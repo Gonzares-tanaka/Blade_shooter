@@ -1,0 +1,19 @@
+{
+  "editor": "Pyxel Editor 2.9.9 / native Windows UI",
+  "pixel_8_4": 2,
+  "shot_sound_0_speed": 3,
+  "music_0": {
+    "seqs": [
+      [
+        33,
+        32,
+        33
+      ],
+      [
+        34,
+        35
+      ]
+    ]
+  },
+  "sha256": "b86a8c0df7d748111621273c25f4fbfde5e9e5b8c3cbad9d6fd9e8dab94da6b3"
+}

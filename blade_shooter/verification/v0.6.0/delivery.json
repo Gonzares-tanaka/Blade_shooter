@@ -1,0 +1,110 @@
+{
+  "version": "0.6.0",
+  "resource_sha256": "ef711269a41d9b0a3848152e9af90ee86f0cac213320b17d0406185c099c1dae",
+  "core_combat_hp_resources_and_reference_wave_tables_preserved": true,
+  "tuning_changes": {
+    "SMALL_SPEED": {
+      "before": 38.0,
+      "after": 72.0
+    },
+    "ARMOR_ENTRY_SPEED": {
+      "before": 54.0,
+      "after": 150.0
+    },
+    "ARMOR_Y": {
+      "before": 112.0,
+      "after": 132.0
+    },
+    "ARMOR_LIFETIME": {
+      "before": 9.0,
+      "after": 6.4
+    },
+    "ARMOR_FIRE_SECONDS": {
+      "before": 1.65,
+      "after": 0.65
+    },
+    "ARMOR_REST_SECONDS": {
+      "before": 2.5,
+      "after": 1.9
+    },
+    "ARMOR_FIRE_INTERVAL": {
+      "before": 0.55,
+      "after": 0.45
+    },
+    "ARMOR_SPREAD_DEGREES": {
+      "before": 18.0,
+      "after": 22.0
+    },
+    "ARMOR_BULLET_SPEED": {
+      "before": 38.0,
+      "after": 100.0
+    },
+    "SMALL_BULLET_SPEED": {
+      "before": 48.0,
+      "after": 110.0
+    },
+    "SMALL_FIRST_SHOT": {
+      "before": 2.0,
+      "after": 1.75
+    },
+    "CHARGER_HP": {
+      "before": 24,
+      "after": 18
+    },
+    "CHARGER_ENTRY_SPEED": {
+      "before": 64.0,
+      "after": 170.0
+    },
+    "CHARGER_Y": {
+      "before": 96.0,
+      "after": 100.0
+    },
+    "CHARGER_WARNING_SECONDS": {
+      "before": 1.2,
+      "after": 0.75
+    },
+    "CHARGER_SPEED": {
+      "before": 140.0,
+      "after": 225.0
+    },
+    "REAR_MARKER_SECONDS": {
+      "before": 1.2,
+      "after": 0.65
+    },
+    "REAR_ENTRY_SPEED": {
+      "before": 56.0,
+      "after": 120.0
+    },
+    "REAR_EXIT_SPEED": {
+      "before": 44.0,
+      "after": 96.0
+    },
+    "REAR_WARNING_SECONDS": {
+      "before": 1.4,
+      "after": 0.6
+    },
+    "REAR_BULLET_SPEED": {
+      "before": 42.0,
+      "after": 92.0
+    },
+    "REAR_SHOT_INTERVAL": {
+      "before": 0.55,
+      "after": 0.38
+    },
+    "REAR_SHOTS": {
+      "before": 3,
+      "after": 2
+    }
+  },
+  "sources_resources_and_documents_match": true,
+  "packages": {
+    "blade-shooter-web.zip": {
+      "bytes": 46802,
+      "sha256": "ace77b5144f83249357367984eb9c0af4f6fd6773faf6fcc4109344a3092c7a5"
+    },
+    "blade-shooter-gkd.zip": {
+      "bytes": 32735,
+      "sha256": "f6c96652d109619ded4c808fdb5bbb440654b90ee809e9b40a29b77fee65f30d"
+    }
+  }
+}

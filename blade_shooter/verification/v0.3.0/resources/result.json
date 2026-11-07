@@ -1,0 +1,12 @@
+{
+  "pixel": 2,
+  "screen_pixel": 2,
+  "shot_speed": 3,
+  "music": [
+    33,
+    32,
+    33
+  ],
+  "colors": 52,
+  "formation_swing_kills": 3
+}

@@ -1,0 +1,25 @@
+{
+  "version": "0.7.0",
+  "fps": 60,
+  "frames": 20251,
+  "wall_seconds": 341.7045977999951,
+  "automatic_input": true,
+  "state": "clear",
+  "time": 337.51666666663255,
+  "hp": 2,
+  "boss_spawn": 300.0,
+  "first_boss_fire": 304.8833333333289,
+  "order": [
+    "center",
+    "left",
+    "right"
+  ],
+  "blade": {
+    "armor": 41,
+    "small": 87,
+    "charger": 7,
+    "rear": 6,
+    "boss": 3
+  },
+  "cleared": 66
+}

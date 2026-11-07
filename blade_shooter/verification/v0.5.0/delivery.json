@@ -1,0 +1,16 @@
+{
+  "version": "0.5.0",
+  "resource_sha256": "ef711269a41d9b0a3848152e9af90ee86f0cac213320b17d0406185c099c1dae",
+  "old_combat_settings_and_classic_course_unchanged": true,
+  "sources_resources_and_documents_match": true,
+  "packages": {
+    "blade-shooter-web.zip": {
+      "bytes": 44753,
+      "sha256": "b15650b2e22ec024a4969bb5dbbe764d1d5189f04e50d2ad87dec05871994639"
+    },
+    "blade-shooter-gkd.zip": {
+      "bytes": 33573,
+      "sha256": "396ed14d63b7fff77b92de2195100bed96bd4618e32c78e3631f49f442c2d57a"
+    }
+  }
+}

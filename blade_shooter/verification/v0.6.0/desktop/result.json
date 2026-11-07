@@ -1,0 +1,111 @@
+{
+  "fps": 60,
+  "automatic_input": true,
+  "routes": [
+    {
+      "course": "tempo",
+      "mode": "idle",
+      "state": "gameover",
+      "time": 6.749999999999981,
+      "hp": 0,
+      "slashes": 0,
+      "blade": {
+        "armor": 0,
+        "small": 0,
+        "charger": 0,
+        "rear": 0
+      },
+      "cleared": 0,
+      "shot": {
+        "armor": 0,
+        "small": 0,
+        "charger": 0,
+        "rear": 0
+      }
+    },
+    {
+      "course": "tempo",
+      "mode": "move",
+      "state": "clear",
+      "time": 30.0,
+      "hp": 1,
+      "slashes": 0,
+      "blade": {
+        "armor": 0,
+        "small": 0,
+        "charger": 0,
+        "rear": 0
+      },
+      "cleared": 0,
+      "shot": {
+        "armor": 1,
+        "small": 7,
+        "charger": 0,
+        "rear": 0
+      }
+    },
+    {
+      "course": "tempo",
+      "mode": "blade",
+      "state": "clear",
+      "time": 30.0,
+      "hp": 3,
+      "slashes": 13,
+      "blade": {
+        "armor": 6,
+        "small": 7,
+        "charger": 1,
+        "rear": 2
+      },
+      "cleared": 10,
+      "shot": {
+        "armor": 0,
+        "small": 13,
+        "charger": 0,
+        "rear": 0
+      }
+    },
+    {
+      "course": "tempo_fast",
+      "mode": "move",
+      "state": "clear",
+      "time": 30.0,
+      "hp": 3,
+      "slashes": 0,
+      "blade": {
+        "armor": 0,
+        "small": 0,
+        "charger": 0,
+        "rear": 0
+      },
+      "cleared": 0,
+      "shot": {
+        "armor": 1,
+        "small": 5,
+        "charger": 0,
+        "rear": 0
+      }
+    },
+    {
+      "course": "tempo_fast",
+      "mode": "blade",
+      "state": "clear",
+      "time": 30.0,
+      "hp": 2,
+      "slashes": 9,
+      "blade": {
+        "armor": 6,
+        "small": 3,
+        "charger": 1,
+        "rear": 1
+      },
+      "cleared": 7,
+      "shot": {
+        "armor": 0,
+        "small": 10,
+        "charger": 0,
+        "rear": 0
+      }
+    }
+  ]
+}

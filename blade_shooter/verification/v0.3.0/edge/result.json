@@ -1,0 +1,16 @@
+{
+  "runtime": "Pyxel 2.9.9",
+  "browser": "155.0.4283.62",
+  "actualTouch": true,
+  "resource": {
+    "pixel": 2,
+    "speed": 3,
+    "music": [
+      33,
+      32,
+      33
+    ]
+  },
+  "errors": [],
+  "result": "PASS"
+}

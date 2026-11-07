@@ -1,0 +1,1707 @@
+{
+  "version": "0.6.0",
+  "routes": [
+    {
+      "course": "tempo",
+      "mode": "idle",
+      "section": 1,
+      "speed": 162.5,
+      "state": "gameover",
+      "time": 6.75,
+      "hp": 0,
+      "hits": [
+        2.417,
+        5.467,
+        6.75
+      ],
+      "blade": {
+        "armor": 0,
+        "small": 0,
+        "charger": 0,
+        "rear": 0
+      },
+      "shot": {
+        "armor": 0,
+        "small": 0,
+        "charger": 0,
+        "rear": 0
+      },
+      "cleared": 0,
+      "slashes": 0,
+      "max_swing": 0,
+      "mixed_seconds": 5.833,
+      "triple_seconds": 3.817,
+      "four_kind_seconds": 0.0,
+      "near_bullet_seconds": 2.167,
+      "peak_bullets": 16,
+      "volleys": 14,
+      "first_attacks": [
+        {
+          "kind": "armor",
+          "time": 1.167,
+          "hp": 32,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 1.95,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 1.95,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 1.95,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "rear",
+          "time": 3.05,
+          "hp": 12,
+          "on_screen": true
+        },
+        {
+          "kind": "armor",
+          "time": 5.167,
+          "hp": 32,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 5.35,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 5.35,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 5.35,
+          "hp": 2,
+          "on_screen": true
+        }
+      ]
+    },
+    {
+      "course": "tempo",
+      "mode": "stationary_slash",
+      "section": 1,
+      "speed": 162.5,
+      "state": "gameover",
+      "time": 6.95,
+      "hp": 0,
+      "hits": [
+        2.417,
+        5.533,
+        6.95
+      ],
+      "blade": {
+        "armor": 0,
+        "small": 0,
+        "charger": 0,
+        "rear": 1
+      },
+      "shot": {
+        "armor": 0,
+        "small": 0,
+        "charger": 0,
+        "rear": 0
+      },
+      "cleared": 11,
+      "slashes": 7,
+      "max_swing": 1,
+      "mixed_seconds": 6.033,
+      "triple_seconds": 1.95,
+      "four_kind_seconds": 0.0,
+      "near_bullet_seconds": 1.983,
+      "peak_bullets": 14,
+      "volleys": 14,
+      "first_attacks": [
+        {
+          "kind": "armor",
+          "time": 1.167,
+          "hp": 32,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 1.95,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 1.95,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 1.95,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "rear",
+          "time": 3.05,
+          "hp": 12,
+          "on_screen": true
+        },
+        {
+          "kind": "armor",
+          "time": 5.233,
+          "hp": 32,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 5.417,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 5.417,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 5.417,
+          "hp": 2,
+          "on_screen": true
+        }
+      ]
+    },
+    {
+      "course": "tempo",
+      "mode": "move",
+      "section": 1,
+      "speed": 162.5,
+      "state": "clear",
+      "time": 30.0,
+      "hp": 1,
+      "hits": [
+        11.383,
+        18.133
+      ],
+      "blade": {
+        "armor": 0,
+        "small": 0,
+        "charger": 0,
+        "rear": 0
+      },
+      "shot": {
+        "armor": 1,
+        "small": 7,
+        "charger": 0,
+        "rear": 0
+      },
+      "cleared": 0,
+      "slashes": 0,
+      "max_swing": 0,
+      "mixed_seconds": 29.083,
+      "triple_seconds": 13.083,
+      "four_kind_seconds": 0.0,
+      "near_bullet_seconds": 9.683,
+      "peak_bullets": 17,
+      "volleys": 52,
+      "first_attacks": [
+        {
+          "kind": "armor",
+          "time": 1.167,
+          "hp": 32,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 1.95,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 1.95,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 1.95,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "rear",
+          "time": 3.05,
+          "hp": 12,
+          "on_screen": true
+        },
+        {
+          "kind": "armor",
+          "time": 5.167,
+          "hp": 32,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 5.35,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 5.35,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 5.35,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 8.95,
+          "hp": 1,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 8.95,
+          "hp": 1,
+          "on_screen": true
+        },
+        {
+          "kind": "armor",
+          "time": 11.15,
+          "hp": 32,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 11.933,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 11.933,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 11.933,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "armor",
+          "time": 15.15,
+          "hp": 32,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 15.333,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 15.333,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 15.333,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 18.933,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 18.933,
+          "hp": 1,
+          "on_screen": true
+        },
+        {
+          "kind": "armor",
+          "time": 21.15,
+          "hp": 32,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 21.933,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 21.933,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 21.933,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "rear",
+          "time": 23.05,
+          "hp": 12,
+          "on_screen": true
+        },
+        {
+          "kind": "armor",
+          "time": 25.167,
+          "hp": 32,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 25.35,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 25.35,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 25.35,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 28.95,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "rear",
+          "time": 29.767,
+          "hp": 12,
+          "on_screen": true
+        }
+      ]
+    },
+    {
+      "course": "tempo",
+      "mode": "blade",
+      "section": 1,
+      "speed": 162.5,
+      "state": "clear",
+      "time": 30.0,
+      "hp": 3,
+      "hits": [],
+      "blade": {
+        "armor": 6,
+        "small": 7,
+        "charger": 1,
+        "rear": 2
+      },
+      "shot": {
+        "armor": 0,
+        "small": 13,
+        "charger": 0,
+        "rear": 0
+      },
+      "cleared": 10,
+      "slashes": 13,
+      "max_swing": 3,
+      "mixed_seconds": 14.15,
+      "triple_seconds": 4.383,
+      "four_kind_seconds": 0.0,
+      "near_bullet_seconds": 4.117,
+      "peak_bullets": 11,
+      "volleys": 33,
+      "first_attacks": [
+        {
+          "kind": "armor",
+          "time": 1.167,
+          "hp": 32,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 1.95,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 1.95,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 1.95,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "rear",
+          "time": 3.117,
+          "hp": 12,
+          "on_screen": true
+        },
+        {
+          "kind": "armor",
+          "time": 5.167,
+          "hp": 30,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 5.483,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 5.483,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 5.483,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "armor",
+          "time": 11.15,
+          "hp": 32,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 11.933,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 11.933,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 11.933,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "armor",
+          "time": 15.15,
+          "hp": 32,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 15.4,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 19.0,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 19.0,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "armor",
+          "time": 21.15,
+          "hp": 32,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 21.933,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 21.933,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "rear",
+          "time": 23.05,
+          "hp": 12,
+          "on_screen": true
+        },
+        {
+          "kind": "armor",
+          "time": 25.167,
+          "hp": 32,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 25.417,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 25.417,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 25.417,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "rear",
+          "time": 29.833,
+          "hp": 12,
+          "on_screen": true
+        }
+      ]
+    },
+    {
+      "course": "tempo_fast",
+      "mode": "idle",
+      "section": 1,
+      "speed": 187.5,
+      "state": "gameover",
+      "time": 6.75,
+      "hp": 0,
+      "hits": [
+        2.417,
+        5.467,
+        6.75
+      ],
+      "blade": {
+        "armor": 0,
+        "small": 0,
+        "charger": 0,
+        "rear": 0
+      },
+      "shot": {
+        "armor": 0,
+        "small": 0,
+        "charger": 0,
+        "rear": 0
+      },
+      "cleared": 0,
+      "slashes": 0,
+      "max_swing": 0,
+      "mixed_seconds": 5.833,
+      "triple_seconds": 3.817,
+      "four_kind_seconds": 0.0,
+      "near_bullet_seconds": 2.167,
+      "peak_bullets": 16,
+      "volleys": 14,
+      "first_attacks": [
+        {
+          "kind": "armor",
+          "time": 1.167,
+          "hp": 32,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 1.95,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 1.95,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 1.95,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "rear",
+          "time": 3.05,
+          "hp": 12,
+          "on_screen": true
+        },
+        {
+          "kind": "armor",
+          "time": 5.167,
+          "hp": 32,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 5.35,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 5.35,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 5.35,
+          "hp": 2,
+          "on_screen": true
+        }
+      ]
+    },
+    {
+      "course": "tempo_fast",
+      "mode": "stationary_slash",
+      "section": 1,
+      "speed": 187.5,
+      "state": "gameover",
+      "time": 6.95,
+      "hp": 0,
+      "hits": [
+        2.417,
+        5.533,
+        6.95
+      ],
+      "blade": {
+        "armor": 0,
+        "small": 0,
+        "charger": 0,
+        "rear": 1
+      },
+      "shot": {
+        "armor": 0,
+        "small": 0,
+        "charger": 0,
+        "rear": 0
+      },
+      "cleared": 11,
+      "slashes": 7,
+      "max_swing": 1,
+      "mixed_seconds": 6.033,
+      "triple_seconds": 1.95,
+      "four_kind_seconds": 0.0,
+      "near_bullet_seconds": 1.983,
+      "peak_bullets": 14,
+      "volleys": 14,
+      "first_attacks": [
+        {
+          "kind": "armor",
+          "time": 1.167,
+          "hp": 32,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 1.95,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 1.95,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 1.95,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "rear",
+          "time": 3.05,
+          "hp": 12,
+          "on_screen": true
+        },
+        {
+          "kind": "armor",
+          "time": 5.233,
+          "hp": 32,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 5.417,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 5.417,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 5.417,
+          "hp": 2,
+          "on_screen": true
+        }
+      ]
+    },
+    {
+      "course": "tempo_fast",
+      "mode": "move",
+      "section": 1,
+      "speed": 187.5,
+      "state": "clear",
+      "time": 30.0,
+      "hp": 3,
+      "hits": [],
+      "blade": {
+        "armor": 0,
+        "small": 0,
+        "charger": 0,
+        "rear": 0
+      },
+      "shot": {
+        "armor": 1,
+        "small": 5,
+        "charger": 0,
+        "rear": 0
+      },
+      "cleared": 0,
+      "slashes": 0,
+      "max_swing": 0,
+      "mixed_seconds": 29.083,
+      "triple_seconds": 13.133,
+      "four_kind_seconds": 0.0,
+      "near_bullet_seconds": 8.817,
+      "peak_bullets": 17,
+      "volleys": 53,
+      "first_attacks": [
+        {
+          "kind": "armor",
+          "time": 1.167,
+          "hp": 32,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 1.95,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 1.95,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 1.95,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "rear",
+          "time": 3.05,
+          "hp": 12,
+          "on_screen": true
+        },
+        {
+          "kind": "armor",
+          "time": 5.167,
+          "hp": 32,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 5.35,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 5.35,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 5.35,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 8.95,
+          "hp": 1,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 8.95,
+          "hp": 1,
+          "on_screen": true
+        },
+        {
+          "kind": "armor",
+          "time": 11.15,
+          "hp": 32,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 11.933,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 11.933,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "armor",
+          "time": 15.15,
+          "hp": 32,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 15.333,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 15.333,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 15.333,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 18.933,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 18.933,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 18.933,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "armor",
+          "time": 21.15,
+          "hp": 32,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 21.933,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 21.933,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 21.933,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "rear",
+          "time": 23.05,
+          "hp": 12,
+          "on_screen": true
+        },
+        {
+          "kind": "armor",
+          "time": 25.167,
+          "hp": 32,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 25.35,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 25.35,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 25.35,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 28.95,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 28.95,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "rear",
+          "time": 29.767,
+          "hp": 12,
+          "on_screen": true
+        }
+      ]
+    },
+    {
+      "course": "tempo_fast",
+      "mode": "blade",
+      "section": 1,
+      "speed": 187.5,
+      "state": "clear",
+      "time": 30.0,
+      "hp": 2,
+      "hits": [
+        20.867
+      ],
+      "blade": {
+        "armor": 6,
+        "small": 3,
+        "charger": 1,
+        "rear": 1
+      },
+      "shot": {
+        "armor": 0,
+        "small": 10,
+        "charger": 0,
+        "rear": 0
+      },
+      "cleared": 7,
+      "slashes": 9,
+      "max_swing": 2,
+      "mixed_seconds": 23.417,
+      "triple_seconds": 5.783,
+      "four_kind_seconds": 0.0,
+      "near_bullet_seconds": 3.967,
+      "peak_bullets": 15,
+      "volleys": 43,
+      "first_attacks": [
+        {
+          "kind": "armor",
+          "time": 1.167,
+          "hp": 32,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 1.95,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 1.95,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 1.95,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "rear",
+          "time": 3.117,
+          "hp": 12,
+          "on_screen": true
+        },
+        {
+          "kind": "armor",
+          "time": 5.167,
+          "hp": 30,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 5.35,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 5.35,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 5.35,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 8.95,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 8.95,
+          "hp": 1,
+          "on_screen": true
+        },
+        {
+          "kind": "armor",
+          "time": 11.217,
+          "hp": 32,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 12.0,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 12.0,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "armor",
+          "time": 15.15,
+          "hp": 32,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 15.333,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 15.333,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 15.333,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 19.0,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 19.0,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 19.0,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "armor",
+          "time": 21.15,
+          "hp": 31,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 21.933,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 21.933,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "rear",
+          "time": 23.117,
+          "hp": 12,
+          "on_screen": true
+        },
+        {
+          "kind": "armor",
+          "time": 25.167,
+          "hp": 30,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 25.417,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 25.417,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 25.417,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 28.95,
+          "hp": 1,
+          "on_screen": true
+        },
+        {
+          "kind": "rear",
+          "time": 29.767,
+          "hp": 12,
+          "on_screen": true
+        }
+      ]
+    }
+  ],
+  "checkpoints": [
+    {
+      "course": "tempo",
+      "mode": "blade",
+      "section": 2,
+      "speed": 162.5,
+      "state": "clear",
+      "time": 30.0,
+      "hp": 3,
+      "hits": [],
+      "blade": {
+        "armor": 4,
+        "small": 2,
+        "charger": 1,
+        "rear": 1
+      },
+      "shot": {
+        "armor": 0,
+        "small": 9,
+        "charger": 0,
+        "rear": 0
+      },
+      "cleared": 1,
+      "slashes": 7,
+      "max_swing": 2,
+      "mixed_seconds": 10.7,
+      "triple_seconds": 3.833,
+      "four_kind_seconds": 0.0,
+      "near_bullet_seconds": 3.167,
+      "peak_bullets": 11,
+      "volleys": 22,
+      "first_attacks": [
+        {
+          "kind": "armor",
+          "time": 11.15,
+          "hp": 32,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 11.933,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 11.933,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 11.933,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "armor",
+          "time": 15.15,
+          "hp": 32,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 15.4,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 19.0,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 19.0,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "armor",
+          "time": 21.15,
+          "hp": 32,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 21.933,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 21.933,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "rear",
+          "time": 23.067,
+          "hp": 12,
+          "on_screen": true
+        },
+        {
+          "kind": "armor",
+          "time": 25.167,
+          "hp": 32,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 25.417,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 25.417,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 25.417,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "rear",
+          "time": 29.833,
+          "hp": 12,
+          "on_screen": true
+        }
+      ]
+    },
+    {
+      "course": "tempo",
+      "mode": "blade",
+      "section": 3,
+      "speed": 162.5,
+      "state": "clear",
+      "time": 30.0,
+      "hp": 3,
+      "hits": [],
+      "blade": {
+        "armor": 2,
+        "small": 2,
+        "charger": 0,
+        "rear": 1
+      },
+      "shot": {
+        "armor": 0,
+        "small": 3,
+        "charger": 0,
+        "rear": 0
+      },
+      "cleared": 0,
+      "slashes": 4,
+      "max_swing": 2,
+      "mixed_seconds": 5.433,
+      "triple_seconds": 1.733,
+      "four_kind_seconds": 0.0,
+      "near_bullet_seconds": 0.933,
+      "peak_bullets": 11,
+      "volleys": 12,
+      "first_attacks": [
+        {
+          "kind": "armor",
+          "time": 21.167,
+          "hp": 27,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 21.95,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 21.95,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "rear",
+          "time": 23.067,
+          "hp": 12,
+          "on_screen": true
+        },
+        {
+          "kind": "armor",
+          "time": 25.167,
+          "hp": 32,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 25.417,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 25.417,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 25.417,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "rear",
+          "time": 29.833,
+          "hp": 12,
+          "on_screen": true
+        }
+      ]
+    },
+    {
+      "course": "tempo_fast",
+      "mode": "blade",
+      "section": 2,
+      "speed": 187.5,
+      "state": "clear",
+      "time": 30.0,
+      "hp": 3,
+      "hits": [],
+      "blade": {
+        "armor": 4,
+        "small": 3,
+        "charger": 0,
+        "rear": 0
+      },
+      "shot": {
+        "armor": 0,
+        "small": 8,
+        "charger": 0,
+        "rear": 0
+      },
+      "cleared": 1,
+      "slashes": 8,
+      "max_swing": 2,
+      "mixed_seconds": 13.417,
+      "triple_seconds": 5.217,
+      "four_kind_seconds": 0.0,
+      "near_bullet_seconds": 2.167,
+      "peak_bullets": 10,
+      "volleys": 25,
+      "first_attacks": [
+        {
+          "kind": "armor",
+          "time": 11.15,
+          "hp": 32,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 11.933,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 11.933,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 11.933,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "armor",
+          "time": 15.15,
+          "hp": 32,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 15.4,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 18.933,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 18.933,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 18.933,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "armor",
+          "time": 21.217,
+          "hp": 31,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 22.0,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 22.0,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "rear",
+          "time": 23.133,
+          "hp": 12,
+          "on_screen": true
+        },
+        {
+          "kind": "armor",
+          "time": 25.167,
+          "hp": 32,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 25.35,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 25.35,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 25.35,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "rear",
+          "time": 29.833,
+          "hp": 12,
+          "on_screen": true
+        }
+      ]
+    },
+    {
+      "course": "tempo_fast",
+      "mode": "blade",
+      "section": 3,
+      "speed": 187.5,
+      "state": "clear",
+      "time": 30.0,
+      "hp": 2,
+      "hits": [
+        26.1
+      ],
+      "blade": {
+        "armor": 2,
+        "small": 3,
+        "charger": 0,
+        "rear": 0
+      },
+      "shot": {
+        "armor": 0,
+        "small": 4,
+        "charger": 0,
+        "rear": 0
+      },
+      "cleared": 1,
+      "slashes": 4,
+      "max_swing": 3,
+      "mixed_seconds": 6.717,
+      "triple_seconds": 3.817,
+      "four_kind_seconds": 0.0,
+      "near_bullet_seconds": 1.45,
+      "peak_bullets": 16,
+      "volleys": 14,
+      "first_attacks": [
+        {
+          "kind": "armor",
+          "time": 21.167,
+          "hp": 28,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 21.95,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 21.95,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "rear",
+          "time": 23.067,
+          "hp": 12,
+          "on_screen": true
+        },
+        {
+          "kind": "armor",
+          "time": 25.167,
+          "hp": 27,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 25.35,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 25.35,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "small",
+          "time": 25.35,
+          "hp": 2,
+          "on_screen": true
+        },
+        {
+          "kind": "rear",
+          "time": 29.833,
+          "hp": 12,
+          "on_screen": true
+        }
+      ]
+    }
+  ],
+  "schedule": {
+    "kind_seconds": {
+      "0": 0.583,
+      "1": 0.333,
+      "2": 16.017,
+      "3": 13.067,
+      "4": 0.0
+    },
+    "longest_three_kind_seconds": 3.817,
+    "first_shot_age": {
+      "armor": 0.967,
+      "small": 1.75,
+      "rear": 1.667
+    }
+  }
+}

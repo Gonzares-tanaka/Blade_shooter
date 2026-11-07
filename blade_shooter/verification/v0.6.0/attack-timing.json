@@ -1,0 +1,31 @@
+{
+  "armor": {
+    "first_attack": 0.967,
+    "hp": 32,
+    "y": 125.0,
+    "visible_seconds": 0.583
+  },
+  "small": {
+    "first_attack": 1.75,
+    "hp": 2,
+    "y": 106.0,
+    "visible_seconds": 1.033
+  },
+  "charger": {
+    "first_attack": 1.467,
+    "hp": 18,
+    "y": 100.0,
+    "visible_seconds": 0
+  },
+  "rear": {
+    "first_attack": 1.667,
+    "hp": 12,
+    "y": 288.0,
+    "visible_seconds": 0
+  },
+  "waves": {
+    "events": 20,
+    "enemies": 38,
+    "max_interval": 3.0
+  }
+}

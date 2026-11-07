@@ -1,0 +1,19 @@
+:root { color-scheme: dark; font-family: system-ui, sans-serif; background: #10141d; color: #fffeff; }
+* { box-sizing: border-box; }
+html { height: 100%; overscroll-behavior: none; }
+body { margin: 0; height: 100vh; height: 100dvh; overflow: hidden; overscroll-behavior: none; padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); }
+main { height: 100%; max-width: 640px; margin: auto; display: flex; flex-direction: column; gap: 6px; padding: 8px 12px; }
+header { flex: 0 0 40px; display: flex; justify-content: space-between; align-items: center; font-size: 11px; letter-spacing: 1px; gap: 10px; }
+header b { color: #48cdde; }
+#display { min-height: 0; flex: 1; display: grid; place-items: center; }
+#pyxel-screen { position: relative !important; width: var(--game-width, 256px) !important; height: var(--game-height, 320px) !important; margin: 0 !important; overflow: hidden; border: 1px solid #34394c; background: #000; touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+#pyxel-screen canvas { position: absolute !important; inset: 0 !important; width: 100% !important; height: 100% !important; margin: 0 !important; object-fit: contain; image-rendering: pixelated; touch-action: none; }
+#pyxel-screen img { max-width: 90% !important; object-fit: contain; pointer-events: none; }
+#status { font-size: 11px; line-height: 16px; text-align: center; color: #c0dfff; min-height: 32px; flex: 0 0 auto; }
+button { font: inherit; touch-action: manipulation; cursor: pointer; }
+nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; flex: 0 0 auto; }
+#course, #section { min-height: 28px; background: #172626; color: #45e082; border: 1px solid #386459; border-radius: 8px; font-size: 10px; padding: 3px 8px; }
+#course:disabled, #section:disabled { opacity: .55; cursor: default; }
+#start { min-width: 90px; min-height: 38px; padding: 4px 12px; background: #242e3a; border: 1px solid #556674; border-radius: 12px; color: #c0dfff; font-size: 12px; }
+footer { flex: 0 0 auto; color: #82889a; text-align: center; font-size: 10px; line-height: 15px; }
+@media (max-height: 560px) { main { gap: 3px; padding-top: 3px; padding-bottom: 3px; } header { flex-basis: 36px; } #status { min-height: 16px; font-size: 10px; } footer { font-size: 8px; line-height: 11px; } }

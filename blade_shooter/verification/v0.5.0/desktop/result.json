@@ -1,0 +1,66 @@
+[
+  {
+    "route": 0,
+    "course": "stage",
+    "state": "clear",
+    "time": 120.0,
+    "hp": 2,
+    "slashes": 0,
+    "blade_kills": 0,
+    "blade_by_kind": {
+      "armor": 0,
+      "small": 0,
+      "charger": 0,
+      "rear": 0
+    },
+    "rear_shots": 9
+  },
+  {
+    "route": 1,
+    "course": "stage",
+    "state": "clear",
+    "time": 120.0,
+    "hp": 3,
+    "slashes": 14,
+    "blade_kills": 19,
+    "blade_by_kind": {
+      "armor": 3,
+      "small": 10,
+      "charger": 3,
+      "rear": 3
+    },
+    "rear_shots": 9
+  },
+  {
+    "route": 2,
+    "course": "classic",
+    "state": "clear",
+    "time": 80.0,
+    "hp": 2,
+    "slashes": 9,
+    "blade_kills": 13,
+    "blade_by_kind": {
+      "armor": 3,
+      "small": 7,
+      "charger": 3,
+      "rear": 0
+    },
+    "rear_shots": 0
+  },
+  {
+    "route": 3,
+    "course": "rear",
+    "state": "clear",
+    "time": 80.0,
+    "hp": 3,
+    "slashes": 9,
+    "blade_kills": 10,
+    "blade_by_kind": {
+      "armor": 2,
+      "small": 2,
+      "charger": 0,
+      "rear": 6
+    },
+    "rear_shots": 18
+  }
+]

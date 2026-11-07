@@ -1,0 +1,173 @@
+{
+  "version": "0.4.0",
+  "comparisons": [
+    {
+      "name": "final",
+      "tuning": {
+        "BLADE_REACH": 60.0,
+        "BLADE_INNER": 30.0,
+        "BLADE_ACTIVE": 0.1,
+        "BLADE_RECOVERY": 0.24,
+        "BLADE_COOLDOWN": 1.0
+      },
+      "result": {
+        "mode": "stationary",
+        "course": "rear",
+        "state": "gameover",
+        "time": 74.133,
+        "hp": 0,
+        "slashes": 73,
+        "blade_kills": 4,
+        "shot_kills": 3,
+        "cleared": 44,
+        "blade_by_kind": {
+          "armor": 0,
+          "small": 2,
+          "charger": 0,
+          "rear": 2
+        },
+        "shot_by_kind": {
+          "armor": 1,
+          "small": 2,
+          "charger": 0,
+          "rear": 0
+        },
+        "rear_shots": 12,
+        "max_swing_kills": 1
+      }
+    }
+  ],
+  "routes": [
+    {
+      "mode": "shot_only",
+      "course": "rear",
+      "state": "clear",
+      "time": 80.0,
+      "hp": 3,
+      "slashes": 0,
+      "blade_kills": 0,
+      "shot_kills": 3,
+      "cleared": 0,
+      "blade_by_kind": {
+        "armor": 0,
+        "small": 0,
+        "charger": 0,
+        "rear": 0
+      },
+      "shot_by_kind": {
+        "armor": 0,
+        "small": 3,
+        "charger": 0,
+        "rear": 0
+      },
+      "rear_shots": 18,
+      "max_swing_kills": 0
+    },
+    {
+      "mode": "approach",
+      "course": "rear",
+      "state": "clear",
+      "time": 80.0,
+      "hp": 1,
+      "slashes": 4,
+      "blade_kills": 6,
+      "shot_kills": 2,
+      "cleared": 3,
+      "blade_by_kind": {
+        "armor": 2,
+        "small": 4,
+        "charger": 0,
+        "rear": 0
+      },
+      "shot_by_kind": {
+        "armor": 0,
+        "small": 2,
+        "charger": 0,
+        "rear": 0
+      },
+      "rear_shots": 18,
+      "max_swing_kills": 2
+    },
+    {
+      "mode": "rear_first",
+      "course": "rear",
+      "state": "clear",
+      "time": 80.0,
+      "hp": 3,
+      "slashes": 10,
+      "blade_kills": 10,
+      "shot_kills": 4,
+      "cleared": 11,
+      "blade_by_kind": {
+        "armor": 2,
+        "small": 2,
+        "charger": 0,
+        "rear": 6
+      },
+      "shot_by_kind": {
+        "armor": 0,
+        "small": 4,
+        "charger": 0,
+        "rear": 0
+      },
+      "rear_shots": 0,
+      "max_swing_kills": 1
+    },
+    {
+      "mode": "shot_only",
+      "course": "classic",
+      "state": "clear",
+      "time": 80.0,
+      "hp": 3,
+      "slashes": 0,
+      "blade_kills": 0,
+      "shot_kills": 12,
+      "cleared": 0,
+      "blade_by_kind": {
+        "armor": 0,
+        "small": 0,
+        "charger": 0,
+        "rear": 0
+      },
+      "shot_by_kind": {
+        "armor": 3,
+        "small": 9,
+        "charger": 0,
+        "rear": 0
+      },
+      "rear_shots": 0,
+      "max_swing_kills": 0
+    },
+    {
+      "mode": "approach",
+      "course": "classic",
+      "state": "clear",
+      "time": 80.0,
+      "hp": 2,
+      "slashes": 9,
+      "blade_kills": 13,
+      "shot_kills": 5,
+      "cleared": 5,
+      "blade_by_kind": {
+        "armor": 3,
+        "small": 7,
+        "charger": 3,
+        "rear": 0
+      },
+      "shot_by_kind": {
+        "armor": 0,
+        "small": 5,
+        "charger": 0,
+        "rear": 0
+      },
+      "rear_shots": 0,
+      "max_swing_kills": 3
+    }
+  ],
+  "front_gap": {
+    "cleared": 7,
+    "moved": 75.0,
+    "hp": 3,
+    "slashes": 1
+  }
+}

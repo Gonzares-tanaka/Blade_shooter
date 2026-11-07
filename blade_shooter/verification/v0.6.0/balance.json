@@ -1,0 +1,1007 @@
+{
+  "version": "0.6.0",
+  "stage_seconds": 120.0,
+  "comparisons": [
+    {
+      "name": "final",
+      "tuning": {
+        "BLADE_REACH": 60.0,
+        "BLADE_INNER": 30.0,
+        "BLADE_ACTIVE": 0.1,
+        "BLADE_RECOVERY": 0.24,
+        "BLADE_COOLDOWN": 1.0
+      },
+      "result": {
+        "mode": "stationary",
+        "course": "stage",
+        "start_section": 1,
+        "state": "gameover",
+        "time": 17.217,
+        "hp": 0,
+        "slashes": 17,
+        "blade_kills": 4,
+        "shot_kills": 1,
+        "cleared": 1,
+        "blade_by_kind": {
+          "armor": 0,
+          "small": 4,
+          "charger": 0,
+          "rear": 0
+        },
+        "shot_by_kind": {
+          "armor": 0,
+          "small": 1,
+          "charger": 0,
+          "rear": 0
+        },
+        "rear_shots": 0,
+        "max_swing_kills": 2,
+        "max_enemies": 3,
+        "max_bullets": 3,
+        "sections": {
+          "01 / FORMATION": {
+            "start": 0.017,
+            "start_hp": 3,
+            "blade_kills_before": 0,
+            "end_hp": 0,
+            "blade_kills": 4
+          }
+        }
+      }
+    }
+  ],
+  "routes": [
+    {
+      "mode": "shot_only",
+      "course": "stage",
+      "start_section": 1,
+      "state": "clear",
+      "time": 120.0,
+      "hp": 3,
+      "slashes": 0,
+      "blade_kills": 0,
+      "shot_kills": 11,
+      "cleared": 0,
+      "blade_by_kind": {
+        "armor": 0,
+        "small": 0,
+        "charger": 0,
+        "rear": 0
+      },
+      "shot_by_kind": {
+        "armor": 1,
+        "small": 10,
+        "charger": 0,
+        "rear": 0
+      },
+      "rear_shots": 6,
+      "max_swing_kills": 0,
+      "max_enemies": 5,
+      "max_bullets": 9,
+      "sections": {
+        "01 / FORMATION": {
+          "start": 0.017,
+          "start_hp": 3,
+          "blade_kills_before": 0,
+          "end_hp": 3,
+          "blade_kills": 0
+        },
+        "02 / ARMOR": {
+          "start": 25.017,
+          "start_hp": 3,
+          "blade_kills_before": 0,
+          "end_hp": 3,
+          "blade_kills": 0
+        },
+        "03 / CHARGER": {
+          "start": 45.017,
+          "start_hp": 3,
+          "blade_kills_before": 0,
+          "end_hp": 3,
+          "blade_kills": 0
+        },
+        "04 / REAR ARRIVAL": {
+          "start": 65.017,
+          "start_hp": 3,
+          "blade_kills_before": 0,
+          "end_hp": 3,
+          "blade_kills": 0
+        },
+        "05 / CHOOSE YOUR TARGET": {
+          "start": 85.017,
+          "start_hp": 3,
+          "blade_kills_before": 0,
+          "end_hp": 3,
+          "blade_kills": 0
+        },
+        "06 / LAST SWEEP": {
+          "start": 110.017,
+          "start_hp": 3,
+          "blade_kills_before": 0,
+          "end_hp": 3,
+          "blade_kills": 0
+        }
+      }
+    },
+    {
+      "mode": "approach",
+      "course": "stage",
+      "start_section": 1,
+      "state": "clear",
+      "time": 120.0,
+      "hp": 3,
+      "slashes": 13,
+      "blade_kills": 18,
+      "shot_kills": 7,
+      "cleared": 0,
+      "blade_by_kind": {
+        "armor": 4,
+        "small": 11,
+        "charger": 3,
+        "rear": 0
+      },
+      "shot_by_kind": {
+        "armor": 0,
+        "small": 7,
+        "charger": 0,
+        "rear": 0
+      },
+      "rear_shots": 6,
+      "max_swing_kills": 3,
+      "max_enemies": 3,
+      "max_bullets": 7,
+      "sections": {
+        "01 / FORMATION": {
+          "start": 0.017,
+          "start_hp": 3,
+          "blade_kills_before": 0,
+          "end_hp": 3,
+          "blade_kills": 6
+        },
+        "02 / ARMOR": {
+          "start": 25.017,
+          "start_hp": 3,
+          "blade_kills_before": 6,
+          "end_hp": 3,
+          "blade_kills": 2
+        },
+        "03 / CHARGER": {
+          "start": 45.017,
+          "start_hp": 3,
+          "blade_kills_before": 8,
+          "end_hp": 3,
+          "blade_kills": 3
+        },
+        "04 / REAR ARRIVAL": {
+          "start": 65.017,
+          "start_hp": 3,
+          "blade_kills_before": 11,
+          "end_hp": 3,
+          "blade_kills": 0
+        },
+        "05 / CHOOSE YOUR TARGET": {
+          "start": 85.017,
+          "start_hp": 3,
+          "blade_kills_before": 11,
+          "end_hp": 3,
+          "blade_kills": 3
+        },
+        "06 / LAST SWEEP": {
+          "start": 110.017,
+          "start_hp": 3,
+          "blade_kills_before": 14,
+          "end_hp": 3,
+          "blade_kills": 4
+        }
+      }
+    },
+    {
+      "mode": "rear_first",
+      "course": "stage",
+      "start_section": 1,
+      "state": "clear",
+      "time": 120.0,
+      "hp": 3,
+      "slashes": 15,
+      "blade_kills": 21,
+      "shot_kills": 6,
+      "cleared": 0,
+      "blade_by_kind": {
+        "armor": 4,
+        "small": 12,
+        "charger": 3,
+        "rear": 2
+      },
+      "shot_by_kind": {
+        "armor": 0,
+        "small": 6,
+        "charger": 0,
+        "rear": 0
+      },
+      "rear_shots": 6,
+      "max_swing_kills": 3,
+      "max_enemies": 3,
+      "max_bullets": 7,
+      "sections": {
+        "01 / FORMATION": {
+          "start": 0.017,
+          "start_hp": 3,
+          "blade_kills_before": 0,
+          "end_hp": 3,
+          "blade_kills": 6
+        },
+        "02 / ARMOR": {
+          "start": 25.017,
+          "start_hp": 3,
+          "blade_kills_before": 6,
+          "end_hp": 3,
+          "blade_kills": 2
+        },
+        "03 / CHARGER": {
+          "start": 45.017,
+          "start_hp": 3,
+          "blade_kills_before": 8,
+          "end_hp": 3,
+          "blade_kills": 3
+        },
+        "04 / REAR ARRIVAL": {
+          "start": 65.017,
+          "start_hp": 3,
+          "blade_kills_before": 11,
+          "end_hp": 3,
+          "blade_kills": 2
+        },
+        "05 / CHOOSE YOUR TARGET": {
+          "start": 85.017,
+          "start_hp": 3,
+          "blade_kills_before": 13,
+          "end_hp": 3,
+          "blade_kills": 4
+        },
+        "06 / LAST SWEEP": {
+          "start": 110.017,
+          "start_hp": 3,
+          "blade_kills_before": 17,
+          "end_hp": 3,
+          "blade_kills": 4
+        }
+      }
+    },
+    {
+      "mode": "shot_only",
+      "course": "classic",
+      "start_section": 1,
+      "state": "clear",
+      "time": 80.0,
+      "hp": 3,
+      "slashes": 0,
+      "blade_kills": 0,
+      "shot_kills": 7,
+      "cleared": 0,
+      "blade_by_kind": {
+        "armor": 0,
+        "small": 0,
+        "charger": 0,
+        "rear": 0
+      },
+      "shot_by_kind": {
+        "armor": 1,
+        "small": 6,
+        "charger": 0,
+        "rear": 0
+      },
+      "rear_shots": 0,
+      "max_swing_kills": 0,
+      "max_enemies": 5,
+      "max_bullets": 9,
+      "sections": {
+        "01 / ARMOR": {
+          "start": 0.017,
+          "start_hp": 3,
+          "blade_kills_before": 0,
+          "end_hp": 3,
+          "blade_kills": 0
+        },
+        "02 / FORMATION": {
+          "start": 16.0,
+          "start_hp": 3,
+          "blade_kills_before": 0,
+          "end_hp": 3,
+          "blade_kills": 0
+        },
+        "03 / CHARGER": {
+          "start": 36.017,
+          "start_hp": 3,
+          "blade_kills_before": 0,
+          "end_hp": 3,
+          "blade_kills": 0
+        },
+        "04 / MIX": {
+          "start": 56.017,
+          "start_hp": 3,
+          "blade_kills_before": 0,
+          "end_hp": 3,
+          "blade_kills": 0
+        }
+      }
+    },
+    {
+      "mode": "rear_first",
+      "course": "classic",
+      "start_section": 1,
+      "state": "clear",
+      "time": 80.0,
+      "hp": 3,
+      "slashes": 11,
+      "blade_kills": 14,
+      "shot_kills": 5,
+      "cleared": 0,
+      "blade_by_kind": {
+        "armor": 3,
+        "small": 7,
+        "charger": 4,
+        "rear": 0
+      },
+      "shot_by_kind": {
+        "armor": 0,
+        "small": 5,
+        "charger": 0,
+        "rear": 0
+      },
+      "rear_shots": 0,
+      "max_swing_kills": 3,
+      "max_enemies": 3,
+      "max_bullets": 6,
+      "sections": {
+        "01 / ARMOR": {
+          "start": 0.017,
+          "start_hp": 3,
+          "blade_kills_before": 0,
+          "end_hp": 3,
+          "blade_kills": 1
+        },
+        "02 / FORMATION": {
+          "start": 16.0,
+          "start_hp": 3,
+          "blade_kills_before": 1,
+          "end_hp": 3,
+          "blade_kills": 3
+        },
+        "03 / CHARGER": {
+          "start": 36.017,
+          "start_hp": 3,
+          "blade_kills_before": 4,
+          "end_hp": 3,
+          "blade_kills": 2
+        },
+        "04 / MIX": {
+          "start": 56.017,
+          "start_hp": 3,
+          "blade_kills_before": 6,
+          "end_hp": 3,
+          "blade_kills": 8
+        }
+      }
+    },
+    {
+      "mode": "shot_only",
+      "course": "rear",
+      "start_section": 1,
+      "state": "clear",
+      "time": 80.0,
+      "hp": 2,
+      "slashes": 0,
+      "blade_kills": 0,
+      "shot_kills": 4,
+      "cleared": 0,
+      "blade_by_kind": {
+        "armor": 0,
+        "small": 0,
+        "charger": 0,
+        "rear": 0
+      },
+      "shot_by_kind": {
+        "armor": 0,
+        "small": 4,
+        "charger": 0,
+        "rear": 0
+      },
+      "rear_shots": 12,
+      "max_swing_kills": 0,
+      "max_enemies": 4,
+      "max_bullets": 8,
+      "sections": {
+        "01 / REAR ARRIVAL": {
+          "start": 0.017,
+          "start_hp": 3,
+          "blade_kills_before": 0,
+          "end_hp": 3,
+          "blade_kills": 0
+        },
+        "02 / ARMOR + REAR": {
+          "start": 26.017,
+          "start_hp": 3,
+          "blade_kills_before": 0,
+          "end_hp": 3,
+          "blade_kills": 0
+        },
+        "03 / FORMATION + REAR": {
+          "start": 54.017,
+          "start_hp": 3,
+          "blade_kills_before": 0,
+          "end_hp": 2,
+          "blade_kills": 0
+        }
+      }
+    },
+    {
+      "mode": "rear_first",
+      "course": "rear",
+      "start_section": 1,
+      "state": "clear",
+      "time": 80.0,
+      "hp": 3,
+      "slashes": 9,
+      "blade_kills": 12,
+      "shot_kills": 2,
+      "cleared": 1,
+      "blade_by_kind": {
+        "armor": 2,
+        "small": 4,
+        "charger": 0,
+        "rear": 6
+      },
+      "shot_by_kind": {
+        "armor": 0,
+        "small": 2,
+        "charger": 0,
+        "rear": 0
+      },
+      "rear_shots": 12,
+      "max_swing_kills": 3,
+      "max_enemies": 4,
+      "max_bullets": 6,
+      "sections": {
+        "01 / REAR ARRIVAL": {
+          "start": 0.017,
+          "start_hp": 3,
+          "blade_kills_before": 0,
+          "end_hp": 3,
+          "blade_kills": 2
+        },
+        "02 / ARMOR + REAR": {
+          "start": 26.017,
+          "start_hp": 3,
+          "blade_kills_before": 2,
+          "end_hp": 3,
+          "blade_kills": 4
+        },
+        "03 / FORMATION + REAR": {
+          "start": 54.017,
+          "start_hp": 3,
+          "blade_kills_before": 6,
+          "end_hp": 3,
+          "blade_kills": 6
+        }
+      }
+    }
+  ],
+  "checkpoints": [
+    {
+      "mode": "shot_only",
+      "course": "stage",
+      "start_section": 2,
+      "state": "clear",
+      "time": 120.0,
+      "hp": 3,
+      "slashes": 0,
+      "blade_kills": 0,
+      "shot_kills": 4,
+      "cleared": 0,
+      "blade_by_kind": {
+        "armor": 0,
+        "small": 0,
+        "charger": 0,
+        "rear": 0
+      },
+      "shot_by_kind": {
+        "armor": 1,
+        "small": 3,
+        "charger": 0,
+        "rear": 0
+      },
+      "rear_shots": 6,
+      "max_swing_kills": 0,
+      "max_enemies": 5,
+      "max_bullets": 9,
+      "sections": {
+        "02 / ARMOR": {
+          "start": 25.017,
+          "start_hp": 3,
+          "blade_kills_before": 0,
+          "end_hp": 3,
+          "blade_kills": 0
+        },
+        "03 / CHARGER": {
+          "start": 45.017,
+          "start_hp": 3,
+          "blade_kills_before": 0,
+          "end_hp": 3,
+          "blade_kills": 0
+        },
+        "04 / REAR ARRIVAL": {
+          "start": 65.017,
+          "start_hp": 3,
+          "blade_kills_before": 0,
+          "end_hp": 3,
+          "blade_kills": 0
+        },
+        "05 / CHOOSE YOUR TARGET": {
+          "start": 85.017,
+          "start_hp": 3,
+          "blade_kills_before": 0,
+          "end_hp": 3,
+          "blade_kills": 0
+        },
+        "06 / LAST SWEEP": {
+          "start": 110.017,
+          "start_hp": 3,
+          "blade_kills_before": 0,
+          "end_hp": 3,
+          "blade_kills": 0
+        }
+      }
+    },
+    {
+      "mode": "rear_first",
+      "course": "stage",
+      "start_section": 2,
+      "state": "clear",
+      "time": 120.0,
+      "hp": 3,
+      "slashes": 12,
+      "blade_kills": 12,
+      "shot_kills": 6,
+      "cleared": 0,
+      "blade_by_kind": {
+        "armor": 4,
+        "small": 3,
+        "charger": 3,
+        "rear": 2
+      },
+      "shot_by_kind": {
+        "armor": 0,
+        "small": 6,
+        "charger": 0,
+        "rear": 0
+      },
+      "rear_shots": 6,
+      "max_swing_kills": 1,
+      "max_enemies": 3,
+      "max_bullets": 7,
+      "sections": {
+        "02 / ARMOR": {
+          "start": 25.017,
+          "start_hp": 3,
+          "blade_kills_before": 0,
+          "end_hp": 3,
+          "blade_kills": 2
+        },
+        "03 / CHARGER": {
+          "start": 45.017,
+          "start_hp": 3,
+          "blade_kills_before": 2,
+          "end_hp": 3,
+          "blade_kills": 3
+        },
+        "04 / REAR ARRIVAL": {
+          "start": 65.017,
+          "start_hp": 3,
+          "blade_kills_before": 5,
+          "end_hp": 3,
+          "blade_kills": 2
+        },
+        "05 / CHOOSE YOUR TARGET": {
+          "start": 85.017,
+          "start_hp": 3,
+          "blade_kills_before": 7,
+          "end_hp": 3,
+          "blade_kills": 3
+        },
+        "06 / LAST SWEEP": {
+          "start": 110.017,
+          "start_hp": 3,
+          "blade_kills_before": 10,
+          "end_hp": 3,
+          "blade_kills": 2
+        }
+      }
+    },
+    {
+      "mode": "shot_only",
+      "course": "stage",
+      "start_section": 3,
+      "state": "clear",
+      "time": 120.0,
+      "hp": 3,
+      "slashes": 0,
+      "blade_kills": 0,
+      "shot_kills": 4,
+      "cleared": 0,
+      "blade_by_kind": {
+        "armor": 0,
+        "small": 0,
+        "charger": 0,
+        "rear": 0
+      },
+      "shot_by_kind": {
+        "armor": 1,
+        "small": 3,
+        "charger": 0,
+        "rear": 0
+      },
+      "rear_shots": 6,
+      "max_swing_kills": 0,
+      "max_enemies": 5,
+      "max_bullets": 9,
+      "sections": {
+        "03 / CHARGER": {
+          "start": 45.017,
+          "start_hp": 3,
+          "blade_kills_before": 0,
+          "end_hp": 3,
+          "blade_kills": 0
+        },
+        "04 / REAR ARRIVAL": {
+          "start": 65.017,
+          "start_hp": 3,
+          "blade_kills_before": 0,
+          "end_hp": 3,
+          "blade_kills": 0
+        },
+        "05 / CHOOSE YOUR TARGET": {
+          "start": 85.017,
+          "start_hp": 3,
+          "blade_kills_before": 0,
+          "end_hp": 3,
+          "blade_kills": 0
+        },
+        "06 / LAST SWEEP": {
+          "start": 110.017,
+          "start_hp": 3,
+          "blade_kills_before": 0,
+          "end_hp": 3,
+          "blade_kills": 0
+        }
+      }
+    },
+    {
+      "mode": "rear_first",
+      "course": "stage",
+      "start_section": 3,
+      "state": "clear",
+      "time": 120.0,
+      "hp": 3,
+      "slashes": 10,
+      "blade_kills": 10,
+      "shot_kills": 6,
+      "cleared": 0,
+      "blade_by_kind": {
+        "armor": 2,
+        "small": 3,
+        "charger": 3,
+        "rear": 2
+      },
+      "shot_by_kind": {
+        "armor": 0,
+        "small": 6,
+        "charger": 0,
+        "rear": 0
+      },
+      "rear_shots": 6,
+      "max_swing_kills": 1,
+      "max_enemies": 3,
+      "max_bullets": 7,
+      "sections": {
+        "03 / CHARGER": {
+          "start": 45.017,
+          "start_hp": 3,
+          "blade_kills_before": 0,
+          "end_hp": 3,
+          "blade_kills": 3
+        },
+        "04 / REAR ARRIVAL": {
+          "start": 65.017,
+          "start_hp": 3,
+          "blade_kills_before": 3,
+          "end_hp": 3,
+          "blade_kills": 2
+        },
+        "05 / CHOOSE YOUR TARGET": {
+          "start": 85.017,
+          "start_hp": 3,
+          "blade_kills_before": 5,
+          "end_hp": 3,
+          "blade_kills": 3
+        },
+        "06 / LAST SWEEP": {
+          "start": 110.017,
+          "start_hp": 3,
+          "blade_kills_before": 8,
+          "end_hp": 3,
+          "blade_kills": 2
+        }
+      }
+    },
+    {
+      "mode": "shot_only",
+      "course": "stage",
+      "start_section": 4,
+      "state": "clear",
+      "time": 120.0,
+      "hp": 2,
+      "slashes": 0,
+      "blade_kills": 0,
+      "shot_kills": 3,
+      "cleared": 0,
+      "blade_by_kind": {
+        "armor": 0,
+        "small": 0,
+        "charger": 0,
+        "rear": 0
+      },
+      "shot_by_kind": {
+        "armor": 0,
+        "small": 3,
+        "charger": 0,
+        "rear": 0
+      },
+      "rear_shots": 6,
+      "max_swing_kills": 0,
+      "max_enemies": 5,
+      "max_bullets": 9,
+      "sections": {
+        "04 / REAR ARRIVAL": {
+          "start": 65.017,
+          "start_hp": 3,
+          "blade_kills_before": 0,
+          "end_hp": 3,
+          "blade_kills": 0
+        },
+        "05 / CHOOSE YOUR TARGET": {
+          "start": 85.017,
+          "start_hp": 3,
+          "blade_kills_before": 0,
+          "end_hp": 3,
+          "blade_kills": 0
+        },
+        "06 / LAST SWEEP": {
+          "start": 110.017,
+          "start_hp": 3,
+          "blade_kills_before": 0,
+          "end_hp": 2,
+          "blade_kills": 0
+        }
+      }
+    },
+    {
+      "mode": "rear_first",
+      "course": "stage",
+      "start_section": 4,
+      "state": "clear",
+      "time": 120.0,
+      "hp": 3,
+      "slashes": 7,
+      "blade_kills": 7,
+      "shot_kills": 6,
+      "cleared": 0,
+      "blade_by_kind": {
+        "armor": 2,
+        "small": 3,
+        "charger": 0,
+        "rear": 2
+      },
+      "shot_by_kind": {
+        "armor": 0,
+        "small": 6,
+        "charger": 0,
+        "rear": 0
+      },
+      "rear_shots": 6,
+      "max_swing_kills": 1,
+      "max_enemies": 3,
+      "max_bullets": 7,
+      "sections": {
+        "04 / REAR ARRIVAL": {
+          "start": 65.017,
+          "start_hp": 3,
+          "blade_kills_before": 0,
+          "end_hp": 3,
+          "blade_kills": 2
+        },
+        "05 / CHOOSE YOUR TARGET": {
+          "start": 85.017,
+          "start_hp": 3,
+          "blade_kills_before": 2,
+          "end_hp": 3,
+          "blade_kills": 3
+        },
+        "06 / LAST SWEEP": {
+          "start": 110.017,
+          "start_hp": 3,
+          "blade_kills_before": 5,
+          "end_hp": 3,
+          "blade_kills": 2
+        }
+      }
+    },
+    {
+      "mode": "shot_only",
+      "course": "stage",
+      "start_section": 5,
+      "state": "clear",
+      "time": 120.0,
+      "hp": 3,
+      "slashes": 0,
+      "blade_kills": 0,
+      "shot_kills": 3,
+      "cleared": 0,
+      "blade_by_kind": {
+        "armor": 0,
+        "small": 0,
+        "charger": 0,
+        "rear": 0
+      },
+      "shot_by_kind": {
+        "armor": 0,
+        "small": 3,
+        "charger": 0,
+        "rear": 0
+      },
+      "rear_shots": 2,
+      "max_swing_kills": 0,
+      "max_enemies": 5,
+      "max_bullets": 9,
+      "sections": {
+        "05 / CHOOSE YOUR TARGET": {
+          "start": 85.017,
+          "start_hp": 3,
+          "blade_kills_before": 0,
+          "end_hp": 3,
+          "blade_kills": 0
+        },
+        "06 / LAST SWEEP": {
+          "start": 110.017,
+          "start_hp": 3,
+          "blade_kills_before": 0,
+          "end_hp": 3,
+          "blade_kills": 0
+        }
+      }
+    },
+    {
+      "mode": "rear_first",
+      "course": "stage",
+      "start_section": 5,
+      "state": "clear",
+      "time": 120.0,
+      "hp": 3,
+      "slashes": 6,
+      "blade_kills": 5,
+      "shot_kills": 6,
+      "cleared": 0,
+      "blade_by_kind": {
+        "armor": 2,
+        "small": 3,
+        "charger": 0,
+        "rear": 0
+      },
+      "shot_by_kind": {
+        "armor": 0,
+        "small": 6,
+        "charger": 0,
+        "rear": 0
+      },
+      "rear_shots": 2,
+      "max_swing_kills": 1,
+      "max_enemies": 3,
+      "max_bullets": 7,
+      "sections": {
+        "05 / CHOOSE YOUR TARGET": {
+          "start": 85.017,
+          "start_hp": 3,
+          "blade_kills_before": 0,
+          "end_hp": 3,
+          "blade_kills": 3
+        },
+        "06 / LAST SWEEP": {
+          "start": 110.017,
+          "start_hp": 3,
+          "blade_kills_before": 3,
+          "end_hp": 3,
+          "blade_kills": 2
+        }
+      }
+    },
+    {
+      "mode": "shot_only",
+      "course": "stage",
+      "start_section": 6,
+      "state": "clear",
+      "time": 120.0,
+      "hp": 3,
+      "slashes": 0,
+      "blade_kills": 0,
+      "shot_kills": 3,
+      "cleared": 0,
+      "blade_by_kind": {
+        "armor": 0,
+        "small": 0,
+        "charger": 0,
+        "rear": 0
+      },
+      "shot_by_kind": {
+        "armor": 0,
+        "small": 3,
+        "charger": 0,
+        "rear": 0
+      },
+      "rear_shots": 0,
+      "max_swing_kills": 0,
+      "max_enemies": 4,
+      "max_bullets": 0,
+      "sections": {
+        "06 / LAST SWEEP": {
+          "start": 110.017,
+          "start_hp": 3,
+          "blade_kills_before": 0,
+          "end_hp": 3,
+          "blade_kills": 0
+        }
+      }
+    },
+    {
+      "mode": "rear_first",
+      "course": "stage",
+      "start_section": 6,
+      "state": "clear",
+      "time": 120.0,
+      "hp": 3,
+      "slashes": 2,
+      "blade_kills": 2,
+      "shot_kills": 4,
+      "cleared": 0,
+      "blade_by_kind": {
+        "armor": 0,
+        "small": 2,
+        "charger": 0,
+        "rear": 0
+      },
+      "shot_by_kind": {
+        "armor": 0,
+        "small": 4,
+        "charger": 0,
+        "rear": 0
+      },
+      "rear_shots": 0,
+      "max_swing_kills": 1,
+      "max_enemies": 3,
+      "max_bullets": 0,
+      "sections": {
+        "06 / LAST SWEEP": {
+          "start": 110.017,
+          "start_hp": 3,
+          "blade_kills_before": 0,
+          "end_hp": 3,
+          "blade_kills": 2
+        }
+      }
+    }
+  ],
+  "front_gap": {
+    "cleared": 7,
+    "moved": 97.5,
+    "hp": 3,
+    "slashes": 1
+  }
+}

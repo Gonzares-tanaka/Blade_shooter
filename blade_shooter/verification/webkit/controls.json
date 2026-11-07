@@ -1,0 +1,11 @@
+{
+  "result": "WEBKIT_CONTROLS_OK",
+  "runtime": "stubbed; input layer only",
+  "drag": "real mouse pointer",
+  "doubleTap": "real touch",
+  "smallLayout": {
+    "ratio": 0.8,
+    "overflow": false
+  },
+  "errors": []
+}

@@ -1,0 +1,32 @@
+{
+  "before_sha256": "ef711269a41d9b0a3848152e9af90ee86f0cac213320b17d0406185c099c1dae",
+  "after_sha256": "ff776ed99e0b9d77b00f8bbfbc0c8ed33d4c8fc178d9df06cae79fbc85d6dbaa",
+  "image_rects": [
+    [
+      0,
+      112,
+      224,
+      104
+    ],
+    [
+      0,
+      224,
+      112,
+      32
+    ]
+  ],
+  "sounds": [
+    12,
+    13,
+    14,
+    15,
+    16,
+    36,
+    37,
+    38,
+    39
+  ],
+  "music": 1,
+  "all_prior_pixels_sounds_music_and_tilemaps_preserved": true,
+  "palette_unchanged": true
+}

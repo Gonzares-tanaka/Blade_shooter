@@ -1,0 +1,15 @@
+{
+  "version": "0.7.0",
+  "pyxel_web_version": "2.9.9",
+  "sources": {
+    "main.py": "e9a048c7d486ebce0bf21e5246afe6672536e2f3d7c90f6d42dfecafe6cb9847",
+    "config.py": "8666112c66d4f6536911daef84a1c81959a54bc59077123fe0d3ad4f8ccbf60d",
+    "game.py": "4a6f5153ecf508e6526c12d944608620321c8f1715e6922f29075c61624a185e",
+    "boss.py": "62669b4c2d2e3e47311b446138e7b8e40fa2a09611d477d3778658c6df2377dd",
+    "view.py": "2c726f09c17b6bc129ea71b164af747e7d5306485b0ba368a460466fce6ee52e",
+    "assets.py": "4acbbb622f793a0ad922a9ad170368867a1ee0e471b9f780642fafc11d20f932",
+    "audio.py": "c1b2efa50ed08f3d7e5cec6c5d287ed4c3b035e7cab2afef8ab2f60a792a3f07",
+    "assets/blade.pyxres": "ff776ed99e0b9d77b00f8bbfbc0c8ed33d4c8fc178d9df06cae79fbc85d6dbaa",
+    "assets/blade.pyxpal": "8bdbe7337bf6a347642b9c1a1a1afb782d6e3442c7c1af5fea7f37276c5686f3"
+  }
+}

@@ -1,0 +1,816 @@
+{
+  "version": "0.7.0",
+  "automatic_input": true,
+  "full": [
+    {
+      "course": "stage",
+      "blade": true,
+      "seed": 7,
+      "state": "clear",
+      "time": 337.517,
+      "hp": 2,
+      "hits": [
+        97.933
+      ],
+      "boss_spawn": 300.0,
+      "boss_engaged": 303.99999999999636,
+      "first_boss_fire": 304.8833333333289,
+      "order": [
+        "center",
+        "left",
+        "right"
+      ],
+      "blade_kills": {
+        "armor": 41,
+        "small": 87,
+        "charger": 7,
+        "rear": 6,
+        "boss": 3
+      },
+      "shot_kills": {
+        "armor": 0,
+        "small": 74,
+        "charger": 0,
+        "rear": 0,
+        "boss": 0
+      },
+      "cleared": 66,
+      "peak_bullets": 36,
+      "choices": [
+        "charge_port",
+        "rear_port",
+        "charge_starboard",
+        "rear_port",
+        "charge_port",
+        "rear_port"
+      ],
+      "sections": {
+        "01 / FORMATIONS": {
+          "near": 1.0666666666666678,
+          "erased": 1,
+          "slashes": 13,
+          "mixed": 0.0,
+          "triple": 0.0,
+          "four": 0.0
+        },
+        "02 / BACK ATTACK": {
+          "near": 1.3333333333333335,
+          "erased": 3,
+          "slashes": 12,
+          "mixed": 4.266666666666657,
+          "triple": 0.0,
+          "four": 0.0
+        },
+        "03 / INTERCEPT": {
+          "near": 1.3333333333333335,
+          "erased": 0,
+          "slashes": 13,
+          "mixed": 1.8333333333333317,
+          "triple": 0.0,
+          "four": 0.0
+        },
+        "04 / ARMORED LINE": {
+          "near": 2.583333333333329,
+          "erased": 1,
+          "slashes": 15,
+          "mixed": 0.24999999999999997,
+          "triple": 0.0,
+          "four": 0.0
+        },
+        "05 / BREAK A CORRIDOR": {
+          "near": 8.533333333333337,
+          "erased": 3,
+          "slashes": 17,
+          "mixed": 14.800000000000315,
+          "triple": 0.0,
+          "four": 0.0
+        },
+        "06 / COMBINED ASSAULT": {
+          "near": 10.866666666666786,
+          "erased": 19,
+          "slashes": 39,
+          "mixed": 24.166666666666575,
+          "triple": 6.483333333333316,
+          "four": 0.0
+        },
+        "boss": {
+          "near": 2.6999999999999953,
+          "erased": 39,
+          "slashes": 26,
+          "mixed": 0.0,
+          "triple": 0.0,
+          "four": 0.0
+        }
+      },
+      "frames": 20251
+    },
+    {
+      "course": "stage",
+      "blade": true,
+      "seed": 42,
+      "state": "clear",
+      "time": 337.467,
+      "hp": 2,
+      "hits": [
+        97.933
+      ],
+      "boss_spawn": 300.0,
+      "boss_engaged": 303.99999999999636,
+      "first_boss_fire": 304.8833333333289,
+      "order": [
+        "center",
+        "left",
+        "right"
+      ],
+      "blade_kills": {
+        "armor": 41,
+        "small": 89,
+        "charger": 7,
+        "rear": 6,
+        "boss": 3
+      },
+      "shot_kills": {
+        "armor": 0,
+        "small": 72,
+        "charger": 0,
+        "rear": 0,
+        "boss": 0
+      },
+      "cleared": 67,
+      "peak_bullets": 36,
+      "choices": [
+        "rear_port",
+        "charge_port",
+        "rear_starboard",
+        "charge_port",
+        "rear_port",
+        "charge_port"
+      ],
+      "sections": {
+        "01 / FORMATIONS": {
+          "near": 1.0666666666666678,
+          "erased": 1,
+          "slashes": 13,
+          "mixed": 0.0,
+          "triple": 0.0,
+          "four": 0.0
+        },
+        "02 / BACK ATTACK": {
+          "near": 1.3333333333333335,
+          "erased": 3,
+          "slashes": 12,
+          "mixed": 4.266666666666657,
+          "triple": 0.0,
+          "four": 0.0
+        },
+        "03 / INTERCEPT": {
+          "near": 1.3333333333333335,
+          "erased": 0,
+          "slashes": 13,
+          "mixed": 1.8333333333333317,
+          "triple": 0.0,
+          "four": 0.0
+        },
+        "04 / ARMORED LINE": {
+          "near": 2.583333333333329,
+          "erased": 1,
+          "slashes": 15,
+          "mixed": 0.24999999999999997,
+          "triple": 0.0,
+          "four": 0.0
+        },
+        "05 / BREAK A CORRIDOR": {
+          "near": 8.533333333333337,
+          "erased": 3,
+          "slashes": 17,
+          "mixed": 14.800000000000315,
+          "triple": 0.0,
+          "four": 0.0
+        },
+        "06 / COMBINED ASSAULT": {
+          "near": 10.116666666666749,
+          "erased": 17,
+          "slashes": 39,
+          "mixed": 24.11666666666658,
+          "triple": 6.449999999999982,
+          "four": 0.0
+        },
+        "boss": {
+          "near": 2.3833333333333298,
+          "erased": 42,
+          "slashes": 25,
+          "mixed": 0.0,
+          "triple": 0.0,
+          "four": 0.0
+        }
+      },
+      "frames": 20248
+    }
+  ],
+  "boss_orders": [
+    {
+      "course": "boss",
+      "blade": true,
+      "seed": 7,
+      "state": "clear",
+      "time": 36.167,
+      "hp": 3,
+      "hits": [],
+      "boss_spawn": 0,
+      "boss_engaged": 4.016666666666658,
+      "first_boss_fire": 4.899999999999988,
+      "order": [
+        "left",
+        "right",
+        "center"
+      ],
+      "blade_kills": {
+        "armor": 0,
+        "small": 0,
+        "charger": 0,
+        "rear": 0,
+        "boss": 3
+      },
+      "shot_kills": {
+        "armor": 0,
+        "small": 0,
+        "charger": 0,
+        "rear": 0,
+        "boss": 0
+      },
+      "cleared": 46,
+      "peak_bullets": 35,
+      "choices": null,
+      "sections": {
+        "boss": {
+          "near": 2.166666666666664,
+          "erased": 46,
+          "slashes": 21,
+          "mixed": 0.0,
+          "triple": 0.0,
+          "four": 0.0
+        }
+      },
+      "frames": 2170
+    },
+    {
+      "course": "boss",
+      "blade": true,
+      "seed": 7,
+      "state": "clear",
+      "time": 37.55,
+      "hp": 3,
+      "hits": [],
+      "boss_spawn": 0,
+      "boss_engaged": 4.016666666666658,
+      "first_boss_fire": 4.899999999999988,
+      "order": [
+        "left",
+        "center",
+        "right"
+      ],
+      "blade_kills": {
+        "armor": 0,
+        "small": 0,
+        "charger": 0,
+        "rear": 0,
+        "boss": 3
+      },
+      "shot_kills": {
+        "armor": 0,
+        "small": 0,
+        "charger": 0,
+        "rear": 0,
+        "boss": 0
+      },
+      "cleared": 29,
+      "peak_bullets": 35,
+      "choices": null,
+      "sections": {
+        "boss": {
+          "near": 2.083333333333331,
+          "erased": 29,
+          "slashes": 23,
+          "mixed": 0.0,
+          "triple": 0.0,
+          "four": 0.0
+        }
+      },
+      "frames": 2253
+    },
+    {
+      "course": "boss",
+      "blade": true,
+      "seed": 7,
+      "state": "clear",
+      "time": 28.967,
+      "hp": 3,
+      "hits": [],
+      "boss_spawn": 0,
+      "boss_engaged": 4.016666666666658,
+      "first_boss_fire": 4.899999999999988,
+      "order": [
+        "right",
+        "left",
+        "center"
+      ],
+      "blade_kills": {
+        "armor": 0,
+        "small": 0,
+        "charger": 0,
+        "rear": 0,
+        "boss": 2
+      },
+      "shot_kills": {
+        "armor": 0,
+        "small": 0,
+        "charger": 0,
+        "rear": 0,
+        "boss": 1
+      },
+      "cleared": 29,
+      "peak_bullets": 36,
+      "choices": null,
+      "sections": {
+        "boss": {
+          "near": 1.2500000000000004,
+          "erased": 29,
+          "slashes": 18,
+          "mixed": 0.0,
+          "triple": 0.0,
+          "four": 0.0
+        }
+      },
+      "frames": 1738
+    },
+    {
+      "course": "boss",
+      "blade": true,
+      "seed": 7,
+      "state": "clear",
+      "time": 37.483,
+      "hp": 3,
+      "hits": [],
+      "boss_spawn": 0,
+      "boss_engaged": 4.016666666666658,
+      "first_boss_fire": 4.899999999999988,
+      "order": [
+        "right",
+        "center",
+        "left"
+      ],
+      "blade_kills": {
+        "armor": 0,
+        "small": 0,
+        "charger": 0,
+        "rear": 0,
+        "boss": 2
+      },
+      "shot_kills": {
+        "armor": 0,
+        "small": 0,
+        "charger": 0,
+        "rear": 0,
+        "boss": 1
+      },
+      "cleared": 43,
+      "peak_bullets": 36,
+      "choices": null,
+      "sections": {
+        "boss": {
+          "near": 1.8999999999999981,
+          "erased": 43,
+          "slashes": 24,
+          "mixed": 0.0,
+          "triple": 0.0,
+          "four": 0.0
+        }
+      },
+      "frames": 2249
+    },
+    {
+      "course": "boss",
+      "blade": true,
+      "seed": 7,
+      "state": "clear",
+      "time": 37.483,
+      "hp": 3,
+      "hits": [],
+      "boss_spawn": 0,
+      "boss_engaged": 4.016666666666658,
+      "first_boss_fire": 4.899999999999988,
+      "order": [
+        "center",
+        "left",
+        "right"
+      ],
+      "blade_kills": {
+        "armor": 0,
+        "small": 0,
+        "charger": 0,
+        "rear": 0,
+        "boss": 3
+      },
+      "shot_kills": {
+        "armor": 0,
+        "small": 0,
+        "charger": 0,
+        "rear": 0,
+        "boss": 0
+      },
+      "cleared": 41,
+      "peak_bullets": 36,
+      "choices": null,
+      "sections": {
+        "boss": {
+          "near": 2.8666666666666614,
+          "erased": 41,
+          "slashes": 25,
+          "mixed": 0.0,
+          "triple": 0.0,
+          "four": 0.0
+        }
+      },
+      "frames": 2249
+    },
+    {
+      "course": "boss",
+      "blade": true,
+      "seed": 7,
+      "state": "clear",
+      "time": 36.45,
+      "hp": 3,
+      "hits": [],
+      "boss_spawn": 0,
+      "boss_engaged": 4.016666666666658,
+      "first_boss_fire": 4.899999999999988,
+      "order": [
+        "center",
+        "right",
+        "left"
+      ],
+      "blade_kills": {
+        "armor": 0,
+        "small": 0,
+        "charger": 0,
+        "rear": 0,
+        "boss": 3
+      },
+      "shot_kills": {
+        "armor": 0,
+        "small": 0,
+        "charger": 0,
+        "rear": 0,
+        "boss": 0
+      },
+      "cleared": 37,
+      "peak_bullets": 36,
+      "choices": null,
+      "sections": {
+        "boss": {
+          "near": 2.6166666666666623,
+          "erased": 37,
+          "slashes": 24,
+          "mixed": 0.0,
+          "triple": 0.0,
+          "four": 0.0
+        }
+      },
+      "frames": 2187
+    }
+  ],
+  "shot_only_boss": {
+    "course": "boss",
+    "blade": false,
+    "seed": 7,
+    "state": "clear",
+    "time": 102.683,
+    "hp": 3,
+    "hits": [],
+    "boss_spawn": 0,
+    "boss_engaged": 4.016666666666658,
+    "first_boss_fire": 4.899999999999988,
+    "order": [
+      "center",
+      "left",
+      "right"
+    ],
+    "blade_kills": {
+      "armor": 0,
+      "small": 0,
+      "charger": 0,
+      "rear": 0,
+      "boss": 0
+    },
+    "shot_kills": {
+      "armor": 0,
+      "small": 0,
+      "charger": 0,
+      "rear": 0,
+      "boss": 3
+    },
+    "cleared": 0,
+    "peak_bullets": 37,
+    "choices": null,
+    "sections": {
+      "boss": {
+        "near": 21.766666666666712,
+        "erased": 0,
+        "slashes": 0,
+        "mixed": 0.0,
+        "triple": 0.0,
+        "four": 0.0
+      }
+    },
+    "frames": 6161
+  },
+  "mixed_candidates": {
+    "rear_port": {
+      "course": "stage",
+      "blade": true,
+      "seed": 2,
+      "state": "playing",
+      "time": 225.0,
+      "hp": 3,
+      "hits": [],
+      "boss_spawn": null,
+      "boss_engaged": null,
+      "first_boss_fire": null,
+      "order": [],
+      "blade_kills": {
+        "armor": 3,
+        "small": 5,
+        "charger": 0,
+        "rear": 0,
+        "boss": 0
+      },
+      "shot_kills": {
+        "armor": 0,
+        "small": 7,
+        "charger": 0,
+        "rear": 0,
+        "boss": 0
+      },
+      "cleared": 3,
+      "peak_bullets": 10,
+      "choices": [
+        "rear_port",
+        "charge_port",
+        "rear_port",
+        "charge_starboard",
+        "rear_port",
+        "charge_starboard"
+      ],
+      "sections": {
+        "06 / COMBINED ASSAULT": {
+          "near": 1.4999999999999996,
+          "erased": 3,
+          "slashes": 7,
+          "mixed": 4.266666666666657,
+          "triple": 0.0,
+          "four": 0.0
+        }
+      },
+      "frames": 900
+    },
+    "rear_starboard": {
+      "course": "stage",
+      "blade": true,
+      "seed": 1,
+      "state": "playing",
+      "time": 225.0,
+      "hp": 3,
+      "hits": [],
+      "boss_spawn": null,
+      "boss_engaged": null,
+      "first_boss_fire": null,
+      "order": [],
+      "blade_kills": {
+        "armor": 3,
+        "small": 5,
+        "charger": 0,
+        "rear": 0,
+        "boss": 0
+      },
+      "shot_kills": {
+        "armor": 0,
+        "small": 5,
+        "charger": 0,
+        "rear": 0,
+        "boss": 0
+      },
+      "cleared": 2,
+      "peak_bullets": 9,
+      "choices": [
+        "rear_starboard",
+        "charge_port",
+        "rear_starboard",
+        "charge_port",
+        "rear_starboard",
+        "charge_starboard"
+      ],
+      "sections": {
+        "06 / COMBINED ASSAULT": {
+          "near": 2.533333333333329,
+          "erased": 2,
+          "slashes": 7,
+          "mixed": 6.399999999999983,
+          "triple": 0.016666666666666666,
+          "four": 0.0
+        }
+      },
+      "frames": 900
+    },
+    "charge_port": {
+      "course": "stage",
+      "blade": true,
+      "seed": 5,
+      "state": "playing",
+      "time": 225.0,
+      "hp": 3,
+      "hits": [],
+      "boss_spawn": null,
+      "boss_engaged": null,
+      "first_boss_fire": null,
+      "order": [],
+      "blade_kills": {
+        "armor": 3,
+        "small": 4,
+        "charger": 0,
+        "rear": 0,
+        "boss": 0
+      },
+      "shot_kills": {
+        "armor": 0,
+        "small": 5,
+        "charger": 0,
+        "rear": 0,
+        "boss": 0
+      },
+      "cleared": 4,
+      "peak_bullets": 9,
+      "choices": [
+        "charge_port",
+        "rear_starboard",
+        "charge_port",
+        "rear_starboard",
+        "charge_port",
+        "rear_port"
+      ],
+      "sections": {
+        "06 / COMBINED ASSAULT": {
+          "near": 1.7499999999999987,
+          "erased": 4,
+          "slashes": 6,
+          "mixed": 3.866666666666658,
+          "triple": 2.1499999999999972,
+          "four": 0.0
+        }
+      },
+      "frames": 900
+    },
+    "charge_starboard": {
+      "course": "stage",
+      "blade": true,
+      "seed": 0,
+      "state": "playing",
+      "time": 225.0,
+      "hp": 3,
+      "hits": [],
+      "boss_spawn": null,
+      "boss_engaged": null,
+      "first_boss_fire": null,
+      "order": [],
+      "blade_kills": {
+        "armor": 3,
+        "small": 3,
+        "charger": 0,
+        "rear": 0,
+        "boss": 0
+      },
+      "shot_kills": {
+        "armor": 0,
+        "small": 6,
+        "charger": 0,
+        "rear": 0,
+        "boss": 0
+      },
+      "cleared": 3,
+      "peak_bullets": 9,
+      "choices": [
+        "charge_starboard",
+        "rear_starboard",
+        "charge_port",
+        "rear_starboard",
+        "charge_starboard",
+        "rear_starboard"
+      ],
+      "sections": {
+        "06 / COMBINED ASSAULT": {
+          "near": 1.8499999999999983,
+          "erased": 3,
+          "slashes": 6,
+          "mixed": 3.8833333333333244,
+          "triple": 2.166666666666664,
+          "four": 0.0
+        }
+      },
+      "frames": 900
+    }
+  },
+  "population": {
+    "7": {
+      "01 / FORMATIONS": {
+        "0": 3.783,
+        "1": 19.017,
+        "2": 17.2,
+        "3": 0.0,
+        "4": 0.0
+      },
+      "02 / BACK ATTACK": {
+        "0": 3.283,
+        "1": 16.05,
+        "2": 19.8,
+        "3": 0.867,
+        "4": 0.0
+      },
+      "03 / INTERCEPT": {
+        "0": 5.967,
+        "1": 19.067,
+        "2": 14.45,
+        "3": 0.517,
+        "4": 0.0
+      },
+      "04 / ARMORED LINE": {
+        "0": 0.983,
+        "1": 10.5,
+        "2": 26.033,
+        "3": 2.483,
+        "4": 0.0
+      },
+      "05 / BREAK A CORRIDOR": {
+        "0": 0.0,
+        "1": 12.45,
+        "2": 37.55,
+        "3": 0.0,
+        "4": 0.0
+      },
+      "06 / COMBINED ASSAULT": {
+        "0": 0.0,
+        "1": 1.867,
+        "2": 70.083,
+        "3": 18.05,
+        "4": 0.0
+      }
+    },
+    "42": {
+      "01 / FORMATIONS": {
+        "0": 3.783,
+        "1": 19.017,
+        "2": 17.2,
+        "3": 0.0,
+        "4": 0.0
+      },
+      "02 / BACK ATTACK": {
+        "0": 3.283,
+        "1": 16.05,
+        "2": 19.8,
+        "3": 0.867,
+        "4": 0.0
+      },
+      "03 / INTERCEPT": {
+        "0": 5.967,
+        "1": 19.067,
+        "2": 14.45,
+        "3": 0.517,
+        "4": 0.0
+      },
+      "04 / ARMORED LINE": {
+        "0": 0.983,
+        "1": 10.5,
+        "2": 26.033,
+        "3": 2.483,
+        "4": 0.0
+      },
+      "05 / BREAK A CORRIDOR": {
+        "0": 0.0,
+        "1": 12.45,
+        "2": 37.55,
+        "3": 0.0,
+        "4": 0.0
+      },
+      "06 / COMBINED ASSAULT": {
+        "0": 0.0,
+        "1": 1.867,
+        "2": 70.083,
+        "3": 18.05,
+        "4": 0.0
+      }
+    }
+  },
+  "idle": {
+    "state": "gameover",
+    "time": 10.616666666666774,
+    "hp": 0
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "version": "0.2.0",
+  "comparisons": [
+    {
+      "name": "shot_stop_and_sweep_only",
+      "tuning": {
+        "BLADE_REACH": 68.0,
+        "BLADE_INNER": 12.0,
+        "BLADE_ACTIVE": 0.12,
+        "BLADE_RECOVERY": 0.14,
+        "BLADE_COOLDOWN": 0.5
+      },
+      "result": {
+        "mode": "stationary",
+        "state": "clear",
+        "time": 60.0,
+        "hp": 3,
+        "slashes": 116,
+        "blade_kills": 6,
+        "shot_kills": 2,
+        "cleared": 118
+      }
+    },
+    {
+      "name": "short_recovery_only",
+      "tuning": {
+        "BLADE_REACH": 68.0,
+        "BLADE_INNER": 12.0,
+        "BLADE_ACTIVE": 0.12,
+        "BLADE_RECOVERY": 0.24,
+        "BLADE_COOLDOWN": 0.5
+      },
+      "result": {
+        "mode": "stationary",
+        "state": "clear",
+        "time": 60.0,
+        "hp": 3,
+        "slashes": 116,
+        "blade_kills": 6,
+        "shot_kills": 1,
+        "cleared": 121
+      }
+    },
+    {
+      "name": "final",
+      "tuning": {
+        "BLADE_REACH": 60.0,
+        "BLADE_INNER": 30.0,
+        "BLADE_ACTIVE": 0.1,
+        "BLADE_RECOVERY": 0.24,
+        "BLADE_COOLDOWN": 1.0
+      },
+      "result": {
+        "mode": "stationary",
+        "state": "gameover",
+        "time": 47.783,
+        "hp": 0,
+        "slashes": 47,
+        "blade_kills": 3,
+        "shot_kills": 2,
+        "cleared": 69
+      }
+    }
+  ],
+  "routes": [
+    {
+      "mode": "shot_only",
+      "state": "clear",
+      "time": 60.0,
+      "hp": 3,
+      "slashes": 0,
+      "blade_kills": 0,
+      "shot_kills": 13,
+      "cleared": 0
+    },
+    {
+      "mode": "approach",
+      "state": "clear",
+      "time": 60.0,
+      "hp": 3,
+      "slashes": 5,
+      "blade_kills": 5,
+      "shot_kills": 4,
+      "cleared": 4
+    }
+  ],
+  "front_gap": {
+    "cleared": 7,
+    "moved": 75.0,
+    "hp": 3,
+    "slashes": 1
+  }
+}

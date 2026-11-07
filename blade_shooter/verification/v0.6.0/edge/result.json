@@ -1,0 +1,56 @@
+{
+  "runtime": "Pyxel 2.9.9",
+  "browser": "156.0.4314.42",
+  "actualTouch": true,
+  "resource": {
+    "pixel": 2,
+    "speed": 3,
+    "music": [
+      33,
+      32,
+      33
+    ],
+    "rear_pixel": 6,
+    "rear_sounds": [
+      [
+        36,
+        40,
+        43
+      ],
+      [
+        31,
+        36
+      ]
+    ]
+  },
+  "routes": [
+    {
+      "course": "tempo",
+      "state": "clear",
+      "time": 30,
+      "hp": 3,
+      "blade": {
+        "armor": 6,
+        "small": 7,
+        "charger": 1,
+        "rear": 2
+      },
+      "cleared": 10
+    },
+    {
+      "course": "tempo_fast",
+      "state": "clear",
+      "time": 30,
+      "hp": 2,
+      "blade": {
+        "armor": 6,
+        "small": 3,
+        "charger": 1,
+        "rear": 1
+      },
+      "cleared": 7
+    }
+  ],
+  "errors": [],
+  "result": "PASS"
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "route": 0,
+    "state": "clear",
+    "time": 60.0,
+    "hp": 3,
+    "slashes": 0,
+    "blade_kills": 0
+  },
+  {
+    "route": 1,
+    "state": "clear",
+    "time": 60.0,
+    "hp": 3,
+    "slashes": 5,
+    "blade_kills": 5
+  }
+]

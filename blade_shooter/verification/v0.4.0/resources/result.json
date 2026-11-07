@@ -1,0 +1,27 @@
+{
+  "pixel": 2,
+  "screen_pixel": 2,
+  "shot_speed": 3,
+  "music": [
+    33,
+    32,
+    33
+  ],
+  "colors": 52,
+  "formation_swing_kills": 3,
+  "rear_stop": [
+    128,
+    290
+  ],
+  "rear_sound_notes": {
+    "10": [
+      36,
+      40,
+      43
+    ],
+    "11": [
+      31,
+      36
+    ]
+  }
+}

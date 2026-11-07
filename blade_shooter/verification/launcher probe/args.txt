@@ -1,0 +1,6 @@
+/c/temp/mypyxel/shooting_2/blade_shooter/verification/launcher probe/blade-shooter
+-u
+main.py
+--gkd
+--probe
+value with spaces
