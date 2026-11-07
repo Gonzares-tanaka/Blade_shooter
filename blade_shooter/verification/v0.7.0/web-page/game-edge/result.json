@@ -1,0 +1,58 @@
+{
+  "runtime": "Pyxel 2.9.9",
+  "browser": "157.0.4341.42",
+  "actualTouch": true,
+  "resource": {
+    "pixel": 2,
+    "speed": 3,
+    "music": [
+      33,
+      32,
+      33
+    ],
+    "rear_pixel": 6,
+    "rear_sounds": [
+      [
+        36,
+        40,
+        43
+      ],
+      [
+        31,
+        36
+      ]
+    ]
+  },
+  "routes": [
+    {
+      "course": "stage",
+      "state": "clear",
+      "time": 337.48333333329924,
+      "hp": 3,
+      "boss_spawn": 300,
+      "first_fire": 304.89999999999554,
+      "order": [
+        "center",
+        "left",
+        "right"
+      ],
+      "cleared": 41
+    },
+    {
+      "course": "boss",
+      "state": "clear",
+      "time": 28.966666666666303,
+      "hp": 3,
+      "boss_spawn": 0,
+      "first_fire": 4.899999999999988,
+      "order": [
+        "right",
+        "left",
+        "center"
+      ],
+      "cleared": 29
+    }
+  ],
+  "errors": [],
+  "result": "PASS"
+}

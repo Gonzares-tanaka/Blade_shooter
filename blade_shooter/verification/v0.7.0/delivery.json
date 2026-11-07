@@ -12,12 +12,12 @@
   "sources_resources_and_documents_match": true,
   "packages": {
     "blade-shooter-web.zip": {
-      "bytes": 60525,
-      "sha256": "6692feae5a52d9308b8ab61126314ac89d247e8a0cb548d04bdc58f94243dea8"
+      "bytes": 83937,
+      "sha256": "0379bcdb7809d3bf8ed29f60828ee31b697582b1ee4c594e036ca1b9ddd332a6"
     },
     "blade-shooter-gkd.zip": {
-      "bytes": 40460,
-      "sha256": "96473f015844f07a2d16e6bbec3c814b6d2b67b065103718568c8c3b76d1c90e"
+      "bytes": 41802,
+      "sha256": "b6f0b35a9e26b0ede33aba7e1093814c433881f0934184ed379deef381216998"
     }
   }
 }

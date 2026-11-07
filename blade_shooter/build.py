@@ -41,8 +41,11 @@ def build():
     boot = ('launchPyxel({command:"play", name:"blade-shooter.pyxapp", '
             'gamepad:"disabled", base64:' + json.dumps(base64.b64encode(app_data).decode()) + '});\n')
     (web/"boot.js").write_text(boot, encoding="utf-8", newline="\n")
-    for name in ("index.html", "style.css", "gestures.js", "controls.js"):
-        (web/name).write_bytes((ROOT/"web"/name).read_bytes())
+    for path in (ROOT/"web").rglob("*"):
+        if path.is_file():
+            target=web/path.relative_to(ROOT/"web")
+            target.parent.mkdir(parents=True,exist_ok=True)
+            target.write_bytes(path.read_bytes())
     touch_config = dict(C.WEB_TOUCH, game_width=C.WIDTH, game_height=C.HEIGHT)
     (web/"touch-config.js").write_text("window.BLADE_TOUCH_CONFIG = "+json.dumps(touch_config)+";\n",
                                        encoding="utf-8", newline="\n")
@@ -51,8 +54,9 @@ def build():
                 "sources": {name: hashlib.sha256(data).hexdigest() for name, data in contents.items()}}
     (dist/"manifest.json").write_text(json.dumps(manifest, indent=2)+"\n", encoding="utf-8")
     with zipfile.ZipFile(dist/"blade-shooter-web.zip", "w") as archive:
-        for path in sorted(web.iterdir()):
-            zip_write(archive, path.name, path.read_bytes())
+        for path in sorted(web.rglob("*")):
+            if path.is_file():
+                zip_write(archive, path.relative_to(web).as_posix(), path.read_bytes())
     with zipfile.ZipFile(dist/"blade-shooter-gkd.zip", "w") as archive:
         script = (ROOT/"blade-shooter.sh").read_text(encoding="utf-8").replace("\r\n", "\n")
         zip_write(archive, "blade-shooter.sh", script.encode(), True)

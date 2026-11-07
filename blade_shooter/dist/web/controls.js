@@ -5,6 +5,7 @@ window.bladeInput = {
   slashSerial: 0, confirmSerial: 0, pauseSerial: 0, courseSerial: 0, sectionSerial: 0,
 };
 (() => {
+  document.documentElement.dataset.embedded = String(new URLSearchParams(location.search).has("embed"));
   const bridge = window.bladeInput;
   const config = window.BLADE_TOUCH_CONFIG;
   const gestures = new window.BladeGestures(config);
@@ -27,10 +28,11 @@ window.bladeInput = {
     section.textContent = `開始区間：${sectionLabel}（変更）`;
     course.disabled = !["title", "clear", "gameover"].includes(state);
     section.disabled = course.disabled;
-    start.textContent = state === "playing" ? "一時停止" : state === "paused" ? "再開" :
+    start.disabled = state === "loading";
+    start.textContent = state === "loading" ? "読み込み中" : state === "playing" ? "一時停止" : state === "paused" ? "再開" :
                        ["clear", "gameover"].includes(state) ? "もう一度" : "開始";
     document.getElementById("status").textContent = state === "loading" ?
-      "読み込み後、画面をタップして音声を有効にします" : state === "paused" ?
+      "表示が出たらゲーム画面をタップ →「開始」でプレイ" : state === "paused" ?
       "一時停止中 · 再開ボタン / Pで続ける" :
       "ドラッグで移動 · ダブルタップで斬撃 · ショットは自動";
   }
@@ -155,6 +157,21 @@ window.bladeInput = {
     document.documentElement.style.setProperty("--game-height", `${config.game_height*scale}px`);
   };
   new ResizeObserver(resize).observe(display);
+  const fullscreen = document.getElementById("fullscreen");
+  if (document.documentElement.requestFullscreen) {
+    fullscreen.hidden = false;
+    fullscreen.addEventListener("click", async () => {
+      clearTouch();
+      try {
+        if (document.fullscreenElement) await document.exitFullscreen();
+        else await document.documentElement.requestFullscreen();
+      } catch { /* 拡大を利用できない環境でも通常表示で遊べる。 */ }
+    });
+    document.addEventListener("fullscreenchange", () => {
+      fullscreen.textContent = document.fullscreenElement ? "拡大を終了 ↙" : "画面拡大 ↗";
+      resize();
+    });
+  }
   resize();
   updateLabels();
 })();

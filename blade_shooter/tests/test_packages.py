@@ -14,8 +14,9 @@ class DistributionTests(unittest.TestCase):
             for name in ('main.py','config.py','game.py','view.py','assets.py','audio.py','assets/blade.pyxres','assets/blade.pyxpal'):
                 self.assertEqual(app.read('blade-shooter/'+name),(ROOT/name).read_bytes())
         with zipfile.ZipFile(ROOT/'dist/blade-shooter-web.zip') as web:
-            for path in (ROOT/'dist/web').iterdir():
-                self.assertEqual(web.read(path.name),path.read_bytes())
+            for path in (ROOT/'dist/web').rglob('*'):
+                if path.is_file():
+                    self.assertEqual(web.read(path.relative_to(ROOT/'dist/web').as_posix()),path.read_bytes())
         with zipfile.ZipFile(ROOT/'dist/blade-shooter-gkd.zip') as gkd:
             for name in ('assets.py','audio.py','assets/blade.pyxres','assets/blade.pyxpal'):
                 self.assertEqual(gkd.read('blade-shooter/'+name),(ROOT/name).read_bytes())

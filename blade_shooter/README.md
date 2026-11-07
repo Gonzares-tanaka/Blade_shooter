@@ -197,6 +197,22 @@ Editorで保存後、ゲームを再起動し、配布版を再ビルドして�
 `stage_course(seed)` が出現表を確定し、`Game`の再開・リトライで同じ表を使います。5:00以降は出現させません。
 別コースは `stage`、`tempo`、`tempo_fast`、`boss`、`legacy`（旧120秒）、`classic`、`rear` の順です。
 
+## Web紹介ページとスマホプレイ
+
+公開先：<https://gonzares-tanaka.github.io/Blade_shooter/>
+
+`index.html` はゲーム紹介ページです。「ブラウザで遊ぶ」でページ内のゲームを起動できます。
+`play.html` はゲーム専用画面で、スマホでは広く画面を使えます。
+スマホはドラッグで相対移動、ダブルタップで斬撃。読み込み後にゲーム画面をタップし、「開始」を押してください。
+音声の有効化には画面タップが必要です。対応ブラウザでは「画面拡大」でフルスクリーンにできます。
+
+紹介ページには実際のゲーム画像、操作説明のスマホ／キーボード切替、1面の流れ、3部位の戦艦紹介、FAQを用意しました。
+ゲーム本体のダウンロードは「遊ぶ」を押したときに開始します。通信エラー時はゲーム専用画面内に再読み込みボタンを表示します。
+ローカル確認は `python -m http.server 8000 --directory dist/web`。HTML単体だけでなく、生成されたフォルダー一式を使ってください。
+
+`.github/workflows/pages.yml` が `main` へのWeb関連変更のpushでビルドし、`blade_shooter/dist/web/` の中身をGitHub Pagesのルートへ公開します。
+GitHub Pagesの公開元はGitHub Actionsです。ソース変更は `web/`、生成・配布用は `dist/web/` と使い分けます。
+
 ## 配布物を更新・公開する
 
 `blade_shooter/` で `python build.py` を実行します。原本の素材はバイト列のまま同梱します。
