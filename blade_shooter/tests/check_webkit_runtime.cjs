@@ -19,8 +19,9 @@ const fs=require('node:fs');
     if(ready) {await page.locator('#pyxel-screen').click();await page.waitForTimeout(1500);}
     const phase=await page.evaluate(()=>({entered:!!window.baselineEntered,initialized:!!window.baselineInitialized}));
     const result={officialRuntimeOnly:true,readyForUserGesture:ready,...phase,logs};
-    fs.mkdirSync('verification/webkit',{recursive:true});
-    fs.writeFileSync('verification/webkit/runtime-baseline.json',JSON.stringify(result,null,2));
+    const folder=require('node:path').resolve(__dirname,'../verification/v0.9.0/webkit-baseline');
+    fs.mkdirSync(folder,{recursive:true});
+    fs.writeFileSync(folder+'/runtime-baseline.json',JSON.stringify(result,null,2));
     console.log(JSON.stringify(result));
   } finally {await browser.close();}
 })().catch(e=>{console.error(e);process.exit(1);});

@@ -1,0 +1,25 @@
+{
+  "version": "0.9.0",
+  "python_unit_tests": 88,
+  "node_gesture_tests": 16,
+  "edge_actual_game": "PASS - CDP touch, 3 weapons, drag-to-flick, no warp, repeat, axes, lifecycle",
+  "webkit_input_layer": "PASS - iPhone viewport, real mouse pointer, stubbed runtime",
+  "webkit_actual_game": "NOT VERIFIED - fatal Pyodide/pyxel.init error also in official minimal baseline",
+  "native": "3 weapons, 54 sec each, actual Pyxel 60fps, clear; 165.062 sec wall time",
+  "lance_width": {
+    "before": 5,
+    "after": 16,
+    "visible_sprite": [
+      208,
+      0,
+      28,
+      16
+    ],
+    "damage_reach_and_timing_unchanged": true
+  },
+  "real_devices_not_tested": [
+    "iPhone Safari",
+    "Android",
+    "GKD Pixel 2 / PlumOS"
+  ]
+}

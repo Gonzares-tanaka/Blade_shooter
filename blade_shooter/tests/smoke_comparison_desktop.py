@@ -1,4 +1,4 @@
-﻿"""実Pyxel 60fps、3武器の54秒コースを通常入力で描画・音声付き確認。"""
+"""実Pyxel 60fps、3武器の54秒コースを通常入力で描画・音声付き確認。"""
 from pathlib import Path
 import sys,json,time
 sys.path[:0]=[str(Path(__file__).resolve().parents[1]),str(Path(__file__).resolve().parent)]
@@ -7,7 +7,7 @@ import config as C
 import main
 from game import Game
 from check_comparison import action
-FOLDER=Path(__file__).resolve().parents[1]/'verification/v0.8.0/desktop'
+FOLDER=Path(__file__).resolve().parents[1]/'verification/v0.9.0/desktop'
 FOLDER.mkdir(parents=True,exist_ok=True)
 weapons=tuple(C.WEAPONS);index=0;captures=set();results=[];frame=0
 original_run=pyxel.run

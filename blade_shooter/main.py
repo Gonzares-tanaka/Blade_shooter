@@ -1,5 +1,5 @@
 # title: Blade Close Quarters
-# version: 0.8.0
+# version: 0.9.0
 """PC / GKD / Web共通入口。SELECTは状態・ヒットストップより先に処理。"""
 import sys
 import config as C
@@ -55,7 +55,7 @@ class Input:
                        focus_lost=lost, quit=pressed("quit"), course="course" in pulses,section=int("section" in pulses),
                        settings=pressed("settings"),weapon=int("weapon" in pulses),
                        touch_mode=int("touchMode" in pulses),
-                       lab=int(getattr(self.bridge,"labValue",3)) if "lab" in pulses else 0)
+                       lab=int(getattr(self.bridge,"labValue",2)) if "lab" in pulses else 0)
 
 
 class App:
@@ -108,6 +108,7 @@ class App:
             self.input.blocked.update(k for keys in self.input.keys.values() for k in keys if self.p.btn(k))
         if self.input.bridge is not None:
             self.input.bridge.state = self.game.state
+            self.input.bridge.meleeReady = self.game.state=="playing" and self.game.cooldown<=1e-6 and self.game.swing<0
             self.input.bridge.weapon = self.game.weapon
             self.input.bridge.touchMode = self.game.touch_mode
             self.input.bridge.labMode = self.game.lab_mode

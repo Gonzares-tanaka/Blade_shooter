@@ -21,7 +21,7 @@ class Actions:
     settings: bool = False
     weapon: int = 0
     touch_mode: int = 0
-    lab: int = 0  # 1=input (blade fixed), 2=weapons (input fixed), 3=free
+    lab: int = 0  # 1=weapons, 2=free
 
 
 
@@ -255,11 +255,10 @@ class Game:
         if mode!="free":
             self.course="compare"
             self.checkpoint=0
-        if mode=="input":self.weapon="blade"
 
     def configure(self, action):
-        if action.lab:self.set_lab(("input","weapons","free")[action.lab-1])
-        if action.weapon and self.lab_mode!="input":
+        if action.lab:self.set_lab(("weapons","free")[action.lab-1])
+        if action.weapon:
             choices=tuple(C.WEAPONS)
             self.weapon=choices[(choices.index(self.weapon)+action.weapon)%len(choices)]
         if action.touch_mode and self.lab_mode!="weapons":
@@ -409,15 +408,13 @@ class Game:
             vertical=int(action.y!=0)
             horizontal=int(action.x!=0)
             if vertical and not self.menu_vertical:
-                self.settings_row=(self.settings_row+(1 if action.y>0 else -1))%3
+                self.settings_row=(self.settings_row+(1 if action.y>0 else -1))%2
             delta=(1 if action.x>0 else -1) if horizontal and not self.menu_direction else 0
             self.menu_vertical,self.menu_direction=vertical,horizontal
             if delta:
                 if self.settings_row==0:action.weapon=delta
-                elif self.settings_row==1:action.touch_mode=delta
                 else:
-                    modes=("free","input","weapons")
-                    self.set_lab(modes[(modes.index(self.lab_mode)+delta)%3])
+                    self.set_lab("weapons" if self.lab_mode=="free" else "free")
             self.configure(action)
             if action.settings or action.confirm or action.slash:
                 self.state="title"

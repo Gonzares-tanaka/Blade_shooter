@@ -1,5 +1,5 @@
 """調整箇所。時間=秒、距離=ゲーム内px、速度=px/秒。変更後build.pyで配布版更新。"""
-TITLE, VERSION = "BLADE / CLOSE QUARTERS", "0.8.0"
+TITLE, VERSION = "BLADE / CLOSE QUARTERS", "0.9.0"
 WIDTH, HEIGHT, HUD_HEIGHT, FPS = 256, 320, 24, 60
 PLAYER_SIZE, PLAYER_HIT_RADIUS = 16, 2.0
 PLAYER_SPEED, PLAYER_HP, INVINCIBLE_SECONDS = 125.0, 3, 1.2
@@ -15,7 +15,7 @@ WEAPONS = {
     "axe": dict(label="AXE", damage=80, reach=44.0, inner=30.0, width=14.0,
                 windup=0.035, active=0.12, recovery=0.50, cooldown=1.20,
                 start_angle=-145.0, end_angle=-35.0),
-    "lance": dict(label="LANCE", damage=32, reach=94.0, inner=66.0, width=5.0,
+    "lance": dict(label="LANCE", damage=32, reach=94.0, inner=66.0, width=16.0,
                   windup=0.055, active=0.16, recovery=0.20, cooldown=0.82,
                   start_angle=-90.0, end_angle=-90.0),
 }
@@ -26,8 +26,8 @@ BLADE_REACH, BLADE_INNER, BLADE_WIDTH = (WEAPONS["blade"][k] for k in ("reach","
 BLADE_DAMAGE, BLADE_COOLDOWN = (WEAPONS["blade"][k] for k in ("damage","cooldown"))
 BLADE_WINDUP, BLADE_ACTIVE, BLADE_RECOVERY = (WEAPONS["blade"][k] for k in ("windup","active","recovery"))
 BLADE_START_ANGLE, BLADE_END_ANGLE = (WEAPONS["blade"][k] for k in ("start_angle","end_angle"))
-TOUCH_MODES = {"double_tap": "DOUBLE TAP", "tap_flick": "TAP > FLICK"}
-DEFAULT_WEAPON, DEFAULT_TOUCH_MODE = "blade", "double_tap"
+TOUCH_MODES = {"flick": "FLICK"}
+DEFAULT_WEAPON, DEFAULT_TOUCH_MODE = "blade", "flick"
 HITSTOP_SECONDS, SHAKE_SECONDS, SHAKE_PIXELS = 0.05, 0.16, 1.5
 SMALL_HP, SMALL_RADIUS, SMALL_SPEED = 2, 8.0, 72.0
 ARMOR_HP, ARMOR_RADIUS = 32, 15.0
@@ -259,7 +259,7 @@ BOSS_PARTS = {
 
 # 武器/操作比較用。乱数を使わず、毎回同じ54秒・同じ条件。
 COMPARE_PLAN = (
-    section("formation",9,"01 / ALIGN & SWEEP","BLADE FIRST / COMPARE INPUT",(
+    section("formation",9,"01 / ALIGN & SWEEP","DRAG / FLICK / STEP IN",(
         (0.8,"formation",128,"line"),(3.6,"formation",60,"diagonal_l"),
         (6.0,"formation",286,"side_r"))),
     section("armor",9,"02 / ARMORED OPENING","WAIT FOR OPEN / STEP IN",(
@@ -306,17 +306,15 @@ GKD_INPUTS = {
     "slash": ("GAMEPAD1_BUTTON_A",), "confirm": ("GAMEPAD1_BUTTON_START",),
     "settings": ("GAMEPAD1_BUTTON_B",), "pause": ("GAMEPAD1_BUTTON_START",), "quit": ("GAMEPAD1_BUTTON_BACK",),
 }
+# 距離=256x320ゲームpx、時刻=ms。ドラッグの倍率は判定に掛けない。
 WEB_TOUCH = {
-    "drag_gain": 1.2, "tap_max_movement_px": 10.0, "tap_max_duration_ms": 220.0,
-    "double_tap_min_interval_ms": 40.0, "double_tap_max_interval_ms": 300.0,
-    "double_tap_max_distance_px": 32.0,
-    # 全判定距離は256x320ゲーム座標へ正規化。CSS拡大率・devicePixelRatioに非依存。
-    # tap_flick_intervalは最初の指を離してから2回目の接触まで。
-    "tap_flick_min_interval_ms": 40.0, "tap_flick_max_interval_ms": 300.0,
-    "tap_flick_max_distance_px": 48.0,
-    "flick_distance_px": 18.0, "flick_min_speed_px_ms": 0.18,
-    "flick_timeout_ms": 180.0,
-
+    "drag_gain": 1.2,
+    "flick_axes": {"blade":"horizontal", "axe":"horizontal", "lance":"vertical"},
+    "flick_distance_px": 14.0, "flick_min_speed_px_ms": 0.40,
+    "flick_window_ms": 90.0, "flick_idle_sample_ms": 1000/FPS, "flick_axis_tolerance_degrees": 35.0,
+    "flick_release_speed_px_ms": 0.12, "flick_rearm_idle_ms": 90.0,
+    # 距離不足などで不成立だった保留移動は、飛ばずにこの速度で戻す。
+    "flick_failed_move_speed_px_s": 125.0,
 }
 # 子機版の52色パレットを共用（インデックスは維持）。
 PALETTE = [

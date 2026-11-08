@@ -4,7 +4,7 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs'),path=require('node:path');
 (async()=>{
  const root=path.resolve(__dirname,'../dist/web');
- const folder=path.resolve(__dirname,'../verification/v0.8.0/landing');
+ const folder=path.resolve(__dirname,'../verification/v0.9.0/landing');
  fs.mkdirSync(folder,{recursive:true});
  const files=new Map();
  function collect(dir){for(const e of fs.readdirSync(dir,{withFileTypes:true})){
@@ -58,14 +58,14 @@ const fs=require('node:fs'),path=require('node:path');
     const x=b.x+b.width*.36,y=b.y+b.height*.7;
     const cdp=await context.newCDPSession(page);
     const touch=(type,px=x,py=y)=>cdp.send('Input.dispatchTouchEvent',{type,touchPoints:type==='touchEnd'?[]:[{id:1,x:px,y:py}]});
-    await touch('touchStart');await touch('touchMove',x+28,y-12);await touch('touchEnd',x+28,y-12);
+    await touch('touchStart');await page.waitForTimeout(80);await touch('touchMove',x+8,y-6);await page.waitForTimeout(80);await touch('touchEnd',x+8,y-6);
     await page.waitForTimeout(100);
-    assert((await py('g.px'))>before.x+10);
-    await page.touchscreen.tap(x,y);await page.waitForTimeout(110);await page.touchscreen.tap(x,y);
-    await page.waitForTimeout(120);assert.equal(await py('g.slashes'),before.slashes+1);
+    assert((await py('g.px'))>before.x+3);
+    await touch("touchStart");await page.waitForTimeout(20);await touch("touchMove",x+30,y);
+    await page.waitForTimeout(120);assert.equal(await py('g.slashes'),before.slashes+1);await touch("touchEnd",x+30,y);
     await frame.locator('#start').click();await frame.waitForFunction(()=>window.bladeInput.state==='paused');
     await page.screenshot({path:folder+'/embedded-mobile.png'});
-    results.push({embeddedGame:'PASS',drag:true,doubleTap:true,pause:true,aspect:b.width/b.height});
+    results.push({embeddedGame:'PASS',drag:true,flick:true,pause:true,aspect:b.width/b.height});
    }
    results.push({viewport:{width,height},...metrics});await context.close();
   }

@@ -1,4 +1,4 @@
-﻿"""武器の時間/実体、開始前選択の契約を検証。"""
+"""武器の時間/実体、開始前選択の契約を検証。"""
 import sys, unittest, math
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
@@ -66,19 +66,39 @@ class WeaponTests(unittest.TestCase):
             g.bullets=[Bullet(g.px,g.py,0,0)]
             g.step(.001);self.assertEqual(g.hp,C.PLAYER_HP-1)
 
+    def test_lance_width_hits_and_erases_visible_sixteen_pixel_tip(self):
+        g=self.sandbox('lance');w=g.weapon_config
+        self.assertEqual(w['width'],C.PLAYER_SIZE)
+        g.swing=w['windup']+.7*w['active'];g.cooldown=.5;g.shot_clock=999
+        e=g.spawn('small',g.px+15,g.py-4-80);e.hp=500
+        g.bullets=[Bullet(g.px+10,g.py-4-80,0,0),Bullet(g.px+12,g.py-4-80,0,0)]
+        g.step(.001)
+        self.assertEqual(e.hp,500-w['damage'])
+        self.assertEqual(g.cleared_bullets,1);self.assertEqual(len(g.bullets),1)
+        self.assertEqual(g.bullets[0].x,g.px+12)
+        from assets import SPRITES
+        self.assertEqual(SPRITES['lance'],(208,0,28,16))
+
+    def test_other_weapon_performance_unchanged(self):
+        import runpy
+        old=runpy.run_path(str(Path(__file__).resolve().parents[1]/'verification/v0.9.0/before/config.py'))
+        for weapon,w in old['WEAPONS'].items():
+            for key,value in w.items():
+                if weapon=='lance' and key=='width':continue
+                self.assertEqual(C.WEAPONS[weapon][key],value,(weapon,key))
+
     def test_settings_physical_rows_locks_and_retry(self):
         g=Game('compare');g.step(.01,Actions(settings=True));self.assertEqual(g.state,'settings')
         g.step(.01,Actions(x=1));self.assertEqual(g.weapon,'axe')
         g.step(.01);g.step(.01,Actions(y=1));g.step(.01);g.step(.01,Actions(x=1))
-        self.assertEqual(g.touch_mode,'tap_flick')
-        g.step(.01,Actions(lab=1,weapon=1));self.assertEqual(g.weapon,'blade')
-        g.step(.01,Actions(lab=2,weapon=1,touch_mode=1));self.assertEqual(g.weapon,'axe');self.assertEqual(g.touch_mode,'tap_flick')
+        self.assertEqual(g.touch_mode,'flick');self.assertEqual(g.lab_mode,'weapons')
+        g.step(.01,Actions(weapon=1));self.assertEqual(g.weapon,'lance')
         g.step(.01,Actions(confirm=True));self.assertEqual(g.state,'title')
         g.step(.01,Actions(confirm=True));self.assertEqual(g.state,'playing')
-        g.step(.01,Actions(weapon=1,touch_mode=1,settings=True,lab=1))
-        self.assertEqual((g.weapon,g.touch_mode),('axe','tap_flick'))
+        g.step(.01,Actions(weapon=1,settings=True,lab=2))
+        self.assertEqual((g.weapon,g.touch_mode),('lance','flick'))
         g.state='gameover';g.step(.01,Actions(confirm=True))
-        self.assertEqual((g.weapon,g.touch_mode,g.lab_mode),('axe','tap_flick','weapons'))
+        self.assertEqual((g.weapon,g.touch_mode,g.lab_mode),('lance','flick','weapons'))
 
     def test_gkd_b_settings_and_select_exit_mapping(self):
         p=FakePyxel();i=Input(p,'gkd');g=Game()

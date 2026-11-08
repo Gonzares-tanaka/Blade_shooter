@@ -29,6 +29,14 @@ for course in ('classic','rear','tempo','tempo_fast'):
     assert old['COURSES'][course]['waves']==C.COURSES[course]['waves']
 assert old['COURSES']['stage']['waves']==C.COURSES['stage']['waves']
 assert old['COURSES']['stage']['duration']==C.COURSES['stage']['duration']
+for weapon,settings in old['WEAPONS'].items():
+    for key,value in settings.items():
+        if weapon=='lance' and key=='width':continue
+        assert C.WEAPONS[weapon][key]==value,(weapon,key)
+assert C.WEAPONS['lance']['width']==C.PLAYER_SIZE==16
+assert tuple(C.TOUCH_MODES)==('flick',)
+gestures=(ROOT/'web/gestures.js').read_text(encoding='utf-8-sig')
+assert not any(old_mode in gestures for old_mode in ('lastTap','double_tap','tap_flick','setMode'))
 changes={k:dict(before=v,after=getattr(C,k)) for k,v in old.items()
          if k.isupper() and isinstance(v,(int,float)) and hasattr(C,k) and v!=getattr(C,k)}
 result=dict(version=C.VERSION,resource_sha256=addition['after_sha256'],

@@ -1,0 +1,60 @@
+{
+  "result": "PASS",
+  "engine": "Edge CDP",
+  "browser": "157.0.4341.42",
+  "runtime": "actual Pyxel 2.9.9",
+  "realIPhone": false,
+  "results": [
+    {
+      "weapon": "blade",
+      "dragToFlick": true,
+      "noTap": true,
+      "beforeRelease": true,
+      "noJump": true,
+      "continuousStrokeOnce": true,
+      "newStrokeWithoutLift": true,
+      "wrongAxisRejected": true,
+      "diagonalAllowed": true
+    },
+    {
+      "weapon": "axe",
+      "dragToFlick": true,
+      "noTap": true,
+      "beforeRelease": true,
+      "noJump": true,
+      "continuousStrokeOnce": true,
+      "newStrokeWithoutLift": true,
+      "wrongAxisRejected": true,
+      "diagonalAllowed": true
+    },
+    {
+      "weapon": "lance",
+      "dragToFlick": true,
+      "noTap": true,
+      "beforeRelease": true,
+      "noJump": true,
+      "continuousStrokeOnce": true,
+      "newStrokeWithoutLift": true,
+      "wrongAxisRejected": true,
+      "diagonalAllowed": true
+    },
+    {
+      "cancelBackgroundNoAttack": true
+    },
+    {
+      "width": 320,
+      "normalizedFlick": true
+    },
+    {
+      "width": 768,
+      "normalizedFlick": true
+    }
+  ],
+  "errors": [],
+  "logs": [
+    "Ignored attempt to cancel a touchcancel event with cancelable=false, for example because scrolling is in progress and cannot be interrupted.",
+    "Ignored attempt to cancel a touchcancel event with cancelable=false, for example because scrolling is in progress and cannot be interrupted.",
+    "Ignored attempt to cancel a touchcancel event with cancelable=false, for example because scrolling is in progress and cannot be interrupted.",
+    "Ignored attempt to cancel a touchcancel event with cancelable=false, for example because scrolling is in progress and cannot be interrupted."
+  ]
+}

@@ -2,7 +2,7 @@
 // Pyodideの標準jsブリッジへ、相対移動と押下イベントだけを渡す。
 window.bladeInput = {
   dragX: 0, dragY: 0, touchActive: false, focusSerial: 0, suspended: false,
-  slashSerial: 0, confirmSerial: 0, pauseSerial: 0, courseSerial: 0, sectionSerial: 0, settingsSerial: 0, weaponSerial: 0, touchModeSerial: 0, labSerial: 0, labValue: 3, inputResetSerial: 0, cancelSlashSerial: 0,
+  slashSerial: 0, confirmSerial: 0, pauseSerial: 0, courseSerial: 0, sectionSerial: 0, settingsSerial: 0, weaponSerial: 0, labSerial: 0, labValue: 2, inputResetSerial: 0, cancelSlashSerial: 0, meleeReady: false,
 };
 (() => {
   document.documentElement.dataset.embedded = String(new URLSearchParams(location.search).has("embed"));
@@ -16,10 +16,9 @@ window.bladeInput = {
   const settings = document.getElementById("settings");
   const panel = document.getElementById("settings-panel");
   const weapon = document.getElementById("weapon");
-  const touchMode = document.getElementById("touch-mode");
-  let weaponName = "blade", modeName = "double_tap", labMode = "free";
+  let weaponName = "blade", labMode = "free";
   const weaponLabels = {blade:"ブレイド",axe:"アックス",lance:"ランス"};
-  const modeLabels = {double_tap:"ダブルタップ",tap_flick:"タップ→フリック"};
+  const directionLabel = () => weaponName === "lance" ? "縦フリック ↑↓" : "横フリック ←→";
   let state = "loading";
   let courseName = "stage";
   let courseLabel = "1面 / 5分＋巨大戦艦", sectionLabel = "最初から";
@@ -38,23 +37,21 @@ window.bladeInput = {
     course.disabled = !["title", "clear", "gameover"].includes(state);
     section.disabled = course.disabled;
     settings.disabled = !["title", "clear", "gameover", "settings"].includes(state);
-    settings.textContent = state === "settings" ? "設定を閉じる" : `${weaponLabels[weaponName]} / ${modeLabels[modeName]} ⚙`;
+    settings.textContent = state === "settings" ? "設定を閉じる" : `${weaponLabels[weaponName]} / ${directionLabel()} ⚙`;
     panel.hidden = state !== "settings";
-    weapon.textContent = `武器：${weaponLabels[weaponName]}${labMode === "input" ? "（固定）" : "（変更）"}`;
-    touchMode.textContent = `スマホ操作：${modeLabels[modeName]}${labMode === "weapons" ? "（固定）" : "（変更）"}`;
-    weapon.disabled = labMode === "input";
-    touchMode.disabled = labMode === "weapons";
+    weapon.textContent = `武器：${weaponLabels[weaponName]}（変更）`;
+    weapon.disabled = false;
+    document.getElementById("flick-help").textContent = `${weaponLabels[weaponName]}：${directionLabel()}。ドラッグ中でも素早く払うと即攻撃。`;
     for (const button of panel.querySelectorAll("[data-lab]")) button.setAttribute("aria-pressed",String(button.dataset.lab === labMode));
-    document.getElementById("lab-note").textContent = labMode === "input" ?
-      "① ブレイド固定・54秒固定配置。操作だけ変えてリトライ。" : labMode === "weapons" ?
-      "② 操作方式固定・同じ54秒。武器だけ変えてリトライ。" : "武器・操作をそれぞれ選択。既存の1面も遊べます。";
+    document.getElementById("lab-note").textContent = labMode === "weapons" ?
+      "54秒固定配置。武器を変えて同じ条件でリトライ。" : "武器を選択。既存の1面も遊べます。";
     start.disabled = state === "loading";
     start.textContent = state === "loading" ? "読み込み中" : state === "playing" ? "一時停止" : state === "paused" ? "再開" :
                        ["clear", "gameover"].includes(state) ? "もう一度" : state === "settings" ? "設定完了" : "開始";
     document.getElementById("status").textContent = state === "loading" ?
       "表示が出たらゲーム画面をタップ →「開始」でプレイ" : state === "paused" ?
       "一時停止中 · 再開ボタン / Pで続ける" :
-      `ドラッグ移動 · ${modeLabels[modeName]}で${weaponLabels[weaponName]} · ショット自動`;
+      `ドラッグ移動 · ${directionLabel()}で${weaponLabels[weaponName]} · ショット自動`;
   }
 
   // Pythonが状態を変更した直後にジェスチャーを破棄し、リトライや再開へ持ち越さない。
@@ -82,8 +79,7 @@ window.bladeInput = {
   });
 
   for (const [property, read, write] of [
-    ["weapon",()=>weaponName,value=>{weaponName=value;}],
-    ["touchMode",()=>modeName,value=>{modeName=value;gestures.setMode(value);clearTouch();}],
+    ["weapon",()=>weaponName,value=>{weaponName=value;gestures.setWeapon(value);clearTouch();}],
     ["labMode",()=>labMode,value=>{labMode=value;}],
   ]) Object.defineProperty(bridge,property,{get:read,set:value=>{
     if(read()!==value){write(value);updateLabels();}
@@ -96,8 +92,12 @@ window.bladeInput = {
   }
   function eventTime(e) { return e.timeStamp > 0 ? e.timeStamp : performance.now(); }
   function flushAttack() { if(gestures.takeAttack()) bridge.slashSerial++; }
-  // pointermoveが来なくても、フリック待ちを時間で解除する。
-  function tick(time) { gestures.tick(time); requestAnimationFrame(tick); }
+  // 停止中にストロークを再準備。不成立の保留移動は少しずつ戻す。
+  function tick(time) {
+    const move=gestures.tick(time);
+    if(state==="playing"&&move){bridge.dragX+=move.x*config.drag_gain;bridge.dragY+=move.y*config.drag_gain;}
+    requestAnimationFrame(tick);
+  }
   requestAnimationFrame(tick);
 
   function resumeAudio() {
@@ -106,7 +106,7 @@ window.bladeInput = {
   }
 
   function queueMovement(e) {
-    const movement = gestures.move(e.pointerId, ...coordinates(e), eventTime(e));
+    const movement = gestures.move(e.pointerId, ...coordinates(e), eventTime(e), bridge.meleeReady);
     flushAttack();
     if (!movement) return;
     bridge.dragX += movement.x*config.drag_gain;
@@ -128,7 +128,7 @@ window.bladeInput = {
     if (state !== "playing") { clearTouch(); return; }
     if (gestures.active?.id !== e.pointerId) return;
     e.preventDefault();
-    // 合成イベントに含まれる往復移動も判定へ通し、最終点だけでタップ判定しない。
+    // 合成イベントの時刻と変位も使い、短い払いを最終点だけで判定しない。
     const samples = e.getCoalescedEvents ? e.getCoalescedEvents() : [];
     for (const sample of samples) queueMovement(sample);
     queueMovement(e);
@@ -137,7 +137,7 @@ window.bladeInput = {
     e.preventDefault();
     if (state !== "playing") { clearTouch(); return; }
     queueMovement(e);
-    if (gestures.end(e.pointerId, ...coordinates(e), eventTime(e))) bridge.slashSerial++;
+    if (gestures.end(e.pointerId, ...coordinates(e), eventTime(e), bridge.meleeReady)) bridge.slashSerial++;
     flushAttack();
     bridge.touchActive = gestures.active !== null;
     // 相対移動は次の1フレームで消費。継続する方向入力は保持しない。
@@ -179,7 +179,7 @@ window.bladeInput = {
     if(settings.disabled)return;
     clearTouch();bridge.suspended=false;resumeAudio();bridge.settingsSerial++;
   });
-  for(const [button,serial] of [[weapon,"weaponSerial"],[touchMode,"touchModeSerial"]]) {
+  for(const [button,serial] of [[weapon,"weaponSerial"]]) {
     button.addEventListener("click",()=>{
       if(state!=="settings" || button.disabled)return;
       clearTouch();bridge.suspended=false;bridge[serial]++;
@@ -188,7 +188,7 @@ window.bladeInput = {
   for(const button of panel.querySelectorAll("[data-lab]")) button.addEventListener("click",()=>{
     if(state!=="settings")return;
     clearTouch();bridge.suspended=false;
-    bridge.labValue={input:1,weapons:2,free:3}[button.dataset.lab];bridge.labSerial++;
+    bridge.labValue={weapons:1,free:2}[button.dataset.lab];bridge.labSerial++;
   });
   function suspend() {
     clearTouch();

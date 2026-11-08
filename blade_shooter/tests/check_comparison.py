@@ -1,4 +1,4 @@
-﻿"""54秒固定出現を通常入力だけで比較。HP/弾/無敵/出現は改変しない。"""
+"""54秒固定出現を通常入力だけで比較。HP/弾/無敵/出現は改変しない。"""
 from pathlib import Path
 import sys,json,math
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
@@ -18,7 +18,7 @@ def action(g):
         a.slash=any(e.hp>0 and e.damageable and abs(e.x-g.px)<e.radius+1 and
                     32<g.py-e.y<96 and (e.kind!='armor' or e.resting) for e in g.enemies)
     if g.cooldown<=0:
-        width=5 if g.weapon=='lance' else 28 if g.weapon=='axe' else 42
+        width=10 if g.weapon=='lance' else 28 if g.weapon=='axe' else 42
         if any(24<g.py-b.y<g.weapon_config['reach']+3 and abs(g.px-b.x)<width for b in g.bullets):a.slash=True
     return a
 
@@ -39,8 +39,8 @@ def run(weapon,mode,still=False):
 
 if __name__=='__main__':
     rows=[run(w,m) for w in C.WEAPONS for m in C.TOUCH_MODES]
-    rows.append(run('blade','double_tap',True))
+    rows.append(run('blade','flick',True))
     for row in rows:print(json.dumps(row))
-    out=ROOT/'verification/v0.8.0/comparison.json';out.write_text(json.dumps(rows,indent=2),encoding='utf8')
+    out=ROOT/'verification/v0.9.0/comparison.json';out.write_text(json.dumps(rows,indent=2),encoding='utf8')
     assert all(r['state']=='clear' and r['time']==54 and r['kills']>0 and r['erased']>0 and r['movement_frames']>0 and r['peak_types']==3 for r in rows[:-1])
     assert rows[-1]['state']=='gameover'

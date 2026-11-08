@@ -1,0 +1,55 @@
+{
+  "result": "PASS",
+  "engine": "WebKit iPhone emulation",
+  "browser": "26.5",
+  "runtime": "stubbed - input layer only",
+  "realIPhone": false,
+  "results": [
+    {
+      "weapon": "blade",
+      "dragToFlick": true,
+      "noTap": true,
+      "beforeRelease": true,
+      "noJump": true,
+      "continuousStrokeOnce": true,
+      "newStrokeWithoutLift": true,
+      "wrongAxisRejected": true,
+      "diagonalAllowed": true
+    },
+    {
+      "weapon": "axe",
+      "dragToFlick": true,
+      "noTap": true,
+      "beforeRelease": true,
+      "noJump": true,
+      "continuousStrokeOnce": true,
+      "newStrokeWithoutLift": true,
+      "wrongAxisRejected": true,
+      "diagonalAllowed": true
+    },
+    {
+      "weapon": "lance",
+      "dragToFlick": true,
+      "noTap": true,
+      "beforeRelease": true,
+      "noJump": true,
+      "continuousStrokeOnce": true,
+      "newStrokeWithoutLift": true,
+      "wrongAxisRejected": true,
+      "diagonalAllowed": true
+    },
+    {
+      "cancelBackgroundNoAttack": true
+    },
+    {
+      "width": 320,
+      "normalizedFlick": true
+    },
+    {
+      "width": 768,
+      "normalizedFlick": true
+    }
+  ],
+  "errors": [],
+  "logs": []
+}

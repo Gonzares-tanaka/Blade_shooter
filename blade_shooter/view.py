@@ -139,7 +139,7 @@ class View:
             self.center(120,"5 MIN + BOSS" if g.course=="stage" else "3 TARGETS / ANY ORDER" if g.course=="boss"
                         else f"{int(g.duration)} SEC / FIXED WAVES",39)
             self.center(140,"WEAPON: "+g.weapon_config["label"],6)
-            self.center(152,"TOUCH: "+C.TOUCH_MODES[g.touch_mode],39)
+            self.center(152,"TOUCH: "+("VERTICAL FLICK" if g.weapon=="lance" else "HORIZONTAL FLICK"),39)
             self.center(164,"LAB: "+g.lab_mode.upper(),2)
             self.center(184,"B: SETUP" if self.profile=="gkd" else "X: SETUP",6)
             self.center(198,"LEFT/RIGHT: COURSE",2)
@@ -147,18 +147,16 @@ class View:
             self.center(225,"FROM: "+g.course_config["sections"][g.checkpoint][1],39)
             hint="A / START: BEGIN" if self.profile=="gkd" else "ENTER / Z: BEGIN"
             self.center(247,hint,6)
-            if g.course=="compare":self.center(262,"INPUT FIRST / THEN WEAPONS",2)
+            if g.course=="compare":self.center(262,"SAME WAVES / THREE WEAPONS",2)
         elif g.state == "settings":
             self.panel(78, 202)
             self.center(93,"PRE-FLIGHT SETUP",6)
-            rows=("WEAPON: "+g.weapon_config["label"]+(" [FIXED]" if g.lab_mode=="input" else ""),
-                  "TOUCH: "+C.TOUCH_MODES[g.touch_mode]+(" [FIXED]" if g.lab_mode=="weapons" else ""),
-                  "COMPARE: "+g.lab_mode.upper())
+            rows=("WEAPON: "+g.weapon_config["label"], "COMPARE: "+g.lab_mode.upper())
             for i,text in enumerate(rows):
                 self.center(125+i*25,("> " if i==g.settings_row else "  ")+text,6 if i==g.settings_row else 2)
             self.center(207,"UP/DOWN: ROW  LEFT/RIGHT: VALUE",2)
-            self.center(223,"INPUT: BLADE FIXED / 54 SEC",39)
-            self.center(235,"WEAPONS: TOUCH FIXED / 54 SEC",39)
+            self.center(223,"BLADE / AXE: FLICK LEFT OR RIGHT",39)
+            self.center(235,"LANCE: FLICK UP OR DOWN",39)
             self.center(257,"A / START / B: BACK" if self.profile=="gkd" else "Z / ENTER / X: BACK",6)
         elif g.state in ("gameover", "clear", "paused"):
             self.panel(116, 100)
