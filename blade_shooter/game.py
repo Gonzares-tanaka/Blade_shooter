@@ -18,6 +18,11 @@ class Actions:
     quit: bool = False
     course: bool = False
     section: int = 0
+    settings: bool = False
+    weapon: int = 0
+    touch_mode: int = 0
+    lab: int = 0  # 1=input (blade fixed), 2=weapons (input fixed), 3=free
+
 
 
 @dataclass
@@ -107,11 +112,11 @@ def polygon_hits_circle(poly, x, y, radius):
     return all(v >= 0 for v in signs) or all(v <= 0 for v in signs)
 
 
-def blade_outline(x, y, angle):
+def blade_outline(x, y, angle, inner=C.BLADE_INNER, reach=C.BLADE_REACH, width=C.BLADE_WIDTH):
     """刃本体の4頂点。表示と掃引判定の入力を共用する。"""
     a = math.radians(angle)
-    nx, ny = -math.sin(a)*C.BLADE_WIDTH/2, math.cos(a)*C.BLADE_WIDTH/2
-    near, far = point_at(x, y, C.BLADE_INNER, angle), point_at(x, y, C.BLADE_REACH, angle)
+    nx, ny = -math.sin(a)*width/2, math.cos(a)*width/2
+    near, far = point_at(x, y, inner, angle), point_at(x, y, reach, angle)
     return ((near[0]-nx, near[1]-ny), (far[0]-nx, far[1]-ny),
             (far[0]+nx, far[1]+ny), (near[0]+nx, near[1]+ny))
 
@@ -141,6 +146,37 @@ def sweep_polygons(x, y, start, end, previous=None):
     return [convex_hull(poses[i]+poses[i+1]) for i in range(n)]
 
 
+def weapon_pose(weapon, time):
+    """実体の角度・根元距離・先端距離・幅。描画と判定で共用。"""
+    w=C.WEAPONS[weapon]
+    wind,active=w["windup"],w["active"]
+    progress=max(0,min(1,(time-wind)/active))
+    angle=w["start_angle"]+(w["end_angle"]-w["start_angle"])*progress
+    if weapon=="lance":
+        # 自機は動かさず、先端28pxだけを突き出して戻す。柄は無判定。
+        if time<wind:extension=0
+        elif time<=wind+active:extension=min(1,progress/0.65)
+        else:extension=max(0,1-(time-wind-active)/w["recovery"])
+        far=46+(w["reach"]-46)*extension
+        return -90.0,far-(w["reach"]-w["inner"]),far,w["width"]
+    if time<wind:angle=w["start_angle"]-45+45*time/wind
+    elif time>wind+active:angle=w["end_angle"]+45*min(1,(time-wind-active)/w["recovery"])
+    return angle,w["inner"],w["reach"],w["width"]
+
+
+def weapon_sweep(weapon, previous, current, before, after):
+    a,b=weapon_pose(weapon,before),weapon_pose(weapon,after)
+    n=max(1,math.ceil(abs(b[0]-a[0])/5),
+          math.ceil((math.hypot(current[0]-previous[0],current[1]-previous[1])+abs(b[2]-a[2]))/4))
+    poses=[]
+    for i in range(n+1):
+        t=i/n
+        angle,inner,reach,width=weapon_pose(weapon,before+(after-before)*t)
+        poses.append(blade_outline(previous[0]+(current[0]-previous[0])*t,
+                                   previous[1]+(current[1]-previous[1])*t,angle,inner,reach,width))
+    return [convex_hull(poses[i]+poses[i+1]) for i in range(n)]
+
+
 def polygon_hits_motion(poly, start, end, radius):
     """同じ短い時間区間の弾移動も掃引し、高速な相対移動を取りこぼさない。"""
     if polygon_hits_circle(poly, *start, radius) or polygon_hits_circle(poly, *end, radius):
@@ -161,9 +197,14 @@ def polygon_hits_motion(poly, start, end, radius):
 
 
 class Game:
-    def __init__(self, course=C.DEFAULT_COURSE, section=0, seed=None):
+    def __init__(self, course=C.DEFAULT_COURSE, section=0, seed=None, weapon=C.DEFAULT_WEAPON, touch_mode=C.DEFAULT_TOUCH_MODE):
         if course not in C.COURSES:
             raise ValueError("Unknown test course: "+course)
+        if weapon not in C.WEAPONS or touch_mode not in C.TOUCH_MODES:
+            raise ValueError("Unknown weapon or touch mode")
+        self.weapon, self.touch_mode = weapon, touch_mode
+        self.lab_mode = "free"
+        self.settings_row = 0
         self.course = course
         self.seed=C.STAGE_SEED if seed is None else seed
         self.stage_data=C.COURSES["stage"] if seed is None else C.stage_course(seed)
@@ -204,6 +245,26 @@ class Game:
         self.route_complete=False
         if self.course_config["next_scene"]=="boss" and self.time>=self.duration:
             self.begin_boss()
+
+    @property
+    def weapon_config(self):
+        return C.WEAPONS[self.weapon]
+
+    def set_lab(self, mode):
+        self.lab_mode=mode
+        if mode!="free":
+            self.course="compare"
+            self.checkpoint=0
+        if mode=="input":self.weapon="blade"
+
+    def configure(self, action):
+        if action.lab:self.set_lab(("input","weapons","free")[action.lab-1])
+        if action.weapon and self.lab_mode!="input":
+            choices=tuple(C.WEAPONS)
+            self.weapon=choices[(choices.index(self.weapon)+action.weapon)%len(choices)]
+        if action.touch_mode and self.lab_mode!="weapons":
+            choices=tuple(C.TOUCH_MODES)
+            self.touch_mode=choices[(choices.index(self.touch_mode)+action.touch_mode)%len(choices)]
 
     @property
     def course_config(self):
@@ -298,7 +359,7 @@ class Game:
     def start_slash(self):
         if self.cooldown > 1e-6 or self.swing >= 0:
             return False
-        self.swing, self.cooldown = 0.0, C.BLADE_COOLDOWN
+        self.swing, self.cooldown = 0.0, self.weapon_config["cooldown"]
         self.slash_hits.clear()
         self.swing_kills = 0
         self.swing_hitstop = False
@@ -341,13 +402,40 @@ class Game:
         if action.focus_lost and self.state == "playing":
             self.state = "paused"
             return
+        if self.state == "settings":
+            if action.focus_lost:
+                self.menu_direction=self.menu_vertical=0
+                return
+            vertical=int(action.y!=0)
+            horizontal=int(action.x!=0)
+            if vertical and not self.menu_vertical:
+                self.settings_row=(self.settings_row+(1 if action.y>0 else -1))%3
+            delta=(1 if action.x>0 else -1) if horizontal and not self.menu_direction else 0
+            self.menu_vertical,self.menu_direction=vertical,horizontal
+            if delta:
+                if self.settings_row==0:action.weapon=delta
+                elif self.settings_row==1:action.touch_mode=delta
+                else:
+                    modes=("free","input","weapons")
+                    self.set_lab(modes[(modes.index(self.lab_mode)+delta)%3])
+            self.configure(action)
+            if action.settings or action.confirm or action.slash:
+                self.state="title"
+                self.menu_direction=self.menu_vertical=0
+            return
         if self.state in ("title", "gameover", "clear"):
+            self.configure(action)
+            if action.settings:
+                self.state="settings"
+                self.menu_direction=self.menu_vertical=0
+                return
             direction = int(action.x != 0)
             change_course = action.course or (direction and not self.menu_direction)
             self.menu_direction = direction
             if change_course:
                 courses = tuple(C.COURSES)
                 self.course = courses[(courses.index(self.course)+1)%len(courses)]
+                if self.course!="compare":self.lab_mode="free"
                 self.checkpoint = 0
                 self.reset()
                 self.state = "title"
@@ -616,11 +704,12 @@ class Game:
             return
         before = self.swing
         self.swing += dt
-        wind, active = C.BLADE_WINDUP, C.BLADE_ACTIVE
+        w=self.weapon_config
+        wind, active = w["windup"], w["active"]
         def angle(t):
-            return C.BLADE_START_ANGLE+(C.BLADE_END_ANGLE-C.BLADE_START_ANGLE)*max(0, min(1, (t-wind)/active))
+            return w["start_angle"]+(w["end_angle"]-w["start_angle"])*max(0, min(1, (t-wind)/active))
         if self.swing <= wind:
-            self.blade_angle = -210+45*self.swing/wind
+            self.blade_angle = weapon_pose(self.weapon,self.swing)[0]
         elif min(self.swing, wind+active)-max(before, wind) > 1e-9:
             self.blade_angle = angle(self.swing)
             t0, t1 = (max(before, wind)-before)/dt, (min(self.swing, wind+active)-before)/dt
@@ -629,7 +718,10 @@ class Game:
             def pivot(t):
                 return (previous[0]+(current[0]-previous[0])*t,
                         previous[1]+(current[1]-previous[1])*t)
-            self.slash_polys = sweep_polygons(*pivot(t1), angle(before), self.blade_angle, previous=pivot(t0))
+            if self.weapon=="blade":
+                self.slash_polys = sweep_polygons(*pivot(t1), angle(before), self.blade_angle, previous=pivot(t0))
+            else:
+                self.slash_polys = weapon_sweep(self.weapon,pivot(t0),pivot(t1),max(before,wind),min(self.swing,wind+active))
             self.blade_pivot = pivot(t1)
             n = len(self.slash_polys)
             self.slash_slices = [(poly, t0+(t1-t0)*i/n, t0+(t1-t0)*(i+1)/n)
@@ -638,10 +730,10 @@ class Game:
                 previous = (previous_enemies or {}).get(e.uid, (e.x, e.y))
                 if e.hp > 0 and e.damageable and e.uid not in self.slash_hits and self.blade_hits_motion(previous, (e.x, e.y), e.radius):
                     self.slash_hits.add(e.uid)
-                    self.damage_enemy(e, C.BLADE_DAMAGE, True)
+                    self.damage_enemy(e, w["damage"], True)
         else:
-            self.blade_angle = C.BLADE_END_ANGLE+45*min(1, (self.swing-wind-active)/C.BLADE_RECOVERY)
-        if self.swing >= wind+active+C.BLADE_RECOVERY:
+            self.blade_angle = weapon_pose(self.weapon,self.swing)[0]
+        if self.swing >= w["shot_stop"]:
             self.swing = -1
 
     def hurt(self):

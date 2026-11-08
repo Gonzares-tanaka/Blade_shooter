@@ -10,7 +10,7 @@ from build import SOURCES,RESOURCES
 folder=ROOT/'verification'/('v'+C.VERSION)
 sha=lambda data:hashlib.sha256(data).hexdigest()
 folder.mkdir(exist_ok=True)
-addition=json.loads((ROOT/'verification/v0.7.0/resource-addition.json').read_text())
+addition=json.loads((folder/'resource-addition.json').read_text())
 assert sha((ROOT/C.RESOURCE_FILE).read_bytes())==addition['after_sha256']
 assert (ROOT/C.PALETTE_FILE).read_bytes()==(ROOT/'verification/v0.3.0/before-rear/blade.pyxpal').read_bytes()
 with zipfile.ZipFile(ROOT/'dist/blade-shooter-gkd.zip') as gkd,zipfile.ZipFile(ROOT/'dist/web/blade-shooter.pyxapp') as web:
@@ -20,14 +20,15 @@ with zipfile.ZipFile(ROOT/'dist/blade-shooter-gkd.zip') as gkd,zipfile.ZipFile(R
     assert gkd.read('blade-shooter/README.txt')==(ROOT/'README.md').read_bytes()
     assert gkd.read('blade-shooter/VERIFICATION.md')==(ROOT/'VERIFICATION.md').read_bytes()
 # 0.5.0と比較。戦闘の核と素材は保持し、テンポ値の差を記録する。
-old=runpy.run_path(str(ROOT/'verification/v0.7.0/before/config.py'))
+old=runpy.run_path(str(folder/'before/config.py'))
 prefixes=('SHOT_','BLADE_','HITSTOP_','BULLET_')
 preserved=[key for key in old if key.startswith(prefixes)]
 preserved+=['PLAYER_HP','PLAYER_HIT_RADIUS','INVINCIBLE_SECONDS','SMALL_HP','ARMOR_HP','REAR_HP']
 assert all(old[key]==getattr(C,key) for key in preserved)
 for course in ('classic','rear','tempo','tempo_fast'):
     assert old['COURSES'][course]['waves']==C.COURSES[course]['waves']
-assert old['COURSES']['stage']['waves']==C.COURSES['legacy']['waves']
+assert old['COURSES']['stage']['waves']==C.COURSES['stage']['waves']
+assert old['COURSES']['stage']['duration']==C.COURSES['stage']['duration']
 changes={k:dict(before=v,after=getattr(C,k)) for k,v in old.items()
          if k.isupper() and isinstance(v,(int,float)) and hasattr(C,k) and v!=getattr(C,k)}
 result=dict(version=C.VERSION,resource_sha256=addition['after_sha256'],

@@ -5,6 +5,9 @@ import unittest
 import zipfile
 
 ROOT=Path(__file__).resolve().parents[1]
+import sys
+sys.path.insert(0,str(ROOT))
+import config as C
 
 
 class DistributionTests(unittest.TestCase):
@@ -23,7 +26,7 @@ class DistributionTests(unittest.TestCase):
 
     @unittest.skipUnless(Path('C:/Program Files/Git/bin/bash.exe').exists(),'Windows Git Bash launcher probe')
     def test_extracted_launcher_from_other_directory_with_spaces(self):
-        folder=ROOT/'verification'/'launcher probe'
+        folder=ROOT/'verification'/('v'+C.VERSION)/'launcher probe'
         folder.mkdir(exist_ok=True)
         with zipfile.ZipFile(ROOT/'dist/blade-shooter-gkd.zip') as z:
             z.extractall(folder)

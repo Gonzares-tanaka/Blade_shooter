@@ -27,7 +27,7 @@ const useWebKit=process.argv.includes('--webkit');
   await page.waitForFunction(()=>window.pyxelContext?.resolveInput,null,{timeout:60000});
   await page.locator('#pyxel-screen').tap();
   await page.waitForFunction(()=>window.bladeInput.state==='title',null,{timeout:60000});
-  const folder=path.resolve(__dirname,'../verification/v0.7.0/web-page/'+(useWebKit?'game-webkit':'game-edge'));
+  const folder=path.resolve(__dirname,'../verification/v0.8.0/'+(useWebKit?'game-webkit':'game-edge'));
   fs.mkdirSync(folder,{recursive:true});
   await page.screenshot({path:folder+'/title.png'});
   const py=code=>page.evaluate(code=>window.pyxelContext.pyodide.runPython(code),code);
@@ -42,7 +42,7 @@ const useWebKit=process.argv.includes('--webkit');
   assert(resource.rear_sounds.every(notes=>notes.length>0));
   assert.equal(await py('g.course'),'stage');
   assert.equal(await py('g.duration'),300);
-  for(const course of ['tempo','tempo_fast','boss','legacy','classic','rear','stage']) {
+  for(const course of ['compare','tempo','tempo_fast','boss','legacy','classic','rear','stage']) {
     await page.locator('#course').click();
     await page.waitForFunction(c=>window.bladeInput.course===c,course);
     if(course==='tempo_fast')assert.equal(await py('g.player_speed'),187.5);

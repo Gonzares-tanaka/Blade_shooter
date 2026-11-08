@@ -1,0 +1,16 @@
+{
+  "version": "0.8.0",
+  "python_unit_tests": 86,
+  "node_gesture_tests": 16,
+  "result": "PASS",
+  "comparison_logic": "6 settings clear at 54.000 seconds; stationary shot-only lost at 8.617",
+  "desktop": "Pyxel 2.9.9 at 60 fps, 3 weapons, 54 seconds each, wall 167.094 seconds",
+  "browser": "Edge CDP touch, keyboard, cancellation, retry, normalized scales and original double tap PASS",
+  "landing": "4 responsive widths + actual embedded game + CDN failure retry PASS",
+  "resources": "All preexisting pixels, sound/music/tilemaps and 52-color palette preserved",
+  "hardware_not_tested": [
+    "GKD Pixel 2/PlumOS",
+    "Android devices",
+    "iPhone Safari devices"
+  ]
+}

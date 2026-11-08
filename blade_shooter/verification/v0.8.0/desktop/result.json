@@ -1,0 +1,34 @@
+{
+  "fps": 60,
+  "wall_seconds": 167.09400000001187,
+  "automatic_input": true,
+  "routes": [
+    {
+      "weapon": "blade",
+      "state": "clear",
+      "time": 54.0,
+      "hp": 2,
+      "slashes": 30,
+      "kills": 29,
+      "erased": 28
+    },
+    {
+      "weapon": "axe",
+      "state": "clear",
+      "time": 54.0,
+      "hp": 3,
+      "slashes": 27,
+      "kills": 31,
+      "erased": 13
+    },
+    {
+      "weapon": "lance",
+      "state": "clear",
+      "time": 54.0,
+      "hp": 3,
+      "slashes": 27,
+      "kills": 28,
+      "erased": 11
+    }
+  ]
+}

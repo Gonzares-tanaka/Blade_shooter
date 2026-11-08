@@ -4,7 +4,7 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs'),path=require('node:path');
 (async()=>{
  const root=path.resolve(__dirname,'../dist/web');
- const folder=path.resolve(__dirname,'../verification/v0.7.0/web-page');
+ const folder=path.resolve(__dirname,'../verification/v0.8.0/landing');
  fs.mkdirSync(folder,{recursive:true});
  const files=new Map();
  function collect(dir){for(const e of fs.readdirSync(dir,{withFileTypes:true})){

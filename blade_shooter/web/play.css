@@ -27,3 +27,17 @@ footer { flex:0 0 auto; color:#7d9297; text-align:center; font-size:9px; line-he
 #retry-load { color:#071410; background:#67f0d1; border:0; padding:10px 20px; }
 @media (max-width:380px) { main { padding-inline:8px; gap:5px; } header { font-size:9px; gap:8px; } header b { display:none; } #course,#section { font-size:8px; } }
 @media (max-height:560px) { main { padding-block:3px; gap:3px; } header { flex-basis:33px; } #start { min-height:30px; } #course,#section { min-height:30px; padding-block:3px; } #status { min-height:17px; font-size:9px; padding:0; } footer { font-size:8px; line-height:13px; gap:1px 10px; } #fullscreen { min-height:21px; } }
+
+nav { flex-wrap:wrap; }
+#settings { flex-basis:100%; min-height:32px; color:#c0dfff; background:#14232b; border:1px solid #304952; border-radius:4px; font-size:10px; }
+#settings:disabled { opacity:.5; }
+#settings-panel { position:absolute; z-index:8; inset:145px 12px 45px; overflow:auto; overscroll-behavior:contain; padding:18px; border:1px solid #67f0d1; background:#0d191f; box-shadow:0 12px 35px #000a; font-size:11px; line-height:1.8; }
+#settings-panel h1 { font-size:17px; margin:0 0 14px; color:#67f0d1; }
+#settings-panel p { color:#b3c4c5; margin:10px 0 16px; }
+#settings-panel button { min-height:42px; padding:8px; border:1px solid #35555c; border-radius:4px; color:#dce7e7; background:#192e36; }
+#settings-panel button:disabled { color:#8ca49d; border-style:dashed; }
+#settings-panel>button { width:100%; text-align:left; }
+.lab-tabs { display:flex; gap:5px; }
+.lab-tabs button { flex:1; font-size:10px; }
+#settings-panel [aria-pressed="true"] { background:#234e43; color:#91ffdb; border-color:#67f0d1; }
+@media (max-height:560px) { #settings-panel { inset:113px 8px 22px; padding:12px; } #settings { min-height:27px; } }

@@ -1,0 +1,46 @@
+{
+  "runtime": "Pyxel 2.9.9",
+  "browser": "157.0.4341.42",
+  "results": [
+    {
+      "actualCDPFlick": "PASS",
+      "directions": 4,
+      "immediate": true,
+      "noJump": true,
+      "onePerGesture": true
+    },
+    {
+      "failedFlickNoAttack": true,
+      "heldFingerResumes": true,
+      "resumeDelta": 7.800000000000011
+    },
+    {
+      "pointerCancel": true,
+      "blur": true,
+      "pagehide": true,
+      "visibilityHidden": true
+    },
+    {
+      "keyboardSettings": true,
+      "keyboardAttack": true,
+      "keyboardMovement": true,
+      "retryRetains": true,
+      "locksIndependent": true
+    },
+    {
+      "width": 320,
+      "scale": 1.05621337890625,
+      "normalizedFlick": true
+    },
+    {
+      "width": 768,
+      "scale": 2.51873779296875,
+      "normalizedFlick": true
+    },
+    {
+      "originalDoubleTap": true
+    }
+  ],
+  "errors": [],
+  "result": "PASS"
+}

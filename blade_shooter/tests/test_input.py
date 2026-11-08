@@ -29,7 +29,7 @@ class InputTests(unittest.TestCase):
         self.assertFalse(i.read().slash)
 
     def test_select_exits_all_states_including_hitstop(self):
-        for state in ('title','playing','paused','gameover','clear'):
+        for state in ('title','settings','playing','paused','gameover','clear'):
             app=App.__new__(App)
             p=FakePyxel();p.held={p.GAMEPAD1_BUTTON_BACK};p.edges=set(p.held)
             app.p,app.input,app.game=p,Input(p,'gkd'),Game()
@@ -62,6 +62,26 @@ class InputTests(unittest.TestCase):
         i.bridge.sectionSerial+=1
         self.assertEqual(i.read().section,1)
         self.assertEqual(i.read().section,0)
+
+    def test_settings_transition_releases_held_physical_direction(self):
+        app=App.__new__(App);p=FakePyxel();app.p=p;app.input=Input(p,'gkd');app.game=Game()
+        app.audio=SimpleNamespace(update=lambda game:None)
+        p.held={p.GAMEPAD1_BUTTON_B,p.GAMEPAD1_BUTTON_DPAD_RIGHT};p.edges=set(p.held)
+        app.update();self.assertEqual(app.game.state,'settings')
+        p.edges.clear();app.update();self.assertEqual(app.game.weapon,'blade')
+        p.held.clear();app.update()
+        p.held={p.GAMEPAD1_BUTTON_DPAD_RIGHT};p.edges=set(p.held);app.update()
+        self.assertEqual(app.game.weapon,'axe')
+
+    def test_reset_discards_only_attack_queued_before_reset(self):
+        p=FakePyxel();i=Input(p,'web')
+        i.bridge=SimpleNamespace(slashSerial=1,cancelSlashSerial=1,inputResetSerial=1,
+                                 dragX=0,dragY=0,suspended=False)
+        self.assertFalse(i.read().slash)
+        # A fresh press after the reset must not be swallowed by its next frame.
+        p.held={p.KEY_RIGHT};p.edges=set(p.held)
+        i.bridge.inputResetSerial+=1;i.bridge.slashSerial=2
+        a=i.read();self.assertTrue(a.slash);self.assertEqual(a.x,1)
 
 
 if __name__=='__main__': unittest.main()

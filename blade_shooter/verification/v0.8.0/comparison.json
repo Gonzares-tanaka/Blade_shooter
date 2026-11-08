@@ -1,0 +1,140 @@
+[
+  {
+    "weapon": "blade",
+    "touch_mode": "double_tap",
+    "stationary": false,
+    "state": "clear",
+    "time": 54.0,
+    "hp": 2,
+    "melee": 30,
+    "kills": 29,
+    "erased": 28,
+    "movement_frames": 1829,
+    "bullets_near_frames": 527,
+    "two_types_seconds": 18.12,
+    "peak_types": 3,
+    "types": [
+      "armor",
+      "charger",
+      "small"
+    ]
+  },
+  {
+    "weapon": "blade",
+    "touch_mode": "tap_flick",
+    "stationary": false,
+    "state": "clear",
+    "time": 54.0,
+    "hp": 2,
+    "melee": 30,
+    "kills": 29,
+    "erased": 28,
+    "movement_frames": 1829,
+    "bullets_near_frames": 527,
+    "two_types_seconds": 18.12,
+    "peak_types": 3,
+    "types": [
+      "armor",
+      "charger",
+      "small"
+    ]
+  },
+  {
+    "weapon": "axe",
+    "touch_mode": "double_tap",
+    "stationary": false,
+    "state": "clear",
+    "time": 54.0,
+    "hp": 3,
+    "melee": 27,
+    "kills": 31,
+    "erased": 13,
+    "movement_frames": 1879,
+    "bullets_near_frames": 527,
+    "two_types_seconds": 10.42,
+    "peak_types": 3,
+    "types": [
+      "armor",
+      "charger",
+      "small"
+    ]
+  },
+  {
+    "weapon": "axe",
+    "touch_mode": "tap_flick",
+    "stationary": false,
+    "state": "clear",
+    "time": 54.0,
+    "hp": 3,
+    "melee": 27,
+    "kills": 31,
+    "erased": 13,
+    "movement_frames": 1879,
+    "bullets_near_frames": 527,
+    "two_types_seconds": 10.42,
+    "peak_types": 3,
+    "types": [
+      "armor",
+      "charger",
+      "small"
+    ]
+  },
+  {
+    "weapon": "lance",
+    "touch_mode": "double_tap",
+    "stationary": false,
+    "state": "clear",
+    "time": 54.0,
+    "hp": 3,
+    "melee": 27,
+    "kills": 28,
+    "erased": 11,
+    "movement_frames": 2016,
+    "bullets_near_frames": 730,
+    "two_types_seconds": 18.87,
+    "peak_types": 3,
+    "types": [
+      "armor",
+      "charger",
+      "small"
+    ]
+  },
+  {
+    "weapon": "lance",
+    "touch_mode": "tap_flick",
+    "stationary": false,
+    "state": "clear",
+    "time": 54.0,
+    "hp": 3,
+    "melee": 27,
+    "kills": 28,
+    "erased": 11,
+    "movement_frames": 2016,
+    "bullets_near_frames": 730,
+    "two_types_seconds": 18.87,
+    "peak_types": 3,
+    "types": [
+      "armor",
+      "charger",
+      "small"
+    ]
+  },
+  {
+    "weapon": "blade",
+    "touch_mode": "double_tap",
+    "stationary": true,
+    "state": "gameover",
+    "time": 8.617,
+    "hp": 0,
+    "melee": 0,
+    "kills": 0,
+    "erased": 0,
+    "movement_frames": 0,
+    "bullets_near_frames": 75,
+    "two_types_seconds": 0.0,
+    "peak_types": 1,
+    "types": [
+      "small"
+    ]
+  }
+]

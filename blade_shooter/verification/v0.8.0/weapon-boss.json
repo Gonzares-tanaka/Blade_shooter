@@ -1,0 +1,38 @@
+[
+  {
+    "weapon": "blade",
+    "state": "clear",
+    "time": 37.48333333333249,
+    "hp": 3,
+    "parts": [
+      "center",
+      "left",
+      "right"
+    ],
+    "erased": 41
+  },
+  {
+    "weapon": "axe",
+    "state": "clear",
+    "time": 26.71666666666643,
+    "hp": 3,
+    "parts": [
+      "center",
+      "left",
+      "right"
+    ],
+    "erased": 2
+  },
+  {
+    "weapon": "lance",
+    "state": "clear",
+    "time": 36.249999999999226,
+    "hp": 3,
+    "parts": [
+      "center",
+      "left",
+      "right"
+    ],
+    "erased": 22
+  }
+]

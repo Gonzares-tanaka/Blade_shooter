@@ -2,3 +2,5 @@
 **/.venv/
 **/*.pyc
 **/*launch.log
+
+blade_shooter/verification/v*/launcher probe/

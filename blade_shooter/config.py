@@ -1,16 +1,33 @@
 """調整箇所。時間=秒、距離=ゲーム内px、速度=px/秒。変更後build.pyで配布版更新。"""
-TITLE, VERSION = "BLADE / CLOSE QUARTERS", "0.7.0"
+TITLE, VERSION = "BLADE / CLOSE QUARTERS", "0.8.0"
 WIDTH, HEIGHT, HUD_HEIGHT, FPS = 256, 320, 24, 60
 PLAYER_SIZE, PLAYER_HIT_RADIUS = 16, 2.0
 PLAYER_SPEED, PLAYER_HP, INVINCIBLE_SECONDS = 125.0, 3, 1.2
 PLAYER_SPEED_PRESETS = {"tempo": 1.3, "tempo_fast": 1.5}
 SHOT_INTERVAL, SHOT_SPEED, SHOT_DAMAGE = 0.14, 300.0, 1
-BLADE_REACH, BLADE_INNER, BLADE_WIDTH = 60.0, 30.0, 4.0
-BLADE_DAMAGE, BLADE_COOLDOWN = 40, 1.0
-# ショットはこの3区間すべてで停止。攻撃・弾消しはACTIVEだけ。
-# RECOVERYは移動できる振り終わり。追加延長は実測して必要な場合だけ行う。
-BLADE_WINDUP, BLADE_ACTIVE, BLADE_RECOVERY = 0.07, 0.10, 0.24
-BLADE_START_ANGLE, BLADE_END_ANGLE = -165.0, -15.0
+# 武器の唯一の調整表。距離=ゲームpx、角度=右0/上-90、時間=秒。
+# cooldownは攻撃入力が受理された時点から。shot_stopは3フェーズの合計で自動算出。
+# 攻撃/弾消しはactiveのみ。near〜reachの実体だけを掃引し、柄と残像は無判定。
+WEAPONS = {
+    "blade": dict(label="BLADE", damage=40, reach=60.0, inner=30.0, width=4.0,
+                  windup=0.07, active=0.10, recovery=0.24, cooldown=1.0,
+                  start_angle=-165.0, end_angle=-15.0),
+    "axe": dict(label="AXE", damage=80, reach=44.0, inner=30.0, width=14.0,
+                windup=0.035, active=0.12, recovery=0.50, cooldown=1.20,
+                start_angle=-145.0, end_angle=-35.0),
+    "lance": dict(label="LANCE", damage=32, reach=94.0, inner=66.0, width=5.0,
+                  windup=0.055, active=0.16, recovery=0.20, cooldown=0.82,
+                  start_angle=-90.0, end_angle=-90.0),
+}
+for _weapon in WEAPONS.values():
+    _weapon["shot_stop"] = _weapon["windup"]+_weapon["active"]+_weapon["recovery"]
+# 従来のブレイド参照APIを維持。値は上の表から導出する。
+BLADE_REACH, BLADE_INNER, BLADE_WIDTH = (WEAPONS["blade"][k] for k in ("reach","inner","width"))
+BLADE_DAMAGE, BLADE_COOLDOWN = (WEAPONS["blade"][k] for k in ("damage","cooldown"))
+BLADE_WINDUP, BLADE_ACTIVE, BLADE_RECOVERY = (WEAPONS["blade"][k] for k in ("windup","active","recovery"))
+BLADE_START_ANGLE, BLADE_END_ANGLE = (WEAPONS["blade"][k] for k in ("start_angle","end_angle"))
+TOUCH_MODES = {"double_tap": "DOUBLE TAP", "tap_flick": "TAP > FLICK"}
+DEFAULT_WEAPON, DEFAULT_TOUCH_MODE = "blade", "double_tap"
 HITSTOP_SECONDS, SHAKE_SECONDS, SHAKE_PIXELS = 0.05, 0.16, 1.5
 SMALL_HP, SMALL_RADIUS, SMALL_SPEED = 2, 8.0, 72.0
 ARMOR_HP, ARMOR_RADIUS = 32, 15.0
@@ -240,9 +257,31 @@ BOSS_PARTS = {
                    volleys=(0.0,0.30,0.60),angles=(66,72,78,84,90,96,102,108,114),speed=106.0),
 }
 
+# 武器/操作比較用。乱数を使わず、毎回同じ54秒・同じ条件。
+COMPARE_PLAN = (
+    section("formation",9,"01 / ALIGN & SWEEP","BLADE FIRST / COMPARE INPUT",(
+        (0.8,"formation",128,"line"),(3.6,"formation",60,"diagonal_l"),
+        (6.0,"formation",286,"side_r"))),
+    section("armor",9,"02 / ARMORED OPENING","WAIT FOR OPEN / STEP IN",(
+        (0.2,"armor",176,"hold"),(1.6,"formation",72,"line"),
+        (4.8,"armor",80,"hold"),(6.4,"formation",184,"diagonal_r"))),
+    section("charger",9,"03 / INTERCEPT","READ LOCK / CUT OR DODGE",(
+        (0.4,"charger",64,"lock"),(2.0,"formation",184,"line"),
+        (4.4,"charger",192,"lock"),(6.6,"formation",56,"diagonal_l"))),
+    section("barrage",9,"04 / CUT A CORRIDOR","NARROW THRUST / WIDE SWEEP",(
+        (0.2,"armor",72,"barrage"),(1.6,"formation",184,"line"),
+        (4.8,"armor",184,"barrage"),(6.3,"formation",72,"line"))),
+    section("mix",9,"05 / CHOOSE TARGETS","TWO TYPES / OFFSET FIRE",(
+        (0.2,"armor",176,"hold"),(1.5,"formation",64,"diagonal_l"),
+        (4.6,"charger",56,"lock"),(5.8,"formation",184,"line"))),
+    section("mix",9,"06 / THREE-WAY PASS","RETRY SAME CONDITIONS",(
+        (0.2,"armor",72,"barrage"),(1.4,"formation",184,"line"),
+        (3.0,"charger",208,"lock"),(5.6,"formation",56,"diagonal_l"))),
+)
 DEFAULT_COURSE = "stage"
 COURSES = {
     "stage":stage_course(),
+    "compare":compile_course("WEAPON / INPUT LAB", "54秒 / 武器・操作比較", COMPARE_PLAN),
     "tempo":compile_course("DENSITY TEST / 1.3X", "30秒混成 / 速度1.3倍", TEMPO_PLAN),
     "tempo_fast":compile_course("DENSITY TEST / 1.5X", "30秒混成 / 速度1.5倍", TEMPO_PLAN),
     "boss":dict(label="DREADNOUGHT / PRACTICE",menu_label="巨大戦艦 / 単体確認",duration=0,
@@ -259,18 +298,25 @@ KEYBOARD_INPUTS = {
     "left": ("KEY_LEFT",), "right": ("KEY_RIGHT",),
     "up": ("KEY_UP",), "down": ("KEY_DOWN",),
     "slash": ("KEY_Z",), "confirm": ("KEY_RETURN",),
-    "pause": ("KEY_P",), "quit": ("KEY_ESCAPE",),
+    "settings": ("KEY_X",), "pause": ("KEY_P",), "quit": ("KEY_ESCAPE",),
 }
 GKD_INPUTS = {
     "left": ("GAMEPAD1_BUTTON_DPAD_LEFT",), "right": ("GAMEPAD1_BUTTON_DPAD_RIGHT",),
     "up": ("GAMEPAD1_BUTTON_DPAD_UP",), "down": ("GAMEPAD1_BUTTON_DPAD_DOWN",),
     "slash": ("GAMEPAD1_BUTTON_A",), "confirm": ("GAMEPAD1_BUTTON_START",),
-    "pause": ("GAMEPAD1_BUTTON_START",), "quit": ("GAMEPAD1_BUTTON_BACK",),
+    "settings": ("GAMEPAD1_BUTTON_B",), "pause": ("GAMEPAD1_BUTTON_START",), "quit": ("GAMEPAD1_BUTTON_BACK",),
 }
 WEB_TOUCH = {
     "drag_gain": 1.2, "tap_max_movement_px": 10.0, "tap_max_duration_ms": 220.0,
     "double_tap_min_interval_ms": 40.0, "double_tap_max_interval_ms": 300.0,
     "double_tap_max_distance_px": 32.0,
+    # 全判定距離は256x320ゲーム座標へ正規化。CSS拡大率・devicePixelRatioに非依存。
+    # tap_flick_intervalは最初の指を離してから2回目の接触まで。
+    "tap_flick_min_interval_ms": 40.0, "tap_flick_max_interval_ms": 300.0,
+    "tap_flick_max_distance_px": 48.0,
+    "flick_distance_px": 18.0, "flick_min_speed_px_ms": 0.18,
+    "flick_timeout_ms": 180.0,
+
 }
 # 子機版の52色パレットを共用（インデックスは維持）。
 PALETTE = [

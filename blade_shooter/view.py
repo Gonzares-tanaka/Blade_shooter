@@ -1,7 +1,7 @@
 """画像はpyxres。軌跡・予告線・文字など動的な部分だけ図形描画。"""
 import math
 import config as C
-from game import point_at, blade_outline
+from game import point_at, weapon_pose
 from assets import SPRITES, sprite
 
 
@@ -118,7 +118,7 @@ class View:
         p.text(8, 4, "HULL", 2)
         for i in range(C.PLAYER_HP):
             p.rect(30+i*9, 4, 6, 7, 6 if i < g.hp else 1)
-        p.text(83, 5, "BLADE" if g.cooldown <= 0 else "WAIT", 6 if g.cooldown <= 0 else 2)
+        p.text(83, 5, g.weapon_config["label"] if g.cooldown <= 0 else "WAIT", 6 if g.cooldown <= 0 else 2)
         p.text(122, 5, f"{g.player_speed/C.PLAYER_SPEED:.1f}X", 39)
         seconds=max(0,int(g.time))
         p.text(177, 5, f"{seconds//60:02d}:{seconds%60:02d}" if g.course in ("stage","boss")
@@ -133,24 +133,39 @@ class View:
             if not g.enemies and not g.bullets and not g.boss:
                 self.center(54,"GET READY" if g.time<section[0]+3 else "BREATHER / REPOSITION",33)
         if g.state == "title":
-            self.panel(85, 161)
-            self.center(101, "B L A D E", 6)
-            self.center(119, g.course_config["label"], 40)
-            self.center(130,"5 MIN + BOSS" if g.course=="stage" else "3 TARGETS / ANY ORDER" if g.course=="boss"
-                        else f"{int(g.duration)} SEC",39)
-            self.center(141, "READ THE OPENING.", 3)
-            self.center(153, "MOVE CLOSE. CUT ONCE.", 3)
-            self.center(173, "LEFT/RIGHT: COURSE", 2)
-            self.center(185, "UP/DOWN: START SECTION", 2)
-            self.center(199, "FROM: "+g.course_config["sections"][g.checkpoint][1], 39)
-            if g.course=="stage":self.center(210,f"SEED {g.seed}",2)
-            hint = "A / START: BEGIN" if self.profile == "gkd" else "ENTER / Z: BEGIN"
-            self.center(222, hint, 6)
+            self.panel(78, 202)
+            self.center(91, "B L A D E", 6)
+            self.center(108, g.course_config["label"], 40)
+            self.center(120,"5 MIN + BOSS" if g.course=="stage" else "3 TARGETS / ANY ORDER" if g.course=="boss"
+                        else f"{int(g.duration)} SEC / FIXED WAVES",39)
+            self.center(140,"WEAPON: "+g.weapon_config["label"],6)
+            self.center(152,"TOUCH: "+C.TOUCH_MODES[g.touch_mode],39)
+            self.center(164,"LAB: "+g.lab_mode.upper(),2)
+            self.center(184,"B: SETUP" if self.profile=="gkd" else "X: SETUP",6)
+            self.center(198,"LEFT/RIGHT: COURSE",2)
+            self.center(210,"UP/DOWN: START SECTION",2)
+            self.center(225,"FROM: "+g.course_config["sections"][g.checkpoint][1],39)
+            hint="A / START: BEGIN" if self.profile=="gkd" else "ENTER / Z: BEGIN"
+            self.center(247,hint,6)
+            if g.course=="compare":self.center(262,"INPUT FIRST / THEN WEAPONS",2)
+        elif g.state == "settings":
+            self.panel(78, 202)
+            self.center(93,"PRE-FLIGHT SETUP",6)
+            rows=("WEAPON: "+g.weapon_config["label"]+(" [FIXED]" if g.lab_mode=="input" else ""),
+                  "TOUCH: "+C.TOUCH_MODES[g.touch_mode]+(" [FIXED]" if g.lab_mode=="weapons" else ""),
+                  "COMPARE: "+g.lab_mode.upper())
+            for i,text in enumerate(rows):
+                self.center(125+i*25,("> " if i==g.settings_row else "  ")+text,6 if i==g.settings_row else 2)
+            self.center(207,"UP/DOWN: ROW  LEFT/RIGHT: VALUE",2)
+            self.center(223,"INPUT: BLADE FIXED / 54 SEC",39)
+            self.center(235,"WEAPONS: TOUCH FIXED / 54 SEC",39)
+            self.center(257,"A / START / B: BACK" if self.profile=="gkd" else "Z / ENTER / X: BACK",6)
         elif g.state in ("gameover", "clear", "paused"):
             self.panel(116, 100)
             self.center(137, {"clear":"DREADNOUGHT SUNK" if g.boss else f"SURVIVED / {int(g.duration)} SEC", "gameover":"HULL LOST", "paused":"PAUSED"}[g.state],
                         6 if g.state == "clear" else 3)
-            self.center(160, "READ. APPROACH. CUT.", 2)
+            self.center(160, g.weapon_config["label"]+" / "+C.TOUCH_MODES[g.touch_mode], 2)
+            if g.state!="paused":self.center(176,"B: SETUP" if self.profile=="gkd" else "X: SETUP",39)
             hint = "START / A: RETRY" if self.profile == "gkd" else "ENTER / Z: RETRY"
             if g.state == "paused":
                 hint = "START: RESUME" if self.profile == "gkd" else "P / ENTER: RESUME"
@@ -205,13 +220,19 @@ class View:
             color = 6 if g.cooldown <= 0 else 1
         else:
             elbow = point_at(*pivot, 8, g.blade_angle-24)
-            hand = point_at(*pivot, C.BLADE_INNER, g.blade_angle)
-            tip = point_at(*pivot, C.BLADE_REACH, g.blade_angle)
+            pose_time=min(g.swing,g.weapon_config["windup"]+g.weapon_config["active"]) if g.slash_polys else g.swing
+            angle,inner,reach,width=weapon_pose(g.weapon,pose_time)
+            hand = point_at(*pivot, inner, angle)
+            tip = point_at(*pivot, reach, angle)
             color = 3 if g.slash_polys else 33
         self.textured_segment("arm",(x+5,y-1),elbow,3)
         self.textured_segment("arm",elbow,hand,3)
         sprite(p,"joint",*elbow)
-        self.textured_segment("blade",hand,tip,C.BLADE_WIDTH,dim=not bool(g.slash_polys))
+        if g.weapon!="blade":
+            # 柄は装飾。アックスの刃/ランスの穂先だけが実体ポリゴンに一致。
+            self.textured_segment("arm",elbow,hand,2)
+        width=g.weapon_config["width"] if g.swing>=0 else min(7,g.weapon_config["width"])
+        self.textured_segment(g.weapon,hand,tip,width,dim=not bool(g.slash_polys))
         sprite(p,"joint",*hand)
         p.pset(x, y, 3)
 

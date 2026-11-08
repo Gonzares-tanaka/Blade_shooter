@@ -1,5 +1,5 @@
 # title: Blade Close Quarters
-# version: 0.7.0
+# version: 0.8.0
 """PC / GKD / Web共通入口。SELECTは状態・ヒットストップより先に処理。"""
 import sys
 import config as C
@@ -16,7 +16,7 @@ class Input:
         self.keys = {name: tuple(getattr(p, k) if isinstance(k, str) else k for k in keys)
                      for name, keys in mapping.items()}
         self.bridge = None
-        self.serials = {"slash": 0, "confirm": 0, "pause": 0, "focus": 0, "course": 0, "section": 0}
+        self.serials = {"slash": 0, "confirm": 0, "pause": 0, "focus": 0, "course": 0, "section": 0, "settings": 0, "weapon": 0, "touchMode": 0, "lab": 0, "inputReset": 0}
         self.blocked = set()
         if sys.platform == "emscripten":
             from js import window
@@ -36,6 +36,9 @@ class Input:
             lost = "focus" in pulses
             if lost:
                 self.blocked.update(held)
+            if ("inputReset" in pulses and
+                    int(getattr(b,"slashSerial",0)) == int(getattr(b,"cancelSlashSerial",0))):
+                pulses.discard("slash")
             dx, dy = float(b.dragX), float(b.dragY)
             b.dragX = b.dragY = 0
             if bool(b.suspended):
@@ -49,7 +52,10 @@ class Input:
         return Actions(x=int(down("right"))-int(down("left")),
                        y=int(down("down"))-int(down("up")), drag_x=dx, drag_y=dy,
                        slash=pressed("slash"), confirm=pressed("confirm"), pause=pressed("pause"),
-                       focus_lost=lost, quit=pressed("quit"), course="course" in pulses,section=int("section" in pulses))
+                       focus_lost=lost, quit=pressed("quit"), course="course" in pulses,section=int("section" in pulses),
+                       settings=pressed("settings"),weapon=int("weapon" in pulses),
+                       touch_mode=int("touchMode" in pulses),
+                       lab=int(getattr(self.bridge,"labValue",3)) if "lab" in pulses else 0)
 
 
 class App:
@@ -63,6 +69,12 @@ class App:
         if C.FULLSCREEN:
             pyxel.fullscreen(True)
         self.game, self.input, self.view = Game(course,section,self.seed_option(sys.argv[1:])), Input(pyxel, self.profile), View(pyxel, self.profile)
+        for flag,attribute in (("--weapon","weapon"),("--touch-mode","touch_mode")):
+            if flag in sys.argv:
+                value=sys.argv[sys.argv.index(flag)+1]
+                choices=C.WEAPONS if attribute=="weapon" else C.TOUCH_MODES
+                if value not in choices:raise ValueError("Unknown "+flag)
+                setattr(self.game,attribute,value)
         self.audio = Audio(pyxel)
         pyxel.run(self.update, self.draw)
 
@@ -89,9 +101,16 @@ class App:
         if action.quit:
             self.p.quit()
             return
+        previous_state=self.game.state
         self.game.step(1/C.FPS, action)
+        if previous_state!=self.game.state and "settings" in (previous_state,self.game.state):
+            # 設定への出入りで物理キーの保持も持ち越さず、離してから再入力する。
+            self.input.blocked.update(k for keys in self.input.keys.values() for k in keys if self.p.btn(k))
         if self.input.bridge is not None:
             self.input.bridge.state = self.game.state
+            self.input.bridge.weapon = self.game.weapon
+            self.input.bridge.touchMode = self.game.touch_mode
+            self.input.bridge.labMode = self.game.lab_mode
             self.input.bridge.course = self.game.course
             self.input.bridge.courseLabel = self.game.course_config["menu_label"]
             self.input.bridge.sectionLabel = ("最初から" if self.game.checkpoint==0 else
