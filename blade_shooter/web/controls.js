@@ -83,7 +83,13 @@ window.bladeInput = {
   });
 
   for (const [property, read, write] of [
-    ["weapon",()=>weaponName,value=>{weaponName=value;gestures.setWeapon(value);clearTouch();}],
+    ["weapon",()=>weaponName,value=>{
+      weaponName=value;
+      if(state==="playing") {
+        gestures.setWeapon(value,true);
+        bridge.cancelSlashSerial=bridge.slashSerial;bridge.inputResetSerial++;
+      } else {gestures.setWeapon(value);clearTouch();}
+    }],
     ["labMode",()=>labMode,value=>{labMode=value;}],
   ]) Object.defineProperty(bridge,property,{get:read,set:value=>{
     if(read()!==value){write(value);updateLabels();}

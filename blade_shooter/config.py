@@ -1,5 +1,5 @@
 """調整箇所。時間=秒、距離=ゲーム内px、速度=px/秒。変更後build.pyで配布版更新。"""
-TITLE, VERSION = "BLADE / CLOSE QUARTERS", "0.10.0"
+TITLE, VERSION = "BLADE / CLOSE QUARTERS", "0.11.0"
 WIDTH, HEIGHT, HUD_HEIGHT, FPS = 256, 320, 24, 60
 PLAYER_SIZE, PLAYER_HIT_RADIUS = 16, 2.0
 PLAYER_SPEED, PLAYER_HP, INVINCIBLE_SECONDS = 125.0, 3, 1.2
@@ -28,6 +28,18 @@ BLADE_WINDUP, BLADE_ACTIVE, BLADE_RECOVERY = (WEAPONS["blade"][k] for k in ("win
 BLADE_START_ANGLE, BLADE_END_ANGLE = (WEAPONS["blade"][k] for k in ("start_angle","end_angle"))
 TOUCH_MODES = {"flick": "FLICK"}
 DEFAULT_WEAPON, DEFAULT_TOUCH_MODE = "blade", "flick"
+# エリア報酬の唯一の調整表。時間=秒、位置/距離=ゲームpx、速度=px/秒。
+# stageのplanの各lengthの累積時刻に1個。比較コースの固定条件は変えない。
+AREA_ITEM = dict(
+    courses=("stage",), kinds=("heal", "blade", "axe", "lance"),
+    positions=((64.0, 200.0), (192.0, 200.0), (128.0, 176.0),
+               (48.0, 248.0), (208.0, 248.0)),
+    player_clearance=64.0, enemy_clearance=30.0, bullet_clearance=24.0,
+    settle_seconds=0.5, max_delay=2.0,
+    switch_seconds=0.8, warning_seconds=0.16, blink_seconds=0.05,
+    stay_seconds=8.0, drift_speed=4.0, exit_speed=96.0,
+    pickup_radius=10.0, notice_seconds=1.25,
+)
 HITSTOP_SECONDS, SHAKE_SECONDS, SHAKE_PIXELS = 0.05, 0.16, 1.5
 SMALL_HP, SMALL_RADIUS, SMALL_SPEED = 2, 8.0, 72.0
 ARMOR_HP, ARMOR_RADIUS = 32, 15.0

@@ -32,7 +32,7 @@ def capture(key):
 def tick():
     global frames
     frames+=1;app.update();g=app.game
-    for moment in (4,44,84,124,164,214,264,299.9,300,302,305,308,312,320):
+    for moment in (4,40.6,44,80.6,84,120.6,124,160.6,164,210.6,214,264,299.9,300,302,305,308,312,320):
         if g.time>=moment:capture(str(moment))
     if g.boss:
         for p in g.boss.parts:
@@ -45,10 +45,11 @@ def tick():
                     automatic_input=True,state=g.state,time=g.time,hp=g.hp,boss_spawn=g.boss_spawned_at,
                     first_boss_fire=g.boss.first_fire_time if g.boss else None,
                     order=g.boss.destroyed_order if g.boss else [],blade=g.blade_kills_by_kind,
-                    cleared=g.cleared_bullets)
+                    cleared=g.cleared_bullets,items=g.items.history,weapon=g.weapon)
         (FOLDER/'result.json').write_text(json.dumps(result,indent=2))
         print('DESKTOP_STAGE',json.dumps(result),flush=True)
         assert g.state=='clear' and g.boss_spawned_at==300
+        assert [h['area'] for h in g.items.history if h['event']=='spawn']==[1,2,3,4,5,6]
         pyxel.quit()
     if frames>480*C.FPS:raise AssertionError('stage timeout')
 

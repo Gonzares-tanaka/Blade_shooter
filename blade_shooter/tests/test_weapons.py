@@ -79,15 +79,15 @@ class WeaponTests(unittest.TestCase):
         from assets import SPRITES
         self.assertEqual(SPRITES['lance'],(208,0,28,16))
 
-    def test_all_gameplay_configuration_and_resources_unchanged(self):
+    def test_existing_gameplay_configuration_unchanged(self):
         import runpy
         root=Path(__file__).resolve().parents[1]
-        old=runpy.run_path(str(root/'verification/v0.10.0/before/config.py'))
+        old=runpy.run_path(str(root/'verification/v0.11.0/before/config.py'))
         for key,value in old.items():
             if key in ('VERSION','WEB_TOUCH') or not key.isupper():continue
             self.assertEqual(getattr(C,key),value,key)
-        for name in ('assets/blade.pyxres','assets/blade.pyxpal'):
-            self.assertEqual((root/name).read_bytes(),(root/'verification/v0.10.0/before'/name).read_bytes())
+        name='assets/blade.pyxpal'
+        self.assertEqual((root/name).read_bytes(),(root/'verification/v0.11.0/before'/name).read_bytes())
 
     def test_settings_physical_rows_locks_and_retry(self):
         g=Game('compare');g.step(.01,Actions(settings=True));self.assertEqual(g.state,'settings')

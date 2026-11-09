@@ -3,7 +3,8 @@ const {chromium,webkit,devices}=require('playwright');
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const safari=process.argv.includes('--webkit'),stub=process.argv.includes('--controls-only');
 (async()=>{
- const root=path.resolve(__dirname,'../dist/web'),folder=path.resolve(__dirname,'../verification/v0.10.0/'+(safari?'webkit':'edge')+(stub?'-controls':''));fs.mkdirSync(folder,{recursive:true});
+ const version=JSON.parse(fs.readFileSync(path.resolve(__dirname,'../dist/manifest.json'),'utf8')).version;
+ const root=path.resolve(__dirname,'../dist/web'),folder=path.resolve(__dirname,'../verification/v'+version+'/'+(safari?'webkit':'edge')+(stub?'-controls':''));fs.mkdirSync(folder,{recursive:true});
  const server=require('node:http').createServer((req,res)=>{const file=path.resolve(root,new URL(req.url,'http://localhost').pathname.slice(1)||'index.html');
   if(!file.startsWith(root+path.sep)||!fs.existsSync(file)){res.writeHead(404);res.end();return;}
   res.writeHead(200,{'Content-Type':{'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.png':'image/png','.svg':'image/svg+xml'}[path.extname(file)]||'application/octet-stream'});res.end(fs.readFileSync(file));});
@@ -82,6 +83,19 @@ const safari=process.argv.includes('--webkit'),stub=process.argv.includes('--con
    await clearContacts();results.push({weapon,rightFirst:true,rightOnlyNoJump:true,leftFastNeverAttacks:true,simultaneousMoveAndAttack:true,eitherReleaseOrder:true,cooldownNotQueued:true});
   }
   // 担当固定・余分な指・自動引継ぎなしを実イベントで確認。
+  if(!stub){
+   await choose('blade');await pointer('down',1,64,245);await pointer('down',2,200,245);const owners=await snap();
+   await pointer('move',2,207,245);
+   await py('from items import AreaItem\ng.items.current=AreaItem(0,g.px,g.py,"lance")');
+   await page.waitForFunction(()=>window.bladeInput.weapon==='lance');
+   let before=await snap();assert.equal(before.move,owners.move);assert.equal(before.attack,owners.attack);
+   await pointer('move',1,72,245);await wait(60);let after=await snap();assert(displaced(before,after)>5);assert.equal(after.serial,before.serial);
+   await ready();await pointer('move',2,207,270);await wait(60);after=await snap();assert.equal(after.serial,before.serial+1);
+   assert.equal(await py('g.swing_weapon'),'lance');await clearContacts();
+   await py('g.hp=1\ng.items.current=AreaItem(0,g.px,g.py,"heal")');await wait(70);assert.equal(await py('g.hp'),2);
+   assert.equal(await py('g.items.notice'),'HP +1');
+   results.push({livePickupKeepsBothTouchRoles:true,newFlickAxisAfterPickup:true,healPickupApplied:true});
+  }
   await choose('blade');await pointer('down',1,64,245);await pointer('down',2,200,245);let owners=await snap();
   await pointer('down',3,40,240);await pointer('down',4,220,240);assert.equal((await snap()).ignored,2);
   let before=await snap();await pointer('move',3,210,240);await pointer('move',4,60,240);await wait(50);let after=await snap();assert.equal(after.serial,before.serial);assert(displaced(before,after)<.01);

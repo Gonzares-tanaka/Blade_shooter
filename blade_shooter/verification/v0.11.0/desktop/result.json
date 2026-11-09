@@ -1,0 +1,116 @@
+{
+  "version": "0.11.0",
+  "fps": 60,
+  "frames": 19602,
+  "wall_seconds": 330.0809941999905,
+  "automatic_input": true,
+  "state": "clear",
+  "time": 326.6999999999757,
+  "hp": 2,
+  "boss_spawn": 300.0,
+  "first_boss_fire": 304.8833333333289,
+  "order": [
+    "center",
+    "left",
+    "right"
+  ],
+  "blade": {
+    "armor": 40,
+    "small": 73,
+    "charger": 7,
+    "rear": 5,
+    "boss": 3
+  },
+  "cleared": 13,
+  "items": [
+    {
+      "event": "spawn",
+      "area": 1,
+      "time": 40.499999999998984,
+      "x": 64.0,
+      "y": 200.0,
+      "kind": "lance"
+    },
+    {
+      "event": "exit",
+      "area": 1,
+      "time": 51.06666666666505,
+      "kind": "blade"
+    },
+    {
+      "event": "spawn",
+      "area": 2,
+      "time": 80.49999999999672,
+      "x": 64.0,
+      "y": 200.0,
+      "kind": "axe"
+    },
+    {
+      "event": "exit",
+      "area": 2,
+      "time": 91.06666666666278,
+      "kind": "axe"
+    },
+    {
+      "event": "spawn",
+      "area": 3,
+      "time": 120.49999999999444,
+      "x": 64.0,
+      "y": 200.0,
+      "kind": "lance"
+    },
+    {
+      "event": "pickup",
+      "area": 3,
+      "time": 122.13333333332768,
+      "kind": "axe",
+      "weapon": "axe",
+      "hp": 2
+    },
+    {
+      "event": "spawn",
+      "area": 4,
+      "time": 160.50000000001987,
+      "x": 208.0,
+      "y": 248.0,
+      "kind": "blade"
+    },
+    {
+      "event": "exit",
+      "area": 4,
+      "time": 171.63333333336206,
+      "kind": "axe"
+    },
+    {
+      "event": "spawn",
+      "area": 5,
+      "time": 210.50000000005966,
+      "x": 208.0,
+      "y": 248.0,
+      "kind": "heal"
+    },
+    {
+      "event": "exit",
+      "area": 5,
+      "time": 221.4333333334017,
+      "kind": "lance"
+    },
+    {
+      "event": "spawn",
+      "area": 6,
+      "time": 300.0,
+      "x": 208.0,
+      "y": 248.0,
+      "kind": "blade"
+    },
+    {
+      "event": "pickup",
+      "area": 6,
+      "time": 308.06666666665933,
+      "kind": "axe",
+      "weapon": "axe",
+      "hp": 2
+    }
+  ],
+  "weapon": "axe"
+}

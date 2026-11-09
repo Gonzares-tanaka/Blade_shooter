@@ -8,7 +8,7 @@ import zipfile
 import config as C
 
 ROOT = Path(__file__).resolve().parent
-SOURCES = ("main.py", "config.py", "game.py", "boss.py", "view.py", "assets.py", "audio.py")
+SOURCES = ("main.py", "config.py", "game.py", "boss.py", "items.py", "view.py", "assets.py", "audio.py")
 RESOURCES = (C.RESOURCE_FILE, C.PALETTE_FILE)
 
 

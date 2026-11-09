@@ -34,7 +34,8 @@ for weapon,settings in old['WEAPONS'].items():
         assert C.WEAPONS[weapon][key]==value,(weapon,key)
 assert C.WEAPONS['lance']['width']==C.PLAYER_SIZE==16
 assert tuple(C.TOUCH_MODES)==('flick',)
-assert (ROOT/C.RESOURCE_FILE).read_bytes()==(folder/'before'/C.RESOURCE_FILE).read_bytes()
+# 既存の全画素/音/BGM保持はtest_resourcesが検証。新アイコン/SEだけ追加。
+assert addition['all_prior_pixels_sounds_music_and_tilemaps_preserved']
 gestures=(ROOT/'web/gestures.js').read_text(encoding='utf-8-sig')
 assert not any(old_mode in gestures for old_mode in ('lastTap','double_tap','tap_flick','setMode'))
 changes={k:dict(before=v,after=getattr(C,k)) for k,v in old.items()

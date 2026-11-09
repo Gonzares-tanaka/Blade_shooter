@@ -1,0 +1,86 @@
+{
+  "result": "PASS",
+  "engine": "Edge CDP actual multi-touch",
+  "runtime": "actual Pyxel 2.9.9",
+  "captureAPI": "native",
+  "realIPhone": false,
+  "browser": "157.0.4341.42",
+  "results": [
+    {
+      "weapon": "blade",
+      "rightFirst": true,
+      "rightOnlyNoJump": true,
+      "leftFastNeverAttacks": true,
+      "simultaneousMoveAndAttack": true,
+      "eitherReleaseOrder": true,
+      "cooldownNotQueued": true
+    },
+    {
+      "weapon": "axe",
+      "rightFirst": true,
+      "rightOnlyNoJump": true,
+      "leftFastNeverAttacks": true,
+      "simultaneousMoveAndAttack": true,
+      "eitherReleaseOrder": true,
+      "cooldownNotQueued": true
+    },
+    {
+      "weapon": "lance",
+      "rightFirst": true,
+      "rightOnlyNoJump": true,
+      "leftFastNeverAttacks": true,
+      "simultaneousMoveAndAttack": true,
+      "eitherReleaseOrder": true,
+      "cooldownNotQueued": true
+    },
+    {
+      "livePickupKeepsBothTouchRoles": true,
+      "newFlickAxisAfterPickup": true,
+      "healPickupApplied": true
+    },
+    {
+      "fixedRolesAcrossBoundary": true,
+      "extraFingersIgnored": true,
+      "noAutomaticHandoff": true,
+      "newContactCanAcquireFreeRole": true
+    },
+    {
+      "repeatNoDuplicate": true,
+      "newFlickWithoutLifting": true,
+      "releaseRecontact": true,
+      "jitterAndWrongAxisRejected": true,
+      "diagonalAllowed": true
+    },
+    {
+      "cancelBackgroundAndTransitionsResetBoth": true
+    },
+    {
+      "width": 320,
+      "normalizedCoordinates": true,
+      "guideAlignedAndNonBlocking": true
+    },
+    {
+      "width": 768,
+      "normalizedCoordinates": true,
+      "guideAlignedAndNonBlocking": true
+    }
+  ],
+  "errors": [],
+  "logs": [
+    "Ignored attempt to cancel a touchcancel event with cancelable=false, for example because scrolling is in progress and cannot be interrupted.",
+    "Ignored attempt to cancel a touchcancel event with cancelable=false, for example because scrolling is in progress and cannot be interrupted.",
+    "Ignored attempt to cancel a touchcancel event with cancelable=false, for example because scrolling is in progress and cannot be interrupted.",
+    "Ignored attempt to cancel a touchcancel event with cancelable=false, for example because scrolling is in progress and cannot be interrupted.",
+    "Ignored attempt to cancel a touchcancel event with cancelable=false, for example because scrolling is in progress and cannot be interrupted.",
+    "Ignored attempt to cancel a touchcancel event with cancelable=false, for example because scrolling is in progress and cannot be interrupted.",
+    "Ignored attempt to cancel a touchcancel event with cancelable=false, for example because scrolling is in progress and cannot be interrupted.",
+    "Ignored attempt to cancel a touchcancel event with cancelable=false, for example because scrolling is in progress and cannot be interrupted.",
+    "Ignored attempt to cancel a touchcancel event with cancelable=false, for example because scrolling is in progress and cannot be interrupted.",
+    "Ignored attempt to cancel a touchcancel event with cancelable=false, for example because scrolling is in progress and cannot be interrupted.",
+    "Ignored attempt to cancel a touchcancel event with cancelable=false, for example because scrolling is in progress and cannot be interrupted.",
+    "Ignored attempt to cancel a touchcancel event with cancelable=false, for example because scrolling is in progress and cannot be interrupted.",
+    "Ignored attempt to cancel a touchcancel event with cancelable=false, for example because scrolling is in progress and cannot be interrupted.",
+    "Ignored attempt to cancel a touchcancel event with cancelable=false, for example because scrolling is in progress and cannot be interrupted.",
+    "Ignored attempt to cancel a touchcancel event with cancelable=false, for example because scrolling is in progress and cannot be interrupted."
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "version": "0.11.0",
+  "python_tests": 102,
+  "node_input_tests": 26,
+  "desktop_native": "PASS",
+  "edge_real_pyxel_multitouch": "PASS",
+  "webkit_controls_only": "PASS",
+  "real_iphone": false,
+  "real_gkd": false
+}

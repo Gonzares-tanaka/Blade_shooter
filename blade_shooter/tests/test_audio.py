@@ -14,6 +14,12 @@ class Fake:
 
 
 class AudioTests(unittest.TestCase):
+    def test_item_pickup_uses_editable_dedicated_sound_on_sfx_channel(self):
+        for event,sound in (("pickup_heal",17),("pickup_weapon",18)):
+            p=Fake();a=Audio(p)
+            a.update(SimpleNamespace(state='playing',events=[event,'kill','shot']))
+            self.assertIn(('se',(3,sound),{}),p.calls)
+
     def test_sfx_never_use_bgm_channels_and_deduplicate(self):
         p=Fake();a=Audio(p)
         a.update(SimpleNamespace(state='playing',events=['erase']*30+['kill']*8+['cut']*8+['shot']))

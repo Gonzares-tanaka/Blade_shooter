@@ -3,7 +3,15 @@
 class BladeGestures {
   constructor(config,weapon="blade") {this.config=config;this.weapon=weapon;this.cancel();}
   cancel() {this.movePointer=null;this.attackPointer=null;this.ignored=new Set();this.attack=false;}
-  setWeapon(weapon) {if(this.weapon!==weapon){this.cancel();this.weapon=weapon;}}
+  setWeapon(weapon,preserveContacts=false) {
+    if(this.weapon===weapon)return;
+    if(preserveContacts) {
+      // 道中の取得では左手を保持。右手の古い方向候補だけを捨て、次の払いから使う。
+      this.attack=false;
+      if(this.attackPointer){this.attackPointer.candidate=null;this.attackPointer.locked=true;}
+    } else this.cancel();
+    this.weapon=weapon;
+  }
   get hasContacts() {return !!(this.movePointer||this.attackPointer);}
   role(id) {
     if(this.movePointer?.id===id)return "move";

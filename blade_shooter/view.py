@@ -103,6 +103,9 @@ class View:
                     self.aim_line(e)
             if e.flash:
                 p.rectb(e.x-e.radius,e.y-e.radius,e.radius*2,e.radius*2,3)
+        if g.items.current:
+            self.area_item(g.items.current)
+        # アイテムの枠や下地で敵弾を隠さない。
         for b in g.bullets:
             sprite(p,"bullet",b.x,b.y)
         for effect in g.effects:
@@ -119,6 +122,8 @@ class View:
         for i in range(C.PLAYER_HP):
             p.rect(30+i*9, 4, 6, 7, 6 if i < g.hp else 1)
         p.text(83, 5, g.weapon_config["label"] if g.cooldown <= 0 else "WAIT", 6 if g.cooldown <= 0 else 2)
+        if g.items.notice_time > 0:
+            self.center(15,g.items.notice,6)
         p.text(122, 5, f"{g.player_speed/C.PLAYER_SPEED:.1f}X", 39)
         seconds=max(0,int(g.time))
         p.text(177, 5, f"{seconds//60:02d}:{seconds%60:02d}" if g.course in ("stage","boss")
@@ -127,7 +132,7 @@ class View:
             section=g.section
             self.center(29,section[1],40)
             if g.boss:
-                p.text(8,15,section[2],39)
+                if g.items.notice_time<=0:p.text(8,15,section[2],39)
             else:
                 self.center(40,section[2],2)
             if not g.enemies and not g.bullets and not g.boss:
@@ -141,6 +146,7 @@ class View:
             self.center(140,"WEAPON: "+g.weapon_config["label"],6)
             self.center(152,"LEFT: DRAG / RIGHT: "+("V-FLICK" if g.weapon=="lance" else "H-FLICK"),39)
             self.center(164,"LAB: "+g.lab_mode.upper(),2)
+            if g.course=="stage":self.center(175,"AREA END: HEART / WEAPON PICKUP",39)
             self.center(184,"B: SETUP" if self.profile=="gkd" else "X: SETUP",6)
             self.center(198,"LEFT/RIGHT: COURSE",2)
             self.center(210,"UP/DOWN: START SECTION",2)
@@ -175,6 +181,21 @@ class View:
         self.p.rect(15, y, 226, height, 0)
         self.p.rectb(15, y, 226, height, 33)
 
+    def area_item(self,item):
+        p = self.p
+        blink = item.warning and int(item.cycle/C.AREA_ITEM["blink_seconds"])%2 == 0
+        color = 3 if blink else 2 if item.exiting else 39
+        p.rect(item.x-12,item.y-12,24,24,0)
+        p.rectb(item.x-12,item.y-12,24,24,color)
+        # アイコンは点滅させず、取得する絵柄を常に読めるよう枠だけ点滅。
+        sprite(p,"item_"+item.kind,item.x,item.y)
+        label = "HP" if item.kind=="heal" else C.WEAPONS[item.kind]["label"]
+        p.text(item.x-len(label)*2,item.y-21,label,color)
+        if not item.exiting:
+            p.rect(item.x-11,item.y+15,22,2,1)
+            p.rect(item.x-11,item.y+15,22*(1-item.cycle/C.AREA_ITEM["switch_seconds"]),2,color)
+        else:p.text(item.x-8,item.y+15,"EXIT",2)
+
     def battleship(self,g):
         p,b=self.p,g.boss
         sprite(p,"boss_hull",128,b.y+52)
@@ -206,6 +227,7 @@ class View:
 
     def player(self, g):
         p, x, y = self.p, g.px, g.py
+        weapon,w = g.attack_weapon,g.attack_config
         visible = g.invincible <= 0 or int(g.world_time*20)%2 == 0
         if visible:
             sprite(p,"player",x,y)
@@ -218,19 +240,19 @@ class View:
             color = 6 if g.cooldown <= 0 else 1
         else:
             elbow = point_at(*pivot, 8, g.blade_angle-24)
-            pose_time=min(g.swing,g.weapon_config["windup"]+g.weapon_config["active"]) if g.slash_polys else g.swing
-            angle,inner,reach,width=weapon_pose(g.weapon,pose_time)
+            pose_time=min(g.swing,w["windup"]+w["active"]) if g.slash_polys else g.swing
+            angle,inner,reach,width=weapon_pose(weapon,pose_time)
             hand = point_at(*pivot, inner, angle)
             tip = point_at(*pivot, reach, angle)
             color = 3 if g.slash_polys else 33
         self.textured_segment("arm",(x+5,y-1),elbow,3)
         self.textured_segment("arm",elbow,hand,3)
         sprite(p,"joint",*elbow)
-        if g.weapon!="blade":
+        if weapon!="blade":
             # 柄は装飾。アックスの刃/ランスの穂先だけが実体ポリゴンに一致。
             self.textured_segment("arm",elbow,hand,2)
-        width=g.weapon_config["width"] if g.swing>=0 else min(7,g.weapon_config["width"])
-        self.textured_segment(g.weapon,hand,tip,width,dim=not bool(g.slash_polys))
+        width=w["width"] if g.swing>=0 else min(7,w["width"])
+        self.textured_segment(weapon,hand,tip,width,dim=not bool(g.slash_polys))
         sprite(p,"joint",*hand)
         p.pset(x, y, 3)
 

@@ -1,15 +1,16 @@
 {
-  "version": "0.10.0",
+  "version": "0.11.0",
   "pyxel_web_version": "2.9.9",
   "sources": {
-    "main.py": "ebd3f9a4e1cc41efc77cd627bad6c3daa5cb7bc347509ff07b8f2f80a293f089",
-    "config.py": "c6097211274e4e0eab56316a3b1aed3c61136ee1f9d5f400041657faff9e2cde",
-    "game.py": "64ed413da060d5f4dd4b110b6f0af4feea58d656883685a627340766e14da6f0",
+    "main.py": "40f383be38433c0ecea8d65c79f05f98ada719fb8e06764c632d71651b1fffaa",
+    "config.py": "612605e95769b55e805b22c4dc9a75bcd0192f2e883be771b5e12d783aca5383",
+    "game.py": "42849ba0587aabde32be0d13b1250615964a1fdb8d20e1040600c0bd08a821b0",
     "boss.py": "62669b4c2d2e3e47311b446138e7b8e40fa2a09611d477d3778658c6df2377dd",
-    "view.py": "efc2445e0ca54ecfcf8022d8136dcaef0b41df8714d0c80c3bb661ba0936c22e",
-    "assets.py": "4f9064872e306af8968ab870f63da50f2f3b905666232c2394e8a16f034c171a",
-    "audio.py": "c1b2efa50ed08f3d7e5cec6c5d287ed4c3b035e7cab2afef8ab2f60a792a3f07",
-    "assets/blade.pyxres": "b9c23f28711cd0ce55c5ffd91e238be2e2f7e4c9c5190b7ab245edb1f5b6a6fd",
+    "items.py": "363a9222aeceba6bcb1967d9f35b8f81e012596531d9696480813d0c922c387c",
+    "view.py": "8ca5c94250a643f02259588d4a9b4459c470feb62387d98fa305d9dfdc5aa192",
+    "assets.py": "84c94bd44948ef8217c1ad845da43f1cc69a6f00115f7fe77fce2e17d8391937",
+    "audio.py": "b70b7c6dbfbd9be7e1f98b833f0396d1c6a8a2bc206c44f855cecc4ea6f788f7",
+    "assets/blade.pyxres": "cc7e6e1d995f349242db0350bc143ffc0746c030e61fdef84814693812d625d1",
     "assets/blade.pyxpal": "8bdbe7337bf6a347642b9c1a1a1afb782d6e3442c7c1af5fea7f37276c5686f3"
   }
 }

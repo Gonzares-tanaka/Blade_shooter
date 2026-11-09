@@ -1,6 +1,16 @@
 const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
 const Gestures=require('../web/gestures.js');
 const c=vm.runInNewContext(fs.readFileSync(require('node:path').resolve(__dirname,'../dist/web/touch-config.js'),'utf8')+'\nwindow.BLADE_TOUCH_CONFIG',{window:{}});
+test('live pickup preserves both owners and movement but discards old-axis stroke',()=>{
+ const g=new Gestures(c);g.begin(1,64,200,0);g.begin(2,200,200,0);g.begin(3,32,200,0);
+ g.move(2,207,200,10);assert(g.attackPointer.candidate);
+ g.setWeapon('lance',true);assert.equal(g.role(1),'move');assert.equal(g.role(2),'attack');assert.equal(g.role(3),'ignored');
+ assert.equal(g.attackPointer.candidate,null);assert.equal(g.takeAttack(),false);
+ assert.deepEqual(g.move(1,74,190,20),{x:10,y:-10});
+ g.move(2,230,200,25);assert.equal(g.takeAttack(),false);
+ g.tick(200);g.move(2,230,225,205);assert(g.takeAttack());
+ assert.equal(g.role(1),'move');assert.equal(g.role(2),'attack');
+});
 function begin(w='blade'){const g=new Gestures(c,w);assert.equal(g.begin(2,200,100,0),'attack');return g;}
 for(const weapon of ['blade','axe','lance'])test(weapon+': right hand fires in both required directions before release',()=>{
  for(const sign of [-1,1]){const g=begin(weapon),dx=weapon==='lance'?0:20*sign,dy=weapon==='lance'?20*sign:0;

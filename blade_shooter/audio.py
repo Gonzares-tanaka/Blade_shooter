@@ -6,6 +6,7 @@ MOTION = (("boss_arrival",12,.2),("boss_warning",13,.15),("boss_fire",14,.12),("
           ("rear_warning", 10, .15), ("rear_fire", 11, .15),
           ("charge", 9, .10), ("shot", 0, .10))
 IMPACT = (("boss_defeat",16,.1),("boss_part_break",15,.1),("over", 8, .10), ("clear", 7, .10), ("hurt", 5, .10),
+          ("pickup_heal",17,0.0),("pickup_weapon",18,0.0),
           ("cut", 2, .06), ("kill", 4, .08), ("start", 6, .10))
 
 

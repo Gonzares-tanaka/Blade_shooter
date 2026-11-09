@@ -3,6 +3,7 @@ from dataclasses import dataclass
 import math
 import config as C
 from boss import Battleship
+from items import AreaItems
 
 
 @dataclass
@@ -221,6 +222,8 @@ class Game:
         self.px, self.py = C.WIDTH/2, C.HEIGHT-54
         self.hp, self.invincible = C.PLAYER_HP, 0.0
         self.cooldown, self.swing, self.shot_clock = 0.0, -1.0, 0.0
+        self.swing_weapon = self.weapon
+        self.items = AreaItems(self)
         self.hitstop = self.shake = 0.0
         self.enemies, self.bullets, self.shots, self.effects = [], [], [], []
         self.slash_polys, self.slash_slices, self.slash_hits = [], [], set()
@@ -249,6 +252,14 @@ class Game:
     @property
     def weapon_config(self):
         return C.WEAPONS[self.weapon]
+
+    @property
+    def attack_weapon(self):
+        return self.swing_weapon if self.swing >= 0 else self.weapon
+
+    @property
+    def attack_config(self):
+        return C.WEAPONS[self.attack_weapon]
 
     def set_lab(self, mode):
         self.lab_mode=mode
@@ -359,6 +370,7 @@ class Game:
         if self.cooldown > 1e-6 or self.swing >= 0:
             return False
         self.swing, self.cooldown = 0.0, self.weapon_config["cooldown"]
+        self.swing_weapon = self.weapon
         self.slash_hits.clear()
         self.swing_kills = 0
         self.swing_hitstop = False
@@ -476,6 +488,8 @@ class Game:
         gain = self.player_speed/C.PLAYER_SPEED
         self.px = max(8, min(C.WIDTH-8, self.px+action.x/length*self.player_speed*dt+action.drag_x*gain))
         self.py = max(C.HUD_HEIGHT+8, min(C.HEIGHT-8, self.py+action.y/length*self.player_speed*dt+action.drag_y*gain))
+        self.items.update(self, dt, (previous_pivot[0], previous_pivot[1]+4))
+        self.items.schedule(self)
         if action.slash:
             self.start_slash()
         # 終了するフレームも含め、振り始めから振り終わりまでは新規発射しない。
@@ -701,12 +715,13 @@ class Game:
             return
         before = self.swing
         self.swing += dt
-        w=self.weapon_config
+        weapon=self.swing_weapon
+        w=C.WEAPONS[weapon]
         wind, active = w["windup"], w["active"]
         def angle(t):
             return w["start_angle"]+(w["end_angle"]-w["start_angle"])*max(0, min(1, (t-wind)/active))
         if self.swing <= wind:
-            self.blade_angle = weapon_pose(self.weapon,self.swing)[0]
+            self.blade_angle = weapon_pose(weapon,self.swing)[0]
         elif min(self.swing, wind+active)-max(before, wind) > 1e-9:
             self.blade_angle = angle(self.swing)
             t0, t1 = (max(before, wind)-before)/dt, (min(self.swing, wind+active)-before)/dt
@@ -715,10 +730,10 @@ class Game:
             def pivot(t):
                 return (previous[0]+(current[0]-previous[0])*t,
                         previous[1]+(current[1]-previous[1])*t)
-            if self.weapon=="blade":
+            if weapon=="blade":
                 self.slash_polys = sweep_polygons(*pivot(t1), angle(before), self.blade_angle, previous=pivot(t0))
             else:
-                self.slash_polys = weapon_sweep(self.weapon,pivot(t0),pivot(t1),max(before,wind),min(self.swing,wind+active))
+                self.slash_polys = weapon_sweep(weapon,pivot(t0),pivot(t1),max(before,wind),min(self.swing,wind+active))
             self.blade_pivot = pivot(t1)
             n = len(self.slash_polys)
             self.slash_slices = [(poly, t0+(t1-t0)*i/n, t0+(t1-t0)*(i+1)/n)
@@ -729,7 +744,7 @@ class Game:
                     self.slash_hits.add(e.uid)
                     self.damage_enemy(e, w["damage"], True)
         else:
-            self.blade_angle = weapon_pose(self.weapon,self.swing)[0]
+            self.blade_angle = weapon_pose(weapon,self.swing)[0]
         if self.swing >= w["shot_stop"]:
             self.swing = -1
 
