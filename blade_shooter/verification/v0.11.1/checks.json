@@ -1,0 +1,12 @@
+{
+  "version": "0.11.1",
+  "date": "2026-11-10",
+  "python_tests": 103,
+  "native_audio": "PASS",
+  "native_loop_wraps_per_voice": 2,
+  "web_audio": "PASS",
+  "web_loop_wraps_per_voice": 1,
+  "original_mml_bytes_preserved": true,
+  "real_iphone": false,
+  "real_gkd": false
+}

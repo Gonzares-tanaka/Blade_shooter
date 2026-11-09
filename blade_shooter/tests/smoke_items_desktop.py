@@ -33,8 +33,8 @@ def run(update,draw):
         g.hp=2;g.items.current=AreaItem(0,g.px,g.py,kind,cycle=.799)
         g.step(1/C.FPS);assert event in g.events
         app.audio.update(g);app.draw();p.screenshot(str(folder/('pickup-'+kind+'.png')),scale=2)
-        assert p.play_pos(3) is not None
-        result['sounds'][str(sound)]=dict(notes=list(p.sounds[sound].notes),playing=list(p.play_pos(3)))
+        assert p.play_pos(C.AUDIO_SE_CHANNELS[1]) is not None
+        result['sounds'][str(sound)]=dict(notes=list(p.sounds[sound].notes),playing=list(p.play_pos(C.AUDIO_SE_CHANNELS[1])))
     assert g.weapon=='axe';g.cooldown=0;g.start_slash()
     g.items.current=AreaItem(0,g.px,g.py,'lance');g.step(1/C.FPS)
     assert g.weapon=='lance' and g.swing_weapon=='axe'

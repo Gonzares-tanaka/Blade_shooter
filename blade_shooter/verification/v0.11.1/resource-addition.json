@@ -1,0 +1,21 @@
+{
+  "before_sha256": "cc7e6e1d995f349242db0350bc143ffc0746c030e61fdef84814693812d625d1",
+  "after_sha256": "cc7e6e1d995f349242db0350bc143ffc0746c030e61fdef84814693812d625d1",
+  "source_sha256": "ccbfa2c5445435e0cb600d2b84c80eebef88f98418c1aa92a06dee6e951a609c",
+  "track_seconds": [
+    12.800192832946777,
+    12.800192832946777,
+    3.2000482082366943,
+    12.800192832946777
+  ],
+  "audible_tracks": [
+    40,
+    41,
+    43
+  ],
+  "loop_seconds": 12.800192832946777,
+  "existing_images_sfx_boss_music_and_palette_preserved": true,
+  "resource_unchanged": true,
+  "all_prior_pixels_sounds_music_and_tilemaps_preserved": true,
+  "mml_loaded_from_source_at_startup": true
+}

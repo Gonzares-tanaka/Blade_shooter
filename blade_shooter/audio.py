@@ -1,5 +1,17 @@
-"""BGMは0/1、SEは2/3。音の内容はpyxresだけで編集する。"""
+"""BGMは0/1/2、SEは3/4。1面は添付MML原文、ボスとSEはpyxres。"""
+from pathlib import Path
 import config as C
+
+
+def load_stage_bgm(p):
+    # Pyxel 2.9.9のsave/loadはMMLを保持しないので、毎回原文から設定する。
+    path=Path(__file__).resolve().parent/C.STAGE_BGM_MML_FILE
+    tracks=[line.strip() for line in path.read_text(encoding="utf-8-sig").splitlines()
+            if line.strip() and not line.strip().startswith("https://")]
+    if len(tracks)!=len(C.STAGE_BGM_SOUNDS):
+        raise ValueError("stage1_MML.txt must contain four MML tracks")
+    for slot,track in zip(C.STAGE_BGM_SOUNDS,tracks):p.sounds[slot].mml(track)
+    p.musics[0].set(*([C.STAGE_BGM_SOUNDS[i]] for i in C.STAGE_BGM_AUDIBLE_TRACKS),[])
 
 # 優先順位順。Sound番号、最短発音間隔（秒）。各ch最大1回/フレーム。
 MOTION = (("boss_arrival",12,.2),("boss_warning",13,.15),("boss_fire",14,.12),("swing", 1, .08), ("erase", 3, .10),
@@ -15,8 +27,11 @@ class Audio:
         self.p, self.time = p, 0
         self.music_playing = False
         self.music_number=0
-        self.next_play = {2: 0, 3: 0}
-        self.last_priority = {2: 99, 3: 99}
+        while len(p.channels) <= max((*C.AUDIO_BGM_CHANNELS,*C.AUDIO_SE_CHANNELS)):
+            p.channels.append(p.Channel())
+        load_stage_bgm(p)
+        self.next_play = dict.fromkeys(C.AUDIO_SE_CHANNELS,0)
+        self.last_priority = dict.fromkeys(C.AUDIO_SE_CHANNELS,99)
 
     def update(self, game):
         self.time += 1/C.FPS
@@ -25,13 +40,14 @@ class Audio:
         playing = game.state == "playing"
         music=1 if getattr(game,"boss",None) else 0
         if playing and (not self.music_playing or music!=self.music_number):
+            if self.music_playing:
+                for ch in C.AUDIO_BGM_CHANNELS:self.p.stop(ch)
             self.p.playm(music, loop=True)
             self.music_number=music
         elif not playing and self.music_playing:
-            self.p.stop(0)
-            self.p.stop(1)
+            for ch in C.AUDIO_BGM_CHANNELS:self.p.stop(ch)
         self.music_playing = playing
-        for ch, table in ((2, MOTION), (3, IMPACT)):
+        for ch, table in zip(C.AUDIO_SE_CHANNELS,(MOTION,IMPACT)):
             for rank, (name, sound, interval) in enumerate(table):
                 if name in game.events:
                     if self.time >= self.next_play[ch] or rank < self.last_priority[ch]:

@@ -26,7 +26,7 @@ class ResourceTests(unittest.TestCase):
         for i in (0,1):
             music=self.data['musics'][i]['seqs']
             self.assertTrue(music[0]);self.assertTrue(music[1])
-            self.assertTrue(all(not seq for seq in music[2:]))
+            self.assertTrue(all(not music[ch] for ch in C.AUDIO_SE_CHANNELS if ch<len(music)))
             self.assertTrue(all(sound>=32 for seq in music for sound in seq))
 
     def test_item_additions_preserve_every_existing_pixel_sound_and_music(self):
