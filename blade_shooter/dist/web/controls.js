@@ -10,6 +10,8 @@ window.bladeInput = {
   const config = window.BLADE_TOUCH_CONFIG;
   const gestures = new window.BladeGestures(config);
   const screen = document.getElementById("pyxel-screen");
+  const zones = document.getElementById("touch-zones");
+  document.documentElement.style.setProperty("--move-zone-width",`${config.move_region_ratio*100}%`);
   const start = document.getElementById("start");
   const course = document.getElementById("course");
   const section = document.getElementById("section");
@@ -41,17 +43,19 @@ window.bladeInput = {
     panel.hidden = state !== "settings";
     weapon.textContent = `武器：${weaponLabels[weaponName]}（変更）`;
     weapon.disabled = false;
-    document.getElementById("flick-help").textContent = `${weaponLabels[weaponName]}：${directionLabel()}。ドラッグ中でも素早く払うと即攻撃。`;
+    document.getElementById("flick-help").textContent = `左手はドラッグ移動。右手は${directionLabel()}で${weaponLabels[weaponName]}。`;
     for (const button of panel.querySelectorAll("[data-lab]")) button.setAttribute("aria-pressed",String(button.dataset.lab === labMode));
     document.getElementById("lab-note").textContent = labMode === "weapons" ?
       "54秒固定配置。武器を変えて同じ条件でリトライ。" : "武器を選択。既存の1面も遊べます。";
+    zones.hidden = state!=="playing";
+    document.getElementById("attack-zone-label").textContent = `斬撃エリア ${weaponName==="lance"?"↑↓":"←→"}`;
     start.disabled = state === "loading";
     start.textContent = state === "loading" ? "読み込み中" : state === "playing" ? "一時停止" : state === "paused" ? "再開" :
                        ["clear", "gameover"].includes(state) ? "もう一度" : state === "settings" ? "設定完了" : "開始";
     document.getElementById("status").textContent = state === "loading" ?
       "表示が出たらゲーム画面をタップ →「開始」でプレイ" : state === "paused" ?
       "一時停止中 · 再開ボタン / Pで続ける" :
-      `ドラッグ移動 · ${directionLabel()}で${weaponLabels[weaponName]} · ショット自動`;
+      `左手：ドラッグ移動 · 右手：${directionLabel()} · ショット自動`;
   }
 
   // Pythonが状態を変更した直後にジェスチャーを破棄し、リトライや再開へ持ち越さない。
@@ -92,12 +96,8 @@ window.bladeInput = {
   }
   function eventTime(e) { return e.timeStamp > 0 ? e.timeStamp : performance.now(); }
   function flushAttack() { if(gestures.takeAttack()) bridge.slashSerial++; }
-  // 停止中にストロークを再準備。不成立の保留移動は少しずつ戻す。
-  function tick(time) {
-    const move=gestures.tick(time);
-    if(state==="playing"&&move){bridge.dragX+=move.x*config.drag_gain;bridge.dragY+=move.y*config.drag_gain;}
-    requestAnimationFrame(tick);
-  }
+  // 右担当のフリックだけを更新。攻撃側の変位は移動へ戻さない。
+  function tick(time) { gestures.tick(time); requestAnimationFrame(tick); }
   requestAnimationFrame(tick);
 
   function resumeAudio() {
@@ -121,13 +121,13 @@ window.bladeInput = {
     if (state !== "playing") { clearTouch(); return; }
     gestures.begin(e.pointerId, ...coordinates(e), eventTime(e), e.pointerType);
     screen.setPointerCapture(e.pointerId);
-    bridge.touchActive = gestures.active !== null;
+    bridge.touchActive = gestures.hasContacts;
     // 押下位置は移動に使わない。自機から離れた場所で操作を始められる。
   });
   screen.addEventListener("pointermove", e => {
     if (state !== "playing") { clearTouch(); return; }
-    if (gestures.active?.id !== e.pointerId) return;
     e.preventDefault();
+    if (!gestures.owns(e.pointerId)) return;
     // 合成イベントの時刻と変位も使い、短い払いを最終点だけで判定しない。
     const samples = e.getCoalescedEvents ? e.getCoalescedEvents() : [];
     for (const sample of samples) queueMovement(sample);
@@ -136,15 +136,15 @@ window.bladeInput = {
   screen.addEventListener("pointerup", e => {
     e.preventDefault();
     if (state !== "playing") { clearTouch(); return; }
-    queueMovement(e);
-    if (gestures.end(e.pointerId, ...coordinates(e), eventTime(e), bridge.meleeReady)) bridge.slashSerial++;
-    flushAttack();
-    bridge.touchActive = gestures.active !== null;
+    // 離指の座標は左の最終移動にのみ使う。右はpointermoveでだけ即発動する。
+    if (gestures.role(e.pointerId)==="move") queueMovement(e);
+    gestures.end(e.pointerId);
+    bridge.touchActive = gestures.hasContacts;
     // 相対移動は次の1フレームで消費。継続する方向入力は保持しない。
   });
   screen.addEventListener("pointercancel", clearTouch);
   screen.addEventListener("lostpointercapture", e => {
-    if (gestures.active?.id === e.pointerId || gestures.ignored.has(e.pointerId)) clearTouch();
+    if (gestures.owns(e.pointerId)) clearTouch();
   });
   for (const event of ["contextmenu", "dblclick", "gesturestart", "gesturechange"]) {
     screen.addEventListener(event, e => e.preventDefault(), { passive: false });

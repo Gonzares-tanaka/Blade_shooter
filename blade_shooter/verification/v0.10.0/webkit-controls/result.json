@@ -1,0 +1,65 @@
+{
+  "result": "PASS",
+  "engine": "WebKit iPhone viewport - synthetic multi-pointer",
+  "runtime": "stubbed input layer only",
+  "captureAPI": "test double",
+  "realIPhone": false,
+  "browser": "26.5",
+  "results": [
+    {
+      "weapon": "blade",
+      "rightFirst": true,
+      "rightOnlyNoJump": true,
+      "leftFastNeverAttacks": true,
+      "simultaneousMoveAndAttack": true,
+      "eitherReleaseOrder": true,
+      "cooldownNotQueued": true
+    },
+    {
+      "weapon": "axe",
+      "rightFirst": true,
+      "rightOnlyNoJump": true,
+      "leftFastNeverAttacks": true,
+      "simultaneousMoveAndAttack": true,
+      "eitherReleaseOrder": true,
+      "cooldownNotQueued": true
+    },
+    {
+      "weapon": "lance",
+      "rightFirst": true,
+      "rightOnlyNoJump": true,
+      "leftFastNeverAttacks": true,
+      "simultaneousMoveAndAttack": true,
+      "eitherReleaseOrder": true,
+      "cooldownNotQueued": true
+    },
+    {
+      "fixedRolesAcrossBoundary": true,
+      "extraFingersIgnored": true,
+      "noAutomaticHandoff": true,
+      "newContactCanAcquireFreeRole": true
+    },
+    {
+      "repeatNoDuplicate": true,
+      "newFlickWithoutLifting": true,
+      "releaseRecontact": true,
+      "jitterAndWrongAxisRejected": true,
+      "diagonalAllowed": true
+    },
+    {
+      "cancelBackgroundAndTransitionsResetBoth": true
+    },
+    {
+      "width": 320,
+      "normalizedCoordinates": true,
+      "guideAlignedAndNonBlocking": true
+    },
+    {
+      "width": 768,
+      "normalizedCoordinates": true,
+      "guideAlignedAndNonBlocking": true
+    }
+  ],
+  "errors": [],
+  "logs": []
+}

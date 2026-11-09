@@ -1,5 +1,5 @@
 """調整箇所。時間=秒、距離=ゲーム内px、速度=px/秒。変更後build.pyで配布版更新。"""
-TITLE, VERSION = "BLADE / CLOSE QUARTERS", "0.9.0"
+TITLE, VERSION = "BLADE / CLOSE QUARTERS", "0.10.0"
 WIDTH, HEIGHT, HUD_HEIGHT, FPS = 256, 320, 24, 60
 PLAYER_SIZE, PLAYER_HIT_RADIUS = 16, 2.0
 PLAYER_SPEED, PLAYER_HP, INVINCIBLE_SECONDS = 125.0, 3, 1.2
@@ -308,13 +308,11 @@ GKD_INPUTS = {
 }
 # 距離=256x320ゲームpx、時刻=ms。ドラッグの倍率は判定に掛けない。
 WEB_TOUCH = {
-    "drag_gain": 1.2,
+    "drag_gain": 1.2, "move_region_ratio": 0.5, # 左側の幅。境界ちょうどは攻撃側。
     "flick_axes": {"blade":"horizontal", "axe":"horizontal", "lance":"vertical"},
     "flick_distance_px": 14.0, "flick_min_speed_px_ms": 0.40,
     "flick_window_ms": 90.0, "flick_idle_sample_ms": 1000/FPS, "flick_axis_tolerance_degrees": 35.0,
     "flick_release_speed_px_ms": 0.12, "flick_rearm_idle_ms": 90.0,
-    # 距離不足などで不成立だった保留移動は、飛ばずにこの速度で戻す。
-    "flick_failed_move_speed_px_s": 125.0,
 }
 # 子機版の52色パレットを共用（インデックスは維持）。
 PALETTE = [

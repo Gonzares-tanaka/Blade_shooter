@@ -1,0 +1,18 @@
+{
+  "version": "0.10.0",
+  "date": "2026-11-09",
+  "python_unit_tests": 88,
+  "node_gesture_tests": 25,
+  "gameplay_configuration_unchanged": true,
+  "game_py_byte_identical": true,
+  "resources_byte_identical": true,
+  "edge_actual_multitouch_and_pyxel": "PASS - all 3 weapons, independent owners, simultaneous movement+attack, no false left attack, no right displacement, release orders, crossing, extra fingers, reset and resize",
+  "webkit_input_layer": "PASS - iPhone viewport, synthetic multi-pointer, runtime/capture test doubles",
+  "webkit_actual_pyxel": "NOT VERIFIED - official Pyodide fatal error before title",
+  "landing": "PASS - 4 viewports and embedded actual game",
+  "real_devices_not_tested": [
+    "iPhone Safari",
+    "Android",
+    "GKD Pixel 2/PlumOS"
+  ]
+}

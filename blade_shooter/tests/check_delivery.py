@@ -19,7 +19,7 @@ with zipfile.ZipFile(ROOT/'dist/blade-shooter-gkd.zip') as gkd,zipfile.ZipFile(R
     assert gkd.read('blade-shooter.sh')==(ROOT/'blade-shooter.sh').read_bytes()
     assert gkd.read('blade-shooter/README.txt')==(ROOT/'README.md').read_bytes()
     assert gkd.read('blade-shooter/VERIFICATION.md')==(ROOT/'VERIFICATION.md').read_bytes()
-# 0.5.0と比較。戦闘の核と素材は保持し、テンポ値の差を記録する。
+# 前版と比較。戦闘の核・武器の全性能・素材・出現表を保持。
 old=runpy.run_path(str(folder/'before/config.py'))
 prefixes=('SHOT_','BLADE_','HITSTOP_','BULLET_')
 preserved=[key for key in old if key.startswith(prefixes)]
@@ -31,10 +31,10 @@ assert old['COURSES']['stage']['waves']==C.COURSES['stage']['waves']
 assert old['COURSES']['stage']['duration']==C.COURSES['stage']['duration']
 for weapon,settings in old['WEAPONS'].items():
     for key,value in settings.items():
-        if weapon=='lance' and key=='width':continue
         assert C.WEAPONS[weapon][key]==value,(weapon,key)
 assert C.WEAPONS['lance']['width']==C.PLAYER_SIZE==16
 assert tuple(C.TOUCH_MODES)==('flick',)
+assert (ROOT/C.RESOURCE_FILE).read_bytes()==(folder/'before'/C.RESOURCE_FILE).read_bytes()
 gestures=(ROOT/'web/gestures.js').read_text(encoding='utf-8-sig')
 assert not any(old_mode in gestures for old_mode in ('lastTap','double_tap','tap_flick','setMode'))
 changes={k:dict(before=v,after=getattr(C,k)) for k,v in old.items()

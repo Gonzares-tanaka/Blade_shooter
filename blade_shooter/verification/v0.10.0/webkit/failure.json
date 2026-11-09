@@ -1,0 +1,11 @@
+{
+  "error": "TimeoutError: page.waitForFunction: Timeout 25000ms exceeded.",
+  "errors": [],
+  "logs": [
+    "Aborted()",
+    "Pyodide has suffered a fatal error. Please report this to the Pyodide maintainers.",
+    "The cause of the fatal error was:",
+    "RuntimeError: Unreachable code should not be executed (evaluating '___trap()')",
+    "RuntimeError: Unreachable code should not be executed (evaluating '___trap()')\n13193@wasm-function[13193]\nabort@https://cdn.jsdelivr.net/pyodide/v314.0.4/full/pyodide.asm.mjs:1:5014\n13217@wasm-function[13217]\n3866@wasm-function[3866]\n3875@wasm-function[3875]\n3856@wasm-function[3856]\n361@wasm-function[361]\n2680@wasm-function[2680]\n2346@wasm-function[2346]\n1209@wasm-function[1209]\n3788@wasm-function[3788]\n3789@wasm-function[3789]\n1213@wasm-function[1213]\n1201@wasm-function[1201]\n1217@wasm-function[1217]\n2987@wasm-function[2987]\n2868@wasm-function[2868]\n5205@wasm-function[5205]\n1200@wasm-function[1200]\n1209@wasm-function[1209]\n3788@wasm-function[3788]\n3786@wasm-function[3786]\n3747@wasm-function[3747]\n2346@wasm-function[2346]\n1209@wasm-function[1209]\n3788@wasm-function[3788]\n3786@wasm-function[3786]\n3746@wasm-function[3746]\n3788@wasm-function[3788]\n3789@wasm-function[3789]\n1213@wasm-function[1213]\n1209@wasm-function[1209]\n468@wasm-function[468]\nxe@https://cdn.jsdelivr.net/pyodide/v314.0.4/full/pyodide.asm.mjs:1:623407\n@https://cdn.jsdelivr.net/gh/kitao/pyxel@2.9.9/wasm/pyxel.js:937:22\nasync launchPyxel@https://cdn.jsdelivr.net/gh/kitao/pyxel@2.9.9/wasm/pyxel.js:178:31"
+  ]
+}

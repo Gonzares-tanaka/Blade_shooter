@@ -41,3 +41,10 @@ nav { flex-wrap:wrap; }
 .lab-tabs button { flex:1; font-size:10px; }
 #settings-panel [aria-pressed="true"] { background:#234e43; color:#91ffdb; border-color:#67f0d1; }
 @media (max-height:560px) { #settings-panel { inset:113px 8px 22px; padding:12px; } #settings { min-height:27px; } }
+
+/* ガイドはゲームと同じ大きさで重ね、PointerEventを遮らない。 */
+#pyxel-screen,#touch-zones { grid-area:1 / 1; }
+#touch-zones { position:relative; z-index:2; width:var(--game-width,256px); height:var(--game-height,320px); pointer-events:none; user-select:none; overflow:hidden; }
+#move-zone,#attack-zone { position:absolute; inset:0 auto 0 0; width:var(--move-zone-width,50%); }
+#attack-zone { left:var(--move-zone-width,50%); right:0; width:auto; border-left:1px dashed #b5ebf22c; background:linear-gradient(transparent 55%,#67f0d109); }
+#touch-zones span { position:absolute; bottom:12px; left:0; right:0; text-align:center; color:#d8eee96e; font-size:9px; letter-spacing:.5px; text-shadow:0 1px 2px #000; }

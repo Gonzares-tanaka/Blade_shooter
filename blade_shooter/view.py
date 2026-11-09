@@ -139,7 +139,7 @@ class View:
             self.center(120,"5 MIN + BOSS" if g.course=="stage" else "3 TARGETS / ANY ORDER" if g.course=="boss"
                         else f"{int(g.duration)} SEC / FIXED WAVES",39)
             self.center(140,"WEAPON: "+g.weapon_config["label"],6)
-            self.center(152,"TOUCH: "+("VERTICAL FLICK" if g.weapon=="lance" else "HORIZONTAL FLICK"),39)
+            self.center(152,"LEFT: DRAG / RIGHT: "+("V-FLICK" if g.weapon=="lance" else "H-FLICK"),39)
             self.center(164,"LAB: "+g.lab_mode.upper(),2)
             self.center(184,"B: SETUP" if self.profile=="gkd" else "X: SETUP",6)
             self.center(198,"LEFT/RIGHT: COURSE",2)
@@ -155,8 +155,8 @@ class View:
             for i,text in enumerate(rows):
                 self.center(125+i*25,("> " if i==g.settings_row else "  ")+text,6 if i==g.settings_row else 2)
             self.center(207,"UP/DOWN: ROW  LEFT/RIGHT: VALUE",2)
-            self.center(223,"BLADE / AXE: FLICK LEFT OR RIGHT",39)
-            self.center(235,"LANCE: FLICK UP OR DOWN",39)
+            self.center(223,"LEFT HAND: DRAG TO MOVE",39)
+            self.center(235,"RIGHT: H-FLICK / LANCE: V-FLICK",39)
             self.center(257,"A / START / B: BACK" if self.profile=="gkd" else "Z / ENTER / X: BACK",6)
         elif g.state in ("gameover", "clear", "paused"):
             self.panel(116, 100)

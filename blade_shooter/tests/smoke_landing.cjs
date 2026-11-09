@@ -4,7 +4,7 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs'),path=require('node:path');
 (async()=>{
  const root=path.resolve(__dirname,'../dist/web');
- const folder=path.resolve(__dirname,'../verification/v0.9.0/landing');
+ const folder=path.resolve(__dirname,'../verification/v0.10.0/landing');
  fs.mkdirSync(folder,{recursive:true});
  const files=new Map();
  function collect(dir){for(const e of fs.readdirSync(dir,{withFileTypes:true})){
@@ -61,8 +61,8 @@ const fs=require('node:fs'),path=require('node:path');
     await touch('touchStart');await page.waitForTimeout(80);await touch('touchMove',x+8,y-6);await page.waitForTimeout(80);await touch('touchEnd',x+8,y-6);
     await page.waitForTimeout(100);
     assert((await py('g.px'))>before.x+3);
-    await touch("touchStart");await page.waitForTimeout(20);await touch("touchMove",x+30,y);
-    await page.waitForTimeout(120);assert.equal(await py('g.slashes'),before.slashes+1);await touch("touchEnd",x+30,y);
+    const ax=b.x+b.width*.75;await touch("touchStart",ax,y);await page.waitForTimeout(120);await touch("touchMove",ax+30,y);
+    await page.waitForTimeout(120);assert.equal(await py('g.slashes'),before.slashes+1);await touch("touchEnd",ax+30,y);
     await frame.locator('#start').click();await frame.waitForFunction(()=>window.bladeInput.state==='paused');
     await page.screenshot({path:folder+'/embedded-mobile.png'});
     results.push({embeddedGame:'PASS',drag:true,flick:true,pause:true,aspect:b.width/b.height});
