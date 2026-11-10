@@ -1,0 +1,61 @@
+{
+  "before_sha256": "6b493be81bac0d64d15b71fc850578811b709b8e7e2d2d21c35c1870b0cee5cc",
+  "after_sha256": "9aa70adb298b33d90ad64536ae34b13ccc61ad23c67b10bfc7a490f506005e6b",
+  "sounds_added": [
+    36,
+    37,
+    38,
+    39,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61
+  ],
+  "music_updated": 1,
+  "sequence": [
+    [
+      36,
+      37,
+      36,
+      38,
+      39,
+      52,
+      39,
+      53
+    ],
+    [
+      54,
+      55,
+      54,
+      56,
+      57,
+      58,
+      57,
+      59
+    ],
+    [
+      60,
+      61,
+      60,
+      61,
+      60,
+      61,
+      60,
+      61
+    ]
+  ],
+  "loop_seconds": 25.6,
+  "source_mml_preserved": true,
+  "existing_images_sfx_other_music_preserved": true,
+  "approximations": [
+    "ENV/volume quantized at 16th notes to 0-7",
+    "noise lowered two octaves for Editor note range",
+    "MML-only vibrato/glide and tied sustain approximated"
+  ]
+}

@@ -10,7 +10,7 @@ import config as C
 ROOT = Path(__file__).resolve().parent
 SOURCES = ("main.py", "config.py", "game.py", "boss.py", "items.py", "progress.py", "stages.py",
            "persistence.py", "view.py", "assets.py", "audio.py")
-RESOURCES = (C.RESOURCE_FILE, C.PALETTE_FILE, C.STAGE_BGM_MML_FILE)
+RESOURCES = (C.RESOURCE_FILE, C.PALETTE_FILE, C.STAGE_BGM_MML_FILE, C.BOSS_BGM_MML_FILE)
 
 
 def zip_write(archive, name, data, executable=False):

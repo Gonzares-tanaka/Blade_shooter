@@ -3,7 +3,7 @@ const {chromium}=require('playwright'),assert=require('node:assert/strict');
 const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
 (async()=>{
  const root=path.resolve(__dirname,'../dist/web'),version=JSON.parse(fs.readFileSync(path.resolve(root,'../manifest.json'),'utf8')).version;
- const folder=path.resolve(__dirname,'../verification/v'+version+'/bgm-web');fs.mkdirSync(folder,{recursive:true});
+ const folder=path.resolve(__dirname,'../verification/v'+version+'/'+(process.env.BLADE_VERIFY_URL?'bgm-published':'bgm-web'));fs.mkdirSync(folder,{recursive:true});
  const server=require('node:http').createServer((req,res)=>{
   const file=path.resolve(root,new URL(req.url,'http://localhost').pathname.slice(1)||'index.html');
   if(!file.startsWith(root+path.sep)||!fs.existsSync(file)){res.writeHead(404);res.end();return;}
@@ -13,7 +13,7 @@ const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypt
  try{
   browser=await chromium.launch({channel:'msedge',headless:true});const context=await browser.newContext({viewport:{width:390,height:844},hasTouch:true,isMobile:true});
   page=await context.newPage();page.on('pageerror',e=>errors.push(String(e)));
-  await page.goto(`http://127.0.0.1:${server.address().port}/play.html`);
+  await page.goto(process.env.BLADE_VERIFY_URL||`http://127.0.0.1:${server.address().port}/play.html`);
   await page.waitForFunction(()=>window.pyxelContext?.resolveInput,null,{timeout:60000});await page.locator('#pyxel-screen').tap();
   await page.waitForFunction(()=>window.bladeInput.state==='title',null,{timeout:60000});
   const py=code=>page.evaluate(code=>window.pyxelContext.pyodide.runPython(code),code);
@@ -39,9 +39,22 @@ const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypt
   assert.deepEqual(wraps,[1,1,1]);
   await page.locator('#start').click();await page.waitForFunction(()=>window.bladeInput.state==='paused');await page.waitForTimeout(80);assert.deepEqual(await positions(),[null,null,null]);
   await page.locator('#start').click();await page.waitForFunction(()=>window.bladeInput.state==='playing');await page.waitForTimeout(100);assert((await positions()).every(p=>p&&p[1]<1));
-  await py('g.begin_boss()');await page.waitForTimeout(120);const boss=await positions();assert(boss[0]&&boss[1]&&!boss[2]);
+  await py('g.begin_boss()');await page.waitForTimeout(120);const boss=await positions();assert(boss.every(Boolean));
+  const bossSource=fs.readFileSync(path.resolve(__dirname,'../assets/stage1_boss.txt'));
+  assert.equal(await py('hashlib.sha256((Path(__import__("audio").__file__).parent/config.BOSS_BGM_MML_FILE).read_bytes()).hexdigest()'),crypto.createHash('sha256').update(bossSource).digest('hex'));
+  const bossDurations=JSON.parse(await py('json.dumps([sum(pyxel.sounds[i].total_sec() for i in seq) for seq in pyxel.musics[1].seqs[:3]])'));
+  for(const d of bossDurations)assert(Math.abs(d-25.6)<.001);
+  previous=null;const bossWraps=[0,0,0],bossStarted=Date.now();
+  await py('g.boss.update=lambda *args:None;g.bullets.clear();g.enemies.clear()');
+  while(Date.now()-bossStarted<26800){
+   const current=await positions();assert(current.every(Boolean));
+   assert(Math.max(...current.map(p=>p[1]))-Math.min(...current.map(p=>p[1]))<.05);
+   if(previous)for(let i=0;i<3;i++)if(current[i][0]<previous[i][0])bossWraps[i]++;
+   previous=current;await py('pyxel.play(config.AUDIO_SE_CHANNELS[1],2)');await page.waitForTimeout(180);
+  }
+  assert.deepEqual(bossWraps,[1,1,1]);
   assert.deepEqual(errors,[]);
-  const result={result:'PASS',version,browser:await browser.version(),runtime:'actual Pyxel 2.9.9',realIPhone:false,audioOnlyFixture:true,editableResource:true,originalMmlBytesPreserved:true,durations,wraps,threeVoicesSynchronized:true,sfxConcurrent:true,pauseResume:true,bossDrumsStop:true,errors,samples};
+  const result={result:'PASS',version,browser:await browser.version(),runtime:'actual Pyxel 2.9.9',realIPhone:false,audioOnlyFixture:true,editableResource:true,originalMmlBytesPreserved:true,durations,wraps,threeVoicesSynchronized:true,sfxConcurrent:true,pauseResume:true,bossThreeVoices:true,bossDurations,bossWraps,errors,samples};
   fs.writeFileSync(folder+'/result.json',JSON.stringify(result,null,2));console.log('STAGE_BGM_WEB_PASS',JSON.stringify({...result,samples:undefined}));
  }catch(e){if(page)await page.screenshot({path:folder+'/failure.png'}).catch(()=>{});throw e;}
  finally{await browser?.close();server.close();}

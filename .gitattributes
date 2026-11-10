@@ -1,2 +1,4 @@
 # Preserve the supplied MML file exactly in packages and GitHub Pages builds.
 blade_shooter/assets/stage1_MML.txt -text
+blade_shooter/assets/stage1_boss.txt -text
+blade_shooter/verification/**/assets/stage1_MML.txt -text

@@ -34,7 +34,7 @@ for weapon,settings in old['WEAPONS'].items():
         assert C.WEAPONS[weapon][key]==value,(weapon,key)
 assert C.WEAPONS['lance']['width']==C.PLAYER_SIZE==16
 assert tuple(C.TOUCH_MODES)==('flick',)
-# BGM0だけを意図して変更。既存画素/SE/他BGMの保持はtest_resourcesで検証。
+# 指定されたBGMだけを意図して変更。既存画素/SE/他BGMの保持はtest_resourcesで検証。
 assets_preserved=addition.get('existing_images_sfx_other_music_preserved',
                               addition.get('all_prior_pixels_sounds_music_and_tilemaps_preserved',False))
 assert assets_preserved

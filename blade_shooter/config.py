@@ -1,5 +1,5 @@
 """調整箇所。時間=秒、距離=ゲーム内px、速度=px/秒。変更後build.pyで配布版更新。"""
-TITLE, VERSION = "BLADE / CLOSE QUARTERS", "0.12.0"
+TITLE, VERSION = "BLADE / CLOSE QUARTERS", "0.12.1"
 WIDTH, HEIGHT, HUD_HEIGHT, FPS = 256, 320, 24, 60
 PLAYER_SIZE, PLAYER_HIT_RADIUS = 16, 2.0
 PLAYER_SPEED, PLAYER_HP, INVINCIBLE_SECONDS = 125.0, 3, 1.2
@@ -61,6 +61,7 @@ FULLSCREEN, SOUND_ENABLED = False, True
 # 1面MMLの3声（主旋律・伴奏・ドラム）とSEを独立。音声のみ5chへ拡張。
 AUDIO_BGM_CHANNELS, AUDIO_SE_CHANNELS = (0, 1, 2), (3, 4)
 STAGE_BGM_MML_FILE = "assets/stage1_MML.txt"
+BOSS_BGM_MML_FILE = "assets/stage1_boss.txt"
 STAGE_BGM_MODE = "resource"  # Editor音符を優先。元のMML完全再生は"mml"で選べる。
 STAGE_BGM_SOUNDS = (40, 41, 42, 43)
 STAGE_BGM_AUDIBLE_TRACKS = (0, 1, 3)  # 3行目は休符のみ。原文は全4行保持。

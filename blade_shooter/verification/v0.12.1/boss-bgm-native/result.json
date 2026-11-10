@@ -1,0 +1,21 @@
+{
+  "result": "PASS",
+  "version": "0.12.1",
+  "engine": "actual Pyxel 2.9.9",
+  "audio_only_fixture": true,
+  "real_handheld": false,
+  "wall_seconds": 52.91914470004849,
+  "track_seconds": [
+    25.600000381469727,
+    25.600000381469727,
+    25.600000381469727
+  ],
+  "loop_wraps": [
+    2,
+    2,
+    2
+  ],
+  "stage_to_boss_switch": true,
+  "sfx_concurrent": true,
+  "pause_resume": true
+}

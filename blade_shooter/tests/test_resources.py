@@ -1,5 +1,5 @@
 from pathlib import Path
-import sys,zipfile,tomllib,unittest
+import sys,zipfile,tomllib,unittest,json
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 import config as C
 from assets import SPRITES
@@ -29,8 +29,8 @@ class ResourceTests(unittest.TestCase):
             self.assertTrue(all(not music[ch] for ch in C.AUDIO_SE_CHANNELS if ch<len(music)))
             self.assertTrue(all(sound>=32 for seq in music for sound in seq))
 
-    def test_item_additions_preserve_every_existing_pixel_sound_and_music(self):
-        with zipfile.ZipFile(ROOT/'verification/v0.12.0/before'/C.RESOURCE_FILE) as z:
+    def test_boss_music_preserves_stage_images_sfx_and_other_music(self):
+        with zipfile.ZipFile(ROOT/'verification/v0.12.1/before'/C.RESOURCE_FILE) as z:
             before=tomllib.loads(z.read('pyxel_resource.toml').decode())
         def pixel(bank,x,y):
             rows=bank['data'];return rows[y][x] if y<len(rows) and x<len(rows[y]) else 0
@@ -39,9 +39,10 @@ class ResourceTests(unittest.TestCase):
                 for x in range(256):
                     self.assertEqual(pixel(old,x,y),pixel(new,x,y),(bank,x,y))
         for i,(old,new) in enumerate(zip(before['sounds'],self.data['sounds'])):
-            if i not in range(40,52):self.assertEqual(old,new,i)
+            if i not in (36,37,38,39,52,53,54,55,56,57,58,59,60,61):self.assertEqual(old,new,i)
         self.assertEqual(before['tilemaps'],self.data['tilemaps'])
-        self.assertEqual(before['musics'][1:],self.data['musics'][1:])
+        self.assertEqual(before['musics'][0],self.data['musics'][0])
+        self.assertEqual(before['musics'][2:],self.data['musics'][2:])
         self.assertEqual(self.data['musics'][0]['seqs'],[[40,41,42,43],[44,45,46,47],[48,49,50,51]])
         for i in range(40,52):
             sound=self.data['sounds'][i]
@@ -49,7 +50,24 @@ class ResourceTests(unittest.TestCase):
             self.assertTrue(all(-1<=n<=59 for n in sound['notes']))
             self.assertEqual(sound['speed'],12)
         self.assertEqual((ROOT/C.STAGE_BGM_MML_FILE).read_bytes(),
-                         (ROOT/'verification/v0.12.0/before'/C.STAGE_BGM_MML_FILE).read_bytes())
+                         (ROOT/'verification/v0.12.1/before'/C.STAGE_BGM_MML_FILE).read_bytes())
+
+
+    def test_boss_tracks_are_synchronized_editor_notes(self):
+        from tools.convert_stage_bgm import convert
+        rows=[r for r in (ROOT/C.BOSS_BGM_MML_FILE).read_text(encoding='utf-8-sig').splitlines() if r.startswith('Q')]
+        expected=[convert(rows[i]) for i in (0,1,3)]
+        for seq,track in zip(self.data['musics'][1]['seqs'],expected):
+            actual=[]
+            for i in seq:
+                sound=self.data['sounds'][i]
+                self.assertEqual(sound['speed'],12)
+                self.assertLessEqual(len(sound['notes']),48)
+                # Resource TOML abbreviates repeating property lists.
+                props=[sound[k] for k in ('notes','tones','volumes','effects')]
+                actual.extend(tuple(a[n%len(a)] for a in props) for n in range(len(props[0])))
+            self.assertEqual(actual,track)
+            self.assertEqual(len(actual),256)
 
 
 if __name__=='__main__':unittest.main()

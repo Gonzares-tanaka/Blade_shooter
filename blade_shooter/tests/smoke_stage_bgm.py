@@ -46,12 +46,12 @@ def tick():
     if frames==1630:
         assert all(pos is not None and pos[1]<1 for pos in positions),positions
     if frames==1640:
-        assert positions[0] is not None and positions[1] is not None and positions[2] is None,positions
+        assert positions[0] is not None and positions[1] is not None and positions[2] is not None,positions
         assert wraps==[2,2,2],wraps
         result=dict(result='PASS',version=C.VERSION,engine='actual Pyxel 2.9.9',audio_only_fixture=True,
                     real_handheld=False,wall_seconds=time.perf_counter()-started,
                     source_track_seconds=durations,loop_wraps=wraps,sfx_concurrent=True,
-                    pause_stops_all_bgm=True,resume_restarts_stage=True,boss_stops_stage_drums=True,
+                    pause_stops_all_bgm=True,resume_restarts_stage=True,boss_switches_three_voices=True,
                     channels=len(p.channels),samples=samples)
         (folder/'result.json').write_text(json.dumps(result,indent=2),encoding='utf8')
         print('STAGE_BGM_NATIVE_PASS',json.dumps(result),flush=True);p.quit()

@@ -1,4 +1,4 @@
-"""BGMは0/1/2、SEは3/4。1面は添付MML原文、ボスとSEはpyxres。"""
+"""BGMは0/1/2、SEは3/4。道中・ボス・SEはEditor原本のpyxres。"""
 from pathlib import Path
 import config as C
 
