@@ -2,7 +2,10 @@
 // Pyodideの標準jsブリッジへ、相対移動と押下イベントだけを渡す。
 window.bladeInput = {
   dragX: 0, dragY: 0, touchActive: false, focusSerial: 0, suspended: false,
-  slashSerial: 0, confirmSerial: 0, pauseSerial: 0, courseSerial: 0, sectionSerial: 0, settingsSerial: 0, weaponSerial: 0, labSerial: 0, labValue: 2, inputResetSerial: 0, cancelSlashSerial: 0, meleeReady: false,
+  slashSerial: 0, confirmSerial: 0, pauseSerial: 0, courseSerial: 0, sectionSerial: 0, settingsSerial: 0, weaponSerial: 0, labSerial: 0, labValue: 2, inputResetSerial: 0, cancelSlashSerial: 0, meleeReady: false,titleSerial:0,retrySerial:0,
+  debug:new URLSearchParams(location.search).get("debug")==="1",
+  loadBestScore(){try{return Math.max(0,Number(JSON.parse(localStorage.getItem("blade-shooter.best.v1")||"{}").best_score)||0);}catch{return 0;}},
+  saveBestScore(score){try{localStorage.setItem("blade-shooter.best.v1",JSON.stringify({schema:1,best_score:score}));return true;}catch{return false;}},
 };
 (() => {
   document.documentElement.dataset.embedded = String(new URLSearchParams(location.search).has("embed"));
@@ -16,6 +19,7 @@ window.bladeInput = {
   const course = document.getElementById("course");
   const section = document.getElementById("section");
   const settings = document.getElementById("settings");
+  const titleButton = document.getElementById("title-return");
   const panel = document.getElementById("settings-panel");
   const weapon = document.getElementById("weapon");
   let weaponName = "blade", labMode = "free";
@@ -36,9 +40,10 @@ window.bladeInput = {
   function updateLabels() {
     course.textContent = `コース：${courseLabel}（切替）`;
     section.textContent = `開始区間：${sectionLabel}（変更）`;
-    course.disabled = !["title", "clear", "gameover"].includes(state);
+    course.disabled = !["title", "clear"].includes(state);
     section.disabled = course.disabled;
-    settings.disabled = !["title", "clear", "gameover", "settings"].includes(state);
+    settings.disabled = !["title", "clear", "settings"].includes(state);
+    titleButton.hidden=!["result","gameover"].includes(state);
     settings.textContent = state === "settings" ? "設定を閉じる" : `${weaponLabels[weaponName]} / ${directionLabel()} ⚙`;
     panel.hidden = state !== "settings";
     weapon.textContent = `武器：${weaponLabels[weaponName]}（変更）`;
@@ -49,9 +54,9 @@ window.bladeInput = {
       "54秒固定配置。武器を変えて同じ条件でリトライ。" : "武器を選択。既存の1面も遊べます。";
     zones.hidden = state!=="playing";
     document.getElementById("attack-zone-label").textContent = `斬撃エリア ${weaponName==="lance"?"↑↓":"←→"}`;
-    start.disabled = state === "loading";
+    start.disabled = state === "loading" || state === "stage_clear";
     start.textContent = state === "loading" ? "読み込み中" : state === "playing" ? "一時停止" : state === "paused" ? "再開" :
-                       ["clear", "gameover"].includes(state) ? "もう一度" : state === "settings" ? "設定完了" : "開始";
+                       ["clear", "gameover","result"].includes(state) ? "もう一度" : state === "stage_clear" ? "STAGE CLEAR" : state === "settings" ? "設定完了" : "開始";
     document.getElementById("status").textContent = state === "loading" ?
       "表示が出たらゲーム画面をタップ →「開始」でプレイ" : state === "paused" ?
       "一時停止中 · 再開ボタン / Pで続ける" :
@@ -66,6 +71,7 @@ window.bladeInput = {
         clearTouch();
         state = value;
         updateLabels();
+        if(["result","gameover"].includes(state)&&document.activeElement instanceof HTMLButtonElement)document.activeElement.blur();
       }
     },
   });
@@ -165,7 +171,12 @@ window.bladeInput = {
     resumeAudio();
     clearTouch();
     if (["playing", "paused"].includes(state)) bridge.pauseSerial++;
+    else if(["result","gameover"].includes(state))bridge.retrySerial++;
     else bridge.confirmSerial++;
+  });
+  titleButton.addEventListener("click",()=>{
+    if(!["result","gameover"].includes(state))return;
+    clearTouch();bridge.suspended=false;bridge.titleSerial++;
   });
   course.addEventListener("click", () => {
     if (!["title", "clear", "gameover"].includes(state)) return;

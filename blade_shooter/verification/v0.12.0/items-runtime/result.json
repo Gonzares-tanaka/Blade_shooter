@@ -1,0 +1,43 @@
+{
+  "version": "0.12.0",
+  "engine": "actual Pyxel 2.9.9",
+  "fixture": true,
+  "screenshots": [
+    "heal",
+    "blade",
+    "axe",
+    "lance"
+  ],
+  "sounds": {
+    "17": {
+      "notes": [
+        36,
+        40,
+        43,
+        48
+      ],
+      "playing": [
+        0,
+        0.046439968049526215
+      ]
+    },
+    "18": {
+      "notes": [
+        31,
+        36,
+        43
+      ],
+      "playing": [
+        0,
+        0.023220263421535492
+      ]
+    }
+  },
+  "bulletsVisibleOverItem": true,
+  "result": "PASS",
+  "displayedKindPickup": true,
+  "oldAttackCompletes": true,
+  "nextAttackNewWeapon": true,
+  "oldCooldownPreserved": true,
+  "paletteColors": 52
+}

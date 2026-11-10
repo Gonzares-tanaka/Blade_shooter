@@ -1,9 +1,12 @@
 """描画・入力APIに依存しない共通ゲーム。斬撃ポリゴンは描画と判定で共有。"""
 from dataclasses import dataclass
 import math
+import json
 import config as C
 from boss import Battleship
 from items import AreaItems
+from progress import RunState,Result,ScorePopup
+from stages import get_stage
 
 
 @dataclass
@@ -23,6 +26,8 @@ class Actions:
     weapon: int = 0
     touch_mode: int = 0
     lab: int = 0  # 1=weapons, 2=free
+    title: bool = False
+    retry: bool = False
 
 
 
@@ -198,29 +203,36 @@ def polygon_hits_motion(poly, start, end, radius):
 
 
 class Game:
-    def __init__(self, course=C.DEFAULT_COURSE, section=0, seed=None, weapon=C.DEFAULT_WEAPON, touch_mode=C.DEFAULT_TOUCH_MODE):
+    def __init__(self, course=C.DEFAULT_COURSE, section=0, seed=None, weapon=C.DEFAULT_WEAPON, touch_mode=C.DEFAULT_TOUCH_MODE, debug=C.DEBUG_ENABLED):
         if course not in C.COURSES:
             raise ValueError("Unknown test course: "+course)
         if weapon not in C.WEAPONS or touch_mode not in C.TOUCH_MODES:
             raise ValueError("Unknown weapon or touch mode")
+        self.run=RunState(weapon=weapon)
+        self.selected_weapon=weapon
         self.weapon, self.touch_mode = weapon, touch_mode
+        self.best_score=0
+        self.debug=debug
+        self.debug_log=[]
+        self.stage_definition=get_stage(1)
         self.lab_mode = "free"
         self.settings_row = 0
         self.course = course
         self.seed=C.STAGE_SEED if seed is None else seed
-        self.stage_data=C.COURSES["stage"] if seed is None else C.stage_course(seed)
+        self.stage_data=self.stage_definition.build(self.seed)
         self.checkpoint = section
         self.state = "title"
         self.reset()
         self.state = "title"
         self.events=[]
 
-    def reset(self):
+    def reset(self,carry_run=False):
+        if not carry_run:self.run=RunState(current_stage=self.stage_definition.number,weapon=self.selected_weapon)
         self.state = "playing"
         self.checkpoint=max(0,min(self.checkpoint,len(self.course_config["sections"])-1))
         self.time = self.world_time = self.course_config["sections"][self.checkpoint][0]
         self.px, self.py = C.WIDTH/2, C.HEIGHT-54
-        self.hp, self.invincible = C.PLAYER_HP, 0.0
+        self.invincible = 0.0
         self.cooldown, self.swing, self.shot_clock = 0.0, -1.0, 0.0
         self.swing_weapon = self.weapon
         self.items = AreaItems(self)
@@ -246,8 +258,82 @@ class Game:
         self.boss_spawned_at=None
         self.boss_engaged_at=None
         self.route_complete=False
+        self.boss_pending=False
+        self.cleanup_time=0.0
+        self.scene_time=0.0
+        self.result=None
+        self.result_choice=0
+        self.frame_hurt=False
+        self.cut_pulse=0.0
+        self.score_popups=[]
+        self.score_totals={}
+        self.combo_text=""
+        self.combo_time=0.0
+        self.boss_defeated=False
+        self.debug_log=[]
         if self.course_config["next_scene"]=="boss" and self.time>=self.duration:
             self.begin_boss()
+
+    @property
+    def weapon(self):return self.run.weapon
+    @weapon.setter
+    def weapon(self,value):self.run.weapon=value
+    @property
+    def hp(self):return self.run.hp
+    @hp.setter
+    def hp(self,value):self.run.hp=value
+    @property
+    def score(self):return self.run.score
+    @score.setter
+    def score(self,value):self.run.score=value
+    @property
+    def current_cut(self):return self.run.current_cut
+    @property
+    def max_cut(self):return self.run.max_cut
+
+    def enter_stage(self,number,carry_run=True):
+        self.stage_definition=get_stage(number)
+        self.stage_data=self.stage_definition.build(self.seed)
+        self.run.current_stage=number
+        self.course="stage";self.checkpoint=0
+        self.reset(carry_run=carry_run)
+
+    def log(self,event,**data):
+        if not self.debug:return
+        item=dict(time=round(self.time,3),event=event,**data)
+        self.debug_log.append(item);self.debug_log=self.debug_log[-256:]
+        print("BLADE_DEBUG "+json.dumps(item),flush=True)
+
+    def add_score(self,amount,reason,x=None,y=None,melee=False):
+        self.score+=amount
+        self.score_totals[reason]=self.score_totals.get(reason,0)+amount
+        if x is not None:
+            self.score_popups.append(ScorePopup(x,y,amount,melee))
+            self.score_popups=self.score_popups[-6:]
+        self.log("score",amount=amount,total=self.score,reason=reason)
+
+    def reset_cut(self,reason):
+        if self.current_cut:self.log("cut_reset",reason=reason,previous=self.current_cut)
+        self.run.current_cut=0;self.run.cut_remaining=0
+        self.cut_pulse=0
+
+    def add_cut(self,count):
+        if not count:return
+        self.run.current_cut+=count
+        self.run.cut_remaining=C.CUT["grace_seconds"]
+        self.cut_pulse=C.CUT["pulse_seconds"]
+        self.log("cut",added=count,total=self.current_cut)
+        if self.current_cut>self.max_cut:
+            self.run.max_cut=self.current_cut
+            self.log("max_cut",value=self.max_cut)
+
+    def finish_result(self,cleared):
+        if self.result is not None:return
+        self.best_score=max(self.best_score,self.score)
+        self.result=Result(self.run.current_stage,cleared,self.score,self.best_score,
+                           self.max_cut,self.boss_defeated,self.weapon,self.time)
+        self.result_choice=0;self.menu_vertical=0
+        self.log("stage_end",cleared=cleared,score=self.score,max_cut=self.max_cut)
 
     @property
     def weapon_config(self):
@@ -272,6 +358,7 @@ class Game:
         if action.weapon:
             choices=tuple(C.WEAPONS)
             self.weapon=choices[(choices.index(self.weapon)+action.weapon)%len(choices)]
+            self.selected_weapon=self.weapon
         if action.touch_mode and self.lab_mode!="weapons":
             choices=tuple(C.TOUCH_MODES)
             self.touch_mode=choices[(choices.index(self.touch_mode)+action.touch_mode)%len(choices)]
@@ -291,7 +378,10 @@ class Game:
     def finish_course(self):
         """道中の出口。300秒で出現を止め、クリアにせず戦艦へ接続する。"""
         if self.course_config["next_scene"]=="boss":
-            self.begin_boss()
+            self.route_complete=True
+            self.boss_pending=True
+            self.events.append("route_end")
+            self.log("route_end")
             return
         self.stage_complete = True
         self.pending_scene = self.course_config["next_scene"]
@@ -301,17 +391,26 @@ class Game:
     def begin_boss(self):
         if self.boss is not None:return
         self.route_complete=True
+        self.boss_pending=False
         self.pending_scene="boss"
-        self.boss=Battleship()
+        self.boss=self.stage_definition.boss_factory()
         self.boss_spawned_at=self.time
         self.events.extend(("route_end","boss_arrival"))
+        self.log("boss_arrival")
+
+    def update_transition(self,dt):
+        if not self.boss_pending:return
+        self.cleanup_time+=dt
+        if self.cleanup_time>=C.FLOW["cleanup_max_seconds"]:
+            self.enemies.clear();self.bullets.clear();self.shots.clear()
+        if not self.enemies and not self.bullets:self.begin_boss()
 
     @property
     def targets(self):
         return self.enemies+(self.boss.parts if self.boss else [])
 
     def update_boss(self,dt):
-        if self.boss is None:return
+        if self.boss is None or self.boss_defeated:return
         # 撤退中の道中敵・発射済み弾はそのまま更新し、なくなるまで初撃を待つ。
         ready=not self.enemies and not any(not b.source.startswith("boss:") for b in self.bullets)
         active=self.boss.active
@@ -327,14 +426,22 @@ class Game:
         if self.boss.warnings:self.events.append("boss_warning")
 
     def check_boss_defeat(self):
-        if self.boss and all(p.hp<=0 for p in self.boss.parts) and self.state=="playing":
+        if self.boss and all(p.hp<=0 for p in self.boss.parts) and not self.boss_defeated and self.state=="playing":
+            self.boss_defeated=True
+            self.add_score(C.SCORING["points"]["battleship"],"battleship")
             self.stage_complete=True
-            self.pending_scene="stage_clear"
-            self.state="clear"
+            self.pending_scene=self.stage_definition.clear_target
+            self.state="stage_clear"
+            self.scene_time=0.0
+            self.bullets.clear();self.shots.clear();self.enemies.clear()
+            self.items.current=None
+            self.slash_polys=[];self.slash_slices=[]
+            self.finish_result(True)
             self.events.extend(("boss_defeat","clear"))
 
     @property
     def section(self):
+        if self.boss_pending:return (self.duration,"07 / CLEARING THE DECK","MOVE / DREADNOUGHT INCOMING")
         if self.boss:
             return (self.duration,"07 / DREADNOUGHT","OPEN / STEP IN / CUT" if self.boss.opening
                     else "CLEAR DECK / MOVE BELOW" if not self.boss.active else "DODGE / CUT A CORRIDOR")
@@ -383,6 +490,9 @@ class Game:
         enemy.hp -= amount
         enemy.flash = 0.07
         if enemy.hp <= 0:
+            key="boss_"+enemy.key if enemy.kind=="boss" else enemy.kind
+            points=C.SCORING["points"][key]*(C.SCORING["melee_multiplier"] if blade else 1)
+            self.add_score(points,key,enemy.x,enemy.y,blade)
             if enemy.kind=="boss":
                 enemy.hp=0
                 enemy.enabled=False
@@ -395,6 +505,11 @@ class Game:
                 self.blade_kills += 1
                 self.blade_kills_by_kind[enemy.kind] += 1
                 self.swing_kills += 1
+                if self.swing_kills>=2:
+                    self.add_score(C.SCORING["multi_extra"],"multi_kill")
+                    self.combo_text=({2:"DOUBLE",3:"TRIPLE"}.get(self.swing_kills,str(self.swing_kills)+" KILLS")+
+                                     " +"+str((self.swing_kills-1)*C.SCORING["multi_extra"]))
+                    self.combo_time=C.SCORING["combo_seconds"]
                 self.max_swing_kills = max(self.max_swing_kills, self.swing_kills)
             else:
                 self.shot_kills += 1
@@ -410,6 +525,27 @@ class Game:
     def step(self, dt, action=None):
         action = action or Actions()
         self.events = []
+        if self.state=="stage_clear":
+            self.scene_time+=dt
+            if self.scene_time>=C.FLOW["clear_banner_seconds"]:
+                if self.stage_definition.clear_target=="next_stage" and self.stage_definition.next_stage is not None:
+                    self.enter_stage(self.stage_definition.next_stage,carry_run=True)
+                else:self.state="result"
+            return
+        if self.state in ("result","gameover"):
+            if action.retry:
+                if self.course=="stage":self.checkpoint=0
+                self.reset();self.events.append("start");return
+            vertical=int(action.y!=0)
+            if vertical and not self.menu_vertical:self.result_choice=1-self.result_choice
+            self.menu_vertical=vertical
+            if action.title or action.settings or ((action.confirm or action.slash) and self.result_choice==1):
+                self.state="title";self.menu_direction=self.menu_vertical=0
+                self.weapon=self.selected_weapon
+            elif action.confirm or action.slash:
+                if self.course=="stage":self.checkpoint=0
+                self.reset();self.events.append("start")
+            return
         if action.focus_lost and self.state == "playing":
             self.state = "paused"
             return
@@ -432,7 +568,7 @@ class Game:
                 self.state="title"
                 self.menu_direction=self.menu_vertical=0
             return
-        if self.state in ("title", "gameover", "clear"):
+        if self.state in ("title", "clear"):
             self.configure(action)
             if action.settings:
                 self.state="settings"
@@ -472,7 +608,7 @@ class Game:
         self.menu_direction=int(action.x!=0)
         self.menu_vertical=int(action.y!=0)
         self.time += dt
-        if self.boss is None and self.time >= self.duration-1e-7:
+        if self.boss is None and not self.route_complete and self.time >= self.duration-1e-7:
             self.time = self.duration
             self.finish_course()
             if self.state!="playing":return
@@ -483,6 +619,14 @@ class Game:
         self.shake = max(0, self.shake-dt)
         self.invincible = max(0, self.invincible-dt)
         self.cooldown = max(0, self.cooldown-dt)
+        self.frame_hurt=False
+        self.cut_pulse=max(0,self.cut_pulse-dt)
+        self.combo_time=max(0,self.combo_time-dt)
+        for popup in self.score_popups:popup.age+=dt
+        self.score_popups=[p for p in self.score_popups if p.age<C.SCORING["popup_seconds"]]
+        if not self.boss_pending and not (self.boss and not self.boss.active) and self.current_cut:
+            self.run.cut_remaining=max(0,self.run.cut_remaining-dt)
+            if self.run.cut_remaining<=1e-7:self.reset_cut("timeout")
         previous_pivot = (self.px, self.py-4)
         length = max(1.0, math.hypot(action.x, action.y))
         gain = self.player_speed/C.PLAYER_SPEED
@@ -497,6 +641,9 @@ class Game:
         self.schedule()
         previous_enemies = {e.uid: (e.x, e.y) for e in self.targets}
         self.update_enemies(dt)
+        self.update_transition(dt)
+        # 登場で追加した部位も、このフレームの相対移動の開始点を持つ。
+        for e in self.targets:previous_enemies.setdefault(e.uid,(e.x,e.y))
         self.update_boss(dt)
         self.update_blade(dt, previous_pivot, previous_enemies)
         # 停止分を溜めて連射しない。発射済みの弾はこの下で通常どおり更新する。
@@ -520,13 +667,16 @@ class Game:
                     break
         self.shots = [b for b in self.shots if b.y > C.HUD_HEIGHT-8]
         self.check_boss_defeat()
+        if self.state!="playing":return
         live = []
+        erased=0
         for b in self.bullets:
             previous = (b.x, b.y)
             b.x += b.vx*dt
             b.y += b.vy*dt
             if self.blade_hits_motion(previous, (b.x, b.y), C.BULLET_RADIUS):
                 self.cleared_bullets += 1
+                erased+=1
                 self.events.append("erase")
                 if sum(e.kind == "spark" for e in self.effects) < 24:
                     self.effects.append(Effect(b.x, b.y, "spark"))
@@ -540,6 +690,7 @@ class Game:
             if -10 < b.x < C.WIDTH+10 and C.HUD_HEIGHT-20 < b.y < C.HEIGHT+12:
                 live.append(b)
         self.bullets = live
+        if not self.frame_hurt:self.add_cut(erased)
         self.check_boss_defeat()
         # 突進の前後と自機移動を相対化して掃引。高速設定でも機体をすり抜けない。
         body = ((self.px-8, self.py-8), (self.px+8, self.py-8),
@@ -559,7 +710,7 @@ class Game:
         self.effects = [e for e in self.effects if e.age < (0.48 if e.kind == "split" else 0.22)]
 
     def schedule(self):
-        if self.boss is not None or self.time>=self.duration:return
+        if self.route_complete or self.boss is not None or self.time>=self.duration:return
         for i,wave in enumerate(self.course_config["waves"]):
             if self.time < wave["at"] or i in self.done:continue
             self.done.add(i)
@@ -577,7 +728,7 @@ class Game:
             e.age += dt
             e.flash = max(0, e.flash-dt)
             e.contact_grace=max(0,e.contact_grace-dt)
-            if self.boss is not None:
+            if self.route_complete:
                 e.phase="retreat"
                 e.y-=C.BOSS_RETREAT_SPEED*dt
             elif e.kind == "rear":
@@ -752,9 +903,12 @@ class Game:
         if self.invincible > 0 or self.state != "playing":
             return
         self.hp -= 1
+        self.frame_hurt=True
+        self.reset_cut("damage")
         self.invincible = C.INVINCIBLE_SECONDS
         self.events.append("hurt")
         self.effects.append(Effect(self.px, self.py, "hurt"))
         if self.hp <= 0:
             self.state = "gameover"
+            self.finish_result(False)
             self.events.append("over")

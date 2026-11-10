@@ -1,0 +1,132 @@
+{
+  "version": "0.12.0",
+  "fps": 60,
+  "frames": 19743,
+  "wall_seconds": 335.31471840001177,
+  "automatic_input": true,
+  "state": "result",
+  "time": 327.23333333330856,
+  "hp": 2,
+  "boss_spawn": 300.53333333333285,
+  "first_boss_fire": 305.41666666666174,
+  "order": [
+    "center",
+    "left",
+    "right"
+  ],
+  "blade": {
+    "armor": 40,
+    "small": 73,
+    "charger": 7,
+    "rear": 5,
+    "boss": 3
+  },
+  "cleared": 13,
+  "items": [
+    {
+      "event": "spawn",
+      "area": 1,
+      "time": 40.499999999998984,
+      "x": 64.0,
+      "y": 200.0,
+      "kind": "lance"
+    },
+    {
+      "event": "exit",
+      "area": 1,
+      "time": 51.06666666666505,
+      "kind": "blade"
+    },
+    {
+      "event": "spawn",
+      "area": 2,
+      "time": 80.49999999999672,
+      "x": 64.0,
+      "y": 200.0,
+      "kind": "axe"
+    },
+    {
+      "event": "exit",
+      "area": 2,
+      "time": 91.06666666666278,
+      "kind": "axe"
+    },
+    {
+      "event": "spawn",
+      "area": 3,
+      "time": 120.49999999999444,
+      "x": 64.0,
+      "y": 200.0,
+      "kind": "lance"
+    },
+    {
+      "event": "pickup",
+      "area": 3,
+      "time": 122.13333333332768,
+      "kind": "axe",
+      "weapon": "axe",
+      "hp": 2
+    },
+    {
+      "event": "spawn",
+      "area": 4,
+      "time": 160.50000000001987,
+      "x": 208.0,
+      "y": 248.0,
+      "kind": "blade"
+    },
+    {
+      "event": "exit",
+      "area": 4,
+      "time": 171.63333333336206,
+      "kind": "axe"
+    },
+    {
+      "event": "spawn",
+      "area": 5,
+      "time": 210.50000000005966,
+      "x": 208.0,
+      "y": 248.0,
+      "kind": "heal"
+    },
+    {
+      "event": "exit",
+      "area": 5,
+      "time": 221.4333333334017,
+      "kind": "lance"
+    },
+    {
+      "event": "spawn",
+      "area": 6,
+      "time": 300.0,
+      "x": 208.0,
+      "y": 248.0,
+      "kind": "blade"
+    },
+    {
+      "event": "exit",
+      "area": 6,
+      "time": 310.9333333333234,
+      "kind": "axe"
+    }
+  ],
+  "weapon": "axe",
+  "score": 105300,
+  "best": 105300,
+  "max_cut": 2,
+  "score_totals": {
+    "small": 21800,
+    "multi_kill": 6200,
+    "armor": 40000,
+    "rear": 2500,
+    "charger": 2800,
+    "boss_center": 10000,
+    "boss_left": 6000,
+    "boss_right": 6000,
+    "battleship": 10000
+  },
+  "result_max_cut": 2,
+  "boss_defeated": true,
+  "save_failed": false,
+  "retry_clean": true
+}

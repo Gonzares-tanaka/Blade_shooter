@@ -1,0 +1,12 @@
+{
+  "version": "0.12.0",
+  "date": "2026-11-10",
+  "python_tests": 119,
+  "node_tests": 26,
+  "native_full_stage": "PASS",
+  "native_retry_clean": true,
+  "web_result_and_storage": "PASS",
+  "multitouch": "PASS",
+  "real_iphone": false,
+  "real_gkd": false
+}

@@ -1,10 +1,18 @@
 """調整箇所。時間=秒、距離=ゲーム内px、速度=px/秒。変更後build.pyで配布版更新。"""
-TITLE, VERSION = "BLADE / CLOSE QUARTERS", "0.11.1"
+TITLE, VERSION = "BLADE / CLOSE QUARTERS", "0.12.0"
 WIDTH, HEIGHT, HUD_HEIGHT, FPS = 256, 320, 24, 60
 PLAYER_SIZE, PLAYER_HIT_RADIUS = 16, 2.0
 PLAYER_SPEED, PLAYER_HP, INVINCIBLE_SECONDS = 125.0, 3, 1.2
 PLAYER_SPEED_PRESETS = {"tempo": 1.3, "tempo_fast": 1.5}
 SHOT_INTERVAL, SHOT_SPEED, SHOT_DAMAGE = 0.14, 300.0, 1
+SCORING = dict(points=dict(small=100, charger=200, rear=250, armor=500,
+                          boss_left=3000, boss_right=3000, boss_center=5000, battleship=10000),
+               melee_multiplier=2, multi_extra=200, popup_seconds=0.65, combo_seconds=0.7)
+CUT = dict(grace_seconds=1.5, pulse_seconds=0.18)
+FLOW = dict(cleanup_max_seconds=2.0, clear_banner_seconds=1.8)
+HUD = dict(score_columns=6, cut_columns=4)
+BEST_SCORE_KEY = "blade-shooter.best.v1"
+DEBUG_ENABLED = False
 # 武器の唯一の調整表。距離=ゲームpx、角度=右0/上-90、時間=秒。
 # cooldownは攻撃入力が受理された時点から。shot_stopは3フェーズの合計で自動算出。
 # 攻撃/弾消しはactiveのみ。near〜reachの実体だけを掃引し、柄と残像は無判定。
@@ -53,6 +61,7 @@ FULLSCREEN, SOUND_ENABLED = False, True
 # 1面MMLの3声（主旋律・伴奏・ドラム）とSEを独立。音声のみ5chへ拡張。
 AUDIO_BGM_CHANNELS, AUDIO_SE_CHANNELS = (0, 1, 2), (3, 4)
 STAGE_BGM_MML_FILE = "assets/stage1_MML.txt"
+STAGE_BGM_MODE = "resource"  # Editor音符を優先。元のMML完全再生は"mml"で選べる。
 STAGE_BGM_SOUNDS = (40, 41, 42, 43)
 STAGE_BGM_AUDIBLE_TRACKS = (0, 1, 3)  # 3行目は休符のみ。原文は全4行保持。
 # 小型編隊の中心と、中心からの相対配置。個々の機体HP・速度はSMALL_*。
@@ -185,16 +194,17 @@ MIX_CANDIDATES = {
 }
 
 
-def mixed_waves(seed):
+def mixed_waves(seed, candidates=None):
     import random
     rng=random.Random(seed)
+    candidates=MIX_CANDIDATES if candidates is None else candidates
     waves,chosen=[],[]
     previous=None
     for slot in range(6):
-        pool=[key for key,p in MIX_CANDIDATES.items() if p["family"]!=previous]
+        pool=[key for key,p in candidates.items() if p["family"]!=previous]
         key=rng.choice(pool)
-        item=MIX_CANDIDATES[key]
-        base=MIX_CANDIDATES[item.get("source",key)]
+        item=candidates[key]
+        base=candidates[item.get("source",key)]
         chosen.append(key)
         previous=item["family"]
         for at,kind,x,pattern in base["waves"]:
@@ -205,8 +215,8 @@ def mixed_waves(seed):
     return tuple(waves),tuple(chosen)
 
 
-def stage_plan(seed=STAGE_SEED):
-    mixed,_=mixed_waves(seed)
+def stage_plan(seed=STAGE_SEED, candidates=None):
+    mixed,_=mixed_waves(seed,candidates)
     return (
         section("formation",40,"01 / FORMATIONS","LINE UP / SWEEP / REPOSITION",(
             (0.8,"formation",128,"line"),(4.0,"formation",60,"diagonal_l"),
@@ -252,10 +262,10 @@ def stage_plan(seed=STAGE_SEED):
     )
 
 
-def stage_course(seed=STAGE_SEED):
-    data=compile_course("STAGE 1 / DREADNOUGHT","1面 / 5分＋巨大戦艦",stage_plan(seed),"boss")
+def stage_course(seed=STAGE_SEED, candidates=None):
+    data=compile_course("STAGE 1 / DREADNOUGHT","1面 / 5分＋巨大戦艦",stage_plan(seed,candidates),"boss")
     data["sections"]+=((data["duration"],"07 / DREADNOUGHT","CUT A PATH / DESTROY ALL THREE"),)
-    data["seed"],data["mix_choices"]=seed,mixed_waves(seed)[1]
+    data["seed"],data["mix_choices"]=seed,mixed_waves(seed,candidates)[1]
     return data
 
 

@@ -31,6 +31,7 @@ footer { flex:0 0 auto; color:#7d9297; text-align:center; font-size:9px; line-he
 nav { flex-wrap:wrap; }
 #settings { flex-basis:100%; min-height:32px; color:#c0dfff; background:#14232b; border:1px solid #304952; border-radius:4px; font-size:10px; }
 #settings:disabled { opacity:.5; }
+#title-return { flex-basis:100%; min-height:36px; color:#67f0d1; background:#14232b; border:1px solid #304952; border-radius:4px; font-size:11px; }
 #settings-panel { position:absolute; z-index:8; inset:145px 12px 45px; overflow:auto; overscroll-behavior:contain; padding:18px; border:1px solid #67f0d1; background:#0d191f; box-shadow:0 12px 35px #000a; font-size:11px; line-height:1.8; }
 #settings-panel h1 { font-size:17px; margin:0 0 14px; color:#67f0d1; }
 #settings-panel p { color:#b3c4c5; margin:10px 0 16px; }

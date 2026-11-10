@@ -1,0 +1,14 @@
+{
+  "result": "PASS",
+  "missing": {
+    "weapon": [],
+    "cut": [],
+    "timer": []
+  },
+  "expected_counts": {
+    "weapon": 48,
+    "cut": 24,
+    "timer": 42
+  },
+  "hud_height": 24
+}

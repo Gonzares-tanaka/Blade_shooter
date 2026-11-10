@@ -12,7 +12,7 @@
   runtime.onload = () => {
     if (typeof window.launchPyxel !== "function") { fail(); return; }
     const boot = document.createElement("script");
-    boot.src = "boot.js";
+    boot.src = "boot.js?v="+encodeURIComponent(window.BLADE_TOUCH_CONFIG.version);
     boot.onerror = fail;
     document.body.appendChild(boot);
   };

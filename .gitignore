@@ -6,3 +6,4 @@
 blade_shooter/verification/v*/launcher probe/
 
 .playwright/
+blade_shooter/save/

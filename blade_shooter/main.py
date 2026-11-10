@@ -1,5 +1,5 @@
 # title: Blade Close Quarters
-# version: 0.11.1
+# version: 0.12.0
 """PC / GKD / Web共通入口。SELECTは状態・ヒットストップより先に処理。"""
 import sys
 import config as C
@@ -7,6 +7,7 @@ from game import Game, Actions
 from view import View
 from assets import load_resources
 from audio import Audio
+from persistence import BestStore
 
 
 class Input:
@@ -16,7 +17,7 @@ class Input:
         self.keys = {name: tuple(getattr(p, k) if isinstance(k, str) else k for k in keys)
                      for name, keys in mapping.items()}
         self.bridge = None
-        self.serials = {"slash": 0, "confirm": 0, "pause": 0, "focus": 0, "course": 0, "section": 0, "settings": 0, "weapon": 0, "touchMode": 0, "lab": 0, "inputReset": 0}
+        self.serials = {"slash": 0, "confirm": 0, "pause": 0, "focus": 0, "course": 0, "section": 0, "settings": 0, "weapon": 0, "touchMode": 0, "lab": 0, "inputReset": 0, "title":0,"retry":0}
         self.blocked = set()
         if sys.platform == "emscripten":
             from js import window
@@ -55,7 +56,7 @@ class Input:
                        focus_lost=lost, quit=pressed("quit"), course="course" in pulses,section=int("section" in pulses),
                        settings=pressed("settings"),weapon=int("weapon" in pulses),
                        touch_mode=int("touchMode" in pulses),
-                       lab=int(getattr(self.bridge,"labValue",2)) if "lab" in pulses else 0)
+                       lab=int(getattr(self.bridge,"labValue",2)) if "lab" in pulses else 0,title="title" in pulses,retry="retry" in pulses)
 
 
 class App:
@@ -69,12 +70,16 @@ class App:
         if C.FULLSCREEN:
             pyxel.fullscreen(True)
         self.game, self.input, self.view = Game(course,section,self.seed_option(sys.argv[1:])), Input(pyxel, self.profile), View(pyxel, self.profile)
+        self.store=BestStore(self.input.bridge)
+        self.game.best_score=self.store.best
+        self.game.debug="--debug" in sys.argv or bool(getattr(self.input.bridge,"debug",False))
         for flag,attribute in (("--weapon","weapon"),("--touch-mode","touch_mode")):
             if flag in sys.argv:
                 value=sys.argv[sys.argv.index(flag)+1]
                 choices=C.WEAPONS if attribute=="weapon" else C.TOUCH_MODES
                 if value not in choices:raise ValueError("Unknown "+flag)
                 setattr(self.game,attribute,value)
+                if attribute=="weapon":self.game.selected_weapon=value
         self.audio = Audio(pyxel)
         pyxel.run(self.update, self.draw)
 
@@ -103,6 +108,8 @@ class App:
             return
         previous_state=self.game.state
         self.game.step(1/C.FPS, action)
+        if self.game.result is not None:self.store.save(self.game.best_score)
+        self.game.save_failed=self.store.failed
         if previous_state!=self.game.state and "settings" in (previous_state,self.game.state):
             # 設定への出入りで物理キーの保持も持ち越さず、離してから再入力する。
             self.input.blocked.update(k for keys in self.input.keys.values() for k in keys if self.p.btn(k))

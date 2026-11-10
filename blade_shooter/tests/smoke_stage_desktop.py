@@ -39,17 +39,29 @@ def tick():
             if p.phase=='warning':capture('boss-warning-'+p.key)
         for key in g.boss.destroyed_order:capture('destroyed-'+key)
         if g.boss.opening and g.slash_polys:capture('boss-blade-opening')
-    if g.state in ('clear','gameover'):
+    if g.state=='stage_clear':capture('stage-clear')
+    if g.state in ('result','gameover'):
         capture('result')
         result=dict(version=C.VERSION,fps=C.FPS,frames=frames,wall_seconds=time.perf_counter()-started,
                     automatic_input=True,state=g.state,time=g.time,hp=g.hp,boss_spawn=g.boss_spawned_at,
                     first_boss_fire=g.boss.first_fire_time if g.boss else None,
                     order=g.boss.destroyed_order if g.boss else [],blade=g.blade_kills_by_kind,
-                    cleared=g.cleared_bullets,items=g.items.history,weapon=g.weapon)
+                    cleared=g.cleared_bullets,items=g.items.history,weapon=g.weapon,
+                    score=g.score,best=g.best_score,max_cut=g.max_cut,score_totals=g.score_totals,
+                    result_max_cut=g.result.max_cut,boss_defeated=g.boss_defeated,save_failed=app.store.failed)
+        assert g.state=='result' and 300<=g.boss_spawned_at<=302.1
+        assert g.score>0 and g.max_cut>0 and g.result.max_cut==g.max_cut
+        assert g.score==sum(g.score_totals.values())
+        assert g.score_totals['battleship']==10000
+        assert [h['area'] for h in g.items.history if h['event']=='spawn']==[1,2,3,4,5,6]
+        from game import Actions
+        g.step(1/C.FPS,Actions(retry=True))
+        assert (g.score,g.current_cut,g.max_cut,g.time,g.hp)==(0,0,0,0,3)
+        assert not (g.enemies or g.bullets or g.shots or g.boss or g.items.current)
+        capture('retry-reset')
+        result['retry_clean']=True
         (FOLDER/'result.json').write_text(json.dumps(result,indent=2))
         print('DESKTOP_STAGE',json.dumps(result),flush=True)
-        assert g.state=='clear' and g.boss_spawned_at==300
-        assert [h['area'] for h in g.items.history if h['event']=='spawn']==[1,2,3,4,5,6]
         pyxel.quit()
     if frames>480*C.FPS:raise AssertionError('stage timeout')
 

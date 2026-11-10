@@ -30,18 +30,26 @@ class ResourceTests(unittest.TestCase):
             self.assertTrue(all(sound>=32 for seq in music for sound in seq))
 
     def test_item_additions_preserve_every_existing_pixel_sound_and_music(self):
-        with zipfile.ZipFile(ROOT/'verification/v0.11.0/before'/C.RESOURCE_FILE) as z:
+        with zipfile.ZipFile(ROOT/'verification/v0.12.0/before'/C.RESOURCE_FILE) as z:
             before=tomllib.loads(z.read('pyxel_resource.toml').decode())
         def pixel(bank,x,y):
             rows=bank['data'];return rows[y][x] if y<len(rows) and x<len(rows[y]) else 0
         for bank,(old,new) in enumerate(zip(before['images'],self.data['images'])):
             for y in range(256):
                 for x in range(256):
-                    if bank==0 and x<64 and 96<=y<112:continue
                     self.assertEqual(pixel(old,x,y),pixel(new,x,y),(bank,x,y))
         for i,(old,new) in enumerate(zip(before['sounds'],self.data['sounds'])):
-            if i not in (17,18):self.assertEqual(old,new,i)
-        for key in ('musics','tilemaps'):self.assertEqual(before[key],self.data[key])
+            if i not in range(40,52):self.assertEqual(old,new,i)
+        self.assertEqual(before['tilemaps'],self.data['tilemaps'])
+        self.assertEqual(before['musics'][1:],self.data['musics'][1:])
+        self.assertEqual(self.data['musics'][0]['seqs'],[[40,41,42,43],[44,45,46,47],[48,49,50,51]])
+        for i in range(40,52):
+            sound=self.data['sounds'][i]
+            self.assertEqual(len(sound['notes']),32)
+            self.assertTrue(all(-1<=n<=59 for n in sound['notes']))
+            self.assertEqual(sound['speed'],12)
+        self.assertEqual((ROOT/C.STAGE_BGM_MML_FILE).read_bytes(),
+                         (ROOT/'verification/v0.12.0/before'/C.STAGE_BGM_MML_FILE).read_bytes())
 
 
 if __name__=='__main__':unittest.main()

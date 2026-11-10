@@ -8,7 +8,8 @@ import zipfile
 import config as C
 
 ROOT = Path(__file__).resolve().parent
-SOURCES = ("main.py", "config.py", "game.py", "boss.py", "items.py", "view.py", "assets.py", "audio.py")
+SOURCES = ("main.py", "config.py", "game.py", "boss.py", "items.py", "progress.py", "stages.py",
+           "persistence.py", "view.py", "assets.py", "audio.py")
 RESOURCES = (C.RESOURCE_FILE, C.PALETTE_FILE, C.STAGE_BGM_MML_FILE)
 
 
@@ -46,10 +47,19 @@ def build():
             target=web/path.relative_to(ROOT/"web")
             target.parent.mkdir(parents=True,exist_ok=True)
             target.write_bytes(path.read_bytes())
-    touch_config = dict(C.WEB_TOUCH, game_width=C.WIDTH, game_height=C.HEIGHT)
+    touch_config = dict(C.WEB_TOUCH, game_width=C.WIDTH, game_height=C.HEIGHT,version=C.VERSION)
     (web/"touch-config.js").write_text("window.BLADE_TOUCH_CONFIG = "+json.dumps(touch_config)+";\n",
                                        encoding="utf-8", newline="\n")
     (web/".nojekyll").write_bytes(b"")
+    # 古い入力スクリプトや埋め込みゲームを再利用しないよう版番号を付ける。
+    for page in web.glob('*.html'):
+        html=page.read_text(encoding='utf8')
+        for asset in web.iterdir():
+            if asset.suffix in ('.js','.css'):
+                html=html.replace('"'+asset.name+'"','"'+asset.name+'?v='+C.VERSION+'"')
+        html=html.replace('"play.html"','"play.html?v='+C.VERSION+'"')
+        html=html.replace('play.html?embed=1','play.html?embed=1&v='+C.VERSION)
+        page.write_text(html,encoding='utf8',newline='\n')
     manifest = {"version": C.VERSION, "pyxel_web_version": "2.9.9",
                 "sources": {name: hashlib.sha256(data).hexdigest() for name, data in contents.items()}}
     (dist/"manifest.json").write_text(json.dumps(manifest, indent=2)+"\n", encoding="utf-8")

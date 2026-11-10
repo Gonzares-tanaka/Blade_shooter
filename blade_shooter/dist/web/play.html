@@ -7,12 +7,12 @@
   <meta name="description" content="BLADE / CLOSE QUARTERS ゲーム専用画面。3武器を選択。左手のドラッグで移動、右手のフリックで近接攻撃。">
   <title>遊ぶ — BLADE / CLOSE QUARTERS</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="play.css">
+  <link rel="stylesheet" href="play.css?v=0.12.0">
 </head>
 <body>
   <main>
     <header><a class="back-link" href="index.html#play" target="_top" aria-label="紹介ページへ戻る">←</a><span>BLADE <b>CLOSE QUARTERS</b></span><button id="start" type="button" disabled>読み込み中</button></header>
-    <nav aria-label="開始設定"><button id="course" type="button" disabled>コース：1面 / 5分＋巨大戦艦（切替）</button><button id="section" type="button" disabled>開始区間：最初から（変更）</button><button id="settings" type="button" disabled>武器設定 ⚙</button></nav>
+    <nav aria-label="開始設定"><button id="course" type="button" disabled>コース：1面 / 5分＋巨大戦艦（切替）</button><button id="section" type="button" disabled>開始区間：最初から（変更）</button><button id="settings" type="button" disabled>武器設定 ⚙</button><button id="title-return" type="button" hidden>タイトルへ戻る</button></nav>
     <section id="display" aria-label="ゲーム画面"><div id="pyxel-screen"></div><div id="touch-zones" aria-hidden="true" hidden><div id="move-zone"><span>移動エリア</span></div><div id="attack-zone"><span id="attack-zone-label">斬撃エリア ←→</span></div></div></section>
     <section id="settings-panel" aria-label="武器と比較コースの選択" hidden>
       <h1>出撃前の設定</h1>
@@ -21,6 +21,7 @@
       <button id="weapon" type="button">武器：ブレイド（変更）</button>
       <p>ブレイド：広い薙ぎ払い ／ アックス：短射程・高威力・長い戻り ／ ランス：長射程・自機幅の突き</p>
       <p id="flick-help"></p>
+      <p>Web操作方式：左手ドラッグ移動＋右手フリック（マルチタッチ）。現在はこの方式を使用します。</p>
       <p>画面の左側から触れた指でドラッグ移動。右側から触れた指で、剣・斧は左右、槍は上下へフリック。事前タップは不要で、攻撃は前方へ出ます。</p>
       <p>指の担当は離すまで固定。境界を越えても役割は変わりません。右手は一瞬止めるかゆっくり動かしてから次の払いへ。触り直しでも再入力できます。</p>
       <p>1面ではエリア終了ごとにアイテムが出現。絵柄が0.8秒ごとに変わり、触れたときのHP回復／武器を取得します。武器変更後は右側の案内に合わせてフリックしてください。</p>
@@ -30,9 +31,9 @@
     <div id="load-error" role="alert" hidden><p>ゲームを読み込めませんでした。ネット接続を確認して、もう一度お試しください。</p><button id="retry-load" type="button">再読み込み</button></div>
     <footer><span>左手：移動 / 右手：横フリック（剣・斧）・縦（槍）</span><span>矢印 / Z / Enter / P / X：設定</span><button id="fullscreen" type="button" hidden>画面拡大 ↗</button></footer>
   </main>
-  <script src="touch-config.js"></script>
-  <script src="gestures.js"></script>
-  <script src="controls.js"></script>
-  <script src="runtime.js"></script>
+  <script src="touch-config.js?v=0.12.0"></script>
+  <script src="gestures.js?v=0.12.0"></script>
+  <script src="controls.js?v=0.12.0"></script>
+  <script src="runtime.js?v=0.12.0"></script>
 </body>
 </html>

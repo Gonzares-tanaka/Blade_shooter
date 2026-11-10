@@ -21,7 +21,7 @@ def run(update,draw):
     assert list(p.colors)==C.PALETTE
     assert p.images[0].pget(8,4)==expected['images'][0]['data'][4][8]
     assert p.sounds[0].speed==expected['sounds'][0]['speed']
-    assert list(p.musics[0].seqs[0])==[C.STAGE_BGM_SOUNDS[0]]
+    assert list(p.musics[0].seqs[0])==expected['musics'][0]['seqs'][0]
     g.reset();g.schedule=lambda:None
     g.px,g.py=128,230
     app.audio.update(g)

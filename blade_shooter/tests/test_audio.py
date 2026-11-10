@@ -3,7 +3,7 @@ import sys
 import unittest
 from types import SimpleNamespace
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
-from audio import Audio
+from audio import Audio,load_stage_bgm
 import config as C
 
 
@@ -45,6 +45,9 @@ class AudioTests(unittest.TestCase):
 
     def test_all_mml_tracks_load_verbatim_and_loop_without_effect_collisions(self):
         p=Fake();a=Audio(p)
+        self.assertEqual(C.STAGE_BGM_MODE,'resource')
+        self.assertEqual(p.mml,{})
+        load_stage_bgm(p)  # 原文の完全再生も明示設定で残す。通常はEditor原本優先。
         rows=[s.strip() for s in (Path(__file__).resolve().parents[1]/C.STAGE_BGM_MML_FILE).read_text(encoding='utf-8-sig').splitlines() if s.strip() and not s.startswith('https://')]
         self.assertEqual(list(p.mml.values()),rows)
         self.assertEqual(p.music_sequences[0],([40],[41],[43],[]))

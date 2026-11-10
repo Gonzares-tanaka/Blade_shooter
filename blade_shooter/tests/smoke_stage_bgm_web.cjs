@@ -21,8 +21,8 @@ const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypt
   assert.equal(await py('config.VERSION'),version);
   const mml=fs.readFileSync(path.resolve(__dirname,'../assets/stage1_MML.txt'));
   assert.equal(await py('hashlib.sha256((Path(__import__("audio").__file__).parent/config.STAGE_BGM_MML_FILE).read_bytes()).hexdigest()'),crypto.createHash('sha256').update(mml).digest('hex'));
-  const durations=JSON.parse(await py('json.dumps([pyxel.sounds[i].total_sec() for i in config.STAGE_BGM_SOUNDS])'));
-  assert(Math.abs(durations[0]-12.8)<.001);assert.equal(durations[0],durations[1]);assert.equal(durations[0],durations[3]);
+  const durations=JSON.parse(await py('json.dumps([sum(pyxel.sounds[i].total_sec() for i in seq) for seq in pyxel.musics[0].seqs[:3]])'));
+  assert(Math.abs(durations[0]-12.8)<.001);assert.equal(durations[0],durations[1]);assert.equal(durations[0],durations[2]);
   assert.equal(await py('len(pyxel.channels)'),5);
   await page.locator('#start').click();await page.waitForFunction(()=>window.bladeInput.state==='playing');
   await py('g.schedule=lambda:None'); // 音声確認用。戦闘の通し確認とは分ける。
@@ -31,7 +31,7 @@ const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypt
   while(Date.now()-started<14200){
    const current=await positions();assert(current.every(Boolean));
    assert(Math.max(...current.map(p=>p[1]))-Math.min(...current.map(p=>p[1]))<.05);
-   if(previous)for(let i=0;i<3;i++)if(current[i][1]<previous[i][1]-1)wraps[i]++;
+   if(previous)for(let i=0;i<3;i++)if(current[i][0]<previous[i][0])wraps[i]++;
    previous=current;samples.push(current);
    await py('pyxel.play(config.AUDIO_SE_CHANNELS[1],2)'); // ショットSEはゲームが通常どおり再生中。
    await page.waitForTimeout(180);
@@ -41,7 +41,7 @@ const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypt
   await page.locator('#start').click();await page.waitForFunction(()=>window.bladeInput.state==='playing');await page.waitForTimeout(100);assert((await positions()).every(p=>p&&p[1]<1));
   await py('g.begin_boss()');await page.waitForTimeout(120);const boss=await positions();assert(boss[0]&&boss[1]&&!boss[2]);
   assert.deepEqual(errors,[]);
-  const result={result:'PASS',version,browser:await browser.version(),runtime:'actual Pyxel 2.9.9',realIPhone:false,audioOnlyFixture:true,mmlBytesMatch:true,durations,wraps,threeVoicesSynchronized:true,sfxConcurrent:true,pauseResume:true,bossDrumsStop:true,errors,samples};
+  const result={result:'PASS',version,browser:await browser.version(),runtime:'actual Pyxel 2.9.9',realIPhone:false,audioOnlyFixture:true,editableResource:true,originalMmlBytesPreserved:true,durations,wraps,threeVoicesSynchronized:true,sfxConcurrent:true,pauseResume:true,bossDrumsStop:true,errors,samples};
   fs.writeFileSync(folder+'/result.json',JSON.stringify(result,null,2));console.log('STAGE_BGM_WEB_PASS',JSON.stringify({...result,samples:undefined}));
  }catch(e){if(page)await page.screenshot({path:folder+'/failure.png'}).catch(()=>{});throw e;}
  finally{await browser?.close();server.close();}

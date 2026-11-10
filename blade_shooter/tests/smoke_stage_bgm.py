@@ -18,9 +18,9 @@ def run(update,draw):
     global app,driver,started,durations
     app=update.__self__;app.game.reset()
     driver=SimpleNamespace(state='playing',events=[],boss=None)
-    durations=[p.sounds[i].total_sec() for i in C.STAGE_BGM_SOUNDS]
+    durations=[sum(p.sounds[i].total_sec() for i in seq) for seq in p.musics[0].seqs[:3]]
     assert abs(durations[0]-12.8)<.001
-    assert max(abs(durations[i]-durations[0]) for i in (1,3))<1e-8
+    assert max(abs(durations[i]-durations[0]) for i in (1,2))<1e-8
     assert len(p.channels)==5
     started=time.perf_counter()
     original_run(tick,app.draw)
@@ -38,7 +38,7 @@ def tick():
     if frames<=1620:
         if frames>12:assert all(pos is not None for pos in positions),positions
         for i,(old,new) in enumerate(zip(previous,positions)):
-            if old and new and new[1]<old[1]-1:wraps[i]+=1
+            if old and new and new[0]<old[0]:wraps[i]+=1
         previous=positions
         if frames%120==0:samples.append(dict(frame=frames,positions=positions))
     if frames==1623:

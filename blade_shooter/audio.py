@@ -29,7 +29,7 @@ class Audio:
         self.music_number=0
         while len(p.channels) <= max((*C.AUDIO_BGM_CHANNELS,*C.AUDIO_SE_CHANNELS)):
             p.channels.append(p.Channel())
-        load_stage_bgm(p)
+        if C.STAGE_BGM_MODE=="mml":load_stage_bgm(p)
         self.next_play = dict.fromkeys(C.AUDIO_SE_CHANNELS,0)
         self.last_priority = dict.fromkeys(C.AUDIO_SE_CHANNELS,99)
 
@@ -38,7 +38,8 @@ class Audio:
         if not C.SOUND_ENABLED:
             return
         playing = game.state == "playing"
-        music=1 if getattr(game,"boss",None) else 0
+        stage=getattr(game,"stage_definition",None)
+        music=(stage.boss_bgm if stage else 1) if getattr(game,"boss",None) else (stage.bgm if stage else 0)
         if playing and (not self.music_playing or music!=self.music_number):
             if self.music_playing:
                 for ch in C.AUDIO_BGM_CHANNELS:self.p.stop(ch)

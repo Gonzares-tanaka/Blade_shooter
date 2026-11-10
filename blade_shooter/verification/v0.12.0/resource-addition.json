@@ -1,0 +1,47 @@
+{
+  "before_sha256": "cc7e6e1d995f349242db0350bc143ffc0746c030e61fdef84814693812d625d1",
+  "after_sha256": "6b493be81bac0d64d15b71fc850578811b709b8e7e2d2d21c35c1870b0cee5cc",
+  "sounds_added": [
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51
+  ],
+  "music_updated": 0,
+  "sequence": [
+    [
+      40,
+      41,
+      42,
+      43
+    ],
+    [
+      44,
+      45,
+      46,
+      47
+    ],
+    [
+      48,
+      49,
+      50,
+      51
+    ]
+  ],
+  "loop_seconds": 12.8,
+  "source_mml_preserved": true,
+  "approximations": [
+    "ENV/volume quantized at 16th notes to 0-7",
+    "noise lowered two octaves for Editor note range",
+    "MML-only effects approximated"
+  ],
+  "existing_images_sfx_other_music_preserved": true
+}

@@ -30,9 +30,7 @@ class AreaItems:
         self.ends = []
         elapsed = 0.0
         if game.course in C.AREA_ITEM["courses"]:
-            for part in game.course_config.get("plan", ()):
-                elapsed += part["length"]
-                self.ends.append(elapsed)
+            self.ends=list(game.course_config.get("item_points",()))
         self.done = {i for i, end in enumerate(self.ends) if end <= game.time}
         self.current = None
         self.history = []
@@ -41,7 +39,7 @@ class AreaItems:
     def location(self, game):
         c = C.AREA_ITEM
         # 先に自機から離れた候補だけに絞る。敵・残弾の局所的な余裕で選ぶ。
-        candidates = [p for p in c["positions"]
+        candidates = [p for p in game.course_config.get("item_positions",c["positions"])
                       if math.hypot(p[0]-game.px, p[1]-game.py) >= c["player_clearance"]]
         if not candidates:
             return None, False

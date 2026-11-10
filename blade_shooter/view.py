@@ -4,6 +4,18 @@ import config as C
 from game import point_at, weapon_pose
 from assets import SPRITES, sprite
 
+NUMBERS={"0":("111","101","101","101","111"),
+         "1":("010","110","010","010","111"),
+         "2":("111","001","111","100","111"),
+         "3":("111","001","111","001","111"),
+         "4":("101","101","111","001","001"),
+         "5":("111","100","111","001","111"),
+         "6":("111","100","111","101","111"),
+         "7":("111","001","010","010","010"),
+         "8":("111","101","111","101","111"),
+         "9":("111","101","111","001","111"),
+         "+":("000","010","111","010","000")}
+
 
 class View:
     def __init__(self, pyxel, profile="pc"):
@@ -15,6 +27,21 @@ class View:
     def polygon(self, points, color):
         for i in range(1, len(points)-1):
             self.p.tri(*points[0], *points[i], *points[i+1], color)
+
+    def digits(self,x,y,text,color=3,scale=2.0,slot=8):
+        # 桁の枠は固定。CUTの拡大も枠の中心を動かさない。
+        for index,char in enumerate(str(text)):
+            glyph=NUMBERS.get(char)
+            if glyph:
+                width,height=round(3*scale),round(5*scale)
+                left=round(x+index*slot+(slot-width)/2)
+                for row in range(height):
+                    line=glyph[row*5//height];start=None
+                    for col in range(width+1):
+                        filled=col<width and line[col*3//width]=="1"
+                        if filled and start is None:start=col
+                        if not filled and start is not None:
+                            self.p.rect(left+start,round(y)+row,col-start,1,color);start=None
 
     def textured_segment(self, name, a, b, width, dim=False):
         # リソースの画素を腕・刃の実寸へ投影。イメージバンクには書き込まない。
@@ -39,6 +66,12 @@ class View:
         sx = math.sin(g.world_time*173)*shake
         sy = math.cos(g.world_time*137)*shake
         p.camera(sx, sy)
+        getattr(self,"background_"+g.stage_definition.background)(g)
+        if g.boss:self.battleship(g)
+        self.draw_battle(g)
+
+    def background_star_lanes(self,g):
+        p=self.p
         for i in range(55):
             x = (i*73+17) % C.WIDTH
             y = (i*47+g.world_time*(12+i%3*7)) % C.HEIGHT
@@ -49,7 +82,9 @@ class View:
             for i in range(9):
                 y = (i*44+g.world_time*30) % C.HEIGHT
                 sprite(p,"lane",x,y)
-        if g.boss:self.battleship(g)
+
+    def draw_battle(self,g):
+        p=self.p
         for b in g.shots:
             sprite(p,"shot",b.x,b.y)
         for e in g.enemies:
@@ -105,6 +140,12 @@ class View:
                 p.rectb(e.x-e.radius,e.y-e.radius,e.radius*2,e.radius*2,3)
         if g.items.current:
             self.area_item(g.items.current)
+        for popup in g.score_popups:
+            text="+"+str(popup.points);x=max(8,min(C.WIDTH-len(text)*6-8,popup.x-len(text)*3))
+            if popup.melee:self.digits(x,popup.y-16-popup.age*20,text,6,1.4)
+            else:p.text(x,popup.y-16-popup.age*20,text,2)
+        if g.combo_time>0:self.center(54,g.combo_text,6)
+        if g.items.notice_time>0:self.center(65,g.items.notice,6)
         # アイテムの枠や下地で敵弾を隠さない。
         for b in g.bullets:
             sprite(p,"bullet",b.x,b.y)
@@ -118,24 +159,29 @@ class View:
         p.camera()
         p.rect(0, 0, C.WIDTH, C.HUD_HEIGHT, 0)
         p.line(0, C.HUD_HEIGHT-1, C.WIDTH, C.HUD_HEIGHT-1, 25)
-        p.text(8, 4, "HULL", 2)
+        p.text(6, 4, "SCORE", 2)
+        columns=C.HUD["score_columns"]
+        score=f"{g.score:0{columns}d}"
+        if len(score)>columns:score="9"*(columns-1)+"+"
+        self.digits(30,2,score,3)
+        p.text(191,4,"CUT",6)
+        cut=f"{g.current_cut:02d}".rjust(C.HUD["cut_columns"])
+        if len(cut)>C.HUD["cut_columns"]:cut="9"*(C.HUD["cut_columns"]-1)+"+"
+        self.digits(203,1,cut,6,2.0+0.25*g.cut_pulse/C.CUT["pulse_seconds"],slot=9)
+        p.text(6,15,"HP",2)
         for i in range(C.PLAYER_HP):
-            p.rect(30+i*9, 4, 6, 7, 6 if i < g.hp else 1)
-        p.text(83, 5, g.weapon_config["label"] if g.cooldown <= 0 else "WAIT", 6 if g.cooldown <= 0 else 2)
-        if g.items.notice_time > 0:
-            self.center(15,g.items.notice,6)
-        p.text(122, 5, f"{g.player_speed/C.PLAYER_SPEED:.1f}X", 39)
+            p.rect(20+i*8,14,5,6,6 if i<g.hp else 1)
+        p.text(54,15,g.weapon_config["label"],6)
+        if g.cooldown>0:p.text(81,15,"WAIT",2)
+        p.text(117,15,"ST"+str(g.run.current_stage),39)
         seconds=max(0,int(g.time))
-        p.text(177, 5, f"{seconds//60:02d}:{seconds%60:02d}" if g.course in ("stage","boss")
+        p.text(201, 15, f"{seconds//60:02d}:{seconds%60:02d}" if g.course in ("stage","boss")
                else f"{max(0, math.ceil(g.duration-g.time)):03d} SEC", 3)
         if g.state=="playing":
             section=g.section
             self.center(29,section[1],40)
-            if g.boss:
-                if g.items.notice_time<=0:p.text(8,15,section[2],39)
-            else:
-                self.center(40,section[2],2)
-            if not g.enemies and not g.bullets and not g.boss:
+            self.center(40,section[2],2)
+            if not g.enemies and not g.bullets and not g.boss and not g.combo_time:
                 self.center(54,"GET READY" if g.time<section[0]+3 else "BREATHER / REPOSITION",33)
         if g.state == "title":
             self.panel(78, 202)
@@ -154,6 +200,7 @@ class View:
             hint="A / START: BEGIN" if self.profile=="gkd" else "ENTER / Z: BEGIN"
             self.center(247,hint,6)
             if g.course=="compare":self.center(262,"SAME WAVES / THREE WEAPONS",2)
+            else:self.center(268,f"BEST {g.best_score:06d}",2)
         elif g.state == "settings":
             self.panel(78, 202)
             self.center(93,"PRE-FLIGHT SETUP",6)
@@ -164,7 +211,25 @@ class View:
             self.center(223,"LEFT HAND: DRAG TO MOVE",39)
             self.center(235,"RIGHT: H-FLICK / LANCE: V-FLICK",39)
             self.center(257,"A / START / B: BACK" if self.profile=="gkd" else "Z / ENTER / X: BACK",6)
-        elif g.state in ("gameover", "clear", "paused"):
+        elif g.state=="stage_clear":
+            self.panel(115,92)
+            self.center(139,"STAGE 1 CLEAR",6)
+            self.center(161,"DREADNOUGHT SUNK",3)
+            self.center(182,f"SCORE {g.score:06d}",39)
+        elif g.state in ("result","gameover"):
+            self.panel(72,213)
+            self.center(87,"STAGE 1 RESULT" if g.state=="result" else "GAME OVER",6)
+            for y,label,value in ((111,"SCORE",g.score),(131,"BEST",g.best_score),(151,"MAX CUT",g.max_cut)):
+                p.text(37,y,label,2)
+                self.digits(139,y-1,f"{value:06d}",3)
+            self.center(173,"BOSS: "+("DEFEATED" if g.boss_defeated else "NOT DEFEATED"),39)
+            self.center(187,"WEAPON: "+g.weapon_config["label"],6)
+            self.center(201,f"TIME {seconds//60:02d}:{seconds%60:02d}",2)
+            self.center(226,("> " if g.result_choice==0 else "  ")+"RETRY",6 if g.result_choice==0 else 2)
+            self.center(244,("> " if g.result_choice==1 else "  ")+"TITLE",6 if g.result_choice==1 else 2)
+            self.center(269,"UP/DOWN + A/START" if self.profile=="gkd" else "UP/DOWN + Z/ENTER",39)
+            if getattr(g,"save_failed",False):self.center(294,"BEST: THIS SESSION ONLY",2)
+        elif g.state in ("clear", "paused"):
             self.panel(116, 100)
             self.center(137, {"clear":"DREADNOUGHT SUNK" if g.boss else f"SURVIVED / {int(g.duration)} SEC", "gameover":"HULL LOST", "paused":"PAUSED"}[g.state],
                         6 if g.state == "clear" else 3)

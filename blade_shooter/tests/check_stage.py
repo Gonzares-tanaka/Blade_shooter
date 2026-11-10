@@ -27,6 +27,8 @@ def run(course='stage',blade=True,seed=7,order=('center','left','right'),stop=No
         peak=max(peak,len(g.bullets))
         if g.hp<hp:hits.append(round(g.time,3))
         if g.state!='playing' or stop and g.time>=stop-1e-6:break
+    if g.state=='stage_clear':
+        while g.state=='stage_clear':g.step(DT)
     result=dict(course=course,blade=blade,seed=seed,state=g.state,time=round(g.time,3),hp=g.hp,
                 hits=hits,boss_spawn=g.boss_spawned_at,boss_engaged=g.boss_engaged_at,
                 first_boss_fire=g.boss.first_fire_time if g.boss else None,
@@ -52,15 +54,15 @@ def population(seed):
 def check():
     full=[run(seed=s) for s in (7,42)]
     for r in full:
-        assert r['state']=='clear' and r['boss_spawn']==300,r
+        assert r['state']=='result' and 300<=r['boss_spawn']<=302.1,r
         assert r['first_boss_fire']>=304.8,r
         mix=r['sections']['06 / COMBINED ASSAULT']
         assert mix['near']>1 and mix['erased']>0 and mix['slashes']>0,r
         assert all(s['four']==0 for s in r['sections'].values()),r
     bosses=[run('boss',True,order=o) for o in permutations(('left','right','center'))]
-    for r in bosses:assert r['state']=='clear' and tuple(r['order'])==r['requested_order'],r
+    for r in bosses:assert r['state']=='result' and tuple(r['order'])==r['requested_order'],r
     shot=run('boss',False)
-    assert shot['state']=='clear' and shot['time']>max(r['time'] for r in bosses)*1.5,shot
+    assert shot['state']=='result' and shot['time']>max(r['time'] for r in bosses)*1.5,shot
     candidates={}
     for key in C.MIX_CANDIDATES:
         seed=next(s for s in range(100) if C.mixed_waves(s)[1][0]==key)

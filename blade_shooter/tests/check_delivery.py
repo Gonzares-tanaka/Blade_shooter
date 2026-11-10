@@ -34,15 +34,17 @@ for weapon,settings in old['WEAPONS'].items():
         assert C.WEAPONS[weapon][key]==value,(weapon,key)
 assert C.WEAPONS['lance']['width']==C.PLAYER_SIZE==16
 assert tuple(C.TOUCH_MODES)==('flick',)
-# 既存の全画素/音/BGM保持はtest_resourcesが検証。新アイコン/SEだけ追加。
-assert addition['all_prior_pixels_sounds_music_and_tilemaps_preserved']
+# BGM0だけを意図して変更。既存画素/SE/他BGMの保持はtest_resourcesで検証。
+assets_preserved=addition.get('existing_images_sfx_other_music_preserved',
+                              addition.get('all_prior_pixels_sounds_music_and_tilemaps_preserved',False))
+assert assets_preserved
 gestures=(ROOT/'web/gestures.js').read_text(encoding='utf-8-sig')
 assert not any(old_mode in gestures for old_mode in ('lastTap','double_tap','tap_flick','setMode'))
 changes={k:dict(before=v,after=getattr(C,k)) for k,v in old.items()
          if k.isupper() and isinstance(v,(int,float)) and hasattr(C,k) and v!=getattr(C,k)}
 result=dict(version=C.VERSION,resource_sha256=addition['after_sha256'],
             core_combat_hp_and_reference_wave_tables_preserved=True,
-            resource_additions_preserve_old_content=addition['all_prior_pixels_sounds_music_and_tilemaps_preserved'],
+            existing_content_preserved_except_requested_bgm=assets_preserved,
             tuning_changes=changes,
             sources_resources_and_documents_match=True,packages={})
 for name in ('blade-shooter-web.zip','blade-shooter-gkd.zip'):

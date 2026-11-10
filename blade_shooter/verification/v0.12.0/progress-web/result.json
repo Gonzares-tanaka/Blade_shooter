@@ -1,0 +1,21 @@
+{
+  "result": "PASS",
+  "version": "0.12.0",
+  "runtime": "actual Pyxel 2.9.9",
+  "browser": "157.0.4341.42",
+  "realIPhone": false,
+  "fixture": true,
+  "scoreAndMulti": true,
+  "cutMax": true,
+  "pauseFreezesGrace": true,
+  "bossScoreOnce": true,
+  "clearResultRetryTitle": true,
+  "retryClean": true,
+  "localStorageReload": true,
+  "storageFailureContinues": true,
+  "hudWidths": [
+    390,
+    320
+  ],
+  "errors": []
+}

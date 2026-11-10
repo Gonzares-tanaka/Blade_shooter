@@ -29,7 +29,7 @@ class InputTests(unittest.TestCase):
         self.assertFalse(i.read().slash)
 
     def test_select_exits_all_states_including_hitstop(self):
-        for state in ('title','settings','playing','paused','gameover','clear'):
+        for state in ('title','settings','playing','paused','gameover','clear','stage_clear','result'):
             app=App.__new__(App)
             p=FakePyxel();p.held={p.GAMEPAD1_BUTTON_BACK};p.edges=set(p.held)
             app.p,app.input,app.game=p,Input(p,'gkd'),Game()
@@ -37,6 +37,16 @@ class InputTests(unittest.TestCase):
             app.update()
             self.assertTrue(p.exited)
             self.assertEqual(app.game.state,state)
+
+    def test_gkd_result_select_title_then_start_with_a(self):
+        p=FakePyxel();i=Input(p,'gkd');g=Game();g.reset();g.hp=1;g.hurt()
+        p.held={p.GAMEPAD1_BUTTON_DPAD_DOWN};p.edges=set(p.held)
+        g.step(.01,i.read());self.assertEqual(g.result_choice,1)
+        p.held={p.GAMEPAD1_BUTTON_A};p.edges=set(p.held)
+        g.step(.01,i.read());self.assertEqual(g.state,'title')
+        p.held.clear();p.edges.clear();g.step(.01,i.read())
+        p.held={p.GAMEPAD1_BUTTON_A};p.edges=set(p.held)
+        g.step(.01,i.read());self.assertEqual((g.state,g.hp,g.score),('playing',3,0))
 
     def test_bridge_movement_consumed_once_and_focus_releases_keys(self):
         p=FakePyxel();i=Input(p,'web')
@@ -66,6 +76,7 @@ class InputTests(unittest.TestCase):
     def test_settings_transition_releases_held_physical_direction(self):
         app=App.__new__(App);p=FakePyxel();app.p=p;app.input=Input(p,'gkd');app.game=Game()
         app.audio=SimpleNamespace(update=lambda game:None)
+        app.store=SimpleNamespace(failed=False,save=lambda score:True)
         p.held={p.GAMEPAD1_BUTTON_B,p.GAMEPAD1_BUTTON_DPAD_RIGHT};p.edges=set(p.held)
         app.update();self.assertEqual(app.game.state,'settings')
         p.edges.clear();app.update();self.assertEqual(app.game.weapon,'blade')

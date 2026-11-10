@@ -42,13 +42,17 @@ class StageTests(unittest.TestCase):
         b=Bullet(10,250,0,12,'armor');g.bullets=[b]
         g.step(DT)
         self.assertEqual((g.state,g.time,g.hp),('playing',300,2))
-        self.assertEqual(g.boss_spawned_at,300)
+        self.assertIsNone(g.boss_spawned_at)
+        self.assertTrue(g.boss_pending)
         self.assertIn(e,g.enemies);self.assertIn(b,g.bullets)
         n=g.uid
         for _ in range(5*C.FPS):
             g.step(DT,Actions(x=1 if g.px<230 else 0))
         self.assertEqual(g.uid,n)
-        self.assertFalse(g.boss.active)  # 残弾がまだ画面内なら初撃を待つ。
+        self.assertLessEqual(g.boss_spawned_at,302+DT)
+        self.assertFalse(g.enemies)
+        self.assertNotIn(b,g.bullets)
+        self.assertFalse(g.boss.active)  # 整理してから4秒の登場演出を開始。
         self.assertIsNone(g.boss.first_fire_time)
         self.assertTrue(all(p.shots_fired==0 for p in g.boss.parts))
 
@@ -80,7 +84,7 @@ class StageTests(unittest.TestCase):
                 for other in g.boss.parts:
                     if other.hp>0:self.assertGreater(other.shots_fired,counts[other.key])
                 g.check_boss_defeat()
-                self.assertEqual(g.state,'clear' if key==order[-1] else 'playing')
+                self.assertEqual(g.state,'stage_clear' if key==order[-1] else 'playing')
             self.assertEqual(tuple(g.boss.destroyed_order),order)
 
     def test_blade_reaches_parts_from_outside_contact_hull(self):
@@ -115,8 +119,8 @@ class StageTests(unittest.TestCase):
         self.assertEqual(g.state,'paused')
         g.state='gameover';g.step(DT,Actions(confirm=True))
         self.assertEqual(g.seed,42)
-        self.assertEqual(g.time,300)
-        self.assertTrue(all(p.hp==p.max_hp for p in g.boss.parts))
+        self.assertEqual(g.time,0)
+        self.assertIsNone(g.boss)
 
 
 if __name__=='__main__':unittest.main()
