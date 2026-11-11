@@ -1,12 +1,15 @@
 """調整箇所。時間=秒、距離=ゲーム内px、速度=px/秒。変更後build.pyで配布版更新。"""
-TITLE, VERSION = "BLADE / CLOSE QUARTERS", "0.12.1"
+from stage2_config import MISSILE,STEALTH
+
+TITLE, VERSION = "BLADE / CLOSE QUARTERS", "0.13.0"
 WIDTH, HEIGHT, HUD_HEIGHT, FPS = 256, 320, 24, 60
 PLAYER_SIZE, PLAYER_HIT_RADIUS = 16, 2.0
 PLAYER_SPEED, PLAYER_HP, INVINCIBLE_SECONDS = 125.0, 3, 1.2
 PLAYER_SPEED_PRESETS = {"tempo": 1.3, "tempo_fast": 1.5}
 SHOT_INTERVAL, SHOT_SPEED, SHOT_DAMAGE = 0.14, 300.0, 1
 SCORING = dict(points=dict(small=100, charger=200, rear=250, armor=500,
-                          boss_left=3000, boss_right=3000, boss_center=5000, battleship=10000),
+                          boss_left=3000, boss_right=3000, boss_center=5000, battleship=10000, missile=MISSILE["points"],
+                          boss_stealth=STEALTH["part_points"], stealth_group=STEALTH["defeat_points"]),
                melee_multiplier=2, multi_extra=200, popup_seconds=0.65, combo_seconds=0.7)
 CUT = dict(grace_seconds=1.5, pulse_seconds=0.18)
 FLOW = dict(cleanup_max_seconds=2.0, clear_banner_seconds=1.8)
@@ -39,7 +42,7 @@ DEFAULT_WEAPON, DEFAULT_TOUCH_MODE = "blade", "flick"
 # エリア報酬の唯一の調整表。時間=秒、位置/距離=ゲームpx、速度=px/秒。
 # stageのplanの各lengthの累積時刻に1個。比較コースの固定条件は変えない。
 AREA_ITEM = dict(
-    courses=("stage",), kinds=("heal", "blade", "axe", "lance"),
+    courses=("stage","stage2"), kinds=("heal", "blade", "axe", "lance"),
     positions=((64.0, 200.0), (192.0, 200.0), (128.0, 176.0),
                (48.0, 248.0), (208.0, 248.0)),
     player_clearance=64.0, enemy_clearance=30.0, bullet_clearance=24.0,
@@ -354,3 +357,8 @@ PALETTE = [
     0xE8C8FF, 0xFBC2FF, 0xFEC4EA, 0xFECCC5, 0xF7D8A5, 0xE4E594,
     0xCFEF96, 0xBDF4AB, 0xB3F3CC, 0xB5EBF2,
 ]
+
+# 第2面専用の数値・固定配置・練習開始地点はstage2_config.pyに集約。
+from stage2_config import practice_courses
+COURSES = {"stage":COURSES["stage"], **practice_courses(),
+           **{name:data for name,data in COURSES.items() if name!="stage"}}

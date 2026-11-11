@@ -23,26 +23,29 @@ class ResourceTests(unittest.TestCase):
         self.assertEqual(len(palette),52)
 
     def test_bgm_leaves_sfx_channels_empty(self):
-        for i in (0,1):
+        for i in (0,1,2,3):
             music=self.data['musics'][i]['seqs']
             self.assertTrue(music[0]);self.assertTrue(music[1])
             self.assertTrue(all(not music[ch] for ch in C.AUDIO_SE_CHANNELS if ch<len(music)))
-            self.assertTrue(all(sound>=32 for seq in music for sound in seq))
+            self.assertTrue(all(sound>=(32 if i<2 else 24) for seq in music for sound in seq))
 
     def test_boss_music_preserves_stage_images_sfx_and_other_music(self):
-        with zipfile.ZipFile(ROOT/'verification/v0.12.1/before'/C.RESOURCE_FILE) as z:
+        with zipfile.ZipFile(ROOT/'verification/v0.13.0/before'/C.RESOURCE_FILE) as z:
             before=tomllib.loads(z.read('pyxel_resource.toml').decode())
         def pixel(bank,x,y):
             rows=bank['data'];return rows[y][x] if y<len(rows) and x<len(rows[y]) else 0
         for bank,(old,new) in enumerate(zip(before['images'],self.data['images'])):
             for y in range(256):
                 for x in range(256):
-                    self.assertEqual(pixel(old,x,y),pixel(new,x,y),(bank,x,y))
+                    if bank==0 and any(u<=x<u+w and v<=y<v+h for name,(u,v,w,h) in SPRITES.items()
+                                       if name in ('asteroid','missile_carrier','homing_missile','stealth','stealth_warning','distant_rock')):
+                        self.assertEqual(pixel(old,x,y),0)
+                    else:self.assertEqual(pixel(old,x,y),pixel(new,x,y),(bank,x,y))
         for i,(old,new) in enumerate(zip(before['sounds'],self.data['sounds'])):
-            if i not in (36,37,38,39,52,53,54,55,56,57,58,59,60,61):self.assertEqual(old,new,i)
+            if i not in (19,20,21,24,25,26,27,28,29,30,31):self.assertEqual(old,new,i)
         self.assertEqual(before['tilemaps'],self.data['tilemaps'])
         self.assertEqual(before['musics'][0],self.data['musics'][0])
-        self.assertEqual(before['musics'][2:],self.data['musics'][2:])
+        self.assertEqual(before['musics'][1],self.data['musics'][1])
         self.assertEqual(self.data['musics'][0]['seqs'],[[40,41,42,43],[44,45,46,47],[48,49,50,51]])
         for i in range(40,52):
             sound=self.data['sounds'][i]
@@ -50,7 +53,7 @@ class ResourceTests(unittest.TestCase):
             self.assertTrue(all(-1<=n<=59 for n in sound['notes']))
             self.assertEqual(sound['speed'],12)
         self.assertEqual((ROOT/C.STAGE_BGM_MML_FILE).read_bytes(),
-                         (ROOT/'verification/v0.12.1/before'/C.STAGE_BGM_MML_FILE).read_bytes())
+                         (ROOT/'verification/v0.13.0/before'/C.STAGE_BGM_MML_FILE).read_bytes())
 
 
     def test_boss_tracks_are_synchronized_editor_notes(self):

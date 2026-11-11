@@ -67,7 +67,9 @@ class View:
         sy = math.cos(g.world_time*137)*shake
         p.camera(sx, sy)
         getattr(self,"background_"+g.stage_definition.background)(g)
-        if g.boss:self.battleship(g)
+        if g.boss:
+            if g.run.current_stage==2:self.stealth_chain(g)
+            else:self.battleship(g)
         self.draw_battle(g)
 
     def background_star_lanes(self,g):
@@ -83,12 +85,55 @@ class View:
                 y = (i*44+g.world_time*30) % C.HEIGHT
                 sprite(p,"lane",x,y)
 
+    def background_asteroid_belt(self,g):
+        p=self.p
+        for i in range(40):
+            x=(i*73+17)%C.WIDTH;y=(i*47+g.world_time*(10+i%3*6))%C.HEIGHT
+            if y>C.HUD_HEIGHT:p.pset(x,y,25 if i%3 else 33)
+        for i in range(8):
+            x=(i*91+g.world_time*5)%C.WIDTH;y=(i*71+g.world_time*19)%C.HEIGHT
+            if y>C.HUD_HEIGHT:sprite(p,"distant_rock",x,y)
+
+    def stealth_chain(self,g):
+        p,b=self.p,g.boss
+        # 連結線は隣接する生存スロット同士だけ。撃破した位置を詰めない。
+        for left,right in zip(b.parts,b.parts[1:]):
+            if left.hp>0 and right.hp>0:p.line(left.x,left.y,right.x,right.y,25)
+        for i,part in enumerate(b.parts):
+            if part.hp<=0:continue
+            warning=part.phase=="warning"
+            sprite(p,"stealth_warning" if warning and int(g.world_time*10)%2 else "stealth",part.x,part.y)
+            p.text(part.x-2,part.y-17,str(i+1),10 if warning else 40)
+            p.rect(part.x-13,part.y+12,26,2,1)
+            p.rect(part.x-13,part.y+12,26*part.hp/part.max_hp,2,10 if warning else 6)
+            if warning:p.circb(part.x,part.y,17,10)
+        # 仮想先頭航跡は先頭撃破後も残り、旋回方向を予告する。
+        x,y=b.path(b.fight_time+.75)
+        hx,hy=b.path(b.fight_time)
+        angle=math.atan2(y-hy,x-hx)
+        p.line(hx,hy,x,y,33)
+        p.line(x,y,x-math.cos(angle-.65)*7,y-math.sin(angle-.65)*7,6)
+        p.line(x,y,x-math.cos(angle+.65)*7,y-math.sin(angle+.65)*7,6)
+        if not b.active:self.center(181,"STEALTH CHAIN APPROACHING",10)
+        elif b.opening:self.center(57,"OPEN / STEP IN",6)
+
     def draw_battle(self,g):
         p=self.p
         for b in g.shots:
             sprite(p,"shot",b.x,b.y)
         for e in g.enemies:
-            if e.kind == "armor":
+            if e.kind=="asteroid":
+                sprite(p,"asteroid",e.x,e.y,rotate=e.age*25+e.uid*37)
+            elif e.kind=="missile":
+                warning=e.phase=="warning"
+                sprite(p,"missile_carrier",e.x,e.y)
+                if warning:
+                    p.circb(e.x,e.y,15,10 if int(g.world_time*12)%2 else 3)
+                    p.text(e.x-14,e.y-24,"HOMING",10)
+                if e.on_screen:
+                    p.rect(e.x-10,e.y+15,20,2,1)
+                    p.rect(e.x-10,e.y+15,20*max(0,e.hp)/18,2,6)
+            elif e.kind == "armor":
                 color = 6 if e.resting else 11
                 sprite(p,"armor_open" if e.resting else "armor",e.x,e.y)
                 p.rect(e.x-12, e.y+e.radius+4, 24, 2, 1)
@@ -148,7 +193,10 @@ class View:
         if g.items.notice_time>0:self.center(65,g.items.notice,6)
         # アイテムの枠や下地で敵弾を隠さない。
         for b in g.bullets:
-            sprite(p,"bullet",b.x,b.y)
+            if b.missile:
+                sprite(p,"homing_missile",b.x,b.y,rotate=math.degrees(math.atan2(b.vy,b.vx))+90)
+                if b.homing_remaining>0:p.circb(b.x,b.y,6,10)
+            else:sprite(p,"bullet",b.x,b.y)
         for effect in g.effects:
             self.effect(effect)
         # 攻撃中は毎フレーム掃いた領域だけを描く。ヒットストップ中も同じ領域を保持。
@@ -175,7 +223,7 @@ class View:
         if g.cooldown>0:p.text(81,15,"WAIT",2)
         p.text(117,15,"ST"+str(g.run.current_stage),39)
         seconds=max(0,int(g.time))
-        p.text(201, 15, f"{seconds//60:02d}:{seconds%60:02d}" if g.course in ("stage","boss")
+        p.text(201, 15, f"{seconds//60:02d}:{seconds%60:02d}" if g.course in ("stage","stage2","boss","stealth")
                else f"{max(0, math.ceil(g.duration-g.time)):03d} SEC", 3)
         if g.state=="playing":
             section=g.section
@@ -187,7 +235,7 @@ class View:
             self.panel(78, 202)
             self.center(91, "B L A D E", 6)
             self.center(108, g.course_config["label"], 40)
-            self.center(120,"5 MIN + BOSS" if g.course=="stage" else "3 TARGETS / ANY ORDER" if g.course=="boss"
+            self.center(120,f"{int(g.duration)//60} MIN + BOSS" if g.course in ("stage","stage2") else "3 TARGETS / ANY ORDER" if g.course=="boss"
                         else f"{int(g.duration)} SEC / FIXED WAVES",39)
             self.center(140,"WEAPON: "+g.weapon_config["label"],6)
             self.center(152,"LEFT: DRAG / RIGHT: "+("V-FLICK" if g.weapon=="lance" else "H-FLICK"),39)
@@ -213,20 +261,20 @@ class View:
             self.center(257,"A / START / B: BACK" if self.profile=="gkd" else "Z / ENTER / X: BACK",6)
         elif g.state=="stage_clear":
             self.panel(115,92)
-            self.center(139,"STAGE 1 CLEAR",6)
-            self.center(161,"DREADNOUGHT SUNK",3)
+            self.center(139,"STAGE "+str(g.run.current_stage)+" CLEAR",6)
+            self.center(161,"STEALTH CHAIN DOWN" if g.run.current_stage==2 else "DREADNOUGHT SUNK",3)
             self.center(182,f"SCORE {g.score:06d}",39)
         elif g.state in ("result","gameover"):
             self.panel(72,213)
-            self.center(87,"STAGE 1 RESULT" if g.state=="result" else "GAME OVER",6)
+            self.center(87,"STAGE "+str(g.run.current_stage)+" RESULT" if g.state=="result" else "GAME OVER",6)
             for y,label,value in ((111,"SCORE",g.score),(131,"BEST",g.best_score),(151,"MAX CUT",g.max_cut)):
                 p.text(37,y,label,2)
                 self.digits(139,y-1,f"{value:06d}",3)
             self.center(173,"BOSS: "+("DEFEATED" if g.boss_defeated else "NOT DEFEATED"),39)
             self.center(187,"WEAPON: "+g.weapon_config["label"],6)
             self.center(201,f"TIME {seconds//60:02d}:{seconds%60:02d}",2)
-            self.center(226,("> " if g.result_choice==0 else "  ")+"RETRY",6 if g.result_choice==0 else 2)
-            self.center(244,("> " if g.result_choice==1 else "  ")+"TITLE",6 if g.result_choice==1 else 2)
+            for i,option in enumerate(g.result_options):
+                self.center(219+i*15,("> " if g.result_choice==i else "  ")+option,6 if g.result_choice==i else 2)
             self.center(269,"UP/DOWN + A/START" if self.profile=="gkd" else "UP/DOWN + Z/ENTER",39)
             if getattr(g,"save_failed",False):self.center(294,"BEST: THIS SESSION ONLY",2)
         elif g.state in ("clear", "paused"):
@@ -324,7 +372,7 @@ class View:
     def effect(self, e):
         p, t = self.p, e.age
         if e.kind == "split":
-            name="boss_destroyed" if e.enemy_kind=="boss" else e.enemy_kind
+            name="boss_destroyed" if e.enemy_kind=="boss" else "missile_carrier" if e.enemy_kind=="missile" else e.enemy_kind
             u,v,w,h=SPRITES[name]
             for side in (-1, 1):
                 x, y = e.x+side*t*68, e.y+t*24

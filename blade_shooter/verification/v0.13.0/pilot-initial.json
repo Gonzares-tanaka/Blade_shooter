@@ -1,0 +1,47 @@
+[
+  {
+    "weapon": "blade",
+    "final_weapon": "blade",
+    "state": "gameover",
+    "time": 79.86666666666342,
+    "hp": 0,
+    "rocks": 21,
+    "rows_cut": 6,
+    "rows_dodged": 9,
+    "missiles_cut": 8,
+    "cut": 3,
+    "score": 1000,
+    "boss_parts": [],
+    "wall": 11.513459300040267
+  },
+  {
+    "weapon": "axe",
+    "final_weapon": "axe",
+    "state": "gameover",
+    "time": 138.66666666666916,
+    "hp": 0,
+    "rocks": 24,
+    "rows_cut": 11,
+    "rows_dodged": 21,
+    "missiles_cut": 0,
+    "cut": 3,
+    "score": 1500,
+    "boss_parts": [],
+    "wall": 23.08981600002153
+  },
+  {
+    "weapon": "lance",
+    "final_weapon": "blade",
+    "state": "gameover",
+    "time": 172.03333333336238,
+    "hp": 0,
+    "rocks": 33,
+    "rows_cut": 14,
+    "rows_dodged": 26,
+    "missiles_cut": 10,
+    "cut": 3,
+    "score": 2450,
+    "boss_parts": [],
+    "wall": 28.885298800014425
+  }
+]

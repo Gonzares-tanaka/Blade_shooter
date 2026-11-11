@@ -85,6 +85,14 @@ class WeaponTests(unittest.TestCase):
         old=runpy.run_path(str(root/'verification/v0.11.0/before/config.py'))
         for key,value in old.items():
             if key in ('VERSION','WEB_TOUCH') or not key.isupper():continue
+            if key=='COURSES':
+                for name,course in value.items():self.assertEqual(C.COURSES[name],course,name)
+                continue
+            if key=='AREA_ITEM':
+                for name,setting in value.items():
+                    if name=='courses':self.assertTrue(set(setting)<=set(C.AREA_ITEM[name]))
+                    else:self.assertEqual(C.AREA_ITEM[name],setting,name)
+                continue
             self.assertEqual(getattr(C,key),value,key)
         name='assets/blade.pyxpal'
         self.assertEqual((root/name).read_bytes(),(root/'verification/v0.11.0/before'/name).read_bytes())

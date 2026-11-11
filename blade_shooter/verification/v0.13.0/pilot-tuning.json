@@ -1,0 +1,119 @@
+[
+  {
+    "weapon": "blade",
+    "final_weapon": "blade",
+    "state": "gameover",
+    "time": 158.93333333335195,
+    "hp": 0,
+    "rocks": 43,
+    "rows_cut": 14,
+    "rows_dodged": 23,
+    "missiles_cut": 10,
+    "cut": 3,
+    "score": 1100,
+    "hurts": [
+      {
+        "time": 51.27,
+        "x": 146.41393090664664,
+        "y": 274.21943394000533,
+        "near": [
+          "small",
+          "small"
+        ]
+      },
+      {
+        "time": 142.3,
+        "x": 151.36592103616772,
+        "y": 272.6329290047658,
+        "near": [
+          "charger"
+        ]
+      },
+      {
+        "time": 158.93,
+        "x": 179.51470805046435,
+        "y": 267.08016173142744,
+        "near": [
+          "small",
+          "small"
+        ]
+      }
+    ],
+    "boss_parts": [],
+    "wall": 27.952287299965974
+  },
+  {
+    "weapon": "axe",
+    "final_weapon": "axe",
+    "state": "gameover",
+    "time": 142.2833333333387,
+    "hp": 0,
+    "rocks": 27,
+    "rows_cut": 11,
+    "rows_dodged": 22,
+    "missiles_cut": 0,
+    "cut": 3,
+    "score": 1400,
+    "hurts": [
+      {
+        "time": 51.23,
+        "x": 145.42820311522456,
+        "y": 272.3043530742918,
+        "near": [
+          "small",
+          "small"
+        ]
+      },
+      {
+        "time": 93.82,
+        "x": 90.38855809139714,
+        "y": 281.8797574028595,
+        "near": [
+          "asteroid"
+        ]
+      },
+      {
+        "time": 142.28,
+        "x": 151.22982042949604,
+        "y": 273.09760554191155,
+        "near": [
+          "charger"
+        ]
+      }
+    ],
+    "boss_parts": [],
+    "wall": 25.80912970000645
+  },
+  {
+    "weapon": "lance",
+    "final_weapon": "lance",
+    "state": "result",
+    "time": 207.33333333335509,
+    "hp": 2,
+    "rocks": 15,
+    "rows_cut": 15,
+    "rows_dodged": 28,
+    "missiles_cut": 10,
+    "cut": 4,
+    "score": 34600,
+    "hurts": [
+      {
+        "time": 142.3,
+        "x": 151.36592103616772,
+        "y": 275.05435307429144,
+        "near": [
+          "charger"
+        ]
+      }
+    ],
+    "boss_parts": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "wall": 29.66955869999947
+  }
+]

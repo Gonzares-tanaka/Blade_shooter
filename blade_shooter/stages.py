@@ -1,7 +1,9 @@
-"""第1面だけを登録。次の面は同じRunStateを保ってenter_stageで追加できる。"""
+"""第1・2面を登録。RunStateを保って次の面へ進む。"""
 from dataclasses import dataclass
 import config as C
 from boss import Battleship
+from stealth import StealthChain
+from stage2_config import stage2_course
 
 PLANNED_STAGE_COUNT = 3
 
@@ -30,7 +32,8 @@ class StageDefinition:
         return data
 
 STAGES = {1:StageDefinition(1,C.stage_course,C.MIX_CANDIDATES,"star_lanes",0,
-                           Battleship,1,"result")}
+                           Battleship,1,"result",next_stage=2),
+          2:StageDefinition(2,stage2_course,{},"asteroid_belt",2,StealthChain,3,"result")}
 
 def get_stage(number):
     if number not in STAGES:raise ValueError("Stage content has not been implemented: "+str(number))

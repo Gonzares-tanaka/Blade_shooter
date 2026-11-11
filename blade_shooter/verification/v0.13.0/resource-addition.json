@@ -1,0 +1,30 @@
+{
+  "before_sha256": "9aa70adb298b33d90ad64536ae34b13ccc61ad23c67b10bfc7a490f506005e6b",
+  "after_sha256": "daf1b84ab48b9ecfdcc3fe7ef7a645969314c5eeaeaa074a944f7dba5b749954",
+  "sprites_added": [
+    "asteroid",
+    "missile_carrier",
+    "homing_missile",
+    "stealth",
+    "stealth_warning",
+    "distant_rock"
+  ],
+  "sounds_added": [
+    19,
+    20,
+    21,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31
+  ],
+  "musics_added": [
+    2,
+    3
+  ],
+  "existing_images_sfx_other_music_preserved": true
+}

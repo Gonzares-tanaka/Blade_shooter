@@ -7,6 +7,7 @@ from boss import Battleship
 from items import AreaItems
 from progress import RunState,Result,ScorePopup
 from stages import get_stage
+from stage2_config import ROCK,ROCK_PATTERNS,MISSILE,rock_row,steer_missile
 
 
 @dataclass
@@ -28,6 +29,7 @@ class Actions:
     lab: int = 0  # 1=weapons, 2=free
     title: bool = False
     retry: bool = False
+    next_stage: bool = False
 
 
 
@@ -66,7 +68,8 @@ class Enemy:
     @property
     def radius(self):
         return {"armor": C.ARMOR_RADIUS, "small": C.SMALL_RADIUS,
-                "charger": C.CHARGER_RADIUS, "rear": C.REAR_RADIUS}[self.kind]
+                "charger": C.CHARGER_RADIUS, "rear": C.REAR_RADIUS,
+                "asteroid": ROCK["radius"], "missile": MISSILE["radius"]}[self.kind]
 
     @property
     def resting(self):
@@ -85,6 +88,14 @@ class Bullet:
     vx: float
     vy: float
     source: str = ""
+    homing_remaining: float = 0.0
+    age: float = 0.0
+
+    @property
+    def missile(self):return self.source=="missile"
+
+    @property
+    def radius(self):return MISSILE["radius_bullet"] if self.missile else C.BULLET_RADIUS
 
 
 @dataclass
@@ -214,7 +225,7 @@ class Game:
         self.best_score=0
         self.debug=debug
         self.debug_log=[]
-        self.stage_definition=get_stage(1)
+        self.stage_definition=get_stage(C.COURSES[course].get("stage_number",1))
         self.lab_mode = "free"
         self.settings_row = 0
         self.course = course
@@ -242,11 +253,12 @@ class Game:
         self.events = []
         self.done = {i for i,w in enumerate(self.course_config["waves"]) if w["at"]<self.time}
         self.uid = self.slashes = self.blade_kills = self.shot_kills = self.cleared_bullets = 0
+        self.rocks_destroyed=self.rocks_passed=self.rock_shot_hits=self.missiles_cut=0
         self.swing_hitstop = False
         self.blade_angle = -70.0
         self.blade_pivot = (self.px, self.py-4)
         self.group_id = 0
-        self.blade_kills_by_kind = {kind: 0 for kind in ("armor", "small", "charger", "rear", "boss")}
+        self.blade_kills_by_kind = {kind: 0 for kind in ("armor", "small", "charger", "rear", "boss", "missile")}
         self.shot_kills_by_kind = dict(self.blade_kills_by_kind)
         self.swing_kills = self.max_swing_kills = 0
         self.menu_direction = 0
@@ -297,6 +309,21 @@ class Game:
         self.run.current_stage=number
         self.course="stage";self.checkpoint=0
         self.reset(carry_run=carry_run)
+        if carry_run:self.reset_cut("stage_change")
+
+    @property
+    def can_advance_stage(self):
+        return bool(self.result and self.result.cleared and self.course in ("stage","stage2")
+                    and self.stage_definition.next_stage is not None)
+
+    @property
+    def result_options(self):
+        return ("NEXT STAGE", "RETRY", "TITLE") if self.can_advance_stage else ("RETRY", "TITLE")
+
+    def choose_course(self,course):
+        self.course=course
+        self.stage_definition=get_stage(C.COURSES[course].get("stage_number",1))
+        self.stage_data=self.stage_definition.build(self.seed)
 
     def log(self,event,**data):
         if not self.debug:return
@@ -350,7 +377,7 @@ class Game:
     def set_lab(self, mode):
         self.lab_mode=mode
         if mode!="free":
-            self.course="compare"
+            self.choose_course("compare")
             self.checkpoint=0
 
     def configure(self, action):
@@ -365,7 +392,7 @@ class Game:
 
     @property
     def course_config(self):
-        return self.stage_data if self.course=="stage" else C.COURSES[self.course]
+        return self.stage_data if self.course in ("stage","stage2") else C.COURSES[self.course]
 
     @property
     def duration(self):
@@ -428,7 +455,8 @@ class Game:
     def check_boss_defeat(self):
         if self.boss and all(p.hp<=0 for p in self.boss.parts) and not self.boss_defeated and self.state=="playing":
             self.boss_defeated=True
-            self.add_score(C.SCORING["points"]["battleship"],"battleship")
+            score_key=getattr(self.boss,"score_key","battleship")
+            self.add_score(C.SCORING["points"][score_key],score_key)
             self.stage_complete=True
             self.pending_scene=self.stage_definition.clear_target
             self.state="stage_clear"
@@ -441,6 +469,8 @@ class Game:
 
     @property
     def section(self):
+        if self.boss and self.run.current_stage==2:
+            return (self.duration,"07 / STEALTH CHAIN","TURN / STEP IN / CUT" if self.boss.opening else "STAGGERED FIRE / KEEP A SIDE EXIT")
         if self.boss_pending:return (self.duration,"07 / CLEARING THE DECK","MOVE / DREADNOUGHT INCOMING")
         if self.boss:
             return (self.duration,"07 / DREADNOUGHT","OPEN / STEP IN / CUT" if self.boss.opening
@@ -450,7 +480,8 @@ class Game:
     def spawn(self, kind, x, y=-20):
         self.uid += 1
         hp = {"armor": C.ARMOR_HP, "small": C.SMALL_HP,
-              "charger": C.CHARGER_HP, "rear": C.REAR_HP}[kind]
+              "charger": C.CHARGER_HP, "rear": C.REAR_HP,
+              "asteroid": ROCK["hp"], "missile": MISSILE["hp"]}[kind]
         enemy = Enemy(self.uid, kind, x, y, hp, home_x=x)
         self.enemies.append(enemy)
         return enemy
@@ -487,10 +518,25 @@ class Game:
 
     def damage_enemy(self, enemy, amount, blade=False):
         if enemy.hp<=0:return
+        if enemy.kind=="asteroid":
+            if not blade:
+                self.rock_shot_hits+=1
+                if enemy.age>=enemy.next_fire:
+                    enemy.next_fire=enemy.age+ROCK['shot_spark_seconds']
+                    self.effects.append(Effect(enemy.x,enemy.y+enemy.radius,"spark"))
+                    self.events.append("rock_ricochet")
+                return
+            enemy.hp=0;self.rocks_destroyed+=1
+            self.effects.append(Effect(enemy.x,enemy.y,"split",enemy.radius,enemy_kind="asteroid"))
+            self.events.extend(("rock_break","cut"))
+            self.shake=C.SHAKE_SECONDS
+            if not self.swing_hitstop:self.hitstop=C.HITSTOP_SECONDS;self.swing_hitstop=True
+            self.log("rock_break",count=self.rocks_destroyed)
+            return
         enemy.hp -= amount
         enemy.flash = 0.07
         if enemy.hp <= 0:
-            key="boss_"+enemy.key if enemy.kind=="boss" else enemy.kind
+            key=("boss_stealth" if enemy.key.startswith("stealth_") else "boss_"+enemy.key) if enemy.kind=="boss" else enemy.kind
             points=C.SCORING["points"][key]*(C.SCORING["melee_multiplier"] if blade else 1)
             self.add_score(points,key,enemy.x,enemy.y,blade)
             if enemy.kind=="boss":
@@ -533,18 +579,28 @@ class Game:
                 else:self.state="result"
             return
         if self.state in ("result","gameover"):
+            if action.next_stage and self.can_advance_stage:
+                self.enter_stage(self.stage_definition.next_stage,carry_run=True)
+                self.events.append("start");return
             if action.retry:
-                if self.course=="stage":self.checkpoint=0
+                if self.course in ("stage","stage2"):self.checkpoint=0
                 self.reset();self.events.append("start");return
             vertical=int(action.y!=0)
-            if vertical and not self.menu_vertical:self.result_choice=1-self.result_choice
+            if vertical and not self.menu_vertical:
+                self.result_choice=(self.result_choice+(1 if action.y>0 else -1))%len(self.result_options)
             self.menu_vertical=vertical
-            if action.title or action.settings or ((action.confirm or action.slash) and self.result_choice==1):
+            choice=self.result_options[self.result_choice]
+            if action.title or action.settings or ((action.confirm or action.slash) and choice=="TITLE"):
+                if self.course=="stage":self.choose_course("stage")
+                self.reset()
                 self.state="title";self.menu_direction=self.menu_vertical=0
                 self.weapon=self.selected_weapon
             elif action.confirm or action.slash:
-                if self.course=="stage":self.checkpoint=0
-                self.reset();self.events.append("start")
+                if choice=="NEXT STAGE":self.enter_stage(self.stage_definition.next_stage,carry_run=True)
+                else:
+                    if self.course in ("stage","stage2"):self.checkpoint=0
+                    self.reset()
+                self.events.append("start")
             return
         if action.focus_lost and self.state == "playing":
             self.state = "paused"
@@ -579,7 +635,7 @@ class Game:
             self.menu_direction = direction
             if change_course:
                 courses = tuple(C.COURSES)
-                self.course = courses[(courses.index(self.course)+1)%len(courses)]
+                self.choose_course(courses[(courses.index(self.course)+1)%len(courses)])
                 if self.course!="compare":self.lab_mode="free"
                 self.checkpoint = 0
                 self.reset()
@@ -672,11 +728,15 @@ class Game:
         erased=0
         for b in self.bullets:
             previous = (b.x, b.y)
+            if b.missile:
+                steer_missile(b,self.px,self.py,dt)
+                if b.age>=MISSILE["life_seconds"]:continue
             b.x += b.vx*dt
             b.y += b.vy*dt
-            if self.blade_hits_motion(previous, (b.x, b.y), C.BULLET_RADIUS):
+            if self.blade_hits_motion(previous, (b.x, b.y), b.radius):
                 self.cleared_bullets += 1
                 erased+=1
+                if b.missile:self.missiles_cut+=1
                 self.events.append("erase")
                 if sum(e.kind == "spark" for e in self.effects) < 24:
                     self.effects.append(Effect(b.x, b.y, "spark"))
@@ -684,7 +744,7 @@ class Game:
             # 弾と自機の両方が動く。終点だけで判定すると速い横移動で抜ける。
             if segment_distance_sq(0, 0,
                     (previous[0]-previous_pivot[0], previous[1]-previous_pivot[1]-4),
-                    (b.x-self.px,b.y-self.py)) <= (C.PLAYER_HIT_RADIUS+C.BULLET_HIT_RADIUS)**2:
+                    (b.x-self.px,b.y-self.py)) <= (C.PLAYER_HIT_RADIUS+(MISSILE["hit_radius"] if b.missile else C.BULLET_HIT_RADIUS))**2:
                 self.hurt()
                 continue
             if -10 < b.x < C.WIDTH+10 and C.HUD_HEIGHT-20 < b.y < C.HEIGHT+12:
@@ -701,9 +761,14 @@ class Game:
             if e.hp > 0 and e.contact_active and polygon_hits_motion(body, previous, (e.x, e.y), e.radius):
                 self.hurt()
         if self.boss and self.boss.active and not self.stage_complete:
-            if polygon_hits_motion(self.boss.hull,(previous_pivot[0],previous_pivot[1]+4),
-                                   (self.px,self.py),8):
-                self.hurt()
+            if getattr(self.boss,"contact_parts",False):
+                for part in self.boss.parts:
+                    ex,ey=previous_enemies.get(part.uid,(part.x,part.y))
+                    relative=(ex+self.px-previous_pivot[0],ey+self.py-4-previous_pivot[1])
+                    if part.hp>0 and polygon_hits_motion(body,relative,(part.x,part.y),part.radius):self.hurt()
+            elif polygon_hits_motion(self.boss.hull,(previous_pivot[0],previous_pivot[1]+4),
+                                     (self.px,self.py),8):self.hurt()
+        self.rocks_passed+=sum(e.kind=="asteroid" and e.hp>0 and e.y>=C.HEIGHT+24 for e in self.enemies)
         self.enemies = [e for e in self.enemies if e.hp > 0 and -50 < e.y < C.HEIGHT+24 and -50 < e.x < C.WIDTH+50]
         for effect in self.effects:
             effect.age += dt
@@ -715,7 +780,11 @@ class Game:
             if self.time < wave["at"] or i in self.done:continue
             self.done.add(i)
             kind,x,pattern=wave["kind"],wave["x"],wave["pattern"]
-            if kind=="formation":self.spawn_formation(x,pattern=pattern)
+            if kind=="rock_row":
+                self.group_id+=1
+                for rx in rock_row(pattern):
+                    e=self.spawn("asteroid",rx);e.pattern=pattern;e.group=self.group_id
+            elif kind=="formation":self.spawn_formation(x,pattern=pattern)
             elif kind=="rear":self.spawn_rear(x,pattern)
             else:
                 e=self.spawn(kind,x)
@@ -731,6 +800,12 @@ class Game:
             if self.route_complete:
                 e.phase="retreat"
                 e.y-=C.BOSS_RETREAT_SPEED*dt
+            elif e.kind=="asteroid":
+                p=ROCK_PATTERNS[e.pattern]
+                e.x=e.home_x+p['direction']*ROCK['drift']*math.sin(e.age*ROCK['drift_frequency'])
+                e.y+=p['speed']*dt
+            elif e.kind=="missile":
+                self.update_missile(e,dt)
             elif e.kind == "rear":
                 self.update_rear(e,dt)
             elif e.kind == "small":
@@ -771,6 +846,25 @@ class Game:
                     e.y += e.vy*dt
             else:
                 self.update_armor(e, dt)
+
+    def update_missile(self,e,dt):
+        if e.phase=="exit":
+            e.y-=MISSILE['exit_speed']*dt;return
+        e.y=min(MISSILE['stop_y'],e.y+MISSILE['entry_speed']*dt)
+        if not e.on_screen:return
+        e.phase_time+=dt
+        if e.phase=="entry":
+            e.phase="warning";e.phase_time=0;self.events.append("missile_warning")
+        elif e.phase=="warning" and e.phase_time>=MISSILE['warning']:
+            angle=math.atan2(self.py-e.y,self.px-e.x)
+            self.bullets.append(Bullet(e.x,e.y+e.radius+4,math.cos(angle)*MISSILE['speed'],
+                                       math.sin(angle)*MISSILE['speed'],"missile",MISSILE['homing_seconds']))
+            e.shots_fired+=1;e.phase_time=0;e.phase="coast"
+            self.events.append("missile_launch")
+        elif e.phase=="coast" and e.phase_time>=MISSILE['interval']-MISSILE['warning']:
+            e.phase_time=0
+            if e.shots_fired>=MISSILE['volleys']:e.phase="exit"
+            else:e.phase="warning";self.events.append("missile_warning")
 
     def update_armor(self, e, dt):
         if e.age > C.ARMOR_LIFETIME:

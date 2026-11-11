@@ -1,5 +1,5 @@
 # title: Blade Close Quarters
-# version: 0.12.1
+# version: 0.13.0
 """PC / GKD / Web共通入口。SELECTは状態・ヒットストップより先に処理。"""
 import sys
 import config as C
@@ -17,7 +17,7 @@ class Input:
         self.keys = {name: tuple(getattr(p, k) if isinstance(k, str) else k for k in keys)
                      for name, keys in mapping.items()}
         self.bridge = None
-        self.serials = {"slash": 0, "confirm": 0, "pause": 0, "focus": 0, "course": 0, "section": 0, "settings": 0, "weapon": 0, "touchMode": 0, "lab": 0, "inputReset": 0, "title":0,"retry":0}
+        self.serials = {"slash": 0, "confirm": 0, "pause": 0, "focus": 0, "course": 0, "section": 0, "settings": 0, "weapon": 0, "touchMode": 0, "lab": 0, "inputReset": 0, "title":0,"retry":0,"nextStage":0}
         self.blocked = set()
         if sys.platform == "emscripten":
             from js import window
@@ -56,7 +56,7 @@ class Input:
                        focus_lost=lost, quit=pressed("quit"), course="course" in pulses,section=int("section" in pulses),
                        settings=pressed("settings"),weapon=int("weapon" in pulses),
                        touch_mode=int("touchMode" in pulses),
-                       lab=int(getattr(self.bridge,"labValue",2)) if "lab" in pulses else 0,title="title" in pulses,retry="retry" in pulses)
+                       lab=int(getattr(self.bridge,"labValue",2)) if "lab" in pulses else 0,title="title" in pulses,retry="retry" in pulses,next_stage="nextStage" in pulses)
 
 
 class App:
@@ -114,6 +114,7 @@ class App:
             # 設定への出入りで物理キーの保持も持ち越さず、離してから再入力する。
             self.input.blocked.update(k for keys in self.input.keys.values() for k in keys if self.p.btn(k))
         if self.input.bridge is not None:
+            self.input.bridge.canAdvanceStage = self.game.can_advance_stage
             self.input.bridge.state = self.game.state
             self.input.bridge.meleeReady = self.game.state=="playing" and self.game.cooldown<=1e-6 and self.game.swing<0
             self.input.bridge.weapon = self.game.weapon
