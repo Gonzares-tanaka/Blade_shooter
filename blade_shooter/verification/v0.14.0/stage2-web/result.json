@@ -1,0 +1,25 @@
+{
+  "result": "PASS",
+  "version": "0.14.0",
+  "runtime": "actual Pyxel 2.9.9",
+  "browser": "157.0.4341.46",
+  "realIPhone": false,
+  "fixtures": true,
+  "stage1ResultThenNext": true,
+  "carried": [
+    2,
+    "axe",
+    22234,
+    9
+  ],
+  "stage2MusicLoops": [
+    1,
+    1
+  ],
+  "missileVisible": true,
+  "rocksVisible": true,
+  "stealthSixIndependentSlots": true,
+  "headAndMiddleDestructionContinues": true,
+  "stage2ResultRetry": true,
+  "errors": []
+}

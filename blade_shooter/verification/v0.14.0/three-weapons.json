@@ -1,0 +1,91 @@
+{
+  "result": "PASS",
+  "automatic_input": true,
+  "fixed_dt": 0.016666666666666666,
+  "real_devices": false,
+  "runs": [
+    {
+      "weapon": "blade",
+      "final_weapon": "blade",
+      "state": "result",
+      "seconds": 214.26666666669394,
+      "hp": 3,
+      "rocks_destroyed": 8,
+      "rocks_dodged": 93,
+      "retreats": 6,
+      "melee_hits": 6,
+      "missiles_cut": 16,
+      "max_cut": 6,
+      "score": 31150,
+      "hurts": [],
+      "boss_spawn": 181.9166666666682,
+      "boss_first_fire": 185.66666666667118,
+      "boss_order": [
+        "stealth_3",
+        "stealth_4",
+        "stealth_5",
+        "stealth_6",
+        "stealth_1",
+        "stealth_2"
+      ],
+      "wall_seconds": 24.12167820002651
+    },
+    {
+      "weapon": "axe",
+      "final_weapon": "axe",
+      "state": "result",
+      "seconds": 216.56666666669577,
+      "hp": 3,
+      "rocks_destroyed": 4,
+      "rocks_dodged": 96,
+      "retreats": 4,
+      "melee_hits": 4,
+      "missiles_cut": 9,
+      "max_cut": 3,
+      "score": 26950,
+      "hurts": [],
+      "boss_spawn": 181.9166666666682,
+      "boss_first_fire": 185.66666666667118,
+      "boss_order": [
+        "stealth_5",
+        "stealth_1",
+        "stealth_3",
+        "stealth_2",
+        "stealth_4",
+        "stealth_6"
+      ],
+      "wall_seconds": 24.13137919997098
+    },
+    {
+      "weapon": "lance",
+      "final_weapon": "lance",
+      "state": "result",
+      "seconds": 234.68333333337685,
+      "hp": 2,
+      "rocks_destroyed": 3,
+      "rocks_dodged": 96,
+      "retreats": 9,
+      "melee_hits": 9,
+      "missiles_cut": 10,
+      "max_cut": 6,
+      "score": 29050,
+      "hurts": [
+        {
+          "time": 203.35,
+          "near": []
+        }
+      ],
+      "boss_spawn": 181.9166666666682,
+      "boss_first_fire": 185.66666666667118,
+      "boss_order": [
+        "stealth_1",
+        "stealth_2",
+        "stealth_3",
+        "stealth_4",
+        "stealth_5",
+        "stealth_6"
+      ],
+      "wall_seconds": 31.72372470004484
+    }
+  ]
+}

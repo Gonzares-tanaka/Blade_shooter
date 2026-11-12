@@ -36,6 +36,8 @@ def tick():
         app.update();g=app.game
         if g.slash_polys and any(e.kind=='asteroid' and abs(e.y-g.py)<100 for e in g.enemies):capture('rock-cut')
         if g.time>=12:capture('rock-gaps')
+        if any(e.kind=='asteroid' and e.phase=='marker' for e in g.enemies):capture('edge-warning')
+        if {e.radius for e in g.enemies if e.kind=='asteroid' and e.on_screen}>={8,18}:capture('size-difference')
         if any(b.missile for b in g.bullets):capture('missile')
         if g.time>=96:capture('cross-current')
         if g.boss and g.boss.active:
@@ -45,7 +47,7 @@ def tick():
         if g.state in ('result','gameover'):
             capture('result')
             result=dict(weapon=weapon,final_weapon=g.weapon,state=g.state,seconds=g.time,hp=g.hp,
-                        rocks_destroyed=g.rocks_destroyed,rows_dodged=len(pilot.dodged_rows),
+                        rocks_destroyed=g.rocks_destroyed,rocks_dodged=len(pilot.dodged_rows),retreats=pilot.retreats,melee_hits=pilot.melee_hits,
                         missiles_cut=g.missiles_cut,max_cut=g.max_cut,score=g.score,
                         boss_spawn=g.boss_spawned_at,order=g.boss.destroyed_order if g.boss else [],
                         wall_seconds=time.perf_counter()-started)

@@ -1,0 +1,92 @@
+[
+  {
+    "weapon": "blade",
+    "mode": "camp",
+    "state": "result",
+    "time": 19.66666666666683,
+    "hp": 3,
+    "remaining": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "weapon": "blade",
+    "mode": "chase",
+    "state": "result",
+    "time": 8.51666666666667,
+    "hp": 2,
+    "remaining": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "weapon": "axe",
+    "mode": "camp",
+    "state": "gameover",
+    "time": 30.38333333333289,
+    "hp": 0,
+    "remaining": [
+      79,
+      80,
+      84,
+      82,
+      85,
+      83
+    ]
+  },
+  {
+    "weapon": "axe",
+    "mode": "chase",
+    "state": "result",
+    "time": 8.733333333333347,
+    "hp": 1,
+    "remaining": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "weapon": "lance",
+    "mode": "camp",
+    "state": "result",
+    "time": 32.749999999999424,
+    "hp": 1,
+    "remaining": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "weapon": "lance",
+    "mode": "chase",
+    "state": "result",
+    "time": 9.750000000000064,
+    "hp": 2,
+    "remaining": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+]

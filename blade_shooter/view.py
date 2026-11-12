@@ -3,6 +3,7 @@ import math
 import config as C
 from game import point_at, weapon_pose
 from assets import SPRITES, sprite
+from stage2_config import STEALTH
 
 NUMBERS={"0":("111","101","101","101","111"),
          "1":("010","110","010","010","111"),
@@ -106,16 +107,28 @@ class View:
             p.text(part.x-2,part.y-17,str(i+1),10 if warning else 40)
             p.rect(part.x-13,part.y+12,26,2,1)
             p.rect(part.x-13,part.y+12,26*part.hp/part.max_hp,2,10 if warning else 6)
-            if warning:p.circb(part.x,part.y,17,10)
+            if part.phase=='open':p.text(part.x-6,part.y+17,'CUT',6)
+            if warning:
+                p.circb(part.x,part.y,17,10)
+                tx,ty=b.path(b.fight_time-i*STEALTH['delay']+.8)
+                ratio=min(1,32/(math.hypot(tx-part.x,ty-part.y) or 1))
+                tx,ty=part.x+(tx-part.x)*ratio,part.y+(ty-part.y)*ratio
+                p.line(part.x,part.y,tx,ty,10)
+        for part,target,motion in b.aim_marks:
+            if motion=='break_warning':
+                p.line(part.x,part.y+13,target[0],target[1],25)
+                p.circb(*target,5,10)
         # 仮想先頭航跡は先頭撃破後も残り、旋回方向を予告する。
         x,y=b.path(b.fight_time+.75)
         hx,hy=b.path(b.fight_time)
+        ratio=min(1,38/(math.hypot(x-hx,y-hy) or 1))
+        x,y=hx+(x-hx)*ratio,hy+(y-hy)*ratio
         angle=math.atan2(y-hy,x-hx)
         p.line(hx,hy,x,y,33)
         p.line(x,y,x-math.cos(angle-.65)*7,y-math.sin(angle-.65)*7,6)
         p.line(x,y,x-math.cos(angle+.65)*7,y-math.sin(angle+.65)*7,6)
         if not b.active:self.center(181,"STEALTH CHAIN APPROACHING",10)
-        elif b.opening:self.center(57,"OPEN / STEP IN",6)
+        elif b.opening:self.center(57,"CUT / THEN BREAK AWAY",6)
 
     def draw_battle(self,g):
         p=self.p
@@ -123,7 +136,15 @@ class View:
             sprite(p,"shot",b.x,b.y)
         for e in g.enemies:
             if e.kind=="asteroid":
-                sprite(p,"asteroid",e.x,e.y,rotate=e.age*25+e.uid*37)
+                if e.phase=='marker':
+                    x=max(10,min(C.WIDTH-10,e.x));y=max(54,min(C.HEIGHT-18,e.y))
+                    angle=math.atan2(e.vy,e.vx)
+                    color=10 if int(g.world_time*10)%2 else 39
+                    p.circb(x,y,7,color)
+                    p.line(x,y,x+math.cos(angle)*18,y+math.sin(angle)*18,color)
+                    p.line(x+math.cos(angle)*18,y+math.sin(angle)*18,x+math.cos(angle-.6)*10,y+math.sin(angle-.6)*10,color)
+                    continue
+                sprite(p,"asteroid",e.x,e.y,rotate=e.age*e.spin+e.uid*37,scale=e.radius/12)
             elif e.kind=="missile":
                 warning=e.phase=="warning"
                 sprite(p,"missile_carrier",e.x,e.y)

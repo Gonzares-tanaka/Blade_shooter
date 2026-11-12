@@ -26,6 +26,7 @@ const fs=require('node:fs'),path=require('node:path');
   await page.locator('#next-stage').click();await page.waitForFunction(()=>window.bladeInput.state==='playing');
   assert.equal(await py('g.run.current_stage'),2);assert.deepEqual(JSON.parse(await py('json.dumps([g.hp,g.weapon,g.score,g.max_cut])')),before);
   assert.equal(await py('g.current_cut'),0);assert.equal(await py('g.boss is None'),true);
+  await py('g.px=28'); // 音声ループの確認は導入ゲート左の通路で待つ。
   const music=JSON.parse(await py('json.dumps([list(seq) for seq in pyxel.musics[2].seqs])'));
   assert.deepEqual(music.slice(0,2),[[24,25],[26,27]]);
   let old=null;const wraps=[0,0],started=Date.now();

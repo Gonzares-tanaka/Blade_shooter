@@ -7,7 +7,7 @@ from boss import Battleship
 from items import AreaItems
 from progress import RunState,Result,ScorePopup
 from stages import get_stage
-from stage2_config import ROCK,ROCK_PATTERNS,MISSILE,rock_row,steer_missile
+from stage2_config import ROCK,ROCK_PATTERNS,ROCK_FLOWS,MISSILE,rock_row,rock_position,steer_missile
 
 
 @dataclass
@@ -56,20 +56,24 @@ class Enemy:
     pattern: str = "line"
     contact_grace: float = 0
     visible_time: float = 0
+    rock_radius: float = 0
+    home_y: float = -20
+    warning_duration: float = 0
+    spin: float = 25
 
     @property
     def damageable(self):
-        return self.kind != "rear" or self.phase != "marker"
+        return self.phase!="marker" if self.kind in ("rear","asteroid") else True
 
     @property
     def contact_active(self):
-        return self.kind != "rear" or (self.phase not in ("marker","entry") and self.contact_grace<=0)
+        return self.phase!="marker" if self.kind=="asteroid" else self.kind != "rear" or (self.phase not in ("marker","entry") and self.contact_grace<=0)
 
     @property
     def radius(self):
         return {"armor": C.ARMOR_RADIUS, "small": C.SMALL_RADIUS,
                 "charger": C.CHARGER_RADIUS, "rear": C.REAR_RADIUS,
-                "asteroid": ROCK["radius"], "missile": MISSILE["radius"]}[self.kind]
+                "asteroid": self.rock_radius or ROCK["radius"], "missile": MISSILE["radius"]}[self.kind]
 
     @property
     def resting(self):
@@ -441,11 +445,14 @@ class Game:
         # 撤退中の道中敵・発射済み弾はそのまま更新し、なくなるまで初撃を待つ。
         ready=not self.enemies and not any(not b.source.startswith("boss:") for b in self.bullets)
         active=self.boss.active
-        for part,speed,angles in self.boss.update(dt,ready):
+        if hasattr(self.boss,"player_position"):self.boss.player_position=(self.px,self.py)
+        for command in self.boss.update(dt,ready):
+            part,speed,angles=command[:3]
+            ox,oy=command[3:] if len(command)>3 else (part.x,part.y+part.radius+2)
             if self.boss.first_fire_time is None:self.boss.first_fire_time=self.time
             for degrees in angles:
                 a=math.radians(degrees)
-                self.bullets.append(Bullet(part.x,part.y+part.radius+2,
+                self.bullets.append(Bullet(ox,oy,
                                            math.cos(a)*speed,math.sin(a)*speed,"boss:"+part.key))
             self.events.append("boss_fire")
         if not active and self.boss.active:
@@ -470,7 +477,7 @@ class Game:
     @property
     def section(self):
         if self.boss and self.run.current_stage==2:
-            return (self.duration,"07 / STEALTH CHAIN","TURN / STEP IN / CUT" if self.boss.opening else "STAGGERED FIRE / KEEP A SIDE EXIT")
+            return (self.duration,"07 / STEALTH CHAIN","CUT / THEN DISENGAGE" if self.boss.opening else "DODGE / READ THE NEXT TURN")
         if self.boss_pending:return (self.duration,"07 / CLEARING THE DECK","MOVE / DREADNOUGHT INCOMING")
         if self.boss:
             return (self.duration,"07 / DREADNOUGHT","OPEN / STEP IN / CUT" if self.boss.opening
@@ -482,7 +489,7 @@ class Game:
         hp = {"armor": C.ARMOR_HP, "small": C.SMALL_HP,
               "charger": C.CHARGER_HP, "rear": C.REAR_HP,
               "asteroid": ROCK["hp"], "missile": MISSILE["hp"]}[kind]
-        enemy = Enemy(self.uid, kind, x, y, hp, home_x=x)
+        enemy = Enemy(self.uid, kind, x, y, hp, home_x=x,home_y=y)
         self.enemies.append(enemy)
         return enemy
 
@@ -780,7 +787,14 @@ class Game:
             if self.time < wave["at"] or i in self.done:continue
             self.done.add(i)
             kind,x,pattern=wave["kind"],wave["x"],wave["pattern"]
-            if kind=="rock_row":
+            if kind=="rock":
+                rx,ry,vx,vy,radius,spin=wave['rock']
+                e=self.spawn('asteroid',rx,ry);e.pattern=pattern
+                e.vx,e.vy,e.rock_radius,e.spin=vx,vy,radius,spin
+                e.warning_duration=ROCK['edge_warning'] if rx<0 or rx>C.WIDTH or (ry<C.HUD_HEIGHT and math.hypot(vx,vy)>=100) else 0
+                e.phase='marker' if e.warning_duration else 'coast'
+                e.group=i+1
+            elif kind=="rock_row":
                 self.group_id+=1
                 for rx in rock_row(pattern):
                     e=self.spawn("asteroid",rx);e.pattern=pattern;e.group=self.group_id
@@ -801,9 +815,8 @@ class Game:
                 e.phase="retreat"
                 e.y-=C.BOSS_RETREAT_SPEED*dt
             elif e.kind=="asteroid":
-                p=ROCK_PATTERNS[e.pattern]
-                e.x=e.home_x+p['direction']*ROCK['drift']*math.sin(e.age*ROCK['drift_frequency'])
-                e.y+=p['speed']*dt
+                e.phase='marker' if e.age<e.warning_duration else 'coast'
+                e.x,e.y=rock_position(e)
             elif e.kind=="missile":
                 self.update_missile(e,dt)
             elif e.kind == "rear":

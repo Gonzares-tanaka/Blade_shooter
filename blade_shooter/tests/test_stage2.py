@@ -4,7 +4,7 @@ import sys,math,unittest
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 import config as C
 from game import Game,Actions,Bullet,weapon_pose,point_at
-from stage2_config import ROCK,ROCK_PATTERNS,MISSILE,STEALTH,steer_missile,rock_row
+from stage2_config import ROCK,ROCK_PATTERNS,ROCK_FLOWS,MISSILE,STEALTH,STEALTH_ROUTE,STEALTH_START,STEALTH_FIRE,steer_missile,rock_row,rock_position
 from stealth import StealthChain
 
 
@@ -127,6 +127,59 @@ class Stage2Tests(unittest.TestCase):
         self.assertEqual((g.state,g.run.current_stage,g.stage_definition.number,g.score),('title',1,1,0))
         g.choose_course('stage2');g.set_lab('weapons');g.reset()
         self.assertEqual((g.course,g.stage_definition.number),('compare',1))
+
+    def test_production_rocks_have_sizes_crossing_and_speed_differences(self):
+        g=Game('stage2');waves=[w for w in g.course_config['waves'] if w['kind']=='rock']
+        self.assertTrue(waves);self.assertFalse(any(w['kind']=='rock_row' for w in g.course_config['waves']))
+        self.assertEqual({w['rock'][4] for w in waves},{8,12,18})
+        self.assertTrue(any(w['rock'][2]<-90 for w in waves));self.assertTrue(any(w['rock'][2]>90 for w in waves))
+        self.assertLess(min(w['rock'][3] for w in waves),0)
+        self.assertGreater(max(w['rock'][3] for w in waves),120)
+        self.assertTrue(all(w['at']<g.duration for w in waves))
+
+    def test_edge_warning_freezes_rock_and_disables_contact_until_motion(self):
+        g=self.sandbox();g.schedule=Game.schedule.__get__(g)
+        g.time=60.01;g.done={i for i,w in enumerate(g.course_config['waves']) if w['at']<60}
+        g.schedule();e=next(e for e in g.enemies if e.kind=='asteroid')
+        initial=(e.x,e.y);self.assertEqual(e.phase,'marker');self.assertFalse(e.damageable or e.contact_active)
+        g.update_enemies(.8);self.assertEqual((e.x,e.y),initial)
+        g.update_enemies(.10);self.assertTrue(e.damageable and e.contact_active)
+        self.assertGreater(e.x,initial[0]);self.assertEqual((e.x,e.y),rock_position(e))
+
+    def test_all_rock_sizes_take_melee_only_without_score_or_cut(self):
+        for radius in (8,12,18):
+            g=self.sandbox();e=g.spawn('asteroid',128,200);e.rock_radius=radius
+            g.damage_enemy(e,999);self.assertEqual(e.hp,1)
+            g.damage_enemy(e,1,True);self.assertEqual((e.hp,g.score,g.current_cut),(0,0,0))
+
+    def test_boss_accelerations_are_preceded_by_readable_warnings_and_hp_preserved(self):
+        import runpy
+        old=runpy.run_path(str(Path(__file__).resolve().parents[1]/'verification/v0.14.0/before/stage2_config.py'))
+        self.assertEqual(STEALTH['hp'],old['STEALTH']['hp'])
+        start=STEALTH_START;speeds=[]
+        for i,(duration,end,kind) in enumerate(STEALTH_ROUTE):
+            speeds.append(math.dist(start,end)/duration);start=end
+            if kind in ('sweep','escape'):
+                previous=STEALTH_ROUTE[i-1]
+                self.assertTrue(previous[2].endswith('warning'));self.assertGreaterEqual(previous[0],.7)
+        self.assertGreater(max(speeds),C.PLAYER_SPEED*1.3*1.4);self.assertLess(min(speeds),20)
+        self.assertTrue(all(.8<=end-start<=1.0 for start,end in STEALTH['open_windows']))
+
+    def test_last_aircraft_keeps_all_shot_styles_and_destroyed_slots_do_not_fire(self):
+        b=StealthChain()
+        for p in b.parts[:-1]:p.hp=0
+        for _ in range(18*60):
+            commands=b.update(1/60,True)
+            self.assertTrue(all(command[0] is b.parts[-1] for command in commands))
+        self.assertEqual({e['style'] for e in b.fire_history},{'trail','cross','break'})
+        self.assertTrue(all(p.shots_fired==0 for p in b.parts[:-1]))
+
+    def test_boss_periodic_path_is_continuous_and_stays_clear_of_hud_and_edges(self):
+        b=StealthChain()
+        for frame in range(int(STEALTH['cycle']*60)):
+            t=frame/60;x,y=b.path(t)
+            self.assertTrue(32<=x<=224 and 54<=y<=180)
+            self.assertLess(math.dist(b.path(t),b.path(t+.001)),.3)
 
 
 if __name__=='__main__':unittest.main()

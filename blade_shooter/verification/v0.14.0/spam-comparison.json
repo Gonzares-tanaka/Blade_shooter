@@ -1,0 +1,83 @@
+[
+  {
+    "weapon": "blade",
+    "course": "rocks",
+    "mode": "spam",
+    "state": "clear",
+    "seconds": 30.0,
+    "hp": 1,
+    "rocks": 13
+  },
+  {
+    "weapon": "blade",
+    "course": "stealth",
+    "mode": "camp",
+    "state": "gameover",
+    "seconds": 8.11666666666665,
+    "hp": 0,
+    "rocks": 0
+  },
+  {
+    "weapon": "blade",
+    "course": "stealth",
+    "mode": "chase",
+    "state": "gameover",
+    "seconds": 6.083333333333317,
+    "hp": 0,
+    "rocks": 0
+  },
+  {
+    "weapon": "axe",
+    "course": "rocks",
+    "mode": "spam",
+    "state": "gameover",
+    "seconds": 27.799999999999702,
+    "hp": 0,
+    "rocks": 6
+  },
+  {
+    "weapon": "axe",
+    "course": "stealth",
+    "mode": "camp",
+    "state": "gameover",
+    "seconds": 7.19999999999998,
+    "hp": 0,
+    "rocks": 0
+  },
+  {
+    "weapon": "axe",
+    "course": "stealth",
+    "mode": "chase",
+    "state": "gameover",
+    "seconds": 5.883333333333318,
+    "hp": 0,
+    "rocks": 0
+  },
+  {
+    "weapon": "lance",
+    "course": "rocks",
+    "mode": "spam",
+    "state": "gameover",
+    "seconds": 16.533333333333676,
+    "hp": 0,
+    "rocks": 5
+  },
+  {
+    "weapon": "lance",
+    "course": "stealth",
+    "mode": "camp",
+    "state": "gameover",
+    "seconds": 9.633333333333391,
+    "hp": 0,
+    "rocks": 0
+  },
+  {
+    "weapon": "lance",
+    "course": "stealth",
+    "mode": "chase",
+    "state": "gameover",
+    "seconds": 7.599999999999978,
+    "hp": 0,
+    "rocks": 0
+  }
+]
