@@ -1,0 +1,77 @@
+{
+  "result": "PASS",
+  "version": "0.14.1",
+  "runtime": "actual Pyxel 2.9.9",
+  "browser": "157.0.4341.46",
+  "realIPhone": false,
+  "fixtures": true,
+  "stage1ResultThenNext": true,
+  "carried": [
+    2,
+    "axe",
+    22234,
+    9
+  ],
+  "stage2MusicLoops": [
+    1,
+    1
+  ],
+  "missileVisible": true,
+  "rocksVisible": true,
+  "alternatingGroupsAndRest": true,
+  "cadence": [
+    {
+      "time": 0.7166666666666672,
+      "state": [
+        0,
+        "fire"
+      ],
+      "bullets": 3,
+      "warnings": []
+    },
+    {
+      "time": 1.9999999999999978,
+      "state": [
+        0,
+        "rest"
+      ],
+      "bullets": 24,
+      "warnings": []
+    },
+    {
+      "time": 7.016666666666647,
+      "state": [
+        1,
+        "warning"
+      ],
+      "bullets": 0,
+      "warnings": [
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "time": 7.699999999999978,
+      "state": [
+        1,
+        "fire"
+      ],
+      "bullets": 3,
+      "warnings": []
+    },
+    {
+      "time": 9.016666666666694,
+      "state": [
+        1,
+        "rest"
+      ],
+      "bullets": 16,
+      "warnings": []
+    }
+  ],
+  "stealthSixIndependentSlots": true,
+  "headAndMiddleDestructionContinues": true,
+  "stage2ResultRetry": true,
+  "errors": []
+}

@@ -16,12 +16,9 @@ MISSILE = dict(hp=18, radius=11.0, entry_speed=180.0, stop_y=78.0,
                speed=102.0, turn_degrees_second=65.0, homing_seconds=1.25,
                radius_bullet=5.0, hit_radius=3.0, life_seconds=6.0, points=350)
 STEALTH = dict(count=6, hp=90, radius=11.0, entry_seconds=3.0,
-               delay=.78, warning=.70, first_fire_grace=.70, bullet_speed=126.0,
+               delay=.78, bullet_speed=126.0,
                cross_speed=150.0, break_speed=174.0,
-               cross_offsets=(-14,0,14), break_offsets=(-8,8), wing_offset=14.0,
-               open_seconds=.95, pressure_interval=.32, initial_interval=.35,
-               cross_interval=.36, cross_tail=.70,
-               lead_seconds=.45, lead_max_px=24.0,
+               wing_offset=14.0, open_seconds=.95,
                part_points=2000, defeat_points=8000)
 
 # 終点・所要秒・状態。速度は距離/秒で決まり、急加速の前に0.7秒の予告を置く。
@@ -33,27 +30,25 @@ STEALTH_ROUTE=(
     (1.50,(80.0,64.0),'cruise'), (.70,(54.0,72.0),'turn_warning'),
     (.75,(202.0,170.0),'sweep'), (1.50,(178.0,172.0),'open'),
     (.70,(160.0,166.0),'break_warning'), (.65,STEALTH_START,'escape'))
-def boss_timeline():
-    elapsed=0.0;opens=[];warnings=[(0.0,STEALTH['warning'])]
-    fire=[(STEALTH['warning']+i*STEALTH['initial_interval'],'break') for i in range(3)]
-    for duration,_,kind in STEALTH_ROUTE:
-        if kind=='cruise':
-            for offset in ((.6,1.25) if elapsed==0 else (.3,1.0)):
-                if offset<duration:fire.append((round(elapsed+offset,8),'trail'))
-        elif kind=='turn_warning':
-            at=elapsed+duration
-            fire.extend(((round(at,8),'cross'),(round(at+STEALTH['cross_interval'],8),'cross'),
-                         (round(at+STEALTH['cross_tail'],8),'break')))
-        elif kind=='open':
-            end=elapsed+min(duration,STEALTH['open_seconds'])
-            opens.append((round(elapsed,8),round(end,8)))
-            warnings.append((round(end,8),round(end+STEALTH['warning'],8)))
-            fire.extend((round(end+STEALTH['warning']+i*STEALTH['pressure_interval'],8),'break') for i in range(3))
-        elapsed+=duration
-    return round(elapsed,8),tuple(opens),tuple(warnings),tuple(fire)
-
-# 移動時間を変更すると、旋回後の開口・予告・発射時刻も自動で追従する。
-STEALTH['cycle'],STEALTH['open_windows'],STEALTH['break_warning_windows'],STEALTH_FIRE=boss_timeline()
+# 射撃時計は編隊全体で共通。移動時計・HPは従来どおり。
+# 先頭3機(予告0.7+射撃1.3) / 全休止5 / 後尾3機 / 全休止5 = 14秒。
+STEALTH_ATTACK=dict(group_size=3, warning=.70, fire_seconds=1.30, rest_seconds=5.0,
+                    stagger=.20, residual_seconds=.65,
+                    bursts=((0.0,'cross'),(.32,'break'),(.64,'trail')),
+                    cross_offsets=(-20,0,20),break_offsets=(-11,11),trail_offsets=(-12,0,12))
+STEALTH_ATTACK['half_cycle']=sum(STEALTH_ATTACK[k] for k in ('warning','fire_seconds','rest_seconds'))
+STEALTH_ATTACK['cycle']=2*STEALTH_ATTACK['half_cycle']
+assert max(at for at,_ in STEALTH_ATTACK['bursts'])+(STEALTH_ATTACK['group_size']-1)*STEALTH_ATTACK['stagger']<STEALTH_ATTACK['fire_seconds']
+elapsed=0.0;opens=[];warnings=[]
+for duration,_,kind in STEALTH_ROUTE:
+    if kind=='open':opens.append((round(elapsed,8),round(elapsed+min(duration,STEALTH['open_seconds']),8)))
+    if kind.endswith('warning'):warnings.append((elapsed,elapsed+duration))
+    elapsed+=duration
+STEALTH['cycle']=round(elapsed,8)
+STEALTH['open_windows']=tuple(opens)
+STEALTH['break_warning_windows']=tuple(warnings)
+# グループ先頭機の発射時刻。後続機はstaggerだけずれる。
+STEALTH_FIRE=tuple((STEALTH_ATTACK['warning']+at,style) for at,style in STEALTH_ATTACK['bursts'])
 
 # (時差, x, y, vx, vy, 半径, 回転度/秒)。端の高速岩は全て予告後に動く。
 ROCK['edge_warning']=.85

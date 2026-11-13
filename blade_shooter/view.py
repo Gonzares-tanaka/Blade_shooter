@@ -108,12 +108,11 @@ class View:
             p.rect(part.x-13,part.y+12,26,2,1)
             p.rect(part.x-13,part.y+12,26*part.hp/part.max_hp,2,10 if warning else 6)
             if part.phase=='open':p.text(part.x-6,part.y+17,'CUT',6)
-            if warning:
-                p.circb(part.x,part.y,17,10)
-                tx,ty=b.path(b.fight_time-i*STEALTH['delay']+.8)
-                ratio=min(1,32/(math.hypot(tx-part.x,ty-part.y) or 1))
-                tx,ty=part.x+(tx-part.x)*ratio,part.y+(ty-part.y)*ratio
-                p.line(part.x,part.y,tx,ty,10)
+            if warning:p.circb(part.x,part.y,17,10)
+        for part,i in b.motion_warnings:
+            tx,ty=b.path(b.fight_time-i*STEALTH['delay']+.8)
+            ratio=min(1,32/(math.hypot(tx-part.x,ty-part.y) or 1))
+            p.line(part.x,part.y,part.x+(tx-part.x)*ratio,part.y+(ty-part.y)*ratio,33)
         for part,target,motion in b.aim_marks:
             if motion=='break_warning':
                 p.line(part.x,part.y+13,target[0],target[1],25)
@@ -129,6 +128,9 @@ class View:
         p.line(x,y,x-math.cos(angle+.65)*7,y-math.sin(angle+.65)*7,6)
         if not b.active:self.center(181,"STEALTH CHAIN APPROACHING",10)
         elif b.opening:self.center(57,"CUT / THEN BREAK AWAY",6)
+        else:
+            group,state,_=b.attack_state()
+            self.center(57,"ALL REST / READ THE BULLETS" if state=='rest' else ("FRONT 1-3" if group==0 else "REAR 4-6")+" / "+state.upper(),6 if state=='rest' else 10)
 
     def draw_battle(self,g):
         p=self.p

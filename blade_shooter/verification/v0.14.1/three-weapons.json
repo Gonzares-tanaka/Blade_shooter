@@ -1,0 +1,86 @@
+{
+  "result": "PASS",
+  "automatic_input": true,
+  "fixed_dt": 0.016666666666666666,
+  "real_devices": false,
+  "runs": [
+    {
+      "weapon": "blade",
+      "final_weapon": "blade",
+      "state": "result",
+      "seconds": 204.6666666666863,
+      "hp": 3,
+      "rocks_destroyed": 8,
+      "rocks_dodged": 93,
+      "retreats": 6,
+      "melee_hits": 6,
+      "missiles_cut": 16,
+      "max_cut": 3,
+      "score": 30950,
+      "hurts": [],
+      "boss_spawn": 181.9166666666682,
+      "boss_first_fire": 185.60000000000446,
+      "boss_order": [
+        "stealth_2",
+        "stealth_3",
+        "stealth_4",
+        "stealth_5",
+        "stealth_1",
+        "stealth_6"
+      ],
+      "wall_seconds": 30.228671199991368
+    },
+    {
+      "weapon": "axe",
+      "final_weapon": "axe",
+      "state": "result",
+      "seconds": 211.03333333335803,
+      "hp": 3,
+      "rocks_destroyed": 4,
+      "rocks_dodged": 96,
+      "retreats": 4,
+      "melee_hits": 4,
+      "missiles_cut": 9,
+      "max_cut": 1,
+      "score": 29150,
+      "hurts": [],
+      "boss_spawn": 181.9166666666682,
+      "boss_first_fire": 185.60000000000446,
+      "boss_order": [
+        "stealth_1",
+        "stealth_2",
+        "stealth_3",
+        "stealth_4",
+        "stealth_5",
+        "stealth_6"
+      ],
+      "wall_seconds": 34.75455369998235
+    },
+    {
+      "weapon": "lance",
+      "final_weapon": "lance",
+      "state": "result",
+      "seconds": 210.76666666669115,
+      "hp": 3,
+      "rocks_destroyed": 3,
+      "rocks_dodged": 96,
+      "retreats": 10,
+      "melee_hits": 10,
+      "missiles_cut": 10,
+      "max_cut": 3,
+      "score": 33050,
+      "hurts": [],
+      "boss_spawn": 181.9166666666682,
+      "boss_first_fire": 185.60000000000446,
+      "boss_order": [
+        "stealth_1",
+        "stealth_3",
+        "stealth_2",
+        "stealth_4",
+        "stealth_5",
+        "stealth_6"
+      ],
+      "wall_seconds": 39.432830499950796
+    }
+  ]
+}

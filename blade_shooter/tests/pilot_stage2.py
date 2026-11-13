@@ -2,12 +2,12 @@
 import math
 import config as C
 from game import Actions
-from stage2_config import ROCK_FLOWS,rock_position,STEALTH as S
+from stage2_config import ROCK_FLOWS,rock_position,STEALTH as S,STEALTH_ATTACK as A
 
 class Pilot:
     def __init__(self,melee=True):
         self.melee=melee;self.cut_rows=set();self.dodged_rows=set()
-        self.target=None;self.target_deadline=-1;self.retreat_until=-1;self.retreats=0;self.melee_hits=0
+        self.target_at=0;self.events=[];self.target=None;self.target_deadline=-1;self.retreat_until=-1;self.retreats=0;self.melee_hits=0
         self.counted_swing=-1;self.ignore_rock=None;self.route_moves=0
 
     def action(self,g):
@@ -51,6 +51,8 @@ class Pilot:
         target=next((p for p in b.parts if p.uid==self.target),None)
         if target and target.uid in g.slash_hits and self.counted_swing!=g.slashes:
             self.counted_swing=g.slashes;self.melee_hits+=1;self.retreats+=1
+            self.events.append(dict(time=b.fight_time,part=b.parts.index(target),event='melee_then_retreat',
+                                    group_state=b.attack_state()[1],bullets=len(g.bullets),hp=g.hp,x=g.px,y=g.py))
             self.retreat_until=b.fight_time+1.15;self.target=None;target=None
         if target and (target.hp<=0 or b.fight_time>self.target_deadline):self.target=None;target=None
         if not self.melee or b.fight_time<self.retreat_until:
@@ -67,20 +69,20 @@ class Pilot:
                         until=at+(end-start)
                         if until<=b.fight_time+.15:continue
                         x,y=b.path(at-i*S['delay']+.15)
-                        travel=math.hypot(x-g.px,y+distance-g.py)/g.player_speed
-                        if b.fight_time+travel+.18>until:continue
-                        choices.append((max(at-b.fight_time,travel),p.uid,until))
+                        for half in range(math.floor(at/A['half_cycle']),math.floor(until/A['half_cycle'])+1):
+                            start=max(at,half*A['half_cycle']+A['warning']+A['fire_seconds']+A['residual_seconds'])
+                            end=min(until,(half+1)*A['half_cycle'])
+                            if end-max(start,b.fight_time)<.25:continue
+                            x,y=b.path(start-i*S['delay']+.12)
+                            travel=math.hypot(x-g.px,y+distance-g.py)/g.player_speed
+                            if b.fight_time+travel+.18>end:continue
+                            choices.append((max(start-b.fight_time,travel),p.uid,end,start))
             if choices:
-                _,self.target,self.target_deadline=min(choices)
+                _,self.target,self.target_deadline,self.target_at=min(choices)
                 target=next(p for p in live if p.uid==self.target)
         if target:
             i=b.parts.index(target);local=b.fight_time-i*S['delay']
-            upcoming=[]
-            for a,z in S['open_windows']:
-                for turn in (math.floor(local/S['cycle']),math.floor(local/S['cycle'])+1):
-                    at=turn*S['cycle']+a
-                    if at+z-a>local:upcoming.append(at)
-            at=min(upcoming,default=local)
+            at=self.target_at-i*S['delay']
             # 予備動作の終点付近で待ち、開口中だけ踏み込む。
             x,y=b.path(max(local,at+.12))
             tx,ty=x,y+distance

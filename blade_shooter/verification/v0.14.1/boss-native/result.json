@@ -1,0 +1,314 @@
+{
+  "result": "PASS",
+  "actual_pyxel": true,
+  "automatic_input": true,
+  "real_devices": false,
+  "updates_per_draw": 6,
+  "runs": [
+    {
+      "weapon": "blade",
+      "melee_enabled": false,
+      "state": "playing",
+      "seconds": 59.999999999997875,
+      "hp": 3,
+      "hurts": [],
+      "slashes": 0,
+      "max_cut": 0,
+      "max_bullets": 24,
+      "bullet_near_frames": 542,
+      "min_bullet_distance": 13.739,
+      "rest_with_residual_frames": 606,
+      "melee_hits": 0,
+      "completed_withdrawals": 0,
+      "events": []
+    },
+    {
+      "weapon": "blade",
+      "melee_enabled": true,
+      "state": "result",
+      "seconds": 22.766666666666655,
+      "hp": 3,
+      "hurts": [],
+      "slashes": 7,
+      "max_cut": 0,
+      "max_bullets": 24,
+      "bullet_near_frames": 64,
+      "min_bullet_distance": 16.606,
+      "rest_with_residual_frames": 185,
+      "melee_hits": 6,
+      "completed_withdrawals": 3,
+      "events": [
+        {
+          "time": 3.483333333333326,
+          "part": 0,
+          "event": "melee_then_retreat",
+          "group_state": "rest",
+          "bullets": 0,
+          "hp": 3,
+          "x": 48.47260554191136,
+          "y": 229.53373766190109
+        },
+        {
+          "time": 5.23333333333332,
+          "part": 2,
+          "event": "melee_then_retreat",
+          "group_state": "rest",
+          "bullets": 0,
+          "hp": 3,
+          "x": 56.132929004765614,
+          "y": 236.80911047715065
+        },
+        {
+          "time": 6.899999999999981,
+          "part": 4,
+          "event": "melee_then_retreat",
+          "group_state": "rest",
+          "bullets": 0,
+          "hp": 3,
+          "x": 59.96309073619274,
+          "y": 237.54598822763978
+        },
+        {
+          "time": 9.933333333333406,
+          "part": 0,
+          "event": "melee_then_retreat",
+          "group_state": "rest",
+          "bullets": 5,
+          "hp": 3,
+          "x": 190.67661731427162,
+          "y": 237.76181472385258
+        },
+        {
+          "time": 11.566666666666821,
+          "part": 2,
+          "event": "melee_then_retreat",
+          "group_state": "rest",
+          "bullets": 0,
+          "hp": 3,
+          "x": 190.67661731427162,
+          "y": 238.49869247434168
+        },
+        {
+          "time": 13.400000000000245,
+          "part": 5,
+          "event": "melee_then_retreat",
+          "group_state": "rest",
+          "bullets": 0,
+          "hp": 3,
+          "x": 198.33694077712593,
+          "y": 236.52723689149744
+        }
+      ]
+    },
+    {
+      "weapon": "axe",
+      "melee_enabled": false,
+      "state": "playing",
+      "seconds": 59.999999999997875,
+      "hp": 3,
+      "hurts": [],
+      "slashes": 0,
+      "max_cut": 0,
+      "max_bullets": 24,
+      "bullet_near_frames": 542,
+      "min_bullet_distance": 13.739,
+      "rest_with_residual_frames": 606,
+      "melee_hits": 0,
+      "completed_withdrawals": 0,
+      "events": []
+    },
+    {
+      "weapon": "axe",
+      "melee_enabled": true,
+      "state": "result",
+      "seconds": 22.583333333333332,
+      "hp": 3,
+      "hurts": [],
+      "slashes": 5,
+      "max_cut": 0,
+      "max_bullets": 24,
+      "bullet_near_frames": 74,
+      "min_bullet_distance": 16.606,
+      "rest_with_residual_frames": 169,
+      "melee_hits": 4,
+      "completed_withdrawals": 2,
+      "events": [
+        {
+          "time": 3.4499999999999926,
+          "part": 0,
+          "event": "melee_then_retreat",
+          "group_state": "rest",
+          "bullets": 0,
+          "hp": 3,
+          "x": 48.47260554191136,
+          "y": 218.7004043285677
+        },
+        {
+          "time": 5.733333333333318,
+          "part": 2,
+          "event": "melee_then_retreat",
+          "group_state": "rest",
+          "bullets": 0,
+          "hp": 3,
+          "x": 59.96309073619274,
+          "y": 222.61029194953585
+        },
+        {
+          "time": 10.216666666666754,
+          "part": 1,
+          "event": "melee_then_retreat",
+          "group_state": "rest",
+          "bullets": 3,
+          "hp": 3,
+          "x": 192.86389939332855,
+          "y": 220.44636104288927
+        },
+        {
+          "time": 12.36666666666686,
+          "part": 4,
+          "event": "melee_then_retreat",
+          "group_state": "rest",
+          "bullets": 0,
+          "hp": 3,
+          "x": 196.55796051808403,
+          "y": 221.9764912609981
+        }
+      ]
+    },
+    {
+      "weapon": "lance",
+      "melee_enabled": false,
+      "state": "playing",
+      "seconds": 59.999999999997875,
+      "hp": 3,
+      "hurts": [],
+      "slashes": 0,
+      "max_cut": 0,
+      "max_bullets": 24,
+      "bullet_near_frames": 542,
+      "min_bullet_distance": 13.739,
+      "rest_with_residual_frames": 606,
+      "melee_hits": 0,
+      "completed_withdrawals": 0,
+      "events": []
+    },
+    {
+      "weapon": "lance",
+      "melee_enabled": true,
+      "state": "result",
+      "seconds": 28.86666666666631,
+      "hp": 3,
+      "hurts": [],
+      "slashes": 11,
+      "max_cut": 0,
+      "max_bullets": 24,
+      "bullet_near_frames": 101,
+      "min_bullet_distance": 15.452,
+      "rest_with_residual_frames": 321,
+      "melee_hits": 10,
+      "completed_withdrawals": 7,
+      "events": [
+        {
+          "time": 3.4999999999999925,
+          "part": 0,
+          "event": "melee_then_retreat",
+          "group_state": "rest",
+          "bullets": 0,
+          "hp": 3,
+          "x": 50.387686407624926,
+          "y": 265.53532346285425
+        },
+        {
+          "time": 4.8333333333333215,
+          "part": 1,
+          "event": "melee_then_retreat",
+          "group_state": "rest",
+          "bullets": 0,
+          "hp": 3,
+          "x": 61.8781716019063,
+          "y": 267.1218283980938
+        },
+        {
+          "time": 6.16666666666665,
+          "part": 3,
+          "event": "melee_then_retreat",
+          "group_state": "rest",
+          "bullets": 0,
+          "hp": 3,
+          "x": 59.96309073619274,
+          "y": 270.62341419904686
+        },
+        {
+          "time": 9.783333333333399,
+          "part": 0,
+          "event": "melee_then_retreat",
+          "group_state": "rest",
+          "bullets": 6,
+          "hp": 3,
+          "x": 187.9119092638076,
+          "y": 265.671424069526
+        },
+        {
+          "time": 11.150000000000134,
+          "part": 2,
+          "event": "melee_then_retreat",
+          "group_state": "rest",
+          "bullets": 0,
+          "hp": 3,
+          "x": 197.48731359237547,
+          "y": 270.29483826857285
+        },
+        {
+          "time": 12.516666666666868,
+          "part": 4,
+          "event": "melee_then_retreat",
+          "group_state": "rest",
+          "bullets": 0,
+          "hp": 3,
+          "x": 199.40239445808905,
+          "y": 268.3797574028593
+        },
+        {
+          "time": 13.8333333333336,
+          "part": 5,
+          "event": "melee_then_retreat",
+          "group_state": "rest",
+          "bullets": 0,
+          "hp": 3,
+          "x": 193.65715186094832,
+          "y": 266.46467653714575
+        },
+        {
+          "time": 16.766666666666996,
+          "part": 1,
+          "event": "melee_then_retreat",
+          "group_state": "rest",
+          "bullets": 3,
+          "hp": 3,
+          "x": 76.67776727333847,
+          "y": 258.47577714381754
+        },
+        {
+          "time": 18.166666666666917,
+          "part": 3,
+          "event": "melee_then_retreat",
+          "group_state": "rest",
+          "bullets": 0,
+          "hp": 3,
+          "x": 59.49841419904703,
+          "y": 269.96626233809883
+        },
+        {
+          "time": 19.566666666666837,
+          "part": 5,
+          "event": "melee_then_retreat",
+          "group_state": "rest",
+          "bullets": 0,
+          "hp": 3,
+          "x": 57.583333333333485,
+          "y": 269.17300987047906
+        }
+      ]
+    }
+  ]
+}

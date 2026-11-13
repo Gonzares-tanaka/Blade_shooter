@@ -1,0 +1,24 @@
+{
+  "before_cycle": 12.0,
+  "before_max_gap": 0.35999999999999943,
+  "before_packets_per_cycle": 114,
+  "after_cycle": 14,
+  "after_group_members": [
+    [
+      1,
+      2,
+      3
+    ],
+    [
+      4,
+      5,
+      6
+    ]
+  ],
+  "warning_seconds": 0.7,
+  "fire_seconds": 1.3,
+  "rest_seconds": 5,
+  "all_alive_last_shot": 1.74,
+  "next_first_shot": 7.7,
+  "all_alive_max_no_shot_seconds": 5.96
+}

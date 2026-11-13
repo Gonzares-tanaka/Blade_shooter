@@ -477,7 +477,7 @@ class Game:
     @property
     def section(self):
         if self.boss and self.run.current_stage==2:
-            return (self.duration,"07 / STEALTH CHAIN","CUT / THEN DISENGAGE" if self.boss.opening else "DODGE / READ THE NEXT TURN")
+            return (self.duration,"07 / STEALTH CHAIN","CUT / THEN DISENGAGE" if self.boss.opening else "ALL REST / READ THE BULLETS" if self.boss.attack_state()[1]=="rest" else "DODGE / WATCH THE GLOW")
         if self.boss_pending:return (self.duration,"07 / CLEARING THE DECK","MOVE / DREADNOUGHT INCOMING")
         if self.boss:
             return (self.duration,"07 / DREADNOUGHT","OPEN / STEP IN / CUT" if self.boss.opening

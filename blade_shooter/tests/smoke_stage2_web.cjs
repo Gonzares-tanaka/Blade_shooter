@@ -43,6 +43,20 @@ const fs=require('node:fs'),path=require('node:path');
   await py('g.choose_course("stealth")\ng.reset()');await page.waitForTimeout(3400);
   assert.equal(await py('len(g.boss.parts)'),6);assert.equal(await py('g.boss.active'),true);
   await page.screenshot({path:folder+'/stealth-six.png'});
+  await py('g.px=28\ng.py=300');
+  const cadence=[];
+  for(const [group,state] of [[0,'fire'],[0,'rest'],[1,'warning'],[1,'fire'],[1,'rest']]){
+   await page.waitForFunction(([group,state])=>window.pyxelContext.pyodide.runPython(`g.boss.active and g.boss.attack_state()[:2]==(${group},"${state}")`),[group,state],{timeout:10000});
+   const snap=JSON.parse(await py('json.dumps(dict(time=g.boss.fight_time,state=g.boss.attack_state()[:2],bullets=len(g.bullets),warnings=[i for i,p in enumerate(g.boss.parts) if p.phase=="warning"]))'));
+   cadence.push(snap);
+   if(state==='warning')assert(snap.warnings.length>0&&snap.warnings.every(i=>Math.floor(i/3)===group));
+   await page.screenshot({path:folder+`/cadence-${group}-${state}.png`});
+  }
+  const shots=JSON.parse(await py('json.dumps(g.boss.fire_history)'));
+  assert(shots.some(e=>e.group===0)&&shots.some(e=>e.group===1));
+  assert(shots.every(e=>e.group===Math.floor(e.part/3)));
+  assert(cadence.some(e=>e.state[1]==='rest'&&e.bullets>0));
+
   await py('g.damage_enemy(g.boss.parts[0],999)\ng.damage_enemy(g.boss.parts[2],999)');await page.waitForTimeout(400);
   assert.equal(await py('len([p for p in g.boss.parts if p.hp>0])'),4);assert.equal(await py('len(g.boss.parts)'),6);
   await page.screenshot({path:folder+'/stealth-gaps.png'});
@@ -55,7 +69,7 @@ const fs=require('node:fs'),path=require('node:path');
   assert.deepEqual(errors,[]);
   const result={result:'PASS',version,runtime:'actual Pyxel 2.9.9',browser:await browser.version(),realIPhone:false,
    fixtures:true,stage1ResultThenNext:true,carried:before,stage2MusicLoops:wraps,missileVisible:true,
-   rocksVisible:true,stealthSixIndependentSlots:true,headAndMiddleDestructionContinues:true,stage2ResultRetry:true,errors};
+   rocksVisible:true,alternatingGroupsAndRest:true,cadence,stealthSixIndependentSlots:true,headAndMiddleDestructionContinues:true,stage2ResultRetry:true,errors};
   fs.writeFileSync(folder+'/result.json',JSON.stringify(result,null,2));console.log('STAGE2_WEB_PASS',JSON.stringify(result));
  }catch(e){if(page)await page.screenshot({path:folder+'/failure.png'}).catch(()=>{});throw e;}
  finally{await browser?.close();server.close();}
