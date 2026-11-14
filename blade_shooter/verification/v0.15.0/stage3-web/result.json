@@ -1,0 +1,22 @@
+{
+  "result": "PASS",
+  "version": "0.15.0",
+  "runtime": "actual Pyxel 2.9.9",
+  "browser": "157.0.4341.46",
+  "realIPhone": false,
+  "fixtures": true,
+  "allThreeStageTransitions": true,
+  "carriedIntoThree": [
+    2,
+    "axe",
+    42234,
+    9
+  ],
+  "clearScore": 62234,
+  "reflectionViaKeyboard": true,
+  "noDamageUntilImpact": true,
+  "directDamageRejected": true,
+  "editableSounds": 76,
+  "endingThenTitle": true,
+  "errors": []
+}

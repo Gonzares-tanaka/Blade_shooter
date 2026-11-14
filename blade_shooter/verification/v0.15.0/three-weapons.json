@@ -1,0 +1,61 @@
+{
+  "result": "PASS",
+  "real_devices": false,
+  "automatic_input": true,
+  "runs": [
+    {
+      "weapon": "blade",
+      "final_weapon": "blade",
+      "state": "ending_clear",
+      "seconds": 180.4833333333576,
+      "hp": 3,
+      "hurts": [],
+      "score": 22600,
+      "max_cut": 6,
+      "reflections": 20,
+      "hits": 20,
+      "wall_contacts": 0,
+      "route_turns": 411,
+      "wall_passages": 15,
+      "boss_spawn": 150.0,
+      "wall_seconds": 6.735523900017142
+    },
+    {
+      "weapon": "axe",
+      "final_weapon": "axe",
+      "state": "ending_clear",
+      "seconds": 186.5333333333624,
+      "hp": 1,
+      "hurts": [
+        163.333,
+        175.917
+      ],
+      "score": 21700,
+      "max_cut": 4,
+      "reflections": 20,
+      "hits": 20,
+      "wall_contacts": 0,
+      "route_turns": 522,
+      "wall_passages": 15,
+      "boss_spawn": 150.0,
+      "wall_seconds": 5.096615199930966
+    },
+    {
+      "weapon": "lance",
+      "final_weapon": "lance",
+      "state": "ending_clear",
+      "seconds": 198.63333333337204,
+      "hp": 3,
+      "hurts": [],
+      "score": 21700,
+      "max_cut": 5,
+      "reflections": 21,
+      "hits": 20,
+      "wall_contacts": 0,
+      "route_turns": 640,
+      "wall_passages": 15,
+      "boss_spawn": 150.0,
+      "wall_seconds": 4.825330700026825
+    }
+  ]
+}

@@ -26,7 +26,7 @@ window.bladeInput = {
   let weaponName = "blade", labMode = "free";
   const weaponLabels = {blade:"ブレイド",axe:"アックス",lance:"ランス"};
   const directionLabel = () => weaponName === "lance" ? "縦フリック ↑↓" : "横フリック ←→";
-  let state = "loading";
+  let state = "loading", stageNumber = 1;
   let courseName = "stage";
   let courseLabel = "1面 / 5分＋巨大戦艦", sectionLabel = "最初から";
 
@@ -44,7 +44,8 @@ window.bladeInput = {
     course.disabled = !["title", "clear"].includes(state);
     section.disabled = course.disabled;
     settings.disabled = !["title", "clear", "settings"].includes(state);
-    course.hidden=section.hidden=settings.hidden=["result","gameover","stage_clear"].includes(state);
+    course.hidden=section.hidden=settings.hidden=["result","gameover","stage_clear","ending_clear","credits"].includes(state);
+    nextStageButton.textContent=`第${stageNumber+1}面へ進む`;
     nextStageButton.hidden=!(state==="result"&&bridge.canAdvanceStage);
     titleButton.hidden=!["result","gameover"].includes(state);
     settings.textContent = state === "settings" ? "設定を閉じる" : `${weaponLabels[weaponName]} / ${directionLabel()} ⚙`;
@@ -54,14 +55,14 @@ window.bladeInput = {
     document.getElementById("flick-help").textContent = `左手はドラッグ移動。右手は${directionLabel()}で${weaponLabels[weaponName]}。`;
     for (const button of panel.querySelectorAll("[data-lab]")) button.setAttribute("aria-pressed",String(button.dataset.lab === labMode));
     document.getElementById("lab-note").textContent = labMode === "weapons" ?
-      "54秒固定配置。武器を変えて同じ条件でリトライ。" : "武器を選択。1面から2面へ続けて遊べます。";
+      "54秒固定配置。武器を変えて同じ条件でリトライ。" : "武器を選択。1面から3面・エンディングまで遊べます。";
     zones.hidden = state!=="playing";
     document.getElementById("attack-zone-label").textContent = `斬撃エリア ${weaponName==="lance"?"↑↓":"←→"}`;
-    start.disabled = state === "loading" || state === "stage_clear";
+    start.disabled = state === "loading" || ["stage_clear","ending_clear","credits"].includes(state);
     start.textContent = state === "loading" ? "読み込み中" : state === "playing" ? "一時停止" : state === "paused" ? "再開" :
-                       ["clear", "gameover","result"].includes(state) ? "もう一度" : state === "stage_clear" ? "STAGE CLEAR" : state === "settings" ? "設定完了" : "開始";
+                       ["clear", "gameover","result"].includes(state) ? "もう一度" : state === "ending_clear" ? "CLEAR" : state === "credits" ? "スタッフロール" : state === "stage_clear" ? "STAGE CLEAR" : state === "settings" ? "設定完了" : "開始";
     document.getElementById("status").textContent = state === "loading" ?
-      "表示が出たらゲーム画面をタップ →「開始」でプレイ" : state === "paused" ?
+      "表示が出たらゲーム画面をタップ →「開始」でプレイ" : state === "ending_clear" ? "CLEAR · 最終スコアを表示中" : state === "credits" ? "スタッフロール · 終了後はタイトルへ戻ります" : state === "paused" ?
       "一時停止中 · 再開ボタン / Pで続ける" :
       `左手：ドラッグ移動 · 右手：${directionLabel()} · ショット自動`;
   }
@@ -77,6 +78,9 @@ window.bladeInput = {
         if(["result","gameover"].includes(state)&&document.activeElement instanceof HTMLButtonElement)document.activeElement.blur();
       }
     },
+  });
+  Object.defineProperty(bridge,"stageNumber",{
+    get:()=>stageNumber,set:value=>{if(stageNumber!==value){stageNumber=value;updateLabels();}}
   });
   Object.defineProperty(bridge, "course", {
     get: () => courseName,

@@ -1,0 +1,36 @@
+{
+  "before_sha256": "daf1b84ab48b9ecfdcc3fe7ef7a645969314c5eeaeaa074a944f7dba5b749954",
+  "after_sha256": "e8a23910aa0a980cccf4e91b3625039c3212f2dfa632f008bfd031f3fb51c102",
+  "sprites_added": [
+    "barrier",
+    "final_fighter",
+    "final_warning",
+    "reflected",
+    "reflect_bullet",
+    "cave_tile"
+  ],
+  "sounds_added": [
+    22,
+    23,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75
+  ],
+  "musics_added": [
+    4,
+    5,
+    6
+  ],
+  "existing_images_sfx_other_music_preserved": true
+}

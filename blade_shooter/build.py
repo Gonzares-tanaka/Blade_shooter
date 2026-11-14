@@ -9,7 +9,7 @@ import config as C
 
 ROOT = Path(__file__).resolve().parent
 SOURCES = ("main.py", "config.py", "game.py", "boss.py", "items.py", "progress.py", "stages.py",
-           "persistence.py", "stage2_config.py", "stealth.py", "view.py", "assets.py", "audio.py")
+           "persistence.py", "stage2_config.py", "stealth.py", "stage3_config.py", "cave.py", "final_boss.py", "view.py", "assets.py", "audio.py")
 RESOURCES = (C.RESOURCE_FILE, C.PALETTE_FILE, C.STAGE_BGM_MML_FILE, C.BOSS_BGM_MML_FILE)
 
 

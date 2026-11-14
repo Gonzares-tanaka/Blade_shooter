@@ -1,6 +1,7 @@
 """BGMは0/1/2、SEは3/4。道中・ボス・SEはEditor原本のpyxres。"""
 from pathlib import Path
 import config as C
+from stage3_config import ENDING
 
 
 def load_stage_bgm(p):
@@ -14,10 +15,10 @@ def load_stage_bgm(p):
     p.musics[0].set(*([C.STAGE_BGM_SOUNDS[i]] for i in C.STAGE_BGM_AUDIBLE_TRACKS),[])
 
 # 優先順位順。Sound番号、最短発音間隔（秒）。各ch最大1回/フレーム。
-MOTION = (("missile_warning",10,.2),("missile_launch",21,.15),("rock_ricochet",19,.12),("boss_arrival",12,.2),("boss_warning",13,.15),("boss_fire",14,.12),("swing", 1, .08), ("erase", 3, .10),
+MOTION = (("reflect",23,.08),("shield_block",22,.12),("barrier_warning",13,.2),("missile_warning",10,.2),("missile_launch",21,.15),("rock_ricochet",19,.12),("boss_arrival",12,.2),("boss_warning",13,.15),("boss_fire",14,.12),("swing", 1, .08), ("erase", 3, .10),
           ("rear_warning", 10, .15), ("rear_fire", 11, .15),
           ("charge", 9, .10), ("shot", 0, .10))
-IMPACT = (("rock_break",20,.08),("boss_defeat",16,.1),("boss_part_break",15,.1),("over", 8, .10), ("clear", 7, .10), ("hurt", 5, .10),
+IMPACT = (("reflected_hit",62,.08),("rock_break",20,.08),("boss_defeat",16,.1),("boss_part_break",15,.1),("over", 8, .10), ("clear", 7, .10), ("hurt", 5, .10),
           ("pickup_heal",17,0.0),("pickup_weapon",18,0.0),
           ("cut", 2, .06), ("kill", 4, .08), ("start", 6, .10))
 
@@ -37,9 +38,10 @@ class Audio:
         self.time += 1/C.FPS
         if not C.SOUND_ENABLED:
             return
-        playing = game.state == "playing"
+        playing = game.state in ("playing","ending_clear","credits")
         stage=getattr(game,"stage_definition",None)
         music=(stage.boss_bgm if stage else 1) if getattr(game,"boss",None) else (stage.bgm if stage else 0)
+        if game.state in ("ending_clear","credits"):music=ENDING["bgm"]
         if playing and (not self.music_playing or music!=self.music_number):
             if self.music_playing:
                 for ch in C.AUDIO_BGM_CHANNELS:self.p.stop(ch)

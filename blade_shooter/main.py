@@ -1,5 +1,5 @@
 # title: Blade Close Quarters
-# version: 0.14.1
+# version: 0.15.0
 """PC / GKD / Web共通入口。SELECTは状態・ヒットストップより先に処理。"""
 import sys
 import config as C
@@ -114,6 +114,7 @@ class App:
             # 設定への出入りで物理キーの保持も持ち越さず、離してから再入力する。
             self.input.blocked.update(k for keys in self.input.keys.values() for k in keys if self.p.btn(k))
         if self.input.bridge is not None:
+            self.input.bridge.stageNumber = self.game.run.current_stage
             self.input.bridge.canAdvanceStage = self.game.can_advance_stage
             self.input.bridge.state = self.game.state
             self.input.bridge.meleeReady = self.game.state=="playing" and self.game.cooldown<=1e-6 and self.game.swing<0

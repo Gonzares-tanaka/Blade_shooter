@@ -1,7 +1,7 @@
 """調整箇所。時間=秒、距離=ゲーム内px、速度=px/秒。変更後build.pyで配布版更新。"""
 from stage2_config import MISSILE,STEALTH
 
-TITLE, VERSION = "BLADE / CLOSE QUARTERS", "0.14.1"
+TITLE, VERSION = "BLADE / CLOSE QUARTERS", "0.15.0"
 WIDTH, HEIGHT, HUD_HEIGHT, FPS = 256, 320, 24, 60
 PLAYER_SIZE, PLAYER_HIT_RADIUS = 16, 2.0
 PLAYER_SPEED, PLAYER_HP, INVINCIBLE_SECONDS = 125.0, 3, 1.2
@@ -362,3 +362,9 @@ PALETTE = [
 from stage2_config import practice_courses
 COURSES = {"stage":COURSES["stage"], **practice_courses(),
            **{name:data for name,data in COURSES.items() if name!="stage"}}
+
+# 第3面の固定配置・壁・反射戦・エンディング。
+from stage3_config import practice_courses as stage3_practice,BARRIER,FINAL
+COURSES.update(stage3_practice())
+SCORING["points"].update(barrier=BARRIER["points"],boss_final=0,final_victory=FINAL["points"])
+AREA_ITEM["courses"]=(*AREA_ITEM["courses"],"stage3")

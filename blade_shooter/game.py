@@ -7,6 +7,8 @@ from boss import Battleship
 from items import AreaItems
 from progress import RunState,Result,ScorePopup
 from stages import get_stage
+from cave import CaveWalls
+from stage3_config import BARRIER,FINAL,ENDING
 from stage2_config import ROCK,ROCK_PATTERNS,ROCK_FLOWS,MISSILE,rock_row,rock_position,steer_missile
 
 
@@ -66,6 +68,9 @@ class Enemy:
         return self.phase!="marker" if self.kind in ("rear","asteroid") else True
 
     @property
+    def shielded(self):return self.kind=="barrier" and self.phase!="open"
+
+    @property
     def contact_active(self):
         return self.phase!="marker" if self.kind=="asteroid" else self.kind != "rear" or (self.phase not in ("marker","entry") and self.contact_grace<=0)
 
@@ -73,7 +78,7 @@ class Enemy:
     def radius(self):
         return {"armor": C.ARMOR_RADIUS, "small": C.SMALL_RADIUS,
                 "charger": C.CHARGER_RADIUS, "rear": C.REAR_RADIUS,
-                "asteroid": self.rock_radius or ROCK["radius"], "missile": MISSILE["radius"]}[self.kind]
+                "asteroid": self.rock_radius or ROCK["radius"], "missile": MISSILE["radius"],"barrier":BARRIER["radius"]}[self.kind]
 
     @property
     def resting(self):
@@ -94,6 +99,9 @@ class Bullet:
     source: str = ""
     homing_remaining: float = 0.0
     age: float = 0.0
+
+    reflectable: bool = False
+    friendly: bool = False
 
     @property
     def missile(self):return self.source=="missile"
@@ -258,11 +266,13 @@ class Game:
         self.done = {i for i,w in enumerate(self.course_config["waves"]) if w["at"]<self.time}
         self.uid = self.slashes = self.blade_kills = self.shot_kills = self.cleared_bullets = 0
         self.rocks_destroyed=self.rocks_passed=self.rock_shot_hits=self.missiles_cut=0
+        self.cave=CaveWalls() if self.run.current_stage==3 else None
+        self.reflections=self.reflected_hits=0
         self.swing_hitstop = False
         self.blade_angle = -70.0
         self.blade_pivot = (self.px, self.py-4)
         self.group_id = 0
-        self.blade_kills_by_kind = {kind: 0 for kind in ("armor", "small", "charger", "rear", "boss", "missile")}
+        self.blade_kills_by_kind = {kind: 0 for kind in ("armor", "small", "charger", "rear", "boss", "missile", "barrier")}
         self.shot_kills_by_kind = dict(self.blade_kills_by_kind)
         self.swing_kills = self.max_swing_kills = 0
         self.menu_direction = 0
@@ -317,7 +327,7 @@ class Game:
 
     @property
     def can_advance_stage(self):
-        return bool(self.result and self.result.cleared and self.course in ("stage","stage2")
+        return bool(self.result and self.result.cleared and self.course in ("stage","stage2","stage3")
                     and self.stage_definition.next_stage is not None)
 
     @property
@@ -396,7 +406,7 @@ class Game:
 
     @property
     def course_config(self):
-        return self.stage_data if self.course in ("stage","stage2") else C.COURSES[self.course]
+        return self.stage_data if self.course in ("stage","stage2","stage3") else C.COURSES[self.course]
 
     @property
     def duration(self):
@@ -453,7 +463,7 @@ class Game:
             for degrees in angles:
                 a=math.radians(degrees)
                 self.bullets.append(Bullet(ox,oy,
-                                           math.cos(a)*speed,math.sin(a)*speed,"boss:"+part.key))
+                                           math.cos(a)*speed,math.sin(a)*speed,"boss:"+part.key,reflectable=getattr(self.boss,"reflect_only",False)))
             self.events.append("boss_fire")
         if not active and self.boss.active:
             self.boss_engaged_at=self.time
@@ -466,19 +476,22 @@ class Game:
             self.add_score(C.SCORING["points"][score_key],score_key)
             self.stage_complete=True
             self.pending_scene=self.stage_definition.clear_target
-            self.state="stage_clear"
+            self.state="ending_clear" if self.stage_definition.clear_target=="ending" else "stage_clear"
             self.scene_time=0.0
             self.bullets.clear();self.shots.clear();self.enemies.clear()
             self.items.current=None
+            if self.cave:self.cave.walls.clear()
             self.slash_polys=[];self.slash_slices=[]
             self.finish_result(True)
             self.events.extend(("boss_defeat","clear"))
 
     @property
     def section(self):
+        if self.run.current_stage==3 and self.boss:
+            return (self.duration,"06 / FINAL REFLECTOR","REFLECT BULLETS WITH MELEE" if self.boss.fight_time<9 else "DODGE / REFLECT / MOVE AGAIN")
         if self.boss and self.run.current_stage==2:
             return (self.duration,"07 / STEALTH CHAIN","CUT / THEN DISENGAGE" if self.boss.opening else "ALL REST / READ THE BULLETS" if self.boss.attack_state()[1]=="rest" else "DODGE / WATCH THE GLOW")
-        if self.boss_pending:return (self.duration,"07 / CLEARING THE DECK","MOVE / DREADNOUGHT INCOMING")
+        if self.boss_pending:return (self.duration,"CORE / APPROACHING" if self.run.current_stage==3 else "07 / CLEARING THE DECK","MOVE / FINAL FIGHTER INCOMING" if self.run.current_stage==3 else "MOVE / DREADNOUGHT INCOMING")
         if self.boss:
             return (self.duration,"07 / DREADNOUGHT","OPEN / STEP IN / CUT" if self.boss.opening
                     else "CLEAR DECK / MOVE BELOW" if not self.boss.active else "DODGE / CUT A CORRIDOR")
@@ -488,7 +501,7 @@ class Game:
         self.uid += 1
         hp = {"armor": C.ARMOR_HP, "small": C.SMALL_HP,
               "charger": C.CHARGER_HP, "rear": C.REAR_HP,
-              "asteroid": ROCK["hp"], "missile": MISSILE["hp"]}[kind]
+              "asteroid": ROCK["hp"], "missile": MISSILE["hp"],"barrier":BARRIER["hp"]}[kind]
         enemy = Enemy(self.uid, kind, x, y, hp, home_x=x,home_y=y)
         self.enemies.append(enemy)
         return enemy
@@ -523,8 +536,13 @@ class Game:
         self.events.append("swing")
         return True
 
-    def damage_enemy(self, enemy, amount, blade=False):
+    def damage_enemy(self, enemy, amount, blade=False, reflected=False):
         if enemy.hp<=0:return
+        if (enemy.kind=="boss" and getattr(self.boss,"reflect_only",False) and not reflected) or (enemy.kind=="barrier" and enemy.shielded):
+            if enemy.flash<=0:
+                self.effects.append(Effect(enemy.x,enemy.y,"spark"));self.events.append("shield_block")
+                enemy.flash=.10
+            return
         if enemy.kind=="asteroid":
             if not blade:
                 self.rock_shot_hits+=1
@@ -545,7 +563,7 @@ class Game:
         if enemy.hp <= 0:
             key=("boss_stealth" if enemy.key.startswith("stealth_") else "boss_"+enemy.key) if enemy.kind=="boss" else enemy.kind
             points=C.SCORING["points"][key]*(C.SCORING["melee_multiplier"] if blade else 1)
-            self.add_score(points,key,enemy.x,enemy.y,blade)
+            if points:self.add_score(points,key,enemy.x,enemy.y,blade)
             if enemy.kind=="boss":
                 enemy.hp=0
                 enemy.enabled=False
@@ -578,6 +596,13 @@ class Game:
     def step(self, dt, action=None):
         action = action or Actions()
         self.events = []
+        if self.state in ("ending_clear","credits"):
+            self.scene_time+=dt
+            if self.state=="ending_clear" and self.scene_time>=ENDING['clear_seconds']:
+                self.state='credits';self.scene_time=0.0
+            elif self.state=='credits' and self.scene_time>=(C.HEIGHT+len(ENDING['credits'])*ENDING['line_spacing'])/ENDING['scroll_speed']+ENDING['tail_seconds']:
+                self.choose_course('stage');self.checkpoint=0;self.reset();self.state='title'
+            return
         if self.state=="stage_clear":
             self.scene_time+=dt
             if self.scene_time>=C.FLOW["clear_banner_seconds"]:
@@ -590,7 +615,7 @@ class Game:
                 self.enter_stage(self.stage_definition.next_stage,carry_run=True)
                 self.events.append("start");return
             if action.retry:
-                if self.course in ("stage","stage2"):self.checkpoint=0
+                if self.course in ("stage","stage2","stage3"):self.checkpoint=0
                 self.reset();self.events.append("start");return
             vertical=int(action.y!=0)
             if vertical and not self.menu_vertical:
@@ -605,7 +630,7 @@ class Game:
             elif action.confirm or action.slash:
                 if choice=="NEXT STAGE":self.enter_stage(self.stage_definition.next_stage,carry_run=True)
                 else:
-                    if self.course in ("stage","stage2"):self.checkpoint=0
+                    if self.course in ("stage","stage2","stage3"):self.checkpoint=0
                     self.reset()
                 self.events.append("start")
             return
@@ -695,6 +720,8 @@ class Game:
         gain = self.player_speed/C.PLAYER_SPEED
         self.px = max(8, min(C.WIDTH-8, self.px+action.x/length*self.player_speed*dt+action.drag_x*gain))
         self.py = max(C.HUD_HEIGHT+8, min(C.HEIGHT-8, self.py+action.y/length*self.player_speed*dt+action.drag_y*gain))
+        if self.cave and not self.route_complete:
+            self.cave.update(dt);self.cave.constrain(self,(previous_pivot[0],previous_pivot[1]+4))
         self.items.update(self, dt, (previous_pivot[0], previous_pivot[1]+4))
         self.items.schedule(self)
         if action.slash:
@@ -735,12 +762,32 @@ class Game:
         erased=0
         for b in self.bullets:
             previous = (b.x, b.y)
+            if b.friendly:
+                b.age+=dt
+                if b.age>=FINAL['reflected_lifetime']:continue
+                if self.boss and self.boss.parts[0].hp>0:
+                    target=self.boss.parts[0]
+                    angle=math.atan2(target.y-b.y,target.x-b.x)
+                    b.vx,b.vy=math.cos(angle)*FINAL['reflected_speed'],math.sin(angle)*FINAL['reflected_speed']
+                    b.x+=b.vx*dt;b.y+=b.vy*dt
+                    ex,ey=previous_enemies.get(target.uid,(target.x,target.y))
+                    if segment_distance_sq(0,0,(previous[0]-ex,previous[1]-ey),(b.x-target.x,b.y-target.y))<=(target.radius+b.radius)**2:
+                        self.damage_enemy(target,FINAL['reflected_damage'],reflected=True)
+                        self.reflected_hits+=1;self.events.append('reflected_hit');continue
+                    live.append(b)
+                continue
             if b.missile:
                 steer_missile(b,self.px,self.py,dt)
                 if b.age>=MISSILE["life_seconds"]:continue
             b.x += b.vx*dt
             b.y += b.vy*dt
             if self.blade_hits_motion(previous, (b.x, b.y), b.radius):
+                if b.reflectable:
+                    b.friendly=True;b.age=0;self.reflections+=1
+                    target=self.boss.parts[0];angle=math.atan2(target.y-b.y,target.x-b.x)
+                    b.vx,b.vy=math.cos(angle)*FINAL['reflected_speed'],math.sin(angle)*FINAL['reflected_speed']
+                    live.append(b);erased+=1;self.events.append('reflect')
+                    self.log('reflection',count=self.reflections);continue
                 self.cleared_bullets += 1
                 erased+=1
                 if b.missile:self.missiles_cut+=1
@@ -787,7 +834,8 @@ class Game:
             if self.time < wave["at"] or i in self.done:continue
             self.done.add(i)
             kind,x,pattern=wave["kind"],wave["x"],wave["pattern"]
-            if kind=="rock":
+            if kind=="wall":self.cave.spawn(x,pattern,*wave['wall'])
+            elif kind=="rock":
                 rx,ry,vx,vy,radius,spin=wave['rock']
                 e=self.spawn('asteroid',rx,ry);e.pattern=pattern
                 e.vx,e.vy,e.rock_radius,e.spin=vx,vy,radius,spin
@@ -819,6 +867,8 @@ class Game:
                 e.x,e.y=rock_position(e)
             elif e.kind=="missile":
                 self.update_missile(e,dt)
+            elif e.kind=="barrier":
+                self.update_barrier(e,dt)
             elif e.kind == "rear":
                 self.update_rear(e,dt)
             elif e.kind == "small":
@@ -859,6 +909,25 @@ class Game:
                     e.y += e.vy*dt
             else:
                 self.update_armor(e, dt)
+
+    def update_barrier(self,e,dt):
+        if e.age>=BARRIER['lifetime']:
+            e.phase='exit';e.y-=BARRIER['exit_speed']*dt;return
+        if e.phase=='entry':
+            e.y=min(BARRIER['y'],e.y+BARRIER['entry_speed']*dt)
+            if e.y>=BARRIER['y']:e.phase='shield';e.phase_time=0
+            return
+        before=e.phase_time;e.phase_time+=dt
+        shield=BARRIER['shield_seconds'];fade=BARRIER['fade_seconds']
+        cycle=shield+fade+BARRIER['open_seconds']
+        phase=e.phase_time%cycle
+        old=e.phase;e.phase='shield' if phase<shield else 'fading' if phase<shield+fade else 'open'
+        if old!='fading' and e.phase=='fading':
+            e.aim_x,e.aim_y=self.px,self.py;self.events.append('barrier_warning')
+        for turn in range(int(before//cycle),int(e.phase_time//cycle)+1):
+            for at in BARRIER['fire_at']:
+                if before<turn*cycle+shield+fade+at<=e.phase_time:
+                    self.fire(e,BARRIER['bullet_speed'],BARRIER['angles'],(e.aim_x,e.aim_y))
 
     def update_missile(self,e,dt):
         if e.phase=="exit":

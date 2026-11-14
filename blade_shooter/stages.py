@@ -1,9 +1,11 @@
-"""第1・2面を登録。RunStateを保って次の面へ進む。"""
+"""全3面を登録。RunStateを保って次の面へ進む。"""
 from dataclasses import dataclass
 import config as C
 from boss import Battleship
 from stealth import StealthChain
 from stage2_config import stage2_course
+from stage3_config import stage3_course
+from final_boss import ReflectorFighter
 
 PLANNED_STAGE_COUNT = 3
 
@@ -33,7 +35,8 @@ class StageDefinition:
 
 STAGES = {1:StageDefinition(1,C.stage_course,C.MIX_CANDIDATES,"star_lanes",0,
                            Battleship,1,"result",next_stage=2),
-          2:StageDefinition(2,stage2_course,{},"asteroid_belt",2,StealthChain,3,"result")}
+          2:StageDefinition(2,stage2_course,{},"asteroid_belt",2,StealthChain,3,"result",next_stage=3),
+          3:StageDefinition(3,stage3_course,{},"lunar_cave",4,ReflectorFighter,5,"ending")}
 
 def get_stage(number):
     if number not in STAGES:raise ValueError("Stage content has not been implemented: "+str(number))

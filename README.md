@@ -1,6 +1,6 @@
 # 近接ブレイドSTG
 
-0.12.0は第1面の一巡版です。300秒道中、変化アイテム、巨大戦艦、スコア・CUT、リザルト、ベスト保存、リトライを収録。左手移動＋右手フリック、3武器、Editor編集可能な画像・BGM・SEを使用します。第2面・第3面は未実装です。
+0.15.0は全3面からエンディングまでの一巡版です。第1面300秒＋巨大戦艦、第2面180秒＋連結編隊、第3面150秒の月面洞窟＋反射で倒す最終ボスを収録。HP・武器・スコア・最大CUTを引き継ぎ、CLEARで累計スコアを表示してスタッフロールへ進みます。左手移動＋右手フリック、3武器、Editor編集可能な画像・BGM・SEを使用します。
 
 **[紹介ページ・ブラウザで遊ぶ](https://gonzares-tanaka.github.io/Blade_shooter/)**
 
@@ -11,5 +11,5 @@
 - [GKD Pixel 2 / PlumOS用ZIP](blade_shooter/dist/blade-shooter-gkd.zip)
 - [検証報告](blade_shooter/VERIFICATION.md)
 
-引数なしで1面を起動します。シード固定は `blade_shooter/run.ps1 --seed 42`、ボス単体は `--course boss`。
+引数なしで1面を起動します。シード固定は `blade_shooter/run.ps1 --seed 42`、第3面は `--course stage3`、洞窟道中は `--course cave --section 2`、最終ボスは `--course final`。
 Pagesの公開対象は `blade_shooter/dist/web/` の中身です。子機版 `../shooting_1/` は変更していません。

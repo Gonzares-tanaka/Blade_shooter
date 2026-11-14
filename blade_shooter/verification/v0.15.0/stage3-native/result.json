@@ -1,0 +1,39 @@
+{
+  "result": "PASS",
+  "actual_pyxel": true,
+  "automatic_input": true,
+  "real_devices": false,
+  "updates_per_draw": 6,
+  "runs": [
+    {
+      "weapon": "blade",
+      "seconds": 180.4833333333576,
+      "hp": 3,
+      "score": 22600,
+      "max_cut": 6,
+      "reflections": 20,
+      "hits": 20,
+      "wall_contacts": 0
+    },
+    {
+      "weapon": "axe",
+      "seconds": 186.5333333333624,
+      "hp": 1,
+      "score": 21700,
+      "max_cut": 4,
+      "reflections": 20,
+      "hits": 20,
+      "wall_contacts": 0
+    },
+    {
+      "weapon": "lance",
+      "seconds": 198.63333333337204,
+      "hp": 3,
+      "score": 21700,
+      "max_cut": 5,
+      "reflections": 21,
+      "hits": 20,
+      "wall_contacts": 0
+    }
+  ]
+}

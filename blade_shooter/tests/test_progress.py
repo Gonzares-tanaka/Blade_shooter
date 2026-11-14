@@ -113,12 +113,13 @@ class ProgressTests(unittest.TestCase):
         self.assertEqual(g.uid,1)
 
     def test_stage_registry_two_and_common_state_can_be_carried(self):
-        self.assertEqual(PLANNED_STAGE_COUNT,3);self.assertEqual(tuple(STAGES),(1,2))
+        self.assertEqual(PLANNED_STAGE_COUNT,3);self.assertEqual(tuple(STAGES),(1,2,3))
         g=self.sandbox();g.hp=2;g.weapon='axe';g.score=123;g.add_cut(4)
         old=g.run;g.enter_stage(1,carry_run=True)
         self.assertIs(old,g.run);self.assertEqual((g.hp,g.weapon,g.score,g.max_cut),(2,'axe',123,4))
         self.assertTrue({'stage_number','duration','waves','mixed_candidates','background','bgm','item_points','boss','boss_bgm','clear_target','next_stage'}<=g.stage_data.keys())
-        with self.assertRaises(ValueError):g.enter_stage(3)
+        g.enter_stage(3);self.assertEqual(g.run.current_stage,3)
+        with self.assertRaises(ValueError):g.enter_stage(4)
 
     def test_debug_log_off_by_default_and_reports_score_cut_end_when_enabled(self):
         g=self.sandbox();g.add_score(100,'test');self.assertEqual(g.debug_log,[])

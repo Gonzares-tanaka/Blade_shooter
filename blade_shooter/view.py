@@ -4,8 +4,14 @@ import config as C
 from game import point_at, weapon_pose
 from assets import SPRITES, sprite
 from stage2_config import STEALTH
+from stage3_config import CAVE,BARRIER,ENDING,FINAL
 
-NUMBERS={"0":("111","101","101","101","111"),
+NUMBERS={"C":("111","100","100","100","111"),
+         "L":("100","100","100","100","111"),
+         "E":("111","100","110","100","111"),
+         "A":("111","101","111","101","101"),
+         "R":("110","101","110","101","101"),
+         "0":("111","101","101","101","111"),
          "1":("010","110","010","010","111"),
          "2":("111","001","111","100","111"),
          "3":("111","001","111","001","111"),
@@ -69,7 +75,8 @@ class View:
         p.camera(sx, sy)
         getattr(self,"background_"+g.stage_definition.background)(g)
         if g.boss:
-            if g.run.current_stage==2:self.stealth_chain(g)
+            if g.run.current_stage==3:self.final_fighter(g)
+            elif g.run.current_stage==2:self.stealth_chain(g)
             else:self.battleship(g)
         self.draw_battle(g)
 
@@ -94,6 +101,39 @@ class View:
         for i in range(8):
             x=(i*91+g.world_time*5)%C.WIDTH;y=(i*71+g.world_time*19)%C.HEIGHT
             if y>C.HUD_HEIGHT:sprite(p,"distant_rock",x,y)
+
+    def background_lunar_cave(self,g):
+        p=self.p
+        # 背景は暗い岩肌。接触する面は連続した明色の輪郭。
+        for side in (0,1):
+            for y in range(-16,C.HEIGHT+16,16):
+                yy=(y+g.world_time*24)%(C.HEIGHT+32)-16
+                sprite(p,'cave_tile',8 if side==0 else 248,yy)
+        if g.route_complete:return
+        p.rect(0,C.HUD_HEIGHT,CAVE['base_width'],C.HEIGHT,1)
+        p.rect(C.WIDTH-CAVE['base_width'],C.HUD_HEIGHT,CAVE['base_width'],C.HEIGHT,1)
+        p.line(CAVE['base_width'],C.HUD_HEIGHT,CAVE['base_width'],C.HEIGHT,2)
+        p.line(C.WIDTH-CAVE['base_width'],C.HUD_HEIGHT,C.WIDTH-CAVE['base_width'],C.HEIGHT,2)
+        for wall in g.cave.walls:
+            poly=wall.polygon;self.polygon(poly,16)
+            for a,b in zip(poly[1:-1],poly[2:-1]):p.line(*a,*b,40)
+            p.text(4 if wall.side==0 else 234,max(57,wall.y+wall.height*.5),'ROCK',2)
+        if g.time<8:self.center(67,'BRIGHT WALLS = SOLID',40)
+
+    def final_fighter(self,g):
+        p,b=self.p,g.boss;part=b.parts[0]
+        if part.hp<=0:return
+        warning=b.phase in ('warning','move_warning')
+        sprite(p,'final_warning' if warning and int(g.world_time*10)%2 else 'final_fighter',part.x,part.y)
+        p.rect(70,57,116,3,1);p.rect(70,57,116*part.hp/part.max_hp,3,12)
+        if b.phase=='move_warning':
+            p.line(part.x,part.y,*b.destination,10);p.circb(*b.destination,18,10)
+            self.center(67,'MOVE SIGNAL / KEEP CLEAR',10)
+        elif b.phase=='warning':
+            p.line(part.x,part.y+16,*b.aim,25);p.circb(*b.aim,7,10)
+            self.center(67,'DRAW THE BULLETS FORWARD',10)
+        elif b.phase=='reflect':self.center(67,'MELEE TO REFLECT / THEN MOVE',6)
+        if not b.active:self.center(176,'FINAL / REFLECT BULLETS WITH MELEE',6)
 
     def stealth_chain(self,g):
         p,b=self.p,g.boss
@@ -156,6 +196,17 @@ class View:
                 if e.on_screen:
                     p.rect(e.x-10,e.y+15,20,2,1)
                     p.rect(e.x-10,e.y+15,20*max(0,e.hp)/18,2,6)
+            elif e.kind=='barrier':
+                sprite(p,'barrier',e.x,e.y)
+                color=10 if e.phase=='fading' else 34
+                if e.shielded:
+                    if e.phase!='fading' or int(g.world_time*14)%2:
+                        p.circb(e.x,e.y,18,color);p.circb(e.x,e.y,20,color)
+                    p.text(e.x-12,e.y-28,'UNLOCK' if e.phase=='fading' else 'SHIELD',color)
+                else:
+                    p.text(e.x-8,e.y-26,'OPEN',6)
+                    p.line(e.x-19,e.y-6,e.x-19,e.y+6,6);p.line(e.x+19,e.y-6,e.x+19,e.y+6,6)
+                p.rect(e.x-12,e.y+24,24,2,1);p.rect(e.x-12,e.y+24,24*max(0,e.hp)/BARRIER['hp'],2,6)
             elif e.kind == "armor":
                 color = 6 if e.resting else 11
                 sprite(p,"armor_open" if e.resting else "armor",e.x,e.y)
@@ -216,7 +267,10 @@ class View:
         if g.items.notice_time>0:self.center(65,g.items.notice,6)
         # アイテムの枠や下地で敵弾を隠さない。
         for b in g.bullets:
-            if b.missile:
+            if b.friendly:
+                sprite(p,'reflected',b.x,b.y);p.line(b.x,b.y,b.x-b.vx*.025,b.y-b.vy*.025,6)
+            elif b.reflectable:sprite(p,'reflect_bullet',b.x,b.y)
+            elif b.missile:
                 sprite(p,"homing_missile",b.x,b.y,rotate=math.degrees(math.atan2(b.vy,b.vx))+90)
                 if b.homing_remaining>0:p.circb(b.x,b.y,6,10)
             else:sprite(p,"bullet",b.x,b.y)
@@ -246,19 +300,19 @@ class View:
         if g.cooldown>0:p.text(81,15,"WAIT",2)
         p.text(117,15,"ST"+str(g.run.current_stage),39)
         seconds=max(0,int(g.time))
-        p.text(201, 15, f"{seconds//60:02d}:{seconds%60:02d}" if g.course in ("stage","stage2","boss","stealth")
+        p.text(201, 15, f"{seconds//60:02d}:{seconds%60:02d}" if g.course in ("stage","stage2","stage3","boss","stealth","final")
                else f"{max(0, math.ceil(g.duration-g.time)):03d} SEC", 3)
         if g.state=="playing":
             section=g.section
             self.center(29,section[1],40)
             self.center(40,section[2],2)
             if not g.enemies and not g.bullets and not g.boss and not g.combo_time:
-                self.center(54,"GET READY" if g.time<section[0]+3 else "BREATHER / REPOSITION",33)
+                self.center(54,"READ THE EDGE / CHANGE YOUR ROUTE" if g.cave and g.cave.walls else "GET READY" if g.time<section[0]+3 else "BREATHER / REPOSITION",33)
         if g.state == "title":
             self.panel(78, 202)
             self.center(91, "B L A D E", 6)
             self.center(108, g.course_config["label"], 40)
-            self.center(120,f"{int(g.duration)//60} MIN + BOSS" if g.course in ("stage","stage2") else "3 TARGETS / ANY ORDER" if g.course=="boss"
+            self.center(120,f"{int(g.duration)//60} MIN + BOSS" if g.course in ("stage","stage2","stage3") else "3 TARGETS / ANY ORDER" if g.course=="boss"
                         else f"{int(g.duration)} SEC / FIXED WAVES",39)
             self.center(140,"WEAPON: "+g.weapon_config["label"],6)
             self.center(152,"LEFT: DRAG / RIGHT: "+("V-FLICK" if g.weapon=="lance" else "H-FLICK"),39)
@@ -282,6 +336,18 @@ class View:
             self.center(223,"LEFT HAND: DRAG TO MOVE",39)
             self.center(235,"RIGHT: H-FLICK / LANCE: V-FLICK",39)
             self.center(257,"A / START / B: BACK" if self.profile=="gkd" else "Z / ENTER / X: BACK",6)
+        elif g.state=='ending_clear':
+            p.rect(0,C.HUD_HEIGHT,C.WIDTH,C.HEIGHT,0)
+            self.digits(83,102,'CLEAR',6,3,18)
+            self.center(139,'SCORE',2)
+            self.digits((C.WIDTH-len(str(g.score).zfill(6))*12)/2,159,str(g.score).zfill(6),3,3,12)
+            self.center(202,'ALL THREE STAGES COMPLETE',40)
+            self.center(224,'MAX CUT '+str(g.max_cut),6)
+        elif g.state=='credits':
+            p.rect(0,C.HUD_HEIGHT,C.WIDTH,C.HEIGHT,0)
+            for i,line in enumerate(ENDING['credits']):
+                y=C.HEIGHT+i*ENDING['line_spacing']-g.scene_time*ENDING['scroll_speed']
+                if C.HUD_HEIGHT+8<y<C.HEIGHT-8:self.center(y,line,6 if i%3==0 else 3)
         elif g.state=="stage_clear":
             self.panel(115,92)
             self.center(139,"STAGE "+str(g.run.current_stage)+" CLEAR",6)
