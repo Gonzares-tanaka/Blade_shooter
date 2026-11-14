@@ -1,0 +1,49 @@
+{
+  "result": "PASS",
+  "full_campaign": true,
+  "automatic_input": true,
+  "fixtures": false,
+  "stages": [
+    {
+      "stage": 1,
+      "score": 104900,
+      "hp": 3,
+      "weapon": "blade",
+      "max_cut": 13,
+      "seconds": 337.93333333329883
+    },
+    {
+      "stage": 2,
+      "score": 135850,
+      "hp": 3,
+      "weapon": "blade",
+      "max_cut": 13,
+      "seconds": 204.6666666666863
+    }
+  ],
+  "carry": [
+    {
+      "to_stage": 2,
+      "values": [
+        3,
+        "blade",
+        104900,
+        13
+      ]
+    },
+    {
+      "to_stage": 3,
+      "values": [
+        3,
+        "blade",
+        135850,
+        13
+      ]
+    }
+  ],
+  "final_score": 158450,
+  "max_cut": 13,
+  "ending_then_title": true,
+  "new_best": 158450,
+  "wall_frames": 43604
+}

@@ -1,0 +1,52 @@
+{
+  "result": "PASS",
+  "official_editor": true,
+  "sound_count": 64,
+  "saved_original": false,
+  "cases": [
+    {
+      "editor": 2,
+      "slot": 22
+    },
+    {
+      "editor": 2,
+      "slot": 23
+    },
+    {
+      "editor": 2,
+      "slot": 32
+    },
+    {
+      "editor": 2,
+      "slot": 33
+    },
+    {
+      "editor": 2,
+      "slot": 34
+    },
+    {
+      "editor": 2,
+      "slot": 35
+    },
+    {
+      "editor": 2,
+      "slot": 62
+    },
+    {
+      "editor": 2,
+      "slot": 63
+    },
+    {
+      "editor": 3,
+      "slot": 4
+    },
+    {
+      "editor": 3,
+      "slot": 5
+    },
+    {
+      "editor": 3,
+      "slot": 6
+    }
+  ]
+}

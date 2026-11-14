@@ -1,0 +1,10 @@
+{
+  "result": "PASS",
+  "compared_commit": "4a3849f",
+  "hashes": {
+    "game.py": "781b996d99a64a344fd074f09e10e540b498aee7e57e05106ec9314e969de910",
+    "cave.py": "89d0d9280658cfe1357e4dad13cd4d870751dfa18991293166fd020f972fef11",
+    "final_boss.py": "85ac7dab9e1d60f224ceb48e2e4e90536c9342edd505d7e2b766d8eecae8111e",
+    "stage3_config.py": "9a924d26cbffe0e0e327c70960c40e05698c38ef9fdec8ec04224e3bf1ffe3af"
+  }
+}
