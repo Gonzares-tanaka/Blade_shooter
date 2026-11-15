@@ -1,0 +1,32 @@
+{
+  "before_sha256": "c60d29c5bf16f9cdf44a87053dfdc777b03bbe5745184d3fc6cba443dd743355",
+  "after_sha256": "b9850aff799dfbc8024ecea8c356f937227ffc565a2fddb4c0b0e06c4d38d849",
+  "base_resource_is_user_edited_original": true,
+  "existing_images_sfx_other_music_preserved": true,
+  "all_sounds_music_tilemaps_preserved": true,
+  "updated_sprites": [
+    "missile_carrier",
+    "homing_missile",
+    "stealth",
+    "stealth_warning",
+    "barrier",
+    "final_fighter",
+    "final_warning"
+  ],
+  "missile_crop_before": [
+    224,
+    64,
+    8,
+    16
+  ],
+  "missile_crop_after": [
+    225,
+    64,
+    8,
+    16
+  ],
+  "bank_sha256": {
+    "assets/stage2_music.pyxres": "c5b8283d5183b393123d291e00f4bc7cbb7b35d7e9328073c3b59855bfd5823b",
+    "assets/stage3_music.pyxres": "59a9f0806256df0724ac3375d8db72f9be310a9fbcf85ffe18f7614dc491b041"
+  }
+}

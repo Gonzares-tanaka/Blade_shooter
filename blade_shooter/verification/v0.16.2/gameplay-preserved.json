@@ -1,0 +1,17 @@
+{
+  "result": "PASS",
+  "files": {
+    "game.py": true,
+    "boss.py": true,
+    "cave.py": true,
+    "final_boss.py": true,
+    "stage2_config.py": true,
+    "stage3_config.py": true,
+    "stealth.py": true,
+    "stages.py": true,
+    "items.py": true,
+    "progress.py": true,
+    "view.py": true,
+    "audio.py": true
+  }
+}

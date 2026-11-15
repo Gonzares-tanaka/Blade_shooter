@@ -1,0 +1,136 @@
+[
+  {
+    "sprite": "missile_carrier",
+    "source": "misaile.png",
+    "source_size": [
+      24,
+      24
+    ],
+    "game_size": [
+      24,
+      24
+    ],
+    "mismatched_pixels": 121,
+    "difference_after_white_border": 0
+  },
+  {
+    "sprite": "homing_missile",
+    "source": "missaile1.png",
+    "source_size": [
+      16,
+      16
+    ],
+    "game_size": [
+      8,
+      16
+    ],
+    "mismatched_pixels": 83,
+    "difference_after_white_border": 0,
+    "atlas_rows": [
+      "................",
+      "....21..........",
+      "...3221.........",
+      "...3221.........",
+      "...3221.........",
+      "...3221.........",
+      "...3221.........",
+      "...3221.........",
+      "..122211........",
+      "..111111........",
+      "...baab.........",
+      "...ba3b.........",
+      "....aa..........",
+      "....ab..........",
+      ".....b..........",
+      "................"
+    ],
+    "source_rows": [
+      "................",
+      ".......21.......",
+      "......3221......",
+      "......3221......",
+      "......3221......",
+      "......3221......",
+      "......3221......",
+      "......3221......",
+      ".....122211.....",
+      ".....111111.....",
+      "......baab......",
+      "......ba3b......",
+      ".......aa.......",
+      ".......ab.......",
+      "........b.......",
+      "................"
+    ]
+  },
+  {
+    "sprite": "stealth",
+    "source": "2boss_1.png",
+    "source_size": [
+      32,
+      16
+    ],
+    "game_size": [
+      32,
+      16
+    ],
+    "mismatched_pixels": 0,
+    "difference_after_white_border": 0
+  },
+  {
+    "sprite": "stealth_warning",
+    "source": "2boss_2.png",
+    "source_size": [
+      32,
+      16
+    ],
+    "game_size": [
+      32,
+      16
+    ],
+    "mismatched_pixels": 0,
+    "difference_after_white_border": 0
+  },
+  {
+    "sprite": "barrier",
+    "source": "shield.png",
+    "source_size": [
+      24,
+      24
+    ],
+    "game_size": [
+      24,
+      24
+    ],
+    "mismatched_pixels": 0,
+    "difference_after_white_border": 0
+  },
+  {
+    "sprite": "final_fighter",
+    "source": "3boss_1.png",
+    "source_size": [
+      40,
+      32
+    ],
+    "game_size": [
+      40,
+      32
+    ],
+    "mismatched_pixels": 243,
+    "difference_after_white_border": 0
+  },
+  {
+    "sprite": "final_warning",
+    "source": "3boss_2.png",
+    "source_size": [
+      40,
+      32
+    ],
+    "game_size": [
+      40,
+      32
+    ],
+    "mismatched_pixels": 238,
+    "difference_after_white_border": 0
+  }
+]

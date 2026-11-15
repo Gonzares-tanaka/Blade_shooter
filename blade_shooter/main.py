@@ -1,5 +1,5 @@
 # title: Blade Close Quarters
-# version: 0.16.1
+# version: 0.16.2
 """PC / GKD / Web共通入口。SELECTは状態・ヒットストップより先に処理。"""
 import sys
 import config as C

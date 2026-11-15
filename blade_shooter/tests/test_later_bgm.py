@@ -72,5 +72,7 @@ class LaterBgmTests(unittest.TestCase):
   folder=ROOT/'verification/v0.16.1';report=json.loads((folder/'resource-addition.json').read_text())
   for track in report['tracks']:
    self.assertEqual(hashlib.sha256((ROOT/track['source']).read_bytes()).hexdigest(),track['source_sha256'])
-  self.assertEqual((ROOT/C.RESOURCE_FILE).read_bytes(),(folder/'before'/C.RESOURCE_FILE).read_bytes())
+  # Later art refreshes may change pixels; the stage-one audio must remain intact.
+  current=read(ROOT/C.RESOURCE_FILE);before=read(folder/'before'/C.RESOURCE_FILE)
+  for key in ('sounds','musics','tilemaps'):self.assertEqual(current[key],before[key])
 if __name__=='__main__':unittest.main()

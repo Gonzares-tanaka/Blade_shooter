@@ -1,0 +1,23 @@
+{
+  "result": "PASS",
+  "version": "0.16.2",
+  "browser": "157.0.4341.60",
+  "runtime": "actual Pyxel 2.9.9",
+  "realIPhone": false,
+  "graphicsFixtures": true,
+  "masterResourceSHA256": "b9850aff799dfbc8024ecea8c356f937227ffc565a2fddb4c0b0e06c4d38d849",
+  "image0PixelsSHA256": "3459ed00a98abc6b5cb29e17c3b4a3cf0def2ebf94a61c9925fe656752af5cf8",
+  "bankSwitchPreservesPixels": true,
+  "missileNotClipped": true,
+  "palettePreserved": true,
+  "captures": [
+    "missile-carrier-and-projectiles",
+    "stealth-normal",
+    "stealth-warning",
+    "barrier-shield",
+    "barrier-open",
+    "final-normal",
+    "final-warning"
+  ],
+  "errors": []
+}

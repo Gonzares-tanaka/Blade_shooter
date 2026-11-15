@@ -1,0 +1,17 @@
+{
+  "result": "PASS",
+  "engine": "actual Pyxel 2.9.9",
+  "graphics_fixtures": true,
+  "real_devices": false,
+  "captures": [
+    "missile-carrier-and-projectiles",
+    "stealth-normal",
+    "stealth-warning",
+    "barrier-shield",
+    "barrier-open",
+    "final-normal",
+    "final-warning"
+  ],
+  "master_sha256": "b9850aff799dfbc8024ecea8c356f937227ffc565a2fddb4c0b0e06c4d38d849",
+  "missile_art_not_clipped": true
+}
