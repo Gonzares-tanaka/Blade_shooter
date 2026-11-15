@@ -6,7 +6,19 @@ from assets import SPRITES, sprite, CAVE_TEXTURE
 from stage2_config import STEALTH
 from stage3_config import CAVE,BARRIER,ENDING,FINAL
 
-NUMBERS={"C":("111","100","100","100","111"),
+NUMBERS={"K":("101","101","110","101","101"),
+         "B":("110","101","110","101","110"),
+         "D":("110","101","101","101","110"),
+         "G":("111","100","101","101","111"),
+         "I":("111","010","010","010","111"),
+         "M":("101","111","111","101","101"),
+         "N":("101","111","111","111","101"),
+         "O":("111","101","101","101","111"),
+         "P":("110","101","110","100","100"),
+         "S":("111","100","111","001","111"),
+         "T":("111","010","010","010","010"),
+         "U":("101","101","101","101","111"),
+"C":("111","100","100","100","111"),
          "L":("100","100","100","100","111"),
          "E":("111","100","110","100","111"),
          "A":("111","101","111","101","101"),
@@ -69,6 +81,8 @@ class View:
     def draw(self, g):
         p = self.p
         p.cls(0)
+        if g.state in ("title","mode_select","stage_select","settings") and not g.development:
+            p.camera();self.menu(g);return
         shake = C.SHAKE_PIXELS*max(0, g.shake/C.SHAKE_SECONDS)
         sx = math.sin(g.world_time*173)*shake
         sy = math.cos(g.world_time*137)*shake
@@ -79,6 +93,31 @@ class View:
             elif g.run.current_stage==2:self.stealth_chain(g)
             else:self.battleship(g)
         self.draw_battle(g)
+
+    def menu(self,g):
+        p=self.p
+        bank,u,v,w,h=C.TITLE_IMAGE
+        p.blt(0,12,bank,u,v,w,h)  # Native 256x100; no cropping or aspect change.
+        if g.state=="settings":
+            self.center(125,"WEAPON SETUP",6)
+            self.center(157,"< "+g.weapon_config["label"]+" >",3)
+            self.center(192,"LEFT/RIGHT: CHANGE WEAPON",2)
+            self.center(215,"LEFT HAND: DRAG TO MOVE",39)
+            self.center(229,"RIGHT: H-FLICK / LANCE: V-FLICK",39)
+            self.center(261,"A / B: BACK" if self.profile=="gkd" else "Z / ENTER / X: BACK",6)
+        else:
+            heading={"title":"","mode_select":"SELECT MODE","stage_select":"SELECT STAGE"}[g.state]
+            self.center(124,heading,39)
+            for i,label in enumerate(g.menu_options):
+                disabled=g.state=="title" and i==1 and not g.can_continue
+                color=16 if disabled else 6 if i==g.menu_choice else 3
+                left=(C.WIDTH-len(label)*8)/2
+                self.digits(left,148+i*26,label,color,2,8)
+                if i==g.menu_choice:p.tri(left-12,150+i*26,left-12,156+i*26,left-7,153+i*26,color)
+            self.center(261,"B: WEAPON SETUP" if self.profile=="gkd" else "X: WEAPON SETUP",39)
+            self.center(276,"UP/DOWN + A" if self.profile=="gkd" else "UP/DOWN + Z / ENTER",2)
+            self.center(291,f"BEST {g.best_score:06d} / "+g.weapon_config['label'],2)
+        if self.profile=="gkd":self.center(307,"SELECT: EXIT TO PORTS",2)
 
     def background_star_lanes(self,g):
         p=self.p
@@ -318,10 +357,14 @@ class View:
             p.rect(20+i*8,14,5,6,6 if i<g.hp else 1)
         p.text(54,15,g.weapon_config["label"],6)
         if g.cooldown>0:p.text(81,15,"WAIT",2)
-        p.text(117,15,"ST"+str(g.run.current_stage),39)
+        p.text(112,15,"LIFE",2)
+        p.text(132,15,f"{g.run.lives:02d}",6)
+        p.text(156,15,"ST"+str(g.run.current_stage),39)
         seconds=max(0,int(g.time))
         p.text(201, 15, f"{seconds//60:02d}:{seconds%60:02d}" if g.course in ("stage","stage2","stage3","boss","stealth","final")
                else f"{max(0, math.ceil(g.duration-g.time)):03d} SEC", 3)
+        if g.state=="playing" and g.life_notice_time:
+            self.center(68,g.life_notice,10)
         if g.state=="playing":
             section=g.section
             self.center(29,section[1],40)
@@ -371,7 +414,7 @@ class View:
         elif g.state=="stage_clear":
             self.panel(115,92)
             self.center(139,"STAGE "+str(g.run.current_stage)+" CLEAR",6)
-            self.center(161,"STEALTH CHAIN DOWN" if g.run.current_stage==2 else "DREADNOUGHT SUNK",3)
+            self.center(161,"FINAL FIGHTER DOWN" if g.run.current_stage==3 else "STEALTH CHAIN DOWN" if g.run.current_stage==2 else "DREADNOUGHT SUNK",3)
             self.center(182,f"SCORE {g.score:06d}",39)
         elif g.state in ("result","gameover"):
             self.panel(72,213)

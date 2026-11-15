@@ -116,13 +116,13 @@ class Stage2Tests(unittest.TestCase):
         self.assertLessEqual(a.boss_spawned_at,182.05)
 
     def test_retry_clears_stage2_state_and_preserves_weapon_selection(self):
-        g=self.sandbox('lance');g.rocks_destroyed=7;g.missiles_cut=5;g.score=999;g.hp=1
+        g=self.sandbox('lance');g.rocks_destroyed=7;g.missiles_cut=5;g.score=999;g.run.lives=1;g.hp=1
         g.add_cut(4);g.hurt();g.step(.1,Actions(retry=True))
         self.assertEqual((g.score,g.max_cut,g.hp,g.rocks_destroyed,g.missiles_cut),(0,0,3,0,0))
         self.assertEqual(g.weapon,'lance');self.assertEqual(g.run.current_stage,2)
 
     def test_return_to_title_and_comparison_use_consistent_stage_metadata(self):
-        g=Game();g.enter_stage(2,carry_run=False);g.score=123;g.hp=1;g.hurt()
+        g=Game();g.enter_stage(2,carry_run=False);g.score=123;g.run.lives=1;g.hp=1;g.hurt()
         g.step(.01,Actions(title=True))
         self.assertEqual((g.state,g.run.current_stage,g.stage_definition.number,g.score),('title',1,1,0))
         g.choose_course('stage2');g.set_lab('weapons');g.reset()

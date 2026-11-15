@@ -70,7 +70,7 @@ class CombatTests(unittest.TestCase):
         self.assertEqual(g.hp,2)
 
     def test_damage_grace_and_fast_retry(self):
-        g=sandbox()
+        g=sandbox();g.run.lives=1
         g.hurt(); g.hurt()
         self.assertEqual(g.hp,2)
         g.invincible=0; g.hurt()

@@ -5,7 +5,7 @@ import json
 import config as C
 from boss import Battleship
 from items import AreaItems
-from progress import RunState,Result,ScorePopup
+from progress import RunState,Result,ScorePopup,StageEntry
 from stages import get_stage
 from cave import CaveWalls
 from stage3_config import BARRIER,FINAL,ENDING
@@ -32,6 +32,8 @@ class Actions:
     title: bool = False
     retry: bool = False
     next_stage: bool = False
+    continue_run: bool = False
+    menu_pick: int = 0  # 1-based row; touch activates the same menu as physical buttons.
 
 
 
@@ -235,6 +237,13 @@ class Game:
         self.run=RunState(weapon=weapon)
         self.selected_weapon=weapon
         self.weapon, self.touch_mode = weapon, touch_mode
+        self.play_mode="campaign"
+        self.development=course!=C.DEFAULT_COURSE or section!=0
+        self.menu_choice=0
+        self.settings_return="title"
+        self.continue_entry=None
+        self.continue_max_cut=0
+        self.stage_entry=None
         self.best_score=0
         self.debug=debug
         self.debug_log=[]
@@ -290,6 +299,8 @@ class Game:
         self.scene_time=0.0
         self.result=None
         self.result_choice=0
+        self.life_notice=""
+        self.life_notice_time=0.0
         self.frame_hurt=False
         self.cut_pulse=0.0
         self.score_popups=[]
@@ -298,8 +309,80 @@ class Game:
         self.combo_time=0.0
         self.boss_defeated=False
         self.debug_log=[]
+        self.capture_stage_entry()
         if self.course_config["next_scene"]=="boss" and self.time>=self.duration:
             self.begin_boss()
+
+    def capture_stage_entry(self):
+        self.stage_entry=StageEntry(self.run.current_stage,self.score,self.weapon,self.max_cut,
+                                    self.run.next_extend,self.play_mode)
+
+    @property
+    def can_continue(self):return self.continue_entry is not None
+
+    def return_title(self):
+        # Keep the failed-stage snapshot in memory until a new play starts.
+        self.selected_weapon=self.weapon
+        self.choose_course("stage");self.checkpoint=0;self.reset()
+        self.state="title";self.menu_choice=0
+        self.menu_vertical=self.menu_direction=0
+
+    def start_play(self,stage=1,mode="campaign"):
+        self.play_mode=mode;self.continue_entry=None
+        self.enter_stage(stage,carry_run=False)
+        self.events.append("start")
+
+    def continue_play(self):
+        entry=self.continue_entry
+        if entry is None:return False
+        maximum=max(self.continue_max_cut,entry.max_cut)
+        self.play_mode=entry.mode
+        self.run=RunState(current_stage=entry.stage,score=entry.score,weapon=entry.weapon,
+                          max_cut=maximum,next_extend=entry.next_extend)
+        self.enter_stage(entry.stage,carry_run=True)
+        self.continue_entry=None
+        self.events.append("start")
+        self.log("continue",stage=entry.stage,score=self.score,lives=self.run.lives)
+        return True
+
+    @property
+    def menu_options(self):
+        if self.state=="title":return ("START","CONTINUE")
+        if self.state=="mode_select":return ("CAMPAIGN","STAGE SELECT","BACK")
+        if self.state=="stage_select":return ("STAGE 1","STAGE 2","STAGE 3","BACK")
+        return ()
+
+    def step_menu(self,action):
+        self.configure(action)
+        if action.focus_lost:
+            self.menu_vertical=self.menu_direction=0;return
+        if action.settings:
+            self.settings_return=self.state;self.state="settings"
+            self.menu_vertical=self.menu_direction=0;return
+        if action.title:
+            self.return_title();return
+        vertical=int(action.y!=0)
+        if vertical and not self.menu_vertical:
+            self.menu_choice=(self.menu_choice+(1 if action.y>0 else -1))%len(self.menu_options)
+        self.menu_vertical=vertical
+        if action.menu_pick:
+            if not 1<=action.menu_pick<=len(self.menu_options):return
+            self.menu_choice=action.menu_pick-1
+        if action.continue_run and self.can_continue:
+            self.continue_play();return
+        if not (action.confirm or action.slash or action.menu_pick):return
+        choice=self.menu_choice
+        if self.state=="title":
+            if choice==1:self.continue_play()
+            else:self.state="mode_select"
+        elif self.state=="mode_select":
+            if choice==0:self.start_play()
+            elif choice==1:self.state="stage_select"
+            else:self.return_title()
+        else:
+            if choice<3:self.start_play(choice+1,"stage_select")
+            else:self.state="mode_select"
+        self.menu_choice=0;self.menu_vertical=0
 
     @property
     def weapon(self):return self.run.weapon
@@ -328,11 +411,12 @@ class Game:
 
     @property
     def can_advance_stage(self):
-        return bool(self.result and self.result.cleared and self.course in ("stage","stage2","stage3")
+        return bool(self.play_mode=="campaign" and self.result and self.result.cleared and self.course in ("stage","stage2","stage3")
                     and self.stage_definition.next_stage is not None)
 
     @property
     def result_options(self):
+        if self.state=="gameover" and self.can_continue:return ("CONTINUE","TITLE")
         return ("NEXT STAGE", "RETRY", "TITLE") if self.can_advance_stage else ("RETRY", "TITLE")
 
     def choose_course(self,course):
@@ -348,6 +432,15 @@ class Game:
 
     def add_score(self,amount,reason,x=None,y=None,melee=False):
         self.score+=amount
+        extends=0
+        while self.score>=self.run.next_extend:
+            self.run.lives+=1;extends+=1
+            self.run.next_extend+=C.LIVES["extend_points"]
+        if extends:
+            self.life_notice="EXTEND +"+str(extends)
+            self.life_notice_time=C.LIVES["notice_seconds"]
+            self.events.append("extend")
+            self.log("extend",added=extends,lives=self.run.lives,next=self.run.next_extend)
         self.score_totals[reason]=self.score_totals.get(reason,0)+amount
         if x is not None:
             self.score_popups.append(ScorePopup(x,y,amount,melee))
@@ -477,7 +570,7 @@ class Game:
             self.add_score(C.SCORING["points"][score_key],score_key)
             self.stage_complete=True
             self.pending_scene=self.stage_definition.clear_target
-            self.state="ending_clear" if self.stage_definition.clear_target=="ending" else "stage_clear"
+            self.state="ending_clear" if self.play_mode=="campaign" and self.stage_definition.clear_target=="ending" else "stage_clear"
             self.scene_time=0.0
             self.bullets.clear();self.shots.clear();self.enemies.clear()
             self.items.current=None
@@ -602,20 +695,24 @@ class Game:
             if self.state=="ending_clear" and self.scene_time>=ENDING['clear_seconds']:
                 self.state='credits';self.scene_time=0.0
             elif self.state=='credits' and self.scene_time>=(C.HEIGHT+len(ENDING['credits'])*ENDING['line_spacing'])/ENDING['scroll_speed']+ENDING['tail_seconds']:
-                self.choose_course('stage');self.checkpoint=0;self.reset();self.state='title'
+                self.continue_entry=None;self.return_title()
             return
         if self.state=="stage_clear":
             self.scene_time+=dt
             if self.scene_time>=C.FLOW["clear_banner_seconds"]:
-                if self.stage_definition.clear_target=="next_stage" and self.stage_definition.next_stage is not None:
+                if self.can_advance_stage and self.stage_definition.clear_target=="next_stage":
                     self.enter_stage(self.stage_definition.next_stage,carry_run=True)
                 else:self.state="result"
             return
         if self.state in ("result","gameover"):
+            if action.continue_run:
+                self.continue_play();return
+            if action.menu_pick and 1<=action.menu_pick<=len(self.result_options):self.result_choice=action.menu_pick-1
             if action.next_stage and self.can_advance_stage:
                 self.enter_stage(self.stage_definition.next_stage,carry_run=True)
                 self.events.append("start");return
             if action.retry:
+                self.continue_entry=None
                 if self.course in ("stage","stage2","stage3"):self.checkpoint=0
                 self.reset();self.events.append("start");return
             vertical=int(action.y!=0)
@@ -623,14 +720,13 @@ class Game:
                 self.result_choice=(self.result_choice+(1 if action.y>0 else -1))%len(self.result_options)
             self.menu_vertical=vertical
             choice=self.result_options[self.result_choice]
-            if action.title or action.settings or ((action.confirm or action.slash) and choice=="TITLE"):
-                if self.course=="stage":self.choose_course("stage")
-                self.reset()
-                self.state="title";self.menu_direction=self.menu_vertical=0
-                self.weapon=self.selected_weapon
-            elif action.confirm or action.slash:
-                if choice=="NEXT STAGE":self.enter_stage(self.stage_definition.next_stage,carry_run=True)
+            if action.title or action.settings or ((action.confirm or action.slash or action.menu_pick) and choice=="TITLE"):
+                self.return_title()
+            elif action.confirm or action.slash or action.menu_pick:
+                if choice=="CONTINUE":self.continue_play()
+                elif choice=="NEXT STAGE":self.enter_stage(self.stage_definition.next_stage,carry_run=True)
                 else:
+                    self.continue_entry=None
                     if self.course in ("stage","stage2","stage3"):self.checkpoint=0
                     self.reset()
                 self.events.append("start")
@@ -645,7 +741,7 @@ class Game:
             vertical=int(action.y!=0)
             horizontal=int(action.x!=0)
             if vertical and not self.menu_vertical:
-                self.settings_row=(self.settings_row+(1 if action.y>0 else -1))%2
+                self.settings_row=(self.settings_row+(1 if action.y>0 else -1))%2 if self.development else 0
             delta=(1 if action.x>0 else -1) if horizontal and not self.menu_direction else 0
             self.menu_vertical,self.menu_direction=vertical,horizontal
             if delta:
@@ -654,9 +750,11 @@ class Game:
                     self.set_lab("weapons" if self.lab_mode=="free" else "free")
             self.configure(action)
             if action.settings or action.confirm or action.slash:
-                self.state="title"
+                self.state=self.settings_return
                 self.menu_direction=self.menu_vertical=0
             return
+        if self.state in ("title","mode_select","stage_select") and not self.development:
+            self.step_menu(action);return
         if self.state in ("title", "clear"):
             self.configure(action)
             if action.settings:
@@ -710,6 +808,7 @@ class Game:
         self.cooldown = max(0, self.cooldown-dt)
         self.frame_hurt=False
         self.cut_pulse=max(0,self.cut_pulse-dt)
+        self.life_notice_time=max(0,self.life_notice_time-dt)
         self.combo_time=max(0,self.combo_time-dt)
         for popup in self.score_popups:popup.age+=dt
         self.score_popups=[p for p in self.score_popups if p.age<C.SCORING["popup_seconds"]]
@@ -1088,6 +1187,18 @@ class Game:
         self.events.append("hurt")
         self.effects.append(Effect(self.px, self.py, "hurt"))
         if self.hp <= 0:
-            self.state = "gameover"
-            self.finish_result(False)
-            self.events.append("over")
+            self.run.lives=max(0,self.run.lives-1)
+            self.events.append("life_lost")
+            self.log("life_lost",lives=self.run.lives)
+            if self.run.lives:
+                self.hp=C.PLAYER_HP
+                self.invincible=C.LIVES["respawn_invincible"]
+                self.swing=-1;self.slash_polys=[];self.slash_slices=[]
+                self.life_notice="SHIP LOST / HP RESTORED"
+                self.life_notice_time=C.LIVES["notice_seconds"]
+            else:
+                self.continue_entry=self.stage_entry
+                self.continue_max_cut=self.max_cut
+                self.state = "gameover"
+                self.finish_result(False)
+                self.events.append("over")

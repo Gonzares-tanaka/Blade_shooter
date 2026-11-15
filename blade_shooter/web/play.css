@@ -50,3 +50,8 @@ nav { flex-wrap:wrap; }
 #move-zone,#attack-zone { position:absolute; inset:0 auto 0 0; width:var(--move-zone-width,50%); }
 #attack-zone { left:var(--move-zone-width,50%); right:0; width:auto; border-left:1px dashed #b5ebf22c; background:linear-gradient(transparent 55%,#67f0d109); }
 #touch-zones span { position:absolute; bottom:12px; left:0; right:0; text-align:center; color:#d8eee96e; font-size:9px; letter-spacing:.5px; text-shadow:0 1px 2px #000; }
+
+#menu-options { display:flex; gap:5px; width:100%; justify-content:center; }
+#menu-options:empty { display:none; }
+#menu-options button { flex:1; min-height:36px; padding:5px 8px; font-size:11px; color:#dce7e7; background:#14232b; border:1px solid #35555c; border-radius:4px; }
+#menu-options button:disabled { color:#657371; border-color:#263132; cursor:default; }

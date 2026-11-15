@@ -134,7 +134,7 @@ class Stage3Tests(unittest.TestCase):
 
     def test_retry_clears_all_stage_three_local_state(self):
         g=Game('stage3',weapon='lance');g.reset();g.step(2)
-        g.score=999;g.add_cut(8);g.hp=1;g.hurt();g.step(.01,Actions(retry=True))
+        g.score=999;g.add_cut(8);g.run.lives=1;g.hp=1;g.hurt();g.step(.01,Actions(retry=True))
         self.assertEqual((g.score,g.max_cut,g.hp,g.time),(0,0,3,0))
         self.assertFalse(g.cave.walls or g.enemies or g.bullets);self.assertEqual(g.reflections,0)
 

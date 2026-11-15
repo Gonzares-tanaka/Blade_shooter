@@ -9,3 +9,6 @@ blade_shooter/assets/stage2_MML.txt -text
 blade_shooter/assets/stage2_boss.txt -text
 blade_shooter/assets/stage3_MML.txt -text
 blade_shooter/assets/stage3_boss.txt -text
+
+blade_shooter/assets/opening.txt -text
+blade_shooter/assets/ending.txt -text

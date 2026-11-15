@@ -1,0 +1,53 @@
+{
+  "result": "PASS",
+  "version": "0.17.0",
+  "browser": "157.0.4341.60",
+  "runtime": "actual Pyxel 2.9.9",
+  "realIPhone": false,
+  "scenarios": "menu touch/keyboard, all stage select results, HP/lives/extends, stage 2/3 continue, final clear/credits/title",
+  "combatFixtures": true,
+  "loops": [
+    {
+      "music": 7,
+      "durations": [
+        15.999597549438477,
+        15.999597549438477,
+        15.999597549438477,
+        15.999597549438477
+      ],
+      "wraps": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "music": 6,
+      "durations": [
+        14.43593978881836,
+        14.43593978881836,
+        14.43593978881836,
+        14.43593978881836
+      ],
+      "wraps": [
+        1,
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "continues": [
+    {
+      "stage": 2,
+      "entryScore": 35000
+    },
+    {
+      "stage": 3,
+      "entryScore": 35000
+    }
+  ],
+  "finalScore": 55000,
+  "errors": []
+}

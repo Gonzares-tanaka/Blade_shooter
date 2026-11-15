@@ -1,10 +1,12 @@
 """調整箇所。時間=秒、距離=ゲーム内px、速度=px/秒。変更後build.pyで配布版更新。"""
 from stage2_config import MISSILE,STEALTH
 
-TITLE, VERSION = "BLADE / CLOSE QUARTERS", "0.16.2"
+TITLE, VERSION = "BLADE / CLOSE QUARTERS", "0.17.0"
 WIDTH, HEIGHT, HUD_HEIGHT, FPS = 256, 320, 24, 60
 PLAYER_SIZE, PLAYER_HIT_RADIUS = 16, 2.0
 PLAYER_SPEED, PLAYER_HP, INVINCIBLE_SECONDS = 125.0, 3, 1.2
+LIVES = dict(initial=3, extend_points=10000, respawn_invincible=2.0, notice_seconds=1.5)
+TITLE_IMAGE = (2, 0, 0, 256, 100)  # Image 2, native size; preserve the full logo.
 PLAYER_SPEED_PRESETS = {"tempo": 1.3, "tempo_fast": 1.5}
 SHOT_INTERVAL, SHOT_SPEED, SHOT_DAMAGE = 0.14, 300.0, 1
 SCORING = dict(points=dict(small=100, charger=200, rear=250, armor=500,
@@ -62,10 +64,15 @@ ARMOR_BULLET_SPEED, SMALL_BULLET_SPEED = 100.0, 110.0
 BULLET_RADIUS, BULLET_HIT_RADIUS = 3.0, 2.0
 FULLSCREEN, SOUND_ENABLED = False, True
 # 最終ボスMMLの4声と2系統のSEを分離。音声のみ6chへ拡張。
+AUDIO_MIX = dict(hurt_duck_seconds=0.18, hurt_bgm_gain=0.45, hurt_se_gain=1.6)
 AUDIO_BGM_CHANNELS, AUDIO_SE_CHANNELS = (0, 1, 2, 3), (4, 5)
 # 原文MML優先。Editor音符を編集した曲はmodeをresourceへ切り替える。
 LATER_BGM_MODE = "mml"  # "mml"=原文のENV/VIB/T再現 / "resource"=Editor音符
-AUDIO_BANKS = {2:"assets/stage2_music.pyxres",3:"assets/stage3_music.pyxres"}
+AUDIO_BANKS = {2:"assets/stage2_music.pyxres",3:"assets/stage3_music.pyxres",4:"assets/menu_music.pyxres"}
+UI_BGM_MODE = "mml"  # 原文再生。Editorで編集した音符を使う場合はresource。
+TITLE_BGM = 7
+UI_BGM = {7:dict(file="assets/opening.txt",bank=4,tracks=(0,1,2,3),tempo=120),
+          6:dict(file="assets/ending.txt",bank=4,tracks=(0,1,2,3),tempo=133)}
 LATER_BGM = {
     2:dict(file="assets/stage2_MML.txt",bank=2,tracks=(0,1,3),tempo=150),
     3:dict(file="assets/stage2_boss.txt",bank=2,tracks=(0,1,3),tempo=150),

@@ -50,11 +50,12 @@ const safari=process.argv.includes('--webkit'),stub=process.argv.includes('--con
    await clearContacts();
    if(stub)await page.evaluate(w=>{window.bladeInput.weapon=w;window.bladeInput.state='playing';window.bladeInput.meleeReady=true;},weapon);
    else{
-    if((await py('g.state'))==='playing'){await py('g.state="clear"');await page.waitForFunction(()=>window.bladeInput.state==='clear');}
+    await py('g.return_title()');await page.waitForFunction(()=>window.bladeInput.state==='title');
     await page.locator('#settings').click();await page.waitForFunction(()=>window.bladeInput.state==='settings');
     while(await py('g.weapon')!==weapon){await page.locator('#weapon').click();await wait(60);}
-    await page.locator('[data-lab=weapons]').click();await wait(60);await page.locator('#start').click();await page.waitForFunction(()=>window.bladeInput.state==='title');
-    await page.locator('#start').click();await page.waitForFunction(()=>window.bladeInput.state==='playing');await py('g.schedule=lambda:None');
+    await page.locator('#start').click();await page.waitForFunction(()=>window.bladeInput.state==='title');
+    await page.locator('#start').click();await page.waitForFunction(()=>window.bladeInput.state==='mode_select');
+    await page.locator('#menu-options button').nth(0).click();await page.waitForFunction(()=>window.bladeInput.state==='playing');await py('g.schedule=lambda:None');
    }await bounds();await ready();
   }
   for(const weapon of ['blade','axe','lance']){
@@ -127,7 +128,7 @@ const safari=process.argv.includes('--webkit'),stub=process.argv.includes('--con
    }
    after=await snap();assert.equal(after.serial,before.serial);assert.equal(after.move,null);assert.equal(after.attack,null);
    if(stub)await page.evaluate(()=>{window.bladeInput.state='playing';window.bladeInput.suspended=false;window.bladeInput.meleeReady=true;});
-   else{if(await py('g.state')==='title'){await page.locator('#settings').click();await page.waitForFunction(()=>window.bladeInput.state==='settings');await page.locator('#start').click();await page.waitForFunction(()=>window.bladeInput.state==='title');await page.locator('#start').click();}else if(await py('g.state')==='paused')await page.locator('#start').click();await page.waitForFunction(()=>window.bladeInput.state==='playing');}
+   else{if(await py('g.state')==='title'){await page.locator('#settings').click();await page.waitForFunction(()=>window.bladeInput.state==='settings');await page.locator('#start').click();await page.waitForFunction(()=>window.bladeInput.state==='title');await page.locator('#start').click();await page.waitForFunction(()=>window.bladeInput.state==='mode_select');await page.locator('#menu-options button').nth(0).click();}else if(await py('g.state')==='paused')await page.locator('#start').click();await page.waitForFunction(()=>window.bladeInput.state==='playing');}
   }results.push({cancelBackgroundAndTransitionsResetBoth:true});
   for(const width of [320,768]){
    await ready();await pointer('down',1,60,245);await pointer('down',2,200,245);await pointer('move',2,207,245);before=await snap();

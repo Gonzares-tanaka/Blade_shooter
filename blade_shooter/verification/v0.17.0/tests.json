@@ -1,0 +1,12 @@
+{
+  "result": "PASS",
+  "python_tests": 172,
+  "javascript_gesture_tests": 26,
+  "native": "modes-native/result.json",
+  "web": "modes-web/result.json",
+  "multitouch": "edge/result.json",
+  "campaign": "campaign.json",
+  "webkit": "NOT RUN: Playwright WebKit executable is not installed",
+  "real_iphone": false,
+  "real_gkd": false
+}

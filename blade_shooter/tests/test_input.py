@@ -39,14 +39,36 @@ class InputTests(unittest.TestCase):
             self.assertEqual(app.game.state,state)
 
     def test_gkd_result_select_title_then_start_with_a(self):
-        p=FakePyxel();i=Input(p,'gkd');g=Game();g.reset();g.hp=1;g.hurt()
+        p=FakePyxel();i=Input(p,'gkd');g=Game();g.reset();g.run.lives=1;g.hp=1;g.hurt()
         p.held={p.GAMEPAD1_BUTTON_DPAD_DOWN};p.edges=set(p.held)
         g.step(.01,i.read());self.assertEqual(g.result_choice,1)
         p.held={p.GAMEPAD1_BUTTON_A};p.edges=set(p.held)
         g.step(.01,i.read());self.assertEqual(g.state,'title')
         p.held.clear();p.edges.clear();g.step(.01,i.read())
         p.held={p.GAMEPAD1_BUTTON_A};p.edges=set(p.held)
+        g.step(.01,i.read());self.assertEqual(g.state,'mode_select')
+        p.held.clear();p.edges.clear();g.step(.01,i.read())
+        p.held={p.GAMEPAD1_BUTTON_A};p.edges=set(p.held)
         g.step(.01,i.read());self.assertEqual((g.state,g.hp,g.score),('playing',3,0))
+
+    def test_gkd_two_mode_menu_and_continue_with_physical_buttons(self):
+        app=App.__new__(App);p=FakePyxel();app.p=p;app.input=Input(p,'gkd');app.game=Game()
+        app.audio=SimpleNamespace(update=lambda game:None)
+        app.store=SimpleNamespace(failed=False,save=lambda score:True)
+        def press(key):
+            p.held.clear();p.edges.clear();app.update()
+            p.held={key};p.edges={key};app.update()
+        press(p.GAMEPAD1_BUTTON_A);self.assertEqual(app.game.state,'mode_select')
+        # A still held cannot confirm the next screen again.
+        p.edges.clear();app.update();self.assertEqual(app.game.state,'mode_select')
+        press(p.GAMEPAD1_BUTTON_DPAD_DOWN);press(p.GAMEPAD1_BUTTON_A)
+        self.assertEqual(app.game.state,'stage_select')
+        press(p.GAMEPAD1_BUTTON_DPAD_DOWN);press(p.GAMEPAD1_BUTTON_A)
+        self.assertEqual((app.game.state,app.game.run.current_stage),('playing',2))
+        app.game.run.lives=1;app.game.hp=1;app.game.hurt()
+        self.assertEqual(app.game.state,'gameover')
+        press(p.GAMEPAD1_BUTTON_A)
+        self.assertEqual((app.game.state,app.game.run.current_stage,app.game.run.lives,app.game.hp),('playing',2,3,3))
 
     def test_bridge_movement_consumed_once_and_focus_releases_keys(self):
         p=FakePyxel();i=Input(p,'web')

@@ -6,6 +6,8 @@ import config as C
 class RunState:
     current_stage: int = 1
     score: int = 0
+    lives: int = C.LIVES["initial"]
+    next_extend: int = C.LIVES["extend_points"]
     hp: int = C.PLAYER_HP
     weapon: str = C.DEFAULT_WEAPON
     current_cut: int = 0
@@ -30,3 +32,12 @@ class ScorePopup:
     points: int
     melee: bool
     age: float = 0.0
+
+@dataclass(frozen=True)
+class StageEntry:
+    stage: int
+    score: int
+    weapon: str
+    max_cut: int
+    next_extend: int
+    mode: str

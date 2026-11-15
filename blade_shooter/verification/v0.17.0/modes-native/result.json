@@ -1,0 +1,49 @@
+{
+  "result": "PASS",
+  "engine": "actual Pyxel 2.9.9",
+  "real_devices": false,
+  "graphics_audio_fixtures": true,
+  "logo_pixels_uncropped": true,
+  "colors": 52,
+  "music_seconds": {
+    "7": [
+      15.999597549438477,
+      15.999597549438477,
+      15.999597549438477,
+      15.999597549438477
+    ],
+    "6": [
+      14.43593978881836,
+      14.43593978881836,
+      14.43593978881836,
+      14.43593978881836
+    ]
+  },
+  "hud_missing_pixels": {
+    "HP": [],
+    "LIFE": [],
+    "03": [],
+    "LANCE": [],
+    "ST2": [],
+    "00:00": []
+  },
+  "hurt_sound": [
+    45,
+    39,
+    32,
+    25,
+    16,
+    8
+  ],
+  "captures": [
+    "title",
+    "mode-select",
+    "stage-select",
+    "extend-hud",
+    "respawn-hud",
+    "hud-gkd",
+    "gameover",
+    "title-continue",
+    "continued-stage-two"
+  ]
+}

@@ -71,7 +71,7 @@ class ProgressTests(unittest.TestCase):
         self.assertEqual(g.current_cut,8);g.step(.01);self.assertEqual(g.current_cut,0)
         self.assertEqual(g.max_cut,8);g.add_cut(2);g.hurt()
         self.assertEqual(g.current_cut,0);self.assertEqual(g.max_cut,8)
-        g.invincible=0;g.hp=1;g.hurt()
+        g.invincible=0;g.run.lives=1;g.hp=1;g.hurt()
         self.assertEqual(g.state,'gameover');self.assertEqual(g.result.max_cut,8)
 
     def test_no_enemy_body_cut_counts_as_bullet_cut(self):
@@ -89,7 +89,7 @@ class ProgressTests(unittest.TestCase):
 
     def test_result_retry_completely_resets_and_title_keeps_selection(self):
         g=self.sandbox('lance');g.add_score(1234,'test');g.add_cut(9)
-        g.time=299;g.checkpoint=5;g.hp=1
+        g.time=299;g.checkpoint=5;g.run.lives=1;g.hp=1
         g.enemies=[g.spawn('armor',80,100)];g.bullets=[Bullet(10,10,0,0)]
         g.items.current=AreaItem(2,64,200,'axe');g.hurt()
         self.assertEqual(g.result.score,1234);self.assertEqual(g.result.max_cut,9)
@@ -98,7 +98,7 @@ class ProgressTests(unittest.TestCase):
         self.assertFalse(g.enemies or g.bullets or g.shots or g.items.current or g.boss)
         self.assertEqual(g.items.done,set());self.assertEqual(g.weapon,'lance')
         self.assertEqual(g.best_score,1234)
-        g.hp=1;g.invincible=0;g.hurt();g.step(.1,Actions(y=1));g.step(.1,Actions(confirm=True))
+        g.run.lives=1;g.hp=1;g.invincible=0;g.hurt();g.step(.1,Actions(y=1));g.step(.1,Actions(confirm=True))
         self.assertEqual(g.state,'title');self.assertEqual(g.selected_weapon,'lance')
 
     def test_cleanup_bounded_no_new_enemies_and_final_item_not_delayed(self):
@@ -125,7 +125,7 @@ class ProgressTests(unittest.TestCase):
         g=self.sandbox();g.add_score(100,'test');self.assertEqual(g.debug_log,[])
         g.debug=True
         with contextlib.redirect_stdout(io.StringIO()):
-            g.add_score(50,'test');g.add_cut(2);g.hp=1;g.hurt()
+            g.add_score(50,'test');g.add_cut(2);g.run.lives=1;g.hp=1;g.hurt()
         self.assertTrue({'score','cut','max_cut','stage_end'}<={e['event'] for e in g.debug_log})
 
 class PersistenceTests(unittest.TestCase):
@@ -147,7 +147,7 @@ class PersistenceTests(unittest.TestCase):
     def test_web_blocked_load_and_failed_save_do_not_stop_run(self):
         def blocked():raise OSError('storage denied')
         store=BestStore(SimpleNamespace(loadBestScore=blocked,saveBestScore=lambda score:False))
-        g=Game();g.reset();g.score=200;g.hp=1;g.hurt()
+        g=Game();g.reset();g.score=200;g.run.lives=1;g.hp=1;g.hurt()
         self.assertFalse(store.save(g.best_score));self.assertEqual(store.best,200)
         g.step(.1,Actions(retry=True));self.assertEqual(g.state,'playing')
 

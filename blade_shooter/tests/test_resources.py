@@ -47,14 +47,16 @@ class ResourceTests(unittest.TestCase):
         for bank,(old,new) in enumerate(zip(before['images'],self.data['images'])):
             for y in range(256):
                 for x in range(256):
-                    if bank==1 and x<128 and y<128:
+                    if bank==2 and y<100:
+                        self.assertEqual(pixel(old,x,y),0)
+                    elif bank==1 and x<128 and y<128:
                         self.assertEqual(pixel(old,x,y),0)
                     elif bank==0 and any(u<=x<u+w and v<=y<v+h for name,(u,v,w,h) in SPRITES.items()
                                        if name in ('asteroid','missile_carrier','homing_missile','stealth','stealth_warning','distant_rock','barrier','final_fighter','final_warning','reflected','reflect_bullet','cave_tile')):
                         self.assertEqual(pixel(old,x,y),0)
                     else:self.assertEqual(pixel(old,x,y),pixel(new,x,y),(bank,x,y))
         for i,(old,new) in enumerate(zip(before['sounds'],self.data['sounds'])):
-            if i not in (19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,62,63):self.assertEqual(old,new,i)
+            if i not in (5,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,62,63):self.assertEqual(old,new,i)
         self.assertEqual(before['tilemaps'],self.data['tilemaps'])
         self.assertEqual(before['musics'][0],self.data['musics'][0])
         self.assertEqual(before['musics'][1],self.data['musics'][1])
