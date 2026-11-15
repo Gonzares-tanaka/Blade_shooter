@@ -1,0 +1,202 @@
+{
+  "before_sha256": "c60d29c5bf16f9cdf44a87053dfdc777b03bbe5745184d3fc6cba443dd743355",
+  "after_sha256": "c60d29c5bf16f9cdf44a87053dfdc777b03bbe5745184d3fc6cba443dd743355",
+  "existing_images_sfx_other_music_preserved": true,
+  "base_resource_unchanged": true,
+  "original_mml_verbatim": true,
+  "default_playback": "native MML, exact tempo / ENV / VIB",
+  "editor_notes_approximations": [
+    "sixteenth-note envelope volume quantized 0\u20137",
+    "noise pitches lowered 2 octaves",
+    "vibrato and tied sustain approximated",
+    "T171 quantized to speed11 only in optional Editor playback"
+  ],
+  "tracks": [
+    {
+      "music": 2,
+      "source": "assets/stage2_MML.txt",
+      "bank": "assets/stage2_music.pyxres",
+      "source_tempo": 150,
+      "voices": 3,
+      "source_loop_seconds": 25.6,
+      "editor_loop_seconds": 25.6,
+      "editor_tempo": 150.0,
+      "sequences": [
+        [
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29
+        ],
+        [
+          30,
+          30,
+          31,
+          32,
+          30,
+          30,
+          31,
+          32
+        ],
+        [
+          33,
+          36,
+          33,
+          36,
+          33,
+          36,
+          33,
+          36
+        ]
+      ],
+      "source_sha256": "c576e611c3c949af4415ddc299dcd9ee0514c83e79b8a19e5534876f1d235bab"
+    },
+    {
+      "music": 3,
+      "source": "assets/stage2_boss.txt",
+      "bank": "assets/stage2_music.pyxres",
+      "source_tempo": 150,
+      "voices": 3,
+      "source_loop_seconds": 25.6,
+      "editor_loop_seconds": 25.6,
+      "editor_tempo": 150.0,
+      "sequences": [
+        [
+          37,
+          38,
+          37,
+          39,
+          40,
+          41,
+          40,
+          42
+        ],
+        [
+          43,
+          44,
+          43,
+          45,
+          46,
+          47,
+          46,
+          48
+        ],
+        [
+          33,
+          36,
+          33,
+          36,
+          33,
+          36,
+          33,
+          36
+        ]
+      ],
+      "source_sha256": "28bfc46d1aadd155586e46f86c1917de2146d27ff5614df487f325089f3181a6"
+    },
+    {
+      "music": 4,
+      "source": "assets/stage3_MML.txt",
+      "bank": "assets/stage3_music.pyxres",
+      "source_tempo": 150,
+      "voices": 3,
+      "source_loop_seconds": 25.6,
+      "editor_loop_seconds": 25.6,
+      "editor_tempo": 150.0,
+      "sequences": [
+        [
+          22,
+          23,
+          22,
+          24,
+          25,
+          26,
+          25,
+          27
+        ],
+        [
+          28,
+          29,
+          28,
+          30,
+          28,
+          29,
+          28,
+          30
+        ],
+        [
+          31,
+          32,
+          31,
+          32,
+          31,
+          32,
+          31,
+          32
+        ]
+      ],
+      "source_sha256": "62027ac185191d691683b6fc71b3d97c886fa6b0a39b7630b3cff999b843f558"
+    },
+    {
+      "music": 5,
+      "source": "assets/stage3_boss.txt",
+      "bank": "assets/stage3_music.pyxres",
+      "source_tempo": 171,
+      "voices": 4,
+      "source_loop_seconds": 22.45614035087719,
+      "editor_loop_seconds": 23.466666666666665,
+      "editor_tempo": 163.63636363636363,
+      "sequences": [
+        [
+          33,
+          36,
+          37,
+          38,
+          39,
+          40,
+          39,
+          41
+        ],
+        [
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49
+        ],
+        [
+          50,
+          51,
+          50,
+          52,
+          53,
+          54,
+          53,
+          55
+        ],
+        [
+          56,
+          57,
+          56,
+          57,
+          56,
+          57,
+          56,
+          57
+        ]
+      ],
+      "source_sha256": "1a29428909fac72d7a86bff8489bed690a9ea61b9d64d19a0d94b55d29f1c340"
+    }
+  ],
+  "bank_sha256": {
+    "assets/stage2_music.pyxres": "04a640cc0e17b795cf2201958f4fe84d5175e2291655d655bc525086fe642aa3",
+    "assets/stage3_music.pyxres": "9bab43df9db0db8177bb71b2a404b92a099bac7178416a05813b050f5224689d"
+  }
+}

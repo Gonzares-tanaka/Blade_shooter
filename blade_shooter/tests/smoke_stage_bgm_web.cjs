@@ -23,10 +23,10 @@ const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypt
   assert.equal(await py('hashlib.sha256((Path(__import__("audio").__file__).parent/config.STAGE_BGM_MML_FILE).read_bytes()).hexdigest()'),crypto.createHash('sha256').update(mml).digest('hex'));
   const durations=JSON.parse(await py('json.dumps([sum(pyxel.sounds[i].total_sec() for i in seq) for seq in pyxel.musics[0].seqs[:3]])'));
   assert(Math.abs(durations[0]-12.8)<.001);assert.equal(durations[0],durations[1]);assert.equal(durations[0],durations[2]);
-  assert.equal(await py('len(pyxel.channels)'),5);
+  assert.equal(await py('len(pyxel.channels)'),6);
   await page.locator('#start').click();await page.waitForFunction(()=>window.bladeInput.state==='playing');
   await py('g.schedule=lambda:None'); // 音声確認用。戦闘の通し確認とは分ける。
-  const positions=async()=>JSON.parse(await py('json.dumps([pyxel.play_pos(ch) for ch in config.AUDIO_BGM_CHANNELS])'));
+  const positions=async()=>JSON.parse(await py('json.dumps([pyxel.play_pos(ch) for ch in config.AUDIO_BGM_CHANNELS[:3]])'));
   let previous=null;const wraps=[0,0,0],samples=[],started=Date.now();
   while(Date.now()-started<14200){
    const current=await positions();assert(current.every(Boolean));

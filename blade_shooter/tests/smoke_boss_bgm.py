@@ -30,7 +30,7 @@ def tick():
     if frames==3165:driver.state='playing'
     driver.events=['shot','cut','erase'] if frames%18==0 else []
     app.audio.update(driver)
-    positions=[p.play_pos(ch) for ch in C.AUDIO_BGM_CHANNELS]
+    positions=[p.play_pos(ch) for ch in C.AUDIO_BGM_CHANNELS[:3]]
     if 24<=frames<3160:
         assert all(pos is not None for pos in positions),positions
         for i,(old,new) in enumerate(zip(previous,positions)):

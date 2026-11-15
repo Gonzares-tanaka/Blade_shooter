@@ -3,3 +3,9 @@ blade_shooter/assets/stage1_MML.txt -text
 blade_shooter/assets/stage1_boss.txt -text
 blade_shooter/verification/**/assets/stage1_MML.txt -text
 blade_shooter/verification/**/assets/stage1_boss.txt -text
+
+# Keep the four attached stage 2/3 songs byte-for-byte.
+blade_shooter/assets/stage2_MML.txt -text
+blade_shooter/assets/stage2_boss.txt -text
+blade_shooter/assets/stage3_MML.txt -text
+blade_shooter/assets/stage3_boss.txt -text

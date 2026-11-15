@@ -1,0 +1,87 @@
+{
+  "result": "PASS",
+  "version": "0.16.1",
+  "browser": "157.0.4341.60",
+  "runtime": "actual Pyxel 2.9.9",
+  "realIPhone": false,
+  "audioOnlyFixture": true,
+  "originalMmlBytesPreserved": true,
+  "tracks": [
+    {
+      "music": 2,
+      "file": "assets/stage2_MML.txt",
+      "tempo": 150,
+      "voices": 3,
+      "durations": [
+        25.600385665893555,
+        25.600385665893555,
+        25.600385665893555
+      ],
+      "wraps": [
+        1,
+        1,
+        1
+      ],
+      "sfxConcurrent": true,
+      "pauseResume": true
+    },
+    {
+      "music": 3,
+      "file": "assets/stage2_boss.txt",
+      "tempo": 150,
+      "voices": 3,
+      "durations": [
+        25.600385665893555,
+        25.600385665893555,
+        25.600385665893555
+      ],
+      "wraps": [
+        1,
+        1,
+        1
+      ],
+      "sfxConcurrent": true,
+      "pauseResume": true
+    },
+    {
+      "music": 4,
+      "file": "assets/stage3_MML.txt",
+      "tempo": 150,
+      "voices": 3,
+      "durations": [
+        25.600385665893555,
+        25.600385665893555,
+        25.600385665893555
+      ],
+      "wraps": [
+        1,
+        1,
+        1
+      ],
+      "sfxConcurrent": true,
+      "pauseResume": true
+    },
+    {
+      "music": 5,
+      "file": "assets/stage3_boss.txt",
+      "tempo": 171,
+      "voices": 4,
+      "durations": [
+        22.455907821655273,
+        22.455907821655273,
+        22.455907821655273,
+        22.455907821655273
+      ],
+      "wraps": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "sfxConcurrent": true,
+      "pauseResume": true
+    }
+  ],
+  "editorPlayback": true,
+  "errors": []
+}

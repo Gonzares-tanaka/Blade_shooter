@@ -1,9 +1,9 @@
 {
-  "version": "0.16.0",
+  "version": "0.16.1",
   "pyxel_web_version": "2.9.9",
   "sources": {
-    "main.py": "dbb4a97fed48d20c4f36c25e9171f6d3cfc4c37f746cc68f9032e00537467f1b",
-    "config.py": "ab3597f97402bb0e7d0d1fece27361a1780dede9208e99f0d5b83b7b77ea65ab",
+    "main.py": "77e51de0421ed9fb1a1ee0e1fd4e9bb30179002d68bdd4b67574eb587bb426d4",
+    "config.py": "88d458d38d373cca32e4edbcc909fc8376803b7ad71c961d3da21ccc59c60ddf",
     "game.py": "463a0c7695f2c357e7fb58909db87048a1916a95e9245d0a45b7525436e5dcd0",
     "boss.py": "62669b4c2d2e3e47311b446138e7b8e40fa2a09611d477d3778658c6df2377dd",
     "items.py": "d60530c9f18d7c399271126a3122c5e8d1873ee874c5c6ecb28f06a69aadbf63",
@@ -17,10 +17,18 @@
     "final_boss.py": "85ac7dab9e1d60f224ceb48e2e4e90536c9342edd505d7e2b766d8eecae8111e",
     "view.py": "ca34db0b97e4c385057d60b9fa188b2f8582a37ba378ac2bacb622c933571a7d",
     "assets.py": "422a7b229cf7df1d5707b7b8b6130d490dfdc2062fa237bb800bd757b1a9d98d",
-    "audio.py": "747d4858e2c8ff5aaead3828ea4e59afafcfba64226bfb667329918e227948db",
+    "audio.py": "3731430af8121524e73971e6e32269c45347bdc51d80e1c52edcf1262528ebcf",
     "assets/blade.pyxres": "c60d29c5bf16f9cdf44a87053dfdc777b03bbe5745184d3fc6cba443dd743355",
     "assets/blade.pyxpal": "8bdbe7337bf6a347642b9c1a1a1afb782d6e3442c7c1af5fea7f37276c5686f3",
     "assets/stage1_MML.txt": "ccbfa2c5445435e0cb600d2b84c80eebef88f98418c1aa92a06dee6e951a609c",
-    "assets/stage1_boss.txt": "b90fce6117ccefeb1530ba0f502ee5a43e715f6b36d6d3c3f276bb6adbe3c2bb"
+    "assets/stage1_boss.txt": "b90fce6117ccefeb1530ba0f502ee5a43e715f6b36d6d3c3f276bb6adbe3c2bb",
+    "assets/stage2_music.pyxres": "04a640cc0e17b795cf2201958f4fe84d5175e2291655d655bc525086fe642aa3",
+    "assets/stage3_music.pyxres": "9bab43df9db0db8177bb71b2a404b92a099bac7178416a05813b050f5224689d",
+    "assets/stage2_music.pyxpal": "8bdbe7337bf6a347642b9c1a1a1afb782d6e3442c7c1af5fea7f37276c5686f3",
+    "assets/stage3_music.pyxpal": "8bdbe7337bf6a347642b9c1a1a1afb782d6e3442c7c1af5fea7f37276c5686f3",
+    "assets/stage2_MML.txt": "c576e611c3c949af4415ddc299dcd9ee0514c83e79b8a19e5534876f1d235bab",
+    "assets/stage2_boss.txt": "28bfc46d1aadd155586e46f86c1917de2146d27ff5614df487f325089f3181a6",
+    "assets/stage3_MML.txt": "62027ac185191d691683b6fc71b3d97c886fa6b0a39b7630b3cff999b843f558",
+    "assets/stage3_boss.txt": "1a29428909fac72d7a86bff8489bed690a9ea61b9d64d19a0d94b55d29f1c340"
   }
 }

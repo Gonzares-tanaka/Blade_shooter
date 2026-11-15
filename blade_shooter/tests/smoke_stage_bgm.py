@@ -21,7 +21,7 @@ def run(update,draw):
     durations=[sum(p.sounds[i].total_sec() for i in seq) for seq in p.musics[0].seqs[:3]]
     assert abs(durations[0]-12.8)<.001
     assert max(abs(durations[i]-durations[0]) for i in (1,2))<1e-8
-    assert len(p.channels)==5
+    assert len(p.channels)==6
     started=time.perf_counter()
     original_run(tick,app.draw)
 
@@ -34,7 +34,7 @@ def tick():
     driver.events=['shot','cut','erase'] if frames%18==0 else []
     app.audio.update(driver)
     app.game.time=frames/C.FPS
-    positions=[p.play_pos(ch) for ch in C.AUDIO_BGM_CHANNELS]
+    positions=[p.play_pos(ch) for ch in C.AUDIO_BGM_CHANNELS[:3]]
     if frames<=1620:
         if frames>12:assert all(pos is not None for pos in positions),positions
         for i,(old,new) in enumerate(zip(previous,positions)):

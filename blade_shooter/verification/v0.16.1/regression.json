@@ -1,0 +1,10 @@
+{
+  "result": "PASS",
+  "python_unittest": 161,
+  "native_loops_per_song": 2,
+  "web_loops_per_song": 1,
+  "original_files_preserved": true,
+  "gameplay_unchanged": true,
+  "real_iphone": false,
+  "real_gkd": false
+}

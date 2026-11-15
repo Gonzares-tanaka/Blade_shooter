@@ -1,4 +1,4 @@
-"""BGMは0/1/2、SEは3/4。道中・ボス・SEはEditor原本のpyxres。"""
+"""BGMは0〜3、SEは4/5。第2・第3面は原文MML／Editor音符を選択可能。"""
 from pathlib import Path
 import config as C
 from stage3_config import ENDING
@@ -28,6 +28,7 @@ class Audio:
         self.p, self.time = p, 0
         self.music_playing = False
         self.music_number=0
+        self.bank=1
         while len(p.channels) <= max((*C.AUDIO_BGM_CHANNELS,*C.AUDIO_SE_CHANNELS)):
             p.channels.append(p.Channel())
         if C.STAGE_BGM_MODE=="mml":load_stage_bgm(p)
@@ -45,6 +46,23 @@ class Audio:
         if playing and (not self.music_playing or music!=self.music_number):
             if self.music_playing:
                 for ch in C.AUDIO_BGM_CHANNELS:self.p.stop(ch)
+            bank=C.LATER_BGM[music]['bank'] if music in C.LATER_BGM else (3 if music==ENDING['bgm'] else 1)
+            # 原本は64枠のまま。各面の編集可能な音符バンクを必要時だけ読み込む。
+            if bank!=self.bank:
+                self.p.stop()
+                path=C.AUDIO_BANKS.get(bank,C.RESOURCE_FILE)
+                self.p.load(str(Path(__file__).resolve().parent/path),exclude_images=True,exclude_tilemaps=True)
+                # Sound.mmlの実行時状態を次のEditor音符へ持ち越さない。
+                for sound in self.p.sounds:sound.mml()
+                if bank==1 and C.STAGE_BGM_MODE=='mml':load_stage_bgm(self.p)
+                self.bank=bank
+            if music in C.LATER_BGM and C.LATER_BGM_MODE=='mml':
+                spec=C.LATER_BGM[music]
+                rows=[row.strip() for row in (Path(__file__).resolve().parent/spec['file']).read_text(encoding='utf-8-sig').splitlines()
+                      if row.strip().startswith('Q')]
+                slots=tuple(range(22,22+len(spec['tracks'])))
+                for slot,track in zip(slots,spec['tracks']):self.p.sounds[slot].mml(rows[track])
+                self.p.musics[music].set(*([slot] for slot in slots),*([] for _ in range(4-len(slots))))
             self.p.playm(music, loop=True)
             self.music_number=music
         elif not playing and self.music_playing:

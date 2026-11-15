@@ -44,7 +44,7 @@ const fs=require('node:fs'),path=require('node:path');
   await page.waitForTimeout(2600);assert.equal(await py('g.boss.active'),true);
   assert.equal(await py('len(pyxel.sounds)'),64);
   assert.equal(await py('pyxel.play_pos(0) is not None'),true);
-  assert.deepEqual(JSON.parse(await py('json.dumps([list(s) for s in pyxel.musics[5].seqs][:2])')),[[32],[33]]);
+  assert.deepEqual(JSON.parse(await py('json.dumps([list(s) for s in pyxel.musics[5].seqs][:2])')),[[22],[23]]);
   await page.locator('#pyxel-screen').tap();
   await py('from game import Bullet\ng.boss.fight_time=2.1\ng.bullets=[Bullet(128,220,0,108,"boss:final",reflectable=True)]');
   await page.keyboard.down('z');await page.waitForTimeout(120);await page.keyboard.up('z');
