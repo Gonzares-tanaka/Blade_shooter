@@ -43,6 +43,7 @@ class CavePilot:
             for t in (.08,.22,.45,.8):
                 px=max(8,min(248,g.px+vx*t));py=max(32,min(312,g.py+vy*t))
                 if g.cave and not g.route_complete:
+                    # The 18px margin already covers the shallow 0–5px base rim.
                     left=right=CAVE['base_width']
                     for w in g.cave.walls:
                         edge=max(w.edge(py+offset-CAVE['scroll_speed']*t) for offset in (-10,0,10))
@@ -55,7 +56,7 @@ class CavePilot:
                     # The current central lane will be reflected; other lanes are still avoided.
                     if b is intercept and (g.cooldown<=0 or g.swing>=0):continue
                     d=math.hypot(px-b.x-b.vx*t,py-b.y-b.vy*t)
-                    cost+=max(0,14-d)**2*5
+                    cost+=max(0,18-d)**2*12
                 for e in g.enemies:
                     ex,ey=e.x,e.y
                     if e.kind=='charger' and e.phase=='dash':ex+=e.vx*t;ey+=e.vy*t

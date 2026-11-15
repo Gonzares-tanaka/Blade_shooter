@@ -23,14 +23,21 @@ class Wall:
         return tuple((256-x if self.side else x,y) for x,y in ([(0,self.y)]+points+[(0,self.y+self.height)]))
 
 class CaveWalls:
-    def __init__(self):self.walls=[];self.latched=False;self.contacts=0
+    def __init__(self):self.walls=[];self.latched=False;self.contacts=0;self.scroll=0.0
+    def base_edge(self,y,side=0,advance=0):
+        points=S['rim_profile'];t=(y-self.scroll-S['scroll_speed']*advance+side*31)%points[-1][0]
+        for (a,x),(b,z) in zip(points,points[1:]):
+            if a<=t<=b:return S['base_width']+x+(z-x)*(t-a)/(b-a)
+        return S['base_width']
     def spawn(self,side,shape,depth,height):
         self.walls.append(Wall(side,depth,height,shape,-height))
     def update(self,dt):
+        self.scroll+=S['scroll_speed']*dt
         for wall in self.walls:wall.y+=S['scroll_speed']*dt
         self.walls=[w for w in self.walls if w.y<344]
     def bounds(self,y,radius=8):
-        left=right=S['base_width']
+        left=max(self.base_edge(y+d,0) for d in (-radius,0,radius))
+        right=max(self.base_edge(y+d,1) for d in (-radius,0,radius))
         for w in self.walls:
             # 全ての頂点と自機の上下を評価し、壁の角を抜けない。
             samples=[y-radius,y,y+radius]+[w.y+t*w.height for t,_ in WALL_SHAPES[w.shape] if y-radius<=w.y+t*w.height<=y+radius]

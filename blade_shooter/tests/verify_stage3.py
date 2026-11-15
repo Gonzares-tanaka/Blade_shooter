@@ -1,6 +1,6 @@
 """Real inputs for all third-stage weapons and the complete 1→2→3 campaign."""
 from pathlib import Path
-import sys,json,time
+import sys,json,time,math
 sys.path[:0]=[str(Path(__file__).resolve().parents[1]),str(Path(__file__).resolve().parent)]
 import config as C
 from game import Game,Actions
@@ -12,17 +12,46 @@ from stage3_config import FINAL,ENDING
 FOLDER=Path(__file__).resolve().parents[1]/'verification'/('v'+C.VERSION)
 def third(weapon):
     g=Game('stage3',weapon=weapon);g.reset();pilot=CavePilot();hurts=[];started=time.perf_counter()
+    mixed=triple=near=0;max_types=0;examples=[];cut_lanes=[];residual=[];misses=[];route_cuts=0
+    last_cut=0;last_example=-10;last_residual=-10;killed=set()
     for _ in range(330*C.FPS):
-        hp=g.hp;g.step(1/C.FPS,pilot.action(g))
+        hp=g.hp;before_enemies=list(g.enemies);g.step(1/C.FPS,pilot.action(g))
+        killed.update(e.uid for e in before_enemies if e.hp<=0)
         if hp>g.hp:hurts.append(round(g.time,3))
+        if 'reflected_miss' in g.events:misses.append(round(g.time,3))
+        if not g.route_complete:
+            types=sorted({e.kind for e in g.enemies if e.on_screen and e.hp>0})
+            mixed+=len(types)>=2;triple+=len(types)>=3;max_types=max(max_types,len(types))
+            close=[b for b in g.bullets if math.hypot(b.x-g.px,b.y-g.py)<70]
+            near+=bool(close)
+            if len(types)>=3 and g.time-last_example>8:
+                examples.append(dict(time=round(g.time,3),types=types,player=[round(g.px,1),round(g.py,1)],
+                    corridor=[round(v,1) for v in g.cave.bounds(g.py)],bullets=len(g.bullets)))
+                last_example=g.time
+            left_over=[b for b in close if b.owner_uid in killed]
+            if left_over and g.time-last_residual>12:
+                residual.append(dict(time=round(g.time,3),sources=sorted({b.source for b in left_over}),killed_owner_ids=sorted({b.owner_uid for b in left_over}),
+                    player=[round(g.px,1),round(g.py,1)],corridor=[round(v,1) for v in g.cave.bounds(g.py)]))
+                last_residual=g.time
+            if g.cleared_bullets>last_cut:
+                route_cuts+=g.cleared_bullets-last_cut
+                if len(cut_lanes)<12:cut_lanes.append(dict(time=round(g.time,3),count=g.cleared_bullets-last_cut,
+                    player=[round(g.px,1),round(g.py,1)],types=types))
+            last_cut=g.cleared_bullets
         if g.state in ('ending_clear','gameover'):break
     result=dict(weapon=weapon,final_weapon=g.weapon,state=g.state,seconds=g.time,hp=g.hp,hurts=hurts,
                 score=g.score,max_cut=g.max_cut,reflections=g.reflections,hits=g.reflected_hits,
+                misses=g.reflected_misses,miss_times=misses,
+                route_mixed_seconds=round(mixed/C.FPS,3),route_triple_seconds=round(triple/C.FPS,3),max_enemy_types=max_types,
+                route_near_bullet_seconds=round(near/C.FPS,3),route_bullets_cut=route_cuts,
+                mixed_examples=examples,residual_routes=residual,cut_lanes=cut_lanes,
                 wall_contacts=g.cave.contacts,route_turns=pilot.route_turns,wall_passages=len(pilot.wall_dodges),
                 boss_spawn=g.boss_spawned_at,wall_seconds=time.perf_counter()-started)
-    print('STAGE3',json.dumps(result),flush=True)
+    print('STAGE3',json.dumps({k:v for k,v in result.items() if k not in ('mixed_examples','residual_routes','cut_lanes')}),flush=True)
     assert g.state=='ending_clear' and g.weapon==weapon and g.reflected_hits*FINAL['reflected_damage']>=FINAL['hp'],result
     assert g.reflections>=g.reflected_hits and g.max_cut>0 and pilot.route_turns>=4,result
+    assert mixed/C.FPS>40 and triple/C.FPS>5 and near/C.FPS>8 and route_cuts>5,(weapon,mixed,triple,near,route_cuts)
+    assert residual and examples
     return result
 
 def campaign():

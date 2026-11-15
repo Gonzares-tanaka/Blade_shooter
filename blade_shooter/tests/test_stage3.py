@@ -40,7 +40,7 @@ class Stage3Tests(unittest.TestCase):
 
     def test_real_weapon_sweep_reflects_once_and_only_impact_damages(self):
         for weapon,y in (('blade',210),('axe',220),('lance',172)):
-            g=Game('final',weapon=weapon);g.reset();g.boss.active=True;g.boss.fight_time=4
+            g=Game('final',weapon=weapon);g.reset();g.boss.active=True;g.boss.fight_time=2.1
             p=g.boss.parts[0];g.py=266
             bullet=Bullet(128,y,0,108,'boss:final',reflectable=True);g.bullets=[bullet]
             g.step(1/60,Actions(slash=True))
@@ -54,6 +54,31 @@ class Stage3Tests(unittest.TestCase):
             self.assertEqual(g.reflected_hits,1,weapon)
             self.assertEqual(p.hp,FINAL['hp']-FINAL['reflected_damage'],weapon)
             self.assertEqual(g.reflections,1);self.assertEqual(g.hp,3)
+
+    def test_real_reflection_flies_straight_and_can_miss_a_dash(self):
+        for weapon,y in (('blade',210),('axe',220),('lance',172)):
+            g=Game('final',weapon=weapon);g.reset();g.boss.active=True;g.boss.fight_time=FINAL['cycle']+.32
+            bullet=Bullet(128,y,0,108,'boss:final',reflectable=True);g.bullets=[bullet];g.py=266
+            g.step(1/60,Actions(slash=True))
+            for _ in range(18):
+                if bullet.friendly:break
+                g.step(1/60)
+            self.assertTrue(bullet.friendly,weapon)
+            velocity=(bullet.vx,bullet.vy)
+            for _ in range(24):g.step(1/60)
+            self.assertEqual((bullet.vx,bullet.vy),velocity)
+            self.assertEqual(g.boss.parts[0].hp,FINAL['hp'])
+            self.assertEqual(g.reflected_hits,0)
+            for _ in range(260):g.step(1/60)
+            self.assertEqual(g.reflected_misses,1,weapon)
+            self.assertEqual(g.reflections,1)
+
+    def test_enemy_death_leaves_its_fired_bullets(self):
+        g=Game('stage3');g.reset();e=g.spawn('armor',180,90)
+        g.fire(e,105,(-18,0,18));fired=list(g.bullets)
+        g.damage_enemy(e,999,True)
+        self.assertEqual(g.bullets,fired)
+        self.assertTrue(all(b.source=='armor' for b in fired))
 
     def test_friendly_projectile_cannot_hurt_or_be_reflected_twice(self):
         g=Game('final');g.reset();g.boss.active=True;g.boss.fight_time=4

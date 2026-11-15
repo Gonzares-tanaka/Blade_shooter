@@ -30,18 +30,23 @@ def tick():
     for _ in range(6):
         app.update();g=app.game
         if g.cave and any(w.y>60 for w in g.cave.walls):capture('solid-wall')
+        types={e.kind for e in g.enemies if e.on_screen and e.hp>0}
+        if len(types)>=3 and g.time>60:capture('mixed-three-types')
+        if not g.boss and g.time>30 and any(b.source not in types and abs(b.x-g.px)<60 and abs(b.y-g.py)<60 for b in g.bullets):capture('residual-route')
+        if 'reflected_miss' in g.events:capture('reflection-missed')
         for e in g.enemies:
             if e.kind=='barrier' and e.on_screen:capture('barrier-'+e.phase)
         if g.boss and g.boss.active:
             capture('final-'+g.boss.phase)
             if any(b.friendly for b in g.bullets):capture('reflected-bullet')
+            if g.boss.phase=='dash' and any(b.friendly and abs(b.x-g.boss.parts[0].x)>40 for b in g.bullets):capture('straight-return-off-course')
         if g.state=='gameover':raise AssertionError((weapon,g.time,g.hp))
         if g.state=='ending_clear':
             capture('clear-score')
             if clear_score is None:
                 clear_score=g.score
                 results.append(dict(weapon=weapon,seconds=g.time,hp=g.hp,score=g.score,max_cut=g.max_cut,
-                    reflections=g.reflections,hits=g.reflected_hits,wall_contacts=g.cave.contacts))
+                    reflections=g.reflections,hits=g.reflected_hits,misses=g.reflected_misses,wall_contacts=g.cave.contacts))
                 assert g.reflected_hits>=20 and g.weapon==weapon
         if g.state=='credits':
             seen_credits=True

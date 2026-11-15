@@ -27,6 +27,8 @@ SPRITES = {
     "boss_center": (48,224,32,32), "boss_destroyed": (80,224,32,32),
 }
 
+# Image1の岩塊アトラス。動的な壁輪郭内だけに表示する。
+CAVE_TEXTURE = (1,0,0,128,128)
 
 def load_resources(p, filename=None):
     path = Path(filename) if filename else Path(__file__).resolve().parent/C.RESOURCE_FILE

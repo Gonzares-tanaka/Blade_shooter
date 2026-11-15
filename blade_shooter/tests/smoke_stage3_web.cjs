@@ -46,12 +46,22 @@ const fs=require('node:fs'),path=require('node:path');
   assert.equal(await py('pyxel.play_pos(0) is not None'),true);
   assert.deepEqual(JSON.parse(await py('json.dumps([list(s) for s in pyxel.musics[5].seqs][:2])')),[[32],[33]]);
   await page.locator('#pyxel-screen').tap();
-  await py('from game import Bullet\ng.bullets=[Bullet(128,220,0,108,"boss:final",reflectable=True)]');
+  await py('from game import Bullet\ng.boss.fight_time=2.1\ng.bullets=[Bullet(128,220,0,108,"boss:final",reflectable=True)]');
   await page.keyboard.down('z');await page.waitForTimeout(120);await page.keyboard.up('z');
   assert.equal(await py('g.reflections'),1);assert.equal(await py('g.current_cut'),1);
   assert.equal(await py('g.boss.parts[0].hp'),240);
   await page.screenshot({path:folder+'/reflected-projectile.png'});
   await page.waitForTimeout(700);assert.equal(await py('g.reflected_hits'),1);assert.equal(await py('g.boss.parts[0].hp'),228);
+  // A second real Z sweep during the next move warning must miss the warned dash.
+  await py('from stage3_config import FINAL\ng.boss.fight_time=FINAL["cycle"]+.32\ng.cooldown=0\ng.swing=-1\ng.bullets=[Bullet(128,220,0,108,"boss:final",reflectable=True)]');
+  await page.keyboard.down('z');await page.waitForTimeout(120);await page.keyboard.up('z');
+  assert.equal(await py('g.reflections'),2);assert.equal(await py('g.boss.parts[0].hp'),228);
+  const velocity=JSON.parse(await py('json.dumps([(b.vx,b.vy) for b in g.bullets if b.friendly])'));
+  await page.waitForTimeout(400);
+  assert.deepEqual(JSON.parse(await py('json.dumps([(b.vx,b.vy) for b in g.bullets if b.friendly])')),velocity);
+  assert.equal(await py('g.reflected_hits'),1);assert.equal(await py('g.boss.parts[0].hp'),228);
+  await page.screenshot({path:folder+'/straight-return-misses-dash.png'});
+  await page.waitForFunction(()=>window.pyxelContext.pyodide.runPython('g.reflected_misses')===1,null,{timeout:4000});
   await py('g.damage_enemy(g.boss.parts[0],999)\ng.damage_enemy(g.boss.parts[0],999,True)');
   assert.equal(await py('g.boss.parts[0].hp'),228);
   await py('g.damage_enemy(g.boss.parts[0],228,reflected=True)\ng.check_boss_defeat()');
@@ -69,7 +79,7 @@ const fs=require('node:fs'),path=require('node:path');
   assert.deepEqual(errors,[]);
   const result={result:'PASS',version,runtime:'actual Pyxel 2.9.9',browser:await browser.version(),realIPhone:false,
     fixtures:true,allThreeStageTransitions:true,carriedIntoThree:carry,clearScore:score,reflectionViaKeyboard:true,
-    noDamageUntilImpact:true,directDamageRejected:true,editableSounds:64,endingThenTitle:true,errors};
+    noDamageUntilImpact:true,straightReturnMissViaKeyboard:true,directDamageRejected:true,editableSounds:64,endingThenTitle:true,errors};
   fs.writeFileSync(folder+'/result.json',JSON.stringify(result,null,2));console.log('STAGE3_WEB_PASS',JSON.stringify(result));
  }catch(e){if(page)await page.screenshot({path:folder+'/failure.png'}).catch(()=>{});throw e;}
  finally{await browser?.close();server.close();}

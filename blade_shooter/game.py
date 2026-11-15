@@ -102,6 +102,7 @@ class Bullet:
 
     reflectable: bool = False
     friendly: bool = False
+    owner_uid: int = -999  # 発射元を追跡する検証用情報。弾の寿命とは独立。
 
     @property
     def missile(self):return self.source=="missile"
@@ -267,7 +268,7 @@ class Game:
         self.uid = self.slashes = self.blade_kills = self.shot_kills = self.cleared_bullets = 0
         self.rocks_destroyed=self.rocks_passed=self.rock_shot_hits=self.missiles_cut=0
         self.cave=CaveWalls() if self.run.current_stage==3 else None
-        self.reflections=self.reflected_hits=0
+        self.reflections=self.reflected_hits=self.reflected_misses=0
         self.swing_hitstop = False
         self.blade_angle = -70.0
         self.blade_pivot = (self.px, self.py-4)
@@ -763,18 +764,20 @@ class Game:
         for b in self.bullets:
             previous = (b.x, b.y)
             if b.friendly:
-                b.age+=dt
-                if b.age>=FINAL['reflected_lifetime']:continue
+                # 反射時に決めた速度で直進する。ボスの移動を追尾しない。
+                b.age+=dt;b.x+=b.vx*dt;b.y+=b.vy*dt
                 if self.boss and self.boss.parts[0].hp>0:
                     target=self.boss.parts[0]
-                    angle=math.atan2(target.y-b.y,target.x-b.x)
-                    b.vx,b.vy=math.cos(angle)*FINAL['reflected_speed'],math.sin(angle)*FINAL['reflected_speed']
-                    b.x+=b.vx*dt;b.y+=b.vy*dt
                     ex,ey=previous_enemies.get(target.uid,(target.x,target.y))
                     if segment_distance_sq(0,0,(previous[0]-ex,previous[1]-ey),(b.x-target.x,b.y-target.y))<=(target.radius+b.radius)**2:
                         self.damage_enemy(target,FINAL['reflected_damage'],reflected=True)
-                        self.reflected_hits+=1;self.events.append('reflected_hit');continue
-                    live.append(b)
+                        self.reflected_hits+=1;self.events.append('reflected_hit')
+                        self.log('reflected_hit',count=self.reflected_hits,hp=target.hp);continue
+                    if b.age<FINAL['reflected_lifetime'] and -16<b.x<C.WIDTH+16 and -16<b.y<C.HEIGHT+16:
+                        live.append(b)
+                    else:
+                        self.reflected_misses+=1;self.events.append('reflected_miss')
+                        self.log('reflected_miss',count=self.reflected_misses)
                 continue
             if b.missile:
                 steer_missile(b,self.px,self.py,dt)
@@ -940,7 +943,7 @@ class Game:
         elif e.phase=="warning" and e.phase_time>=MISSILE['warning']:
             angle=math.atan2(self.py-e.y,self.px-e.x)
             self.bullets.append(Bullet(e.x,e.y+e.radius+4,math.cos(angle)*MISSILE['speed'],
-                                       math.sin(angle)*MISSILE['speed'],"missile",MISSILE['homing_seconds']))
+                                       math.sin(angle)*MISSILE['speed'],"missile",MISSILE['homing_seconds'],owner_uid=e.uid))
             e.shots_fired+=1;e.phase_time=0;e.phase="coast"
             self.events.append("missile_launch")
         elif e.phase=="coast" and e.phase_time>=MISSILE['interval']-MISSILE['warning']:
@@ -1002,7 +1005,7 @@ class Game:
                 # 画面内で停止している間だけ発射。上へ離脱中は撃たない。
                 if (e.radius <= e.x <= C.WIDTH-e.radius and
                         C.HUD_HEIGHT+e.radius <= e.y <= C.HEIGHT-e.radius):
-                    self.bullets.append(Bullet(e.x,e.y-e.radius-4,0,-C.REAR_BULLET_SPEED,"rear"))
+                    self.bullets.append(Bullet(e.x,e.y-e.radius-4,0,-C.REAR_BULLET_SPEED,"rear",owner_uid=e.uid))
                     self.rear_shots_fired += 1
                     self.events.append("rear_fire")
                 e.shots_fired += 1
@@ -1022,7 +1025,7 @@ class Game:
         e.shots_fired += 1
         for offset in angles:
             a = aim+math.radians(offset)
-            self.bullets.append(Bullet(e.x, e.y+e.radius, math.cos(a)*speed, math.sin(a)*speed, e.kind))
+            self.bullets.append(Bullet(e.x, e.y+e.radius, math.cos(a)*speed, math.sin(a)*speed, e.kind,owner_uid=e.uid))
 
     def blade_hits_motion(self, previous, current, radius):
         for poly, t0, t1 in self.slash_slices:

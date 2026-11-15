@@ -2,7 +2,7 @@ from pathlib import Path
 import sys,zipfile,tomllib,unittest,json
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 import config as C
-from assets import SPRITES
+from assets import SPRITES,CAVE_TEXTURE
 
 ROOT=Path(__file__).resolve().parents[1]
 
@@ -17,6 +17,8 @@ class ResourceTests(unittest.TestCase):
         for name,(u,v,w,h) in SPRITES.items():
             with self.subTest(sprite=name):
                 self.assertTrue(any(row[x] for row in data[v:v+h] for x in range(u,u+w) if x<len(row)))
+        bank,u,v,w,h=CAVE_TEXTURE
+        self.assertTrue(any(c for row in self.data['images'][bank]['data'][v:v+h] for c in row[u:u+w]))
         for i in range(19):self.assertTrue(self.data['sounds'][i]['notes'])
         palette=[int(line,16) for line in (ROOT/C.PALETTE_FILE).read_text().splitlines()]
         self.assertEqual(palette,C.PALETTE)
@@ -45,7 +47,9 @@ class ResourceTests(unittest.TestCase):
         for bank,(old,new) in enumerate(zip(before['images'],self.data['images'])):
             for y in range(256):
                 for x in range(256):
-                    if bank==0 and any(u<=x<u+w and v<=y<v+h for name,(u,v,w,h) in SPRITES.items()
+                    if bank==1 and x<128 and y<128:
+                        self.assertEqual(pixel(old,x,y),0)
+                    elif bank==0 and any(u<=x<u+w and v<=y<v+h for name,(u,v,w,h) in SPRITES.items()
                                        if name in ('asteroid','missile_carrier','homing_missile','stealth','stealth_warning','distant_rock','barrier','final_fighter','final_warning','reflected','reflect_bullet','cave_tile')):
                         self.assertEqual(pixel(old,x,y),0)
                     else:self.assertEqual(pixel(old,x,y),pixel(new,x,y),(bank,x,y))

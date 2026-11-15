@@ -2,7 +2,7 @@
 import math
 import config as C
 from game import point_at, weapon_pose
-from assets import SPRITES, sprite
+from assets import SPRITES, sprite, CAVE_TEXTURE
 from stage2_config import STEALTH
 from stage3_config import CAVE,BARRIER,ENDING,FINAL
 
@@ -104,20 +104,40 @@ class View:
 
     def background_lunar_cave(self,g):
         p=self.p
-        # 背景は暗い岩肌。接触する面は連続した明色の輪郭。
+        # 奥の岩肌は暗色・接触輪郭なし。壁は明色の大きな多面体。
         for side in (0,1):
             for y in range(-16,C.HEIGHT+16,16):
                 yy=(y+g.world_time*24)%(C.HEIGHT+32)-16
-                sprite(p,'cave_tile',8 if side==0 else 248,yy)
+                sprite(p,'cave_tile',25 if side==0 else 231,yy)
         if g.route_complete:return
-        p.rect(0,C.HUD_HEIGHT,CAVE['base_width'],C.HEIGHT,1)
-        p.rect(C.WIDTH-CAVE['base_width'],C.HUD_HEIGHT,CAVE['base_width'],C.HEIGHT,1)
-        p.line(CAVE['base_width'],C.HUD_HEIGHT,CAVE['base_width'],C.HEIGHT,2)
-        p.line(C.WIDTH-CAVE['base_width'],C.HUD_HEIGHT,C.WIDTH-CAVE['base_width'],C.HEIGHT,2)
+        # 基本壁も左右非対称の岩塊。判定と同じ基底の折れ線で描く。
+        for side in (0,1):
+            for y in range(C.HUD_HEIGHT,C.HEIGHT):
+                edge=g.cave.base_edge(y,side)
+                x=C.WIDTH-edge if side else 0
+                p.rect(x,y,edge,1,16)
+                p.pset(C.WIDTH-edge if side else edge,y,2)
         for wall in g.cave.walls:
-            poly=wall.polygon;self.polygon(poly,16)
-            for a,b in zip(poly[1:-1],poly[2:-1]):p.line(*a,*b,40)
-            p.text(4 if wall.side==0 else 234,max(57,wall.y+wall.height*.5),'ROCK',2)
+            low=max(C.HUD_HEIGHT,math.floor(wall.y));high=min(C.HEIGHT,math.ceil(wall.y+wall.height))
+            # 凹形でも扇状三角形で通路を塗り潰さない。判定と同じedgeを走査。
+            for y in range(low,high):
+                edge=wall.edge(y);x=C.WIDTH-edge if wall.side else 0
+                p.rect(x,y,edge,1,16)
+            for y in range(low,high,4):
+                edge=int(min(wall.edge(y),wall.edge(min(y+3,high-1))))
+                for x in range(0,edge,128):
+                    width=min(128,edge-x);sx=C.WIDTH-x-width if wall.side else x
+                    bank,u,v,w,h=CAVE_TEXTURE;sy=int(y-wall.y)%h
+                    p.blt(sx,y,bank,u,v+sy,width,min(4,h-sy,high-y))
+            points=wall.polygon[1:-1]
+            for a,b in zip(points,points[1:]):p.line(*a,*b,40)
+            # 大きな層・割れ目も輪郭の内側へ収める。
+            for f in (.28,.52,.76):
+                yy=wall.y+wall.height*f;edge=wall.edge(yy)
+                if C.HUD_HEIGHT<yy<C.HEIGHT:
+                    a=(edge*.22,yy-8);b=(edge*.67,yy+3)
+                    if wall.side:a=(256-a[0],a[1]);b=(256-b[0],b[1])
+                    p.line(*a,*b,25)
         if g.time<8:self.center(67,'BRIGHT WALLS = SOLID',40)
 
     def final_fighter(self,g):
@@ -132,7 +152,7 @@ class View:
         elif b.phase=='warning':
             p.line(part.x,part.y+16,*b.aim,25);p.circb(*b.aim,7,10)
             self.center(67,'DRAW THE BULLETS FORWARD',10)
-        elif b.phase=='reflect':self.center(67,'MELEE TO REFLECT / THEN MOVE',6)
+        elif b.phase=='reflect':self.center(67,'REFLECT AT THE HOLD / THEN MOVE',6)
         if not b.active:self.center(176,'FINAL / REFLECT BULLETS WITH MELEE',6)
 
     def stealth_chain(self,g):

@@ -1,0 +1,1581 @@
+{
+  "result": "PASS",
+  "real_devices": false,
+  "automatic_input": true,
+  "runs": [
+    {
+      "weapon": "blade",
+      "final_weapon": "blade",
+      "state": "ending_clear",
+      "seconds": 171.0833333333501,
+      "hp": 1,
+      "hurts": [
+        96.833,
+        111.767
+      ],
+      "score": 25200,
+      "max_cut": 9,
+      "reflections": 21,
+      "hits": 20,
+      "misses": 0,
+      "miss_times": [],
+      "route_mixed_seconds": 128.517,
+      "route_triple_seconds": 53.0,
+      "max_enemy_types": 4,
+      "route_near_bullet_seconds": 77.933,
+      "route_bullets_cut": 101,
+      "mixed_examples": [
+        {
+          "time": 4.7,
+          "types": [
+            "armor",
+            "barrier",
+            "small"
+          ],
+          "player": [
+            133.7,
+            312
+          ],
+          "corridor": [
+            17.3,
+            238.6
+          ],
+          "bullets": 5
+        },
+        {
+          "time": 15.717,
+          "types": [
+            "barrier",
+            "rear",
+            "small"
+          ],
+          "player": [
+            122.3,
+            275.3
+          ],
+          "corridor": [
+            17.8,
+            185.3
+          ],
+          "bullets": 8
+        },
+        {
+          "time": 23.867,
+          "types": [
+            "armor",
+            "missile",
+            "rear"
+          ],
+          "player": [
+            135.7,
+            312
+          ],
+          "corridor": [
+            18.9,
+            238.4
+          ],
+          "bullets": 3
+        },
+        {
+          "time": 35.333,
+          "types": [
+            "barrier",
+            "charger",
+            "missile"
+          ],
+          "player": [
+            116.5,
+            310.1
+          ],
+          "corridor": [
+            17.6,
+            237.3
+          ],
+          "bullets": 9
+        },
+        {
+          "time": 45.733,
+          "types": [
+            "armor",
+            "barrier",
+            "small"
+          ],
+          "player": [
+            135.7,
+            312
+          ],
+          "corridor": [
+            20.4,
+            240.2
+          ],
+          "bullets": 10
+        },
+        {
+          "time": 57.7,
+          "types": [
+            "barrier",
+            "missile",
+            "small"
+          ],
+          "player": [
+            133.7,
+            249.2
+          ],
+          "corridor": [
+            16.8,
+            233.8
+          ],
+          "bullets": 4
+        },
+        {
+          "time": 65.717,
+          "types": [
+            "armor",
+            "barrier",
+            "rear"
+          ],
+          "player": [
+            133.7,
+            303.5
+          ],
+          "corridor": [
+            30.9,
+            238.0
+          ],
+          "bullets": 8
+        },
+        {
+          "time": 73.733,
+          "types": [
+            "armor",
+            "barrier",
+            "rear"
+          ],
+          "player": [
+            118.4,
+            312
+          ],
+          "corridor": [
+            16.8,
+            238.7
+          ],
+          "bullets": 11
+        },
+        {
+          "time": 85.7,
+          "types": [
+            "barrier",
+            "missile",
+            "small"
+          ],
+          "player": [
+            141.4,
+            301.2
+          ],
+          "corridor": [
+            39.7,
+            239.0
+          ],
+          "bullets": 7
+        },
+        {
+          "time": 94.833,
+          "types": [
+            "armor",
+            "barrier",
+            "charger"
+          ],
+          "player": [
+            122.3,
+            297.7
+          ],
+          "corridor": [
+            17.2,
+            237.3
+          ],
+          "bullets": 5
+        },
+        {
+          "time": 105.867,
+          "types": [
+            "barrier",
+            "missile",
+            "rear"
+          ],
+          "player": [
+            137.6,
+            312
+          ],
+          "corridor": [
+            44.3,
+            237.3
+          ],
+          "bullets": 6
+        },
+        {
+          "time": 115.333,
+          "types": [
+            "armor",
+            "barrier",
+            "charger"
+          ],
+          "player": [
+            122.3,
+            277.7
+          ],
+          "corridor": [
+            18.1,
+            223.6
+          ],
+          "bullets": 3
+        },
+        {
+          "time": 125.367,
+          "types": [
+            "armor",
+            "barrier",
+            "rear"
+          ],
+          "player": [
+            137.6,
+            312
+          ],
+          "corridor": [
+            16.8,
+            238.7
+          ],
+          "bullets": 8
+        },
+        {
+          "time": 135.333,
+          "types": [
+            "barrier",
+            "charger",
+            "missile"
+          ],
+          "player": [
+            122.3,
+            285.5
+          ],
+          "corridor": [
+            17.3,
+            224.5
+          ],
+          "bullets": 3
+        },
+        {
+          "time": 145.85,
+          "types": [
+            "armor",
+            "barrier",
+            "rear"
+          ],
+          "player": [
+            133.7,
+            312
+          ],
+          "corridor": [
+            25.3,
+            238.4
+          ],
+          "bullets": 6
+        }
+      ],
+      "residual_routes": [
+        {
+          "time": 17.45,
+          "sources": [
+            "small"
+          ],
+          "killed_owner_ids": [
+            11
+          ],
+          "player": [
+            122.3,
+            262.6
+          ],
+          "corridor": [
+            18.1,
+            182.6
+          ]
+        },
+        {
+          "time": 47.85,
+          "sources": [
+            "small"
+          ],
+          "killed_owner_ids": [
+            27
+          ],
+          "player": [
+            135.7,
+            295.1
+          ],
+          "corridor": [
+            92.2,
+            238.8
+          ]
+        },
+        {
+          "time": 99.433,
+          "sources": [
+            "small"
+          ],
+          "killed_owner_ids": [
+            57
+          ],
+          "player": [
+            126.1,
+            266.4
+          ],
+          "corridor": [
+            17.9,
+            237.6
+          ]
+        },
+        {
+          "time": 119.467,
+          "sources": [
+            "small"
+          ],
+          "killed_owner_ids": [
+            68
+          ],
+          "player": [
+            126.1,
+            267.5
+          ],
+          "corridor": [
+            18.6,
+            239.2
+          ]
+        }
+      ],
+      "cut_lanes": [
+        {
+          "time": 4.217,
+          "count": 1,
+          "player": [
+            124.2,
+            308.2
+          ],
+          "types": [
+            "armor",
+            "barrier"
+          ]
+        },
+        {
+          "time": 6.65,
+          "count": 1,
+          "player": [
+            143.3,
+            295.8
+          ],
+          "types": [
+            "armor",
+            "barrier",
+            "small"
+          ]
+        },
+        {
+          "time": 6.7,
+          "count": 1,
+          "player": [
+            143.3,
+            287.6
+          ],
+          "types": [
+            "armor",
+            "barrier",
+            "small"
+          ]
+        },
+        {
+          "time": 6.717,
+          "count": 1,
+          "player": [
+            143.3,
+            284.9
+          ],
+          "types": [
+            "armor",
+            "barrier",
+            "small"
+          ]
+        },
+        {
+          "time": 11.233,
+          "count": 1,
+          "player": [
+            128.0,
+            293.2
+          ],
+          "types": [
+            "barrier"
+          ]
+        },
+        {
+          "time": 16.6,
+          "count": 1,
+          "player": [
+            110.8,
+            299.3
+          ],
+          "types": [
+            "barrier",
+            "rear",
+            "small"
+          ]
+        },
+        {
+          "time": 17.583,
+          "count": 2,
+          "player": [
+            124.2,
+            260.7
+          ],
+          "types": [
+            "barrier",
+            "missile",
+            "small"
+          ]
+        },
+        {
+          "time": 19.183,
+          "count": 1,
+          "player": [
+            128.0,
+            268.8
+          ],
+          "types": [
+            "barrier",
+            "missile",
+            "small"
+          ]
+        },
+        {
+          "time": 20.917,
+          "count": 1,
+          "player": [
+            128.0,
+            268.8
+          ],
+          "types": [
+            "barrier",
+            "missile"
+          ]
+        },
+        {
+          "time": 22.517,
+          "count": 1,
+          "player": [
+            126.1,
+            277.0
+          ],
+          "types": [
+            "armor",
+            "barrier",
+            "missile"
+          ]
+        },
+        {
+          "time": 23.55,
+          "count": 1,
+          "player": [
+            135.7,
+            312
+          ],
+          "types": [
+            "armor",
+            "missile"
+          ]
+        },
+        {
+          "time": 23.567,
+          "count": 1,
+          "player": [
+            135.7,
+            312
+          ],
+          "types": [
+            "armor",
+            "missile"
+          ]
+        }
+      ],
+      "wall_contacts": 0,
+      "route_turns": 1313,
+      "wall_passages": 20,
+      "boss_spawn": 151.45000000000115,
+      "wall_seconds": 13.474959399999989
+    },
+    {
+      "weapon": "axe",
+      "final_weapon": "axe",
+      "state": "ending_clear",
+      "seconds": 175.80000000002053,
+      "hp": 2,
+      "hurts": [
+        117.367
+      ],
+      "score": 24200,
+      "max_cut": 5,
+      "reflections": 22,
+      "hits": 20,
+      "misses": 2,
+      "miss_times": [
+        169.483,
+        169.617
+      ],
+      "route_mixed_seconds": 128.617,
+      "route_triple_seconds": 56.867,
+      "max_enemy_types": 4,
+      "route_near_bullet_seconds": 83.183,
+      "route_bullets_cut": 70,
+      "mixed_examples": [
+        {
+          "time": 4.7,
+          "types": [
+            "armor",
+            "barrier",
+            "small"
+          ],
+          "player": [
+            133.7,
+            312
+          ],
+          "corridor": [
+            17.3,
+            238.6
+          ],
+          "bullets": 5
+        },
+        {
+          "time": 15.717,
+          "types": [
+            "barrier",
+            "rear",
+            "small"
+          ],
+          "player": [
+            122.3,
+            271.5
+          ],
+          "corridor": [
+            17.2,
+            176.5
+          ],
+          "bullets": 8
+        },
+        {
+          "time": 23.867,
+          "types": [
+            "armor",
+            "missile",
+            "rear"
+          ],
+          "player": [
+            135.7,
+            312
+          ],
+          "corridor": [
+            18.9,
+            238.4
+          ],
+          "bullets": 5
+        },
+        {
+          "time": 35.333,
+          "types": [
+            "barrier",
+            "charger",
+            "missile"
+          ],
+          "player": [
+            116.5,
+            312
+          ],
+          "corridor": [
+            17.9,
+            237.7
+          ],
+          "bullets": 9
+        },
+        {
+          "time": 45.733,
+          "types": [
+            "armor",
+            "barrier",
+            "small"
+          ],
+          "player": [
+            133.7,
+            302.4
+          ],
+          "corridor": [
+            33.6,
+            239.3
+          ],
+          "bullets": 10
+        },
+        {
+          "time": 55.317,
+          "types": [
+            "barrier",
+            "charger",
+            "missile"
+          ],
+          "player": [
+            122.3,
+            312
+          ],
+          "corridor": [
+            19.0,
+            239.8
+          ],
+          "bullets": 3
+        },
+        {
+          "time": 63.367,
+          "types": [
+            "armor",
+            "barrier",
+            "rear"
+          ],
+          "player": [
+            133.7,
+            287.8
+          ],
+          "corridor": [
+            17.4,
+            237.7
+          ],
+          "bullets": 5
+        },
+        {
+          "time": 71.4,
+          "types": [
+            "armor",
+            "barrier",
+            "small"
+          ],
+          "player": [
+            122.3,
+            270.6
+          ],
+          "corridor": [
+            17.3,
+            237.1
+          ],
+          "bullets": 0
+        },
+        {
+          "time": 85.7,
+          "types": [
+            "barrier",
+            "missile",
+            "small"
+          ],
+          "player": [
+            141.4,
+            298.5
+          ],
+          "corridor": [
+            44.8,
+            238.4
+          ],
+          "bullets": 7
+        },
+        {
+          "time": 94.833,
+          "types": [
+            "armor",
+            "barrier",
+            "charger"
+          ],
+          "player": [
+            122.3,
+            308.2
+          ],
+          "corridor": [
+            17.6,
+            237.3
+          ],
+          "bullets": 5
+        },
+        {
+          "time": 105.867,
+          "types": [
+            "barrier",
+            "missile",
+            "rear"
+          ],
+          "player": [
+            137.6,
+            312
+          ],
+          "corridor": [
+            44.3,
+            237.9
+          ],
+          "bullets": 6
+        },
+        {
+          "time": 115.333,
+          "types": [
+            "armor",
+            "barrier",
+            "charger"
+          ],
+          "player": [
+            122.3,
+            277.7
+          ],
+          "corridor": [
+            17.4,
+            223.6
+          ],
+          "bullets": 3
+        },
+        {
+          "time": 125.367,
+          "types": [
+            "armor",
+            "barrier",
+            "rear"
+          ],
+          "player": [
+            137.6,
+            312
+          ],
+          "corridor": [
+            16.8,
+            238.7
+          ],
+          "bullets": 8
+        },
+        {
+          "time": 135.333,
+          "types": [
+            "barrier",
+            "charger",
+            "missile"
+          ],
+          "player": [
+            122.3,
+            284.7
+          ],
+          "corridor": [
+            17.7,
+            223.1
+          ],
+          "bullets": 3
+        },
+        {
+          "time": 145.85,
+          "types": [
+            "armor",
+            "barrier",
+            "rear"
+          ],
+          "player": [
+            128.0,
+            303.8
+          ],
+          "corridor": [
+            36.8,
+            238.6
+          ],
+          "bullets": 6
+        }
+      ],
+      "residual_routes": [
+        {
+          "time": 17.517,
+          "sources": [
+            "small"
+          ],
+          "killed_owner_ids": [
+            11
+          ],
+          "player": [
+            120.3,
+            268.0
+          ],
+          "corridor": [
+            17.7,
+            178.6
+          ]
+        },
+        {
+          "time": 47.85,
+          "sources": [
+            "small"
+          ],
+          "killed_owner_ids": [
+            27
+          ],
+          "player": [
+            131.8,
+            294.8
+          ],
+          "corridor": [
+            91.4,
+            238.3
+          ]
+        },
+        {
+          "time": 87.333,
+          "sources": [
+            "small"
+          ],
+          "killed_owner_ids": [
+            50
+          ],
+          "player": [
+            129.9,
+            254.5
+          ],
+          "corridor": [
+            61.7,
+            237.7
+          ]
+        },
+        {
+          "time": 99.45,
+          "sources": [
+            "small"
+          ],
+          "killed_owner_ids": [
+            57
+          ],
+          "player": [
+            126.1,
+            267.5
+          ],
+          "corridor": [
+            17.2,
+            238.4
+          ]
+        },
+        {
+          "time": 119.4,
+          "sources": [
+            "small"
+          ],
+          "killed_owner_ids": [
+            68
+          ],
+          "player": [
+            126.1,
+            266.7
+          ],
+          "corridor": [
+            18.1,
+            238.4
+          ]
+        }
+      ],
+      "cut_lanes": [
+        {
+          "time": 4.283,
+          "count": 1,
+          "player": [
+            131.8,
+            300.5
+          ],
+          "types": [
+            "armor",
+            "barrier"
+          ]
+        },
+        {
+          "time": 6.65,
+          "count": 1,
+          "player": [
+            143.3,
+            295.8
+          ],
+          "types": [
+            "armor",
+            "barrier",
+            "small"
+          ]
+        },
+        {
+          "time": 6.75,
+          "count": 1,
+          "player": [
+            143.3,
+            279.5
+          ],
+          "types": [
+            "armor",
+            "barrier",
+            "small"
+          ]
+        },
+        {
+          "time": 11.867,
+          "count": 1,
+          "player": [
+            128.0,
+            280.0
+          ],
+          "types": [
+            "barrier"
+          ]
+        },
+        {
+          "time": 16.633,
+          "count": 1,
+          "player": [
+            112.7,
+            301.2
+          ],
+          "types": [
+            "barrier",
+            "rear",
+            "small"
+          ]
+        },
+        {
+          "time": 17.767,
+          "count": 2,
+          "player": [
+            124.2,
+            264.2
+          ],
+          "types": [
+            "barrier",
+            "missile",
+            "small"
+          ]
+        },
+        {
+          "time": 17.783,
+          "count": 1,
+          "player": [
+            126.1,
+            262.3
+          ],
+          "types": [
+            "barrier",
+            "missile",
+            "small"
+          ]
+        },
+        {
+          "time": 19.267,
+          "count": 1,
+          "player": [
+            126.1,
+            267.7
+          ],
+          "types": [
+            "barrier",
+            "missile",
+            "small"
+          ]
+        },
+        {
+          "time": 20.983,
+          "count": 1,
+          "player": [
+            128.0,
+            269.6
+          ],
+          "types": [
+            "barrier",
+            "missile"
+          ]
+        },
+        {
+          "time": 26.283,
+          "count": 1,
+          "player": [
+            141.4,
+            309.3
+          ],
+          "types": [
+            "armor",
+            "barrier",
+            "rear"
+          ]
+        },
+        {
+          "time": 28.667,
+          "count": 1,
+          "player": [
+            126.1,
+            267.7
+          ],
+          "types": [
+            "barrier",
+            "small"
+          ]
+        },
+        {
+          "time": 28.683,
+          "count": 1,
+          "player": [
+            128.0,
+            269.6
+          ],
+          "types": [
+            "barrier",
+            "small"
+          ]
+        }
+      ],
+      "wall_contacts": 0,
+      "route_turns": 1445,
+      "wall_passages": 21,
+      "boss_spawn": 151.45000000000115,
+      "wall_seconds": 11.732628700000078
+    },
+    {
+      "weapon": "lance",
+      "final_weapon": "lance",
+      "state": "ending_clear",
+      "seconds": 175.23333333335341,
+      "hp": 2,
+      "hurts": [
+        79.25
+      ],
+      "score": 22800,
+      "max_cut": 7,
+      "reflections": 23,
+      "hits": 20,
+      "misses": 2,
+      "miss_times": [
+        174.033,
+        174.083
+      ],
+      "route_mixed_seconds": 128.783,
+      "route_triple_seconds": 60.017,
+      "max_enemy_types": 4,
+      "route_near_bullet_seconds": 94.367,
+      "route_bullets_cut": 83,
+      "mixed_examples": [
+        {
+          "time": 4.7,
+          "types": [
+            "armor",
+            "barrier",
+            "small"
+          ],
+          "player": [
+            133.7,
+            293.2
+          ],
+          "corridor": [
+            18.5,
+            240.3
+          ],
+          "bullets": 4
+        },
+        {
+          "time": 15.717,
+          "types": [
+            "barrier",
+            "rear",
+            "small"
+          ],
+          "player": [
+            122.3,
+            275.0
+          ],
+          "corridor": [
+            17.8,
+            184.5
+          ],
+          "bullets": 8
+        },
+        {
+          "time": 23.867,
+          "types": [
+            "armor",
+            "missile",
+            "rear"
+          ],
+          "player": [
+            133.7,
+            294.3
+          ],
+          "corridor": [
+            18.4,
+            239.5
+          ],
+          "bullets": 4
+        },
+        {
+          "time": 35.333,
+          "types": [
+            "barrier",
+            "charger",
+            "missile"
+          ],
+          "player": [
+            116.5,
+            312
+          ],
+          "corridor": [
+            17.9,
+            237.7
+          ],
+          "bullets": 10
+        },
+        {
+          "time": 45.733,
+          "types": [
+            "armor",
+            "barrier",
+            "small"
+          ],
+          "player": [
+            133.7,
+            288.9
+          ],
+          "corridor": [
+            53.7,
+            237.5
+          ],
+          "bullets": 9
+        },
+        {
+          "time": 57.7,
+          "types": [
+            "barrier",
+            "missile",
+            "small"
+          ],
+          "player": [
+            122.3,
+            239.0
+          ],
+          "corridor": [
+            18.7,
+            238.7
+          ],
+          "bullets": 4
+        },
+        {
+          "time": 65.717,
+          "types": [
+            "armor",
+            "barrier",
+            "rear"
+          ],
+          "player": [
+            133.7,
+            302.2
+          ],
+          "corridor": [
+            32.7,
+            238.4
+          ],
+          "bullets": 7
+        },
+        {
+          "time": 73.733,
+          "types": [
+            "armor",
+            "barrier",
+            "rear"
+          ],
+          "player": [
+            118.4,
+            312
+          ],
+          "corridor": [
+            16.8,
+            238.7
+          ],
+          "bullets": 9
+        },
+        {
+          "time": 85.7,
+          "types": [
+            "barrier",
+            "missile",
+            "small"
+          ],
+          "player": [
+            141.4,
+            298.5
+          ],
+          "corridor": [
+            44.8,
+            238.6
+          ],
+          "bullets": 8
+        },
+        {
+          "time": 94.833,
+          "types": [
+            "armor",
+            "barrier",
+            "charger"
+          ],
+          "player": [
+            122.3,
+            306.3
+          ],
+          "corridor": [
+            17.8,
+            237.8
+          ],
+          "bullets": 3
+        },
+        {
+          "time": 105.867,
+          "types": [
+            "barrier",
+            "missile",
+            "rear"
+          ],
+          "player": [
+            137.6,
+            312
+          ],
+          "corridor": [
+            44.3,
+            237.6
+          ],
+          "bullets": 6
+        },
+        {
+          "time": 115.333,
+          "types": [
+            "armor",
+            "barrier",
+            "charger"
+          ],
+          "player": [
+            116.5,
+            284.9
+          ],
+          "corridor": [
+            18.1,
+            228.4
+          ],
+          "bullets": 3
+        },
+        {
+          "time": 125.367,
+          "types": [
+            "armor",
+            "barrier",
+            "rear"
+          ],
+          "player": [
+            137.6,
+            312
+          ],
+          "corridor": [
+            17.5,
+            238.4
+          ],
+          "bullets": 9
+        },
+        {
+          "time": 135.333,
+          "types": [
+            "barrier",
+            "charger",
+            "missile"
+          ],
+          "player": [
+            120.3,
+            312
+          ],
+          "corridor": [
+            18.1,
+            239.3
+          ],
+          "bullets": 4
+        },
+        {
+          "time": 145.85,
+          "types": [
+            "armor",
+            "barrier",
+            "rear"
+          ],
+          "player": [
+            133.7,
+            312
+          ],
+          "corridor": [
+            30.2,
+            238.3
+          ],
+          "bullets": 5
+        }
+      ],
+      "residual_routes": [
+        {
+          "time": 17.517,
+          "sources": [
+            "small"
+          ],
+          "killed_owner_ids": [
+            11
+          ],
+          "player": [
+            116.5,
+            271.0
+          ],
+          "corridor": [
+            17.2,
+            171.6
+          ]
+        },
+        {
+          "time": 29.533,
+          "sources": [
+            "small"
+          ],
+          "killed_owner_ids": [
+            17
+          ],
+          "player": [
+            126.1,
+            284.0
+          ],
+          "corridor": [
+            17.6,
+            237.9
+          ]
+        },
+        {
+          "time": 47.817,
+          "sources": [
+            "small"
+          ],
+          "killed_owner_ids": [
+            27
+          ],
+          "player": [
+            131.8,
+            298.6
+          ],
+          "corridor": [
+            104.5,
+            238.2
+          ]
+        },
+        {
+          "time": 88.117,
+          "sources": [
+            "small"
+          ],
+          "killed_owner_ids": [
+            51
+          ],
+          "player": [
+            122.3,
+            287.4
+          ],
+          "corridor": [
+            39.1,
+            238.2
+          ]
+        },
+        {
+          "time": 100.617,
+          "sources": [
+            "small"
+          ],
+          "killed_owner_ids": [
+            56
+          ],
+          "player": [
+            128.0,
+            290.9
+          ],
+          "corridor": [
+            18.6,
+            238.9
+          ]
+        },
+        {
+          "time": 120.1,
+          "sources": [
+            "small"
+          ],
+          "killed_owner_ids": [
+            70
+          ],
+          "player": [
+            133.7,
+            279.2
+          ],
+          "corridor": [
+            18.0,
+            237.6
+          ]
+        }
+      ],
+      "cut_lanes": [
+        {
+          "time": 4.367,
+          "count": 1,
+          "player": [
+            133.7,
+            304.0
+          ],
+          "types": [
+            "armor",
+            "barrier"
+          ]
+        },
+        {
+          "time": 4.417,
+          "count": 1,
+          "player": [
+            133.7,
+            304.0
+          ],
+          "types": [
+            "armor",
+            "barrier"
+          ]
+        },
+        {
+          "time": 6.317,
+          "count": 1,
+          "player": [
+            141.4,
+            312
+          ],
+          "types": [
+            "armor",
+            "barrier",
+            "small"
+          ]
+        },
+        {
+          "time": 7.083,
+          "count": 2,
+          "player": [
+            145.2,
+            312
+          ],
+          "types": [
+            "armor",
+            "barrier",
+            "small"
+          ]
+        },
+        {
+          "time": 7.1,
+          "count": 1,
+          "player": [
+            145.2,
+            312
+          ],
+          "types": [
+            "armor",
+            "barrier",
+            "small"
+          ]
+        },
+        {
+          "time": 7.117,
+          "count": 1,
+          "player": [
+            145.2,
+            312
+          ],
+          "types": [
+            "armor",
+            "barrier",
+            "small"
+          ]
+        },
+        {
+          "time": 7.2,
+          "count": 1,
+          "player": [
+            145.2,
+            301.2
+          ],
+          "types": [
+            "armor",
+            "barrier",
+            "small"
+          ]
+        },
+        {
+          "time": 11.367,
+          "count": 1,
+          "player": [
+            135.7,
+            262.7
+          ],
+          "types": [
+            "barrier"
+          ]
+        },
+        {
+          "time": 16.033,
+          "count": 1,
+          "player": [
+            122.3,
+            294.0
+          ],
+          "types": [
+            "barrier",
+            "rear",
+            "small"
+          ]
+        },
+        {
+          "time": 16.983,
+          "count": 1,
+          "player": [
+            110.8,
+            312
+          ],
+          "types": [
+            "barrier",
+            "rear",
+            "small"
+          ]
+        },
+        {
+          "time": 20.7,
+          "count": 1,
+          "player": [
+            128.0,
+            268.3
+          ],
+          "types": [
+            "barrier",
+            "missile"
+          ]
+        },
+        {
+          "time": 23.033,
+          "count": 1,
+          "player": [
+            128.0,
+            312
+          ],
+          "types": [
+            "armor",
+            "barrier",
+            "missile"
+          ]
+        }
+      ],
+      "wall_contacts": 0,
+      "route_turns": 1638,
+      "wall_passages": 23,
+      "boss_spawn": 151.45000000000115,
+      "wall_seconds": 10.26870010000016
+    }
+  ]
+}
