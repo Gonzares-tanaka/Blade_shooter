@@ -1,0 +1,43 @@
+{
+  "result": "PASS",
+  "version": "0.17.1",
+  "browser": "157.0.4341.60",
+  "runtime": "actual Pyxel 2.9.9",
+  "realIPhone": false,
+  "graphicsFixtures": true,
+  "inputProfile": "desktop input, 390x844 viewport",
+  "masterResourceSHA256": "2bf6fdaf695ddfe2e7d03d6b79a058473d8f68840b841bf1f2966fe1d6dde3d8",
+  "image0PixelsSHA256": "7e69a4d14bfd3ac8e0c0f354d2ac23dde7797591ebcc72301a4ce48ae42f7216",
+  "bankSwitchPreservesPixels": true,
+  "palettePreserved": true,
+  "livesAt29999": 3,
+  "livesAt30000": 4,
+  "livesAt105000": 6,
+  "creditsNameCount": 3,
+  "continues": [
+    {
+      "stage": 2,
+      "restoredScore": 105000,
+      "nextThreshold": 120000
+    },
+    {
+      "stage": 3,
+      "restoredScore": 120000,
+      "nextThreshold": 150000
+    }
+  ],
+  "captures": [
+    "item-heal",
+    "item-blade",
+    "item-axe",
+    "item-lance",
+    "boss-intact",
+    "boss-destroyed-left",
+    "boss-destroyed-right",
+    "boss-destroyed-center",
+    "credits-names",
+    "score-29999",
+    "score-30000"
+  ],
+  "errors": []
+}

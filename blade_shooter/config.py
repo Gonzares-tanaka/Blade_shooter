@@ -1,11 +1,11 @@
 """調整箇所。時間=秒、距離=ゲーム内px、速度=px/秒。変更後build.pyで配布版更新。"""
 from stage2_config import MISSILE,STEALTH
 
-TITLE, VERSION = "BLADE / CLOSE QUARTERS", "0.17.0"
+TITLE, VERSION = "BLADE / CLOSE QUARTERS", "0.17.1"
 WIDTH, HEIGHT, HUD_HEIGHT, FPS = 256, 320, 24, 60
 PLAYER_SIZE, PLAYER_HIT_RADIUS = 16, 2.0
 PLAYER_SPEED, PLAYER_HP, INVINCIBLE_SECONDS = 125.0, 3, 1.2
-LIVES = dict(initial=3, extend_points=10000, respawn_invincible=2.0, notice_seconds=1.5)
+LIVES = dict(initial=3, extend_points=30000, respawn_invincible=2.0, notice_seconds=1.5)
 TITLE_IMAGE = (2, 0, 0, 256, 100)  # Image 2, native size; preserve the full logo.
 PLAYER_SPEED_PRESETS = {"tempo": 1.3, "tempo_fast": 1.5}
 SHOT_INTERVAL, SHOT_SPEED, SHOT_DAMAGE = 0.14, 300.0, 1

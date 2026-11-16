@@ -42,12 +42,17 @@ class ResourceTests(unittest.TestCase):
     def test_boss_music_preserves_stage_images_sfx_and_other_music(self):
         with zipfile.ZipFile(ROOT/'verification/v0.13.0/before'/C.RESOURCE_FILE) as z:
             before=tomllib.loads(z.read('pyxel_resource.toml').decode())
+        with zipfile.ZipFile(ROOT/'verification/v0.17.1/before/user-edited.pyxres') as z:
+            supplied=tomllib.loads(z.read('pyxel_resource.toml').decode())
         def pixel(bank,x,y):
             rows=bank['data'];return rows[y][x] if y<len(rows) and x<len(rows[y]) else 0
         for bank,(old,new) in enumerate(zip(before['images'],self.data['images'])):
             for y in range(256):
                 for x in range(256):
-                    if bank==2 and y<100:
+                    if bank==0 and any(u<=x<u+w and v<=y<v+h for name,(u,v,w,h) in SPRITES.items()
+                                       if name in ('item_heal','item_blade','item_axe','item_lance','boss_hull','boss_left','boss_right','boss_center','boss_destroyed')):
+                        self.assertEqual(pixel(new,x,y),pixel(supplied['images'][0],x,y))
+                    elif bank==2 and y<100:
                         self.assertEqual(pixel(old,x,y),0)
                     elif bank==1 and x<128 and y<128:
                         self.assertEqual(pixel(old,x,y),0)

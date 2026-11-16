@@ -76,17 +76,42 @@ class ModesLivesTests(unittest.TestCase):
         self.assertTrue(g.can_continue)
 
     def test_extends_cross_multiple_thresholds_once_and_resume_cursor(self):
-        g=Game();g.start_play();g.add_score(9999,"test")
-        self.assertEqual(g.run.lives,3)
-        g.add_score(1,"test");self.assertEqual(g.run.lives,4)
-        g.add_score(25000,"test");self.assertEqual((g.run.lives,g.run.next_extend),(6,40000))
+        g=Game();g.start_play();g.add_score(29999,"test")
+        self.assertEqual((g.run.lives,g.run.next_extend),(3,30000))
+        self.assertNotIn("extend",g.events)
+        g.add_score(1,"test");self.assertEqual((g.run.lives,g.run.next_extend),(4,60000))
+        g.add_score(75000,"test");self.assertEqual((g.run.lives,g.run.next_extend),(6,120000))
         g.add_score(0,"test");self.assertEqual(g.run.lives,6)
-        g.enter_stage(2);self.assertEqual(g.stage_entry.score,35000)
-        g.add_score(16000,"test");self.assertEqual(g.run.next_extend,60000)
+        g.enter_stage(2);self.assertEqual(g.stage_entry.score,105000)
+        g.add_score(75000,"test");self.assertEqual(g.run.next_extend,210000)
         self.last_ship(g);g.step(.01,Actions(continue_run=True))
-        self.assertEqual((g.score,g.run.lives,g.run.next_extend),(35000,3,40000))
-        g.add_score(4999,"test");self.assertEqual(g.run.lives,3)
-        g.add_score(1,"test");self.assertEqual(g.run.lives,4)
+        self.assertEqual((g.score,g.run.lives,g.run.next_extend),(105000,3,120000))
+        g.add_score(14999,"test");self.assertEqual(g.run.lives,3)
+        g.add_score(1,"test");self.assertEqual((g.run.lives,g.run.next_extend),(4,150000))
+
+    def test_continue_derives_next_extend_from_restored_score_for_stage_two_three(self):
+        from dataclasses import replace
+        for stage in (2,3):
+            for score in (0,29999,30000,60000,90001):
+                with self.subTest(stage=stage,score=score):
+                    g=Game();g.start_play();g.add_score(score,"entry");g.enter_stage(stage)
+                    g.add_score(95000,"failed");self.last_ship(g)
+                    # A stale checkpoint cursor must not grant any ship at resume.
+                    g.continue_entry=replace(g.continue_entry,next_extend=1)
+                    g.continue_play()
+                    expected=(score//30000+1)*30000
+                    self.assertEqual((g.score,g.run.lives,g.run.next_extend),(score,3,expected))
+                    g.add_score(0,"resume");self.assertEqual(g.run.lives,3)
+                    g.add_score(expected-score,"next threshold");self.assertEqual(g.run.lives,4)
+                    g.add_score(0,"duplicate");self.assertEqual(g.run.lives,4)
+
+    def test_credits_replace_only_names_and_keep_roles_order(self):
+        import runpy
+        old=runpy.run_path(str(ROOT/'verification/v0.17.1/before/stage3_config.py'))['ENDING']
+        self.assertEqual(ENDING['credits'],tuple('GONZARES TANAKA' if name=='TBD' else name for name in old['credits']))
+        self.assertFalse(any('TBD' in line for line in ENDING['credits']))
+        self.assertEqual(ENDING['credits'].count('GONZARES TANAKA'),3)
+        self.assertEqual({k:v for k,v in ENDING.items() if k!='credits'},{k:v for k,v in old.items() if k!='credits'})
 
     def test_stage_two_three_continue_rolls_back_score_and_clears_all_local_state(self):
         for stage in (2,3):
@@ -111,7 +136,7 @@ class ModesLivesTests(unittest.TestCase):
         self.assertTrue(g.can_continue)
         g.return_title();g.step(.01,Actions(menu_pick=1));g.step(.01,Actions(menu_pick=1))
         self.assertFalse(g.can_continue)
-        self.assertEqual((g.run.current_stage,g.score,g.run.lives,g.run.next_extend),(1,0,3,10000))
+        self.assertEqual((g.run.current_stage,g.score,g.run.lives,g.run.next_extend),(1,0,3,30000))
 
 class MenuAudioTests(unittest.TestCase):
     def test_title_and_ending_mml_exact_tracks_loop_and_music_switches(self):

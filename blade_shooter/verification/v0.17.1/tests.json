@@ -1,0 +1,8 @@
+{
+  "result": "PASS",
+  "python_tests": 178,
+  "native": "refresh-native/result.json",
+  "web": "refresh-web/result.json",
+  "real_iphone": false,
+  "real_gkd": false
+}

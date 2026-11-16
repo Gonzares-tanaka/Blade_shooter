@@ -23,7 +23,7 @@ FINAL=dict(hp=240,radius=13.0,entry_seconds=2.4,move_warning=.50,
 FINAL['cycle']=sum(FINAL[k] for k in ('move_warning','dash_seconds','aim_warning','rest_seconds'))
 ENDING=dict(clear_seconds=5.0,scroll_speed=20.0,line_spacing=24.0,tail_seconds=2.0,
             bgm=6,credits=('BLADE / CLOSE QUARTERS','','THANK YOU FOR PLAYING','',
-            'PLANNING / DESIGN','TBD','','PROGRAMMING','TBD','','ART / SOUND','TBD','',
+            'PLANNING / DESIGN','GONZARES TANAKA','','PROGRAMMING','GONZARES TANAKA','','ART / SOUND','GONZARES TANAKA','',
             'SPECIAL THANKS','PYXEL / KITA O','','PLAYER','YOU','','THE END'))
 
 def stage3_plan():

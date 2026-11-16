@@ -45,7 +45,7 @@ changes={k:dict(before=v,after=getattr(C,k)) for k,v in old.items()
 result=dict(version=C.VERSION,resource_sha256=addition['after_sha256'],
             core_combat_hp_and_reference_wave_tables_preserved=True,
             existing_resources_preserved=assets_preserved,
-            tuning_changes=changes,
+            tuning_changes=changes, lives_tuning=dict(before=old.get("LIVES"),after=C.LIVES),
             sources_resources_and_documents_match=True,packages={})
 for name in ('blade-shooter-web.zip','blade-shooter-gkd.zip'):
     file=ROOT/'dist'/name

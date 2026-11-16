@@ -7,7 +7,7 @@
   <meta name="description" content="BLADE / CLOSE QUARTERS ゲーム専用画面。3武器を選択。左手のドラッグで移動、右手のフリックで近接攻撃。">
   <title>遊ぶ — BLADE / CLOSE QUARTERS</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="play.css?v=0.17.0">
+  <link rel="stylesheet" href="play.css?v=0.17.1">
 </head>
 <body>
   <main>
@@ -23,15 +23,15 @@
       <p>画面の左側から触れた指でドラッグ移動。右側から触れた指で、剣・斧は左右、槍は上下へフリック。事前タップは不要で、攻撃は前方へ出ます。</p>
       <p>指の担当は離すまで固定。境界を越えても役割は変わりません。右手は一瞬止めるかゆっくり動かしてから次の払いへ。触り直しでも再入力できます。</p>
       <p>1面ではエリア終了ごとにアイテムが出現。絵柄が0.8秒ごとに変わり、触れたときのHP回復／武器を取得します。武器変更後は右側の案内に合わせてフリックしてください。</p>
-      <p>設定完了 → START → 通しプレイ／ステージセレクト。残機3・各HP3、10,000点ごとに1機追加。全機を失ったらCONTINUEで失敗した面の最初から再開します。PC：Xで設定、矢印で選択、Z / Enterで戻る。</p>
+      <p>設定完了 → START → 通しプレイ／ステージセレクト。残機3・各HP3、30,000点ごとに1機追加。全機を失ったらCONTINUEで失敗した面の最初から再開します。PC：Xで設定、矢印で選択、Z / Enterで戻る。</p>
     </section>
     <div id="status" role="status">読み込み中… 表示が出たら画面をタップ</div>
     <div id="load-error" role="alert" hidden><p>ゲームを読み込めませんでした。ネット接続を確認して、もう一度お試しください。</p><button id="retry-load" type="button">再読み込み</button></div>
     <footer><span>左手：移動 / 右手：横フリック（剣・斧）・縦（槍）</span><span>矢印 / Z / Enter / P / X：設定</span><button id="fullscreen" type="button" hidden>画面拡大 ↗</button></footer>
   </main>
-  <script src="touch-config.js?v=0.17.0"></script>
-  <script src="gestures.js?v=0.17.0"></script>
-  <script src="controls.js?v=0.17.0"></script>
-  <script src="runtime.js?v=0.17.0"></script>
+  <script src="touch-config.js?v=0.17.1"></script>
+  <script src="gestures.js?v=0.17.1"></script>
+  <script src="controls.js?v=0.17.1"></script>
+  <script src="runtime.js?v=0.17.1"></script>
 </body>
 </html>

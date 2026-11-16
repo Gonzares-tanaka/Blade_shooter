@@ -1,0 +1,26 @@
+{
+  "result": "PASS",
+  "engine": "actual Pyxel 2.9.9",
+  "real_devices": false,
+  "render_fixtures": true,
+  "captures": [
+    "item-heal",
+    "item-blade",
+    "item-axe",
+    "item-lance",
+    "boss-intact",
+    "boss-destroyed-left",
+    "boss-destroyed-right",
+    "boss-destroyed-center",
+    "credits-names",
+    "score-29999",
+    "score-30000"
+  ],
+  "master_sha256": "2bf6fdaf695ddfe2e7d03d6b79a058473d8f68840b841bf1f2966fe1d6dde3d8",
+  "lives_at_29999": 3,
+  "lives_at_30000": 4,
+  "lives_at_105000": 6,
+  "duplicate_extend": false,
+  "credits_names": 3,
+  "colors": 52
+}

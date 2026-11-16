@@ -1,0 +1,194 @@
+{
+  "after_sha256": "2bf6fdaf695ddfe2e7d03d6b79a058473d8f68840b841bf1f2966fe1d6dde3d8",
+  "existing_images_sfx_other_music_preserved": true,
+  "master_preserved_byte_for_byte": true,
+  "prior_non_target_pixels_preserved": true,
+  "sounds_music_tilemaps_unchanged": true,
+  "synchronized_banks": [
+    "assets/stage2_music.pyxres",
+    "assets/stage3_music.pyxres",
+    "assets/menu_music.pyxres"
+  ],
+  "sprites": [
+    {
+      "sprite": "item_heal",
+      "atlas": [
+        0,
+        96,
+        16,
+        16
+      ],
+      "changed_pixels": 0
+    },
+    {
+      "sprite": "item_blade",
+      "atlas": [
+        16,
+        96,
+        16,
+        16
+      ],
+      "changed_pixels": 48
+    },
+    {
+      "sprite": "item_axe",
+      "atlas": [
+        32,
+        96,
+        16,
+        16
+      ],
+      "changed_pixels": 92
+    },
+    {
+      "sprite": "item_lance",
+      "atlas": [
+        48,
+        96,
+        16,
+        16
+      ],
+      "changed_pixels": 81
+    },
+    {
+      "sprite": "boss_hull",
+      "atlas": [
+        0,
+        112,
+        224,
+        104
+      ],
+      "changed_pixels": 17353
+    },
+    {
+      "sprite": "boss_left",
+      "atlas": [
+        0,
+        224,
+        24,
+        24
+      ],
+      "changed_pixels": 397
+    },
+    {
+      "sprite": "boss_right",
+      "atlas": [
+        24,
+        224,
+        24,
+        24
+      ],
+      "changed_pixels": 397
+    },
+    {
+      "sprite": "boss_center",
+      "atlas": [
+        48,
+        224,
+        32,
+        32
+      ],
+      "changed_pixels": 690
+    },
+    {
+      "sprite": "boss_destroyed",
+      "atlas": [
+        80,
+        224,
+        32,
+        32
+      ],
+      "changed_pixels": 473
+    }
+  ],
+  "png_comparisons": [
+    {
+      "sprite": "item_blade",
+      "source": "blade.png",
+      "atlas": [
+        16,
+        96,
+        16,
+        16
+      ],
+      "different_pixels": 0
+    },
+    {
+      "sprite": "item_axe",
+      "source": "ax.png",
+      "atlas": [
+        32,
+        96,
+        16,
+        16
+      ],
+      "different_pixels": 0
+    },
+    {
+      "sprite": "item_lance",
+      "source": "yari.png",
+      "atlas": [
+        48,
+        96,
+        16,
+        16
+      ],
+      "different_pixels": 0
+    },
+    {
+      "sprite": "boss_hull",
+      "source": "1boss_1.png",
+      "atlas": [
+        0,
+        112,
+        224,
+        104
+      ],
+      "different_pixels": 0
+    },
+    {
+      "sprite": "boss_left",
+      "source": "1boss_2.png",
+      "atlas": [
+        0,
+        224,
+        24,
+        24
+      ],
+      "different_pixels": 0
+    },
+    {
+      "sprite": "boss_right",
+      "source": "1boss_2.png",
+      "atlas": [
+        24,
+        224,
+        24,
+        24
+      ],
+      "different_pixels": 0
+    },
+    {
+      "sprite": "boss_center",
+      "source": "1boss_3.png",
+      "atlas": [
+        48,
+        224,
+        32,
+        32
+      ],
+      "different_pixels": 0
+    },
+    {
+      "sprite": "boss_destroyed",
+      "source": "1boss_4.png",
+      "atlas": [
+        80,
+        224,
+        32,
+        32
+      ],
+      "different_pixels": 0
+    }
+  ]
+}

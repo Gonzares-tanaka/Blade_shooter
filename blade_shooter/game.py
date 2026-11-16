@@ -338,7 +338,7 @@ class Game:
         maximum=max(self.continue_max_cut,entry.max_cut)
         self.play_mode=entry.mode
         self.run=RunState(current_stage=entry.stage,score=entry.score,weapon=entry.weapon,
-                          max_cut=maximum,next_extend=entry.next_extend)
+                          max_cut=maximum,next_extend=(entry.score//C.LIVES["extend_points"]+1)*C.LIVES["extend_points"])
         self.enter_stage(entry.stage,carry_run=True)
         self.continue_entry=None
         self.events.append("start")

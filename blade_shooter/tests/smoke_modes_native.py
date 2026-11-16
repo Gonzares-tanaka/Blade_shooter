@@ -31,7 +31,7 @@ def run(update,draw):
     g.return_title();g.step(.01,Actions(confirm=True));capture('mode-select')
     g.step(.01,Actions(menu_pick=2));capture('stage-select')
     g.step(.01,Actions(menu_pick=2));g.schedule=lambda:None
-    g.add_score(10000,'fixture');capture('extend-hud')
+    g.add_score(30000,'fixture');capture('extend-hud')
     g.hp=1;g.invincible=0;g.hurt();capture('respawn-hud')
     assert g.hp==3 and g.run.lives==3
     g.score=12500;g.run.current_cut=8;g.weapon='lance';g.cooldown=0
