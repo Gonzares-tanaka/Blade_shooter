@@ -1,0 +1,44 @@
+{
+  "result": "PASS",
+  "version": "0.18.0",
+  "scenes": {
+    "stage1": {
+      "pages": 3,
+      "widths": [
+        240,
+        240,
+        240
+      ]
+    },
+    "stage2": {
+      "pages": 2,
+      "widths": [
+        240,
+        228
+      ]
+    },
+    "stage3": {
+      "pages": 2,
+      "widths": [
+        240,
+        240
+      ]
+    },
+    "ending": {
+      "pages": 4,
+      "widths": [
+        240,
+        240,
+        240,
+        240
+      ]
+    }
+  },
+  "native_font_matches_layout": true,
+  "palette_order_preserved": true,
+  "combat_images_restored": true,
+  "gkd_instruction_layout_rendered": true,
+  "guides_developer_only": true,
+  "real_gkd": false,
+  "real_iphone": false
+}

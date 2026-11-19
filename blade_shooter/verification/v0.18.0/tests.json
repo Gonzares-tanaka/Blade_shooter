@@ -1,0 +1,11 @@
+{
+  "version": "0.18.0",
+  "python_unittest": 184,
+  "javascript_gestures": 26,
+  "native_all_pages": "PASS",
+  "web_all_pages": "PASS",
+  "campaign_input_only": "PASS",
+  "edited_text_image_rebuild": "PASS",
+  "real_iphone": false,
+  "real_gkd": false
+}

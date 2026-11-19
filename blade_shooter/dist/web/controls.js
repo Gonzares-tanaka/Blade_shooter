@@ -17,7 +17,8 @@ window.bladeInput = {
   document.documentElement.style.setProperty("--move-zone-width",`${config.move_region_ratio*100}%`);
   const start = document.getElementById("start");
   const menuOptions = document.getElementById("menu-options");
-  let canContinue=false, menuContact=null;
+  let canContinue=false, menuContact=null, storyRevision=0;
+  const storySkip=document.getElementById("story-skip");
   const settings = document.getElementById("settings");
   const nextStageButton = document.getElementById("next-stage");
   const titleButton = document.getElementById("title-return");
@@ -52,6 +53,7 @@ window.bladeInput = {
         return button;
       }));
     }
+    storySkip.hidden=state!=="story";
     settings.disabled = !["title","mode_select","stage_select","settings"].includes(state);
     settings.hidden=settings.disabled;
     nextStageButton.textContent=`第${stageNumber+1}面へ進む`;
@@ -66,11 +68,12 @@ window.bladeInput = {
     document.getElementById("attack-zone-label").textContent = `斬撃エリア ${weaponName==="lance"?"↑↓":"←→"}`;
     start.disabled = state === "loading" || ["stage_clear","ending_clear","credits"].includes(state);
     start.textContent = state === "loading" ? "読み込み中" : state === "playing" ? "一時停止" : state === "paused" ? "再開" :
-                       state==="gameover" ? "CONTINUE" : ["clear","result"].includes(state) ? "リトライ" : state === "ending_clear" ? "CLEAR" : state === "credits" ? "スタッフロール" : state === "stage_clear" ? "STAGE CLEAR" : state === "settings" ? "設定完了" : state==="title" ? "START" : "選択";
+                       state==="gameover" ? "CONTINUE" : ["clear","result"].includes(state) ? "リトライ" : state === "ending_clear" ? "CLEAR" : state === "credits" ? "スタッフロール" : state === "stage_clear" ? "STAGE CLEAR" : state === "settings" ? "設定完了" : state==="title" ? "START" : state==="story" ? "次へ" : "選択";
     if(state==="gameover")start.disabled=!canContinue;
     document.getElementById("status").textContent = state === "loading" ?
       "表示が出たらゲーム画面をタップ →「開始」でプレイ" : state === "ending_clear" ? "CLEAR · 最終スコアを表示中" : state === "credits" ? "スタッフロール · 終了後はタイトルへ戻ります" : state === "paused" ?
       "一時停止中 · 再開ボタン / Pで続ける" :
+      state==="story" ? "タップ / Z / Enter / A：次へ · X / B / SKIP：全文スキップ" :
       `左手：ドラッグ移動 · 右手：${directionLabel()} · ショット自動`;
   }
 
@@ -86,6 +89,9 @@ window.bladeInput = {
       }
     },
   });
+  Object.defineProperty(bridge,"storyRevision",{get:()=>storyRevision,set:value=>{
+    if(storyRevision!==value){storyRevision=value;clearTouch();}
+  }});
   Object.defineProperty(bridge,"canContinue",{get:()=>canContinue,set:value=>{
     if(canContinue!==value){canContinue=value;updateLabels();}
   }});
@@ -148,6 +154,7 @@ window.bladeInput = {
     bridge.suspended = false;
     resumeAudio();
     if (state !== "playing") {
+      if(menuContact)return; // Extra fingers never replace the page-turn owner.
       clearTouch();menuContact={id:e.pointerId,point:coordinates(e),state};
       screen.setPointerCapture(e.pointerId);return;
     }
@@ -168,9 +175,14 @@ window.bladeInput = {
   screen.addEventListener("pointerup", e => {
     e.preventDefault();
     if (state !== "playing") {
-      const contact=menuContact,point=coordinates(e);clearTouch();
+      const contact=menuContact,point=coordinates(e);
+      if(!contact||contact.id!==e.pointerId)return;
+      clearTouch();
       if(!contact||contact.id!==e.pointerId||contact.state!==state||Math.hypot(point[0]-contact.point[0],point[1]-contact.point[1])>12)return;
-      if(["title","mode_select","stage_select"].includes(state)){
+      if(state==="story"){
+        if(point[0]>=192&&point[0]<248&&point[1]>=284&&point[1]<308)bridge.settingsSerial++;
+        else bridge.confirmSerial++;
+      }else if(["title","mode_select","stage_select"].includes(state)){
         const row=Math.floor((point[1]-140)/26);
         if(point[0]>=20&&point[0]<=236&&row>=0&&row<menuOptions.children.length)pickMenu(row+1);
       }else if(["result","gameover"].includes(state)&&point[0]>=20&&point[0]<=236){
@@ -188,7 +200,7 @@ window.bladeInput = {
   });
   screen.addEventListener("pointercancel", clearTouch);
   screen.addEventListener("lostpointercapture", e => {
-    if (gestures.owns(e.pointerId)) clearTouch();
+    if (gestures.owns(e.pointerId)||menuContact?.id===e.pointerId) clearTouch();
   });
   for (const event of ["contextmenu", "dblclick", "gesturestart", "gesturechange"]) {
     screen.addEventListener(event, e => e.preventDefault(), { passive: false });
@@ -207,6 +219,10 @@ window.bladeInput = {
     else if(state==="result")bridge.retrySerial++;
     else if(state==="title")pickMenu(1);
     else bridge.confirmSerial++;
+  });
+  storySkip.addEventListener("click",()=>{
+    if(state!=="story")return;
+    clearTouch();bridge.suspended=false;resumeAudio();bridge.settingsSerial++;
   });
   nextStageButton.addEventListener("click",()=>{
     if(state!=="result"||!bridge.canAdvanceStage)return;

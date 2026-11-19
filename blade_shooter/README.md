@@ -1,6 +1,50 @@
-# BLADE 超接近戦 0.17.1
+# BLADE 超接近戦 0.18.0
 
 256×320・全3面の近接シューティングです。左手で弾を避け、右手で残弾を斬り、射撃の隙へ踏み込みます。52色パレットと武器・敵の性能、出現表は維持しています。
+
+## 0.18.0 ストーリー画面
+
+通しプレイは各面の初回開始前に導入を表示します。コンティニュー、ステージセレクト、同じ面のリトライでは導入を省略。最終ボス撃破後はCLEAR・累計スコアを5秒表示し、エンディング本文 → 既存スタッフロール → タイトルへ進みます。本文中は戦闘・面時間・CUT猶予を止めます。初期本文は1面3ページ、2面2ページ、3面2ページ、エンディング4ページです。
+
+次へ：GKDのA／キーボードZ・Enter／画面タップ。全文スキップ：GKDのB／X／画面右下SKIPまたはWebのSKIPボタン。SELECTは本文中も終了です。ページ送りは押し直しが必要で、接触の持ち越しや余分な指ではページを進めません。戦闘への移行時も入力を解除します。
+
+### 本文を編集する
+
+`assets/stage1_intro.txt`、`assets/stage2_intro.txt`、`assets/stage3_intro.txt`、`assets/ending_story.txt`をUTF-8で保存してください。改行と空行を反映し、`---`だけの行で任意改ページできます。本文が長くなっても240px幅へ自動折り返し・10行単位で改ページし、コード変更は不要です。本文は12ドット日本語BDF、行間15px、上端128px。句読点と括弧の基本的な禁則処理があります。フォントはJIS日本語・英数字を収録し、絵文字や未収録の拡張漢字を使う場合は対応BDFと`story.py: FONT`を差し替えてください。
+
+**assets/opening.txtとassets/ending.txtは音楽データです。物語本文で上書きしないでください。** 導入は既存タイトル曲、最終CLEAR・エンディング本文・スタッフロールは既存エンディング曲を使用します。本文→スタッフロールで曲を再スタートしません。GONZARES TANAKAの表記は維持しています。
+
+### 情景画像を編集する
+
+専用原本は`assets/story.pyxres`、同名`story.pyxpal`です。既存の戦闘・タイトル・音楽原本は上書きしません。各場面の全ページで同じ256×100を原寸表示します。
+
+| 場面 | イメージバンク | 左上座標 | サイズ |
+|---|---:|---|---|
+| 1面・救出へ出撃するアストレイヤー | 0 | (0, 0) | 256×100 |
+| 2面・岩と船の残骸 | 0 | (0, 100) | 256×100 |
+| 3面・巨大小惑星の基地入口 | 1 | (0, 0) | 256×100 |
+| エンディング・脱出する船団 | 1 | (0, 100) | 256×100 |
+
+Pyxel Editorで`story.pyxres`の該当範囲を編集して保存し、build.pyを実行してください。52色の順番を変えないでください。別の256×100 PNGへ差し替える場合は同じ範囲へインポートできます。参考PNGは`assets/story-stage1.png`等です。これらを取り込み直すツールは`tools/import_story_assets.py`ですが、Editorでの編集後に実行すると上書きされるため通常の再ビルドでは実行しません。build.pyは保存済み.pyxresと本文をそのまま両配布物へ収録します。
+
+仮画像は内蔵image_genで4点を生成し、256×100・既存52色へ変換して収録しました。制作プロンプトは`verification/v0.18.0/story-art-prompts.md`、フォントの出典・ライセンスは`assets/story-font-LICENSE.txt`です。
+
+### 戦闘なしでプレビュー・配布物を更新する
+
+```powershell
+.\blade_shooter\run.ps1 --story-preview all
+.\blade_shooter\run.ps1 --story-preview stage1
+.\blade_shooter\run.ps1 --story-preview stage2
+.\blade_shooter\run.ps1 --story-preview stage3
+.\blade_shooter\run.ps1 --story-preview ending
+python blade_shooter/build.py
+python -m unittest discover -s blade_shooter/tests -q
+python blade_shooter/tests/check_delivery.py
+```
+
+`all`は4場面を順に表示し、最後にタイトルへ戻ります。個別指定は1場面だけ表示します。通常メニューにプレビューのモードは追加しません。GKDでも`python3 main.py --gkd --story-preview all`で確認できます。Webは再生成した`dist/blade-shooter-web.zip`／`dist/web`、GKDは`dist/blade-shooter-gkd.zip`を更新してください。Pagesへの反映は変更をGitHubへpushするとワークフローが行います。
+
+通常プレイでは敵の射線・突進経路・ボス移動先の線を非表示にしました。砲口発光、点滅、移動前の発光、下端のバックアタック予告、最終ボス初回の反射説明は残します。武器・敵HP・弾速・射撃間隔は変更していません。線の調整確認だけ必要な開発時は`--attack-guides`、または`config.py: DEBUG_ATTACK_GUIDES`で表示できます。
 
 ## 0.17.1の更新
 
@@ -12,7 +56,7 @@
 
 添付のtitle.png（256×100）をImage 2の(0,0)へ取り込み、画面上部に原寸で全体表示します。52色の既存順へ色を変換しています。ロゴ・副題の縦横比と範囲は維持しています。
 
-- START → 通しプレイ（CAMPAIGN）：1→2→3面。面リザルトのNEXT STAGEで状態を引き継ぎ、最終ボス撃破後にCLEAR・累計スコアを5秒表示してスタッフロールへ。終了後はタイトルです。
+- START → 通しプレイ（CAMPAIGN）：1→2→3面。面リザルトのNEXT STAGEで状態を引き継ぎ、最終ボス撃破後にCLEAR・累計スコアを5秒表示してエンディング本文、スタッフロールへ。終了後はタイトルです。
 - START → ステージセレクト：1・2・3面から選び、選んだ面だけを残機3・HP3・スコア0で開始。クリア後はリザルトで終了し、次の面やスタッフロールへ自動進行しません。
 - CONTINUE：全残機を失ったプレイを、その失敗した面の0秒から再開。再開情報がない場合はグレー表示。ゲームオーバーからも選択できます。
 - 武器設定：X／GKDのBまたはWebの設定ボタン。左右でブレイド／アックス／ランスを選び、Z・Enter／A・Bで戻ります。
@@ -60,7 +104,8 @@ Pyxel 2.9.9のEditorを使用します。全バンクは64音源枠、各フレ�
 
 | 原本 | 編集するもの |
 |---|---|
-| assets/blade.pyxres | 全画像、SE、1面道中Music0・ボスMusic1 |
+| assets/blade.pyxres | 戦闘・タイトル画像、SE、1面道中Music0・ボスMusic1 |
+| assets/story.pyxres | 4場面の情景画像（専用バンク） |
 | assets/stage2_music.pyxres | 2面道中Music2・ボスMusic3 |
 | assets/stage3_music.pyxres | 3面道中Music4・最終ボスMusic5 |
 | assets/menu_music.pyxres | タイトルMusic7・スタッフロールMusic6 |
@@ -69,7 +114,7 @@ Pyxel 2.9.9のEditorを使用します。全バンクは64音源枠、各フレ�
 
 被弾は全バンク共通のSound5、6音・speed2・約0.1秒。短い下降音とノイズを組み合わせ、同時発生した撃破・斬撃等のSEより優先します。被弾時は0.18秒だけBGMを45%、効果音CH5を160%へ調整し、元へ戻します。`AUDIO_MIX`で変更可能。SE5を編集する場合は全バンクの同じ枠へ反映してください。
 
-添付opening.txtはT120・4声・16秒ループ、ending.txtはT133・4声・約14.436秒ループ。原文は変更せずassetsに保存。通常は`UI_BGM_MODE="mml"`で添付のメロディ・テンポ・ENV/VIB/GLIを原文から再生します。タイトルと選択画面でMusic7、最終CLEARとスタッフロールでMusic6。前の曲を止めて切り替えます。Safariではゲームを起動する最初のタップ等で音声を解放し、タイトル曲を開始します。
+添付opening.txtはT120・4声・16秒ループ、ending.txtはT133・4声・約14.436秒ループ。原文は変更せずassetsに保存。通常は`UI_BGM_MODE="mml"`で添付のメロディ・テンポ・ENV/VIB/GLIを原文から再生します。タイトルと選択画面でMusic7、最終CLEAR・エンディング本文・スタッフロールでMusic6。前の曲を止めて切り替えます。Safariではゲームを起動する最初のタップ等で音声を解放し、タイトル曲を開始します。
 
 Editorで音符版を編集した場合は`UI_BGM_MODE="resource"`へ変更してください。音符版は16分音符単位・音量0〜7へENVを近似し、VIB/GLIも近似。タイトルはT120を維持。エンディングは整数speed14なので約T128.57・14.933秒です。通常のMML再生ではT133を維持します。取り込みツールはtools/import_menu_assets.py（初回のみ）。
 

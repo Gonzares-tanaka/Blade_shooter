@@ -50,11 +50,12 @@ class Audio:
                     if index in C.AUDIO_BGM_CHANNELS:gain*=C.AUDIO_MIX["hurt_bgm_gain"]
                     elif index==C.AUDIO_SE_CHANNELS[1]:gain*=C.AUDIO_MIX["hurt_se_gain"]
                 ch.gain=gain
-        playing = game.state in ("playing","ending_clear","credits","title","mode_select","stage_select","settings")
+        playing = game.state in ("playing","story","ending_clear","credits","title","mode_select","stage_select","settings")
         stage=getattr(game,"stage_definition",None)
         music=(stage.boss_bgm if stage else 1) if getattr(game,"boss",None) else (stage.bgm if stage else 0)
         if game.state in ("ending_clear","credits"):music=ENDING["bgm"]
         elif game.state in ("title","mode_select","stage_select","settings"):music=C.TITLE_BGM
+        if game.state=="story":music=ENDING["bgm"] if game.story.key=="ending" else C.TITLE_BGM
         if playing and (not self.music_playing or music!=self.music_number):
             if self.music_playing:
                 for ch in C.AUDIO_BGM_CHANNELS:self.p.stop(ch)

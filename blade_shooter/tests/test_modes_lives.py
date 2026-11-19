@@ -43,7 +43,8 @@ class ModesLivesTests(unittest.TestCase):
 
     def test_campaign_carries_all_state_and_final_clear_then_credits(self):
         g=Game();g.step(.01,Actions(menu_pick=1));g.step(.01,Actions(menu_pick=1))
-        self.assertEqual((g.state,g.play_mode),("playing","campaign"))
+        self.assertEqual((g.state,g.play_mode),("story","campaign"))
+        g.step(.01);g.step(.01,Actions(settings=True))
         g.hp=2;g.weapon="axe";g.add_cut(7)
         for stage in (1,2):
             self.kill_boss(g);g.step(C.FLOW['clear_banner_seconds'])
@@ -52,15 +53,18 @@ class ModesLivesTests(unittest.TestCase):
             self.assertEqual(g.run.current_stage,stage+1)
             self.assertEqual((g.hp,g.weapon,g.score,g.max_cut,g.run.lives,g.run.next_extend),carry)
             self.assertEqual(g.stage_entry.score,g.score)
+            self.assertEqual(g.state,"story")
+            g.step(.01);g.step(.01,Actions(settings=True))
         self.kill_boss(g)
         score=g.score
         self.assertEqual((g.state,g.result.score),("ending_clear",score))
         self.assertEqual(g.score,21000+20000+20000)
-        g.step(ENDING['clear_seconds']);self.assertEqual(g.state,"credits")
+        g.step(ENDING['clear_seconds']);self.assertEqual(g.state,"story")
+        g.step(.01);g.step(.01,Actions(settings=True));self.assertEqual(g.state,"credits")
         g.step(200);self.assertEqual((g.state,g.score,g.can_continue),("title",0,False))
 
     def test_three_ships_hp_loss_respawn_and_no_scene_reset(self):
-        g=Game();g.start_play();e=g.spawn("armor",60,80)
+        g=Game();g.start_play(mode="stage_select");e=g.spawn("armor",60,80)
         b=Bullet(70,100,0,10);g.bullets=[b];g.time=71
         for lives in (2,1):
             for hp in (2,1):
@@ -153,7 +157,7 @@ class MenuAudioTests(unittest.TestCase):
 
     def test_hurt_wins_sfx_priority_only_on_real_hp_loss_and_briefly_ducks(self):
         p=Fake();p.channels=[SimpleNamespace(gain=.125) for _ in range(6)]
-        a=Audio(p);g=Game();g.start_play();g.hurt()
+        a=Audio(p);g=Game();g.start_play(mode="stage_select");g.hurt()
         g.events+=['kill','cut','reflected_hit','boss_defeat','over']
         a.update(g)
         self.assertIn(('se',(5,5),{}),p.calls)

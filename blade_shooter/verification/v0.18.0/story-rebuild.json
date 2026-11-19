@@ -1,0 +1,17 @@
+{
+  "result": "PASS",
+  "version": "0.18.0",
+  "edited_text_and_image_reach_web_and_gkd": true,
+  "edited_image_pixel": {
+    "bank": 0,
+    "x": 0,
+    "y": 0,
+    "before": 0,
+    "after": 6
+  },
+  "original_authoring_files_unchanged": true,
+  "files": {
+    "assets/story.pyxres": "5a58b0c5a017cbdf57fd4e4a18656a914e62745ad27906ec96d5ad71c880e446",
+    "assets/stage1_intro.txt": "1549f182009096720d689bc8dfc8c0149523d6c9618635d7f26ce1ee7a4cfa3d"
+  }
+}

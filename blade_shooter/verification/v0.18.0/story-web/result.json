@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "version": "0.18.0",
+  "runtime": "actual Pyxel 2.9.9 WASM",
+  "browser": "157.0.4341.60",
+  "realIPhone": false,
+  "mobileEmulation": true,
+  "captures": [
+    "stage1-1",
+    "stage1-2",
+    "stage1-3",
+    "stage2-1",
+    "stage2-2",
+    "stage3-1",
+    "stage3-2",
+    "ending-1",
+    "ending-2",
+    "ending-3",
+    "ending-4"
+  ],
+  "heldKeySinglePage": true,
+  "extraContactIgnored": true,
+  "cancelAndBlurClear": true,
+  "noAttackOrMovementCarryover": true,
+  "screenAndDomSkip": true,
+  "storyClockFrozen": true,
+  "endingBgmContinuous": true,
+  "creditsToTitle": true,
+  "palettePreserved": true,
+  "errors": []
+}

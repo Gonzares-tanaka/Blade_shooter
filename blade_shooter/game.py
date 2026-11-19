@@ -1,5 +1,6 @@
 """描画・入力APIに依存しない共通ゲーム。斬撃ポリゴンは描画と判定で共有。"""
 from dataclasses import dataclass
+from story import Story, SCENES
 import math
 import json
 import config as C
@@ -237,6 +238,12 @@ class Game:
         self.run=RunState(weapon=weapon)
         self.selected_weapon=weapon
         self.weapon, self.touch_mode = weapon, touch_mode
+        self.story=None
+        self.story_revision=0
+        self.story_seen=set()
+        self.story_preview=[]
+        self.story_released=False
+        self.story_exit_guard=False
         self.play_mode="campaign"
         self.development=course!=C.DEFAULT_COURSE or section!=0
         self.menu_choice=0
@@ -260,6 +267,7 @@ class Game:
         self.events=[]
 
     def reset(self,carry_run=False):
+        self.story=None
         if not carry_run:self.run=RunState(current_stage=self.stage_definition.number,weapon=self.selected_weapon)
         self.state = "playing"
         self.checkpoint=max(0,min(self.checkpoint,len(self.course_config["sections"])-1))
@@ -329,7 +337,8 @@ class Game:
 
     def start_play(self,stage=1,mode="campaign"):
         self.play_mode=mode;self.continue_entry=None
-        self.enter_stage(stage,carry_run=False)
+        self.story_seen.clear()
+        self.enter_stage(stage,carry_run=False,show_intro=True)
         self.events.append("start")
 
     def continue_play(self):
@@ -401,13 +410,47 @@ class Game:
     @property
     def max_cut(self):return self.run.max_cut
 
-    def enter_stage(self,number,carry_run=True):
+    def begin_story(self,key,destination="playing"):
+        self.story=Story.load(key)
+        self.story_destination=destination
+        self.story_revision+=1
+        self.story_released=False
+        self.state="story"
+
+    def preview_story(self,key):
+        self.story_preview=list(SCENES) if key=="all" else [key]
+        if any(name not in SCENES for name in self.story_preview):raise ValueError("Unknown story preview: "+key)
+        self.begin_story(self.story_preview.pop(0),"preview")
+
+    def step_story(self,action):
+        if action.focus_lost:
+            self.story_released=False;return
+        held=action.confirm or action.slash or action.settings
+        if not held:
+            self.story_released=True;return
+        if not self.story_released:return
+        self.story_released=False
+        if not action.settings and self.story.page+1<len(self.story.pages):
+            self.story.page+=1;self.story_revision+=1;return
+        target=self.story_destination
+        self.story=None;self.story_revision+=1;self.story_exit_guard=True
+        if target=="preview":
+            if self.story_preview:self.begin_story(self.story_preview.pop(0),"preview")
+            else:self.return_title()
+        else:
+            self.state=target
+            self.scene_time=0.0
+
+    def enter_stage(self,number,carry_run=True,show_intro=False):
         self.stage_definition=get_stage(number)
         self.stage_data=self.stage_definition.build(self.seed)
         self.run.current_stage=number
         self.course="stage";self.checkpoint=0
         self.reset(carry_run=carry_run)
         if carry_run:self.reset_cut("stage_change")
+        if show_intro and self.play_mode=="campaign" and not self.development and number not in self.story_seen:
+            self.story_seen.add(number)
+            self.begin_story("stage"+str(number))
 
     @property
     def can_advance_stage(self):
@@ -690,10 +733,16 @@ class Game:
     def step(self, dt, action=None):
         action = action or Actions()
         self.events = []
+        if self.state=="story":
+            self.step_story(action);return
+        if self.story_exit_guard:
+            held=action.confirm or action.slash or action.settings
+            if held:action.confirm=action.slash=action.settings=False
+            else:self.story_exit_guard=False
         if self.state in ("ending_clear","credits"):
             self.scene_time+=dt
             if self.state=="ending_clear" and self.scene_time>=ENDING['clear_seconds']:
-                self.state='credits';self.scene_time=0.0
+                self.begin_story("ending","credits")
             elif self.state=='credits' and self.scene_time>=(C.HEIGHT+len(ENDING['credits'])*ENDING['line_spacing'])/ENDING['scroll_speed']+ENDING['tail_seconds']:
                 self.continue_entry=None;self.return_title()
             return
@@ -701,7 +750,7 @@ class Game:
             self.scene_time+=dt
             if self.scene_time>=C.FLOW["clear_banner_seconds"]:
                 if self.can_advance_stage and self.stage_definition.clear_target=="next_stage":
-                    self.enter_stage(self.stage_definition.next_stage,carry_run=True)
+                    self.enter_stage(self.stage_definition.next_stage,carry_run=True,show_intro=True)
                 else:self.state="result"
             return
         if self.state in ("result","gameover"):
@@ -709,7 +758,7 @@ class Game:
                 self.continue_play();return
             if action.menu_pick and 1<=action.menu_pick<=len(self.result_options):self.result_choice=action.menu_pick-1
             if action.next_stage and self.can_advance_stage:
-                self.enter_stage(self.stage_definition.next_stage,carry_run=True)
+                self.enter_stage(self.stage_definition.next_stage,carry_run=True,show_intro=True)
                 self.events.append("start");return
             if action.retry:
                 self.continue_entry=None
@@ -724,7 +773,7 @@ class Game:
                 self.return_title()
             elif action.confirm or action.slash or action.menu_pick:
                 if choice=="CONTINUE":self.continue_play()
-                elif choice=="NEXT STAGE":self.enter_stage(self.stage_definition.next_stage,carry_run=True)
+                elif choice=="NEXT STAGE":self.enter_stage(self.stage_definition.next_stage,carry_run=True,show_intro=True)
                 else:
                     self.continue_entry=None
                     if self.course in ("stage","stage2","stage3"):self.checkpoint=0

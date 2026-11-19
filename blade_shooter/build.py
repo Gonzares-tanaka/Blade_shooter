@@ -6,13 +6,15 @@ import hashlib
 import json
 import zipfile
 import config as C
+import story as S
 
 ROOT = Path(__file__).resolve().parent
-SOURCES = ("main.py", "config.py", "game.py", "boss.py", "items.py", "progress.py", "stages.py",
+SOURCES = ("main.py", "story.py", "config.py", "game.py", "boss.py", "items.py", "progress.py", "stages.py",
            "persistence.py", "stage2_config.py", "stealth.py", "stage3_config.py", "cave.py", "final_boss.py", "view.py", "assets.py", "audio.py")
 RESOURCES = (C.RESOURCE_FILE, C.PALETTE_FILE, C.STAGE_BGM_MML_FILE, C.BOSS_BGM_MML_FILE,
              *C.AUDIO_BANKS.values(),*(Path(path).with_suffix(".pyxpal").as_posix() for path in C.AUDIO_BANKS.values()),
-             *(data["file"] for data in (*C.LATER_BGM.values(),*C.UI_BGM.values())),"assets/title.png")
+             *(data["file"] for data in (*C.LATER_BGM.values(),*C.UI_BGM.values())),"assets/title.png",S.RESOURCE,S.PALETTE,S.FONT,S.FONT_LICENSE,
+             *(scene["file"] for scene in S.SCENES.values()))
 
 
 def zip_write(archive, name, data, executable=False):

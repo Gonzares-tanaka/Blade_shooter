@@ -12,7 +12,7 @@
 <body>
   <main>
     <header><a class="back-link" href="index.html#play" target="_top" aria-label="紹介ページへ戻る">←</a><span>BLADE <b>CLOSE QUARTERS</b></span><button id="start" type="button" disabled>読み込み中</button></header>
-    <nav aria-label="ゲームメニュー"><div id="menu-options" role="group" aria-label="モードとステージ"></div><button id="settings" type="button" disabled>武器設定 ⚙</button><button id="next-stage" type="button" hidden>次の面へ進む</button><button id="title-return" type="button" hidden>タイトルへ戻る</button></nav>
+    <nav aria-label="ゲームメニュー"><div id="menu-options" role="group" aria-label="モードとステージ"></div><button id="story-skip" type="button" hidden>SKIP（全文）</button><button id="settings" type="button" disabled>武器設定 ⚙</button><button id="next-stage" type="button" hidden>次の面へ進む</button><button id="title-return" type="button" hidden>タイトルへ戻る</button></nav>
     <section id="display" aria-label="ゲーム画面"><div id="pyxel-screen"></div><div id="touch-zones" aria-hidden="true" hidden><div id="move-zone"><span>移動エリア</span></div><div id="attack-zone"><span id="attack-zone-label">斬撃エリア ←→</span></div></div></section>
     <section id="settings-panel" aria-label="武器設定" hidden>
       <h1>出撃前の設定</h1>
@@ -23,7 +23,7 @@
       <p>画面の左側から触れた指でドラッグ移動。右側から触れた指で、剣・斧は左右、槍は上下へフリック。事前タップは不要で、攻撃は前方へ出ます。</p>
       <p>指の担当は離すまで固定。境界を越えても役割は変わりません。右手は一瞬止めるかゆっくり動かしてから次の払いへ。触り直しでも再入力できます。</p>
       <p>1面ではエリア終了ごとにアイテムが出現。絵柄が0.8秒ごとに変わり、触れたときのHP回復／武器を取得します。武器変更後は右側の案内に合わせてフリックしてください。</p>
-      <p>設定完了 → START → 通しプレイ／ステージセレクト。残機3・各HP3、30,000点ごとに1機追加。全機を失ったらCONTINUEで失敗した面の最初から再開します。PC：Xで設定、矢印で選択、Z / Enterで戻る。</p>
+      <p>設定完了 → START → 通しプレイ／ステージセレクト。残機3・各HP3、30,000点ごとに1機追加。全機を失ったらCONTINUEで失敗した面の最初から再開します。PC：Xで設定、矢印で選択、Z / Enterで戻る。通しプレイの本文はタップ／Z・Enterで次へ、X／SKIPで全文スキップ。</p>
     </section>
     <div id="status" role="status">読み込み中… 表示が出たら画面をタップ</div>
     <div id="load-error" role="alert" hidden><p>ゲームを読み込めませんでした。ネット接続を確認して、もう一度お試しください。</p><button id="retry-load" type="button">再読み込み</button></div>

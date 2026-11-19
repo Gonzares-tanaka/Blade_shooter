@@ -1,5 +1,5 @@
 # title: Blade Close Quarters
-# version: 0.17.1
+# version: 0.18.0
 """PC / GKD / Web共通入口。SELECTは状態・ヒットストップより先に処理。"""
 import sys
 import config as C
@@ -68,6 +68,7 @@ class App:
         course,section=self.options(sys.argv[1:])
         pyxel.init(C.WIDTH, C.HEIGHT, title=C.TITLE, fps=C.FPS, quit_key=pyxel.KEY_NONE)
         load_resources(pyxel)
+        if "--attack-guides" in sys.argv:C.DEBUG_ATTACK_GUIDES=True
         if C.FULLSCREEN:
             pyxel.fullscreen(True)
         self.game, self.input, self.view = Game(course,section,self.seed_option(sys.argv[1:])), Input(pyxel, self.profile), View(pyxel, self.profile)
@@ -82,6 +83,10 @@ class App:
                 if value not in choices:raise ValueError("Unknown "+flag)
                 setattr(self.game,attribute,value)
                 if attribute=="weapon":self.game.selected_weapon=value
+        if "--story-preview" in sys.argv:
+            i=sys.argv.index("--story-preview")
+            if i+1>=len(sys.argv):raise ValueError("Missing value for --story-preview")
+            self.game.preview_story(sys.argv[i+1])
         self.audio = Audio(pyxel)
         pyxel.run(self.update, self.draw)
 
@@ -109,10 +114,11 @@ class App:
             self.p.quit()
             return
         previous_state=self.game.state
+        previous_story_revision=self.game.story_revision
         self.game.step(1/C.FPS, action)
         if self.game.result is not None:self.store.save(self.game.best_score)
         self.game.save_failed=self.store.failed
-        if previous_state!=self.game.state:
+        if previous_state!=self.game.state or previous_story_revision!=self.game.story_revision:
             # 画面遷移で物理キーの保持も持ち越さず、離してから再入力する。
             self.input.blocked.update(k for keys in self.input.keys.values() for k in keys if self.p.btn(k))
         if self.input.bridge is not None:
@@ -121,6 +127,7 @@ class App:
             self.input.bridge.stageNumber = self.game.run.current_stage
             self.input.bridge.canAdvanceStage = self.game.can_advance_stage
             self.input.bridge.state = self.game.state
+            self.input.bridge.storyRevision = self.game.story_revision
             self.input.bridge.meleeReady = self.game.state=="playing" and self.game.cooldown<=1e-6 and self.game.swing<0
             self.input.bridge.weapon = self.game.weapon
             self.input.bridge.touchMode = self.game.touch_mode

@@ -55,3 +55,5 @@ nav { flex-wrap:wrap; }
 #menu-options:empty { display:none; }
 #menu-options button { flex:1; min-height:36px; padding:5px 8px; font-size:11px; color:#dce7e7; background:#14232b; border:1px solid #35555c; border-radius:4px; }
 #menu-options button:disabled { color:#657371; border-color:#263132; cursor:default; }
+
+#story-skip { min-height:36px; padding:5px 18px; font-size:11px; color:#c0dfff; background:#14232b; border:1px solid #304952; border-radius:4px; }

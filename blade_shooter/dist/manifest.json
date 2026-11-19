@@ -1,10 +1,11 @@
 {
-  "version": "0.17.1",
+  "version": "0.18.0",
   "pyxel_web_version": "2.9.9",
   "sources": {
-    "main.py": "cc0565eabcd2ecaef912ed6123e05761ef6c2b0f869c3587949ca04b617b5191",
-    "config.py": "dd7f9111828a6655e7faacd3d4869678a24f36d28a1970eb8e59adffaaa19d19",
-    "game.py": "4f9cf15d0564235bd09388cbb217cab65e242b3b469ed145e2a487f9eb828e62",
+    "main.py": "d8a1a3ad033d31edb2ca8ea5664693b3df1d1e0bff6f63392721f2c8a08e104c",
+    "story.py": "530406541e33ffc85e24584edd590c36754d112d4d13b0d7eb1a07ba4136fc02",
+    "config.py": "10574223b2213fb59c4d19657a6d9150536863f35ce7a2fcdf1838bcab236531",
+    "game.py": "cd4f05acb7dfde80685ee9523676b53844e5ba8cdc2829aadc91a00a7f42a5b4",
     "boss.py": "62669b4c2d2e3e47311b446138e7b8e40fa2a09611d477d3778658c6df2377dd",
     "items.py": "d60530c9f18d7c399271126a3122c5e8d1873ee874c5c6ecb28f06a69aadbf63",
     "progress.py": "dcca6e91be097c1f79b7be533cf244e9d6fc06b91076d3fccd65211a9acb119e",
@@ -15,9 +16,9 @@
     "stage3_config.py": "a9057a87035ea21c893c11a04078b5b41c3c20088363a89a13747cecafca39fe",
     "cave.py": "54f7037a822591b6a4d62a17429ede1c1140cba199f828410fc3a439066c891e",
     "final_boss.py": "85ac7dab9e1d60f224ceb48e2e4e90536c9342edd505d7e2b766d8eecae8111e",
-    "view.py": "b0b9539b3b8735e71ac919c30ff0c8ca63746d8ea8727dacb7a30eb3369b0aa1",
+    "view.py": "f1654d8687c1e47c5aec8fe4805c12e3565363de6b31b18737bfbd38db18eea3",
     "assets.py": "065e0c7528058173b09f0844f840fc9b3ae287abd7ed0fa3cbd556014b965926",
-    "audio.py": "49ff74fa9191da3f26fc41ae238723eb092e19bc0efc3d11fffd966c9b392270",
+    "audio.py": "c099613def8eefbd8adaaf86245dcf3dca3badba9ebe26efb2204b02884e7882",
     "assets/blade.pyxres": "2bf6fdaf695ddfe2e7d03d6b79a058473d8f68840b841bf1f2966fe1d6dde3d8",
     "assets/blade.pyxpal": "8bdbe7337bf6a347642b9c1a1a1afb782d6e3442c7c1af5fea7f37276c5686f3",
     "assets/stage1_MML.txt": "ccbfa2c5445435e0cb600d2b84c80eebef88f98418c1aa92a06dee6e951a609c",
@@ -34,6 +35,14 @@
     "assets/stage3_boss.txt": "1a29428909fac72d7a86bff8489bed690a9ea61b9d64d19a0d94b55d29f1c340",
     "assets/opening.txt": "221168552b6f5665c86d8983038f9a0834c0eed00ca85d7fbdb3e190f2432ebd",
     "assets/ending.txt": "c850a5248b774ee98d7a2844c3223148dc0883766eb4e65f110b1f05774dd5eb",
-    "assets/title.png": "30ed8a3a0fbceda1f1e5f87b89cfd7e5637e9d44136595533712a4b97125e038"
+    "assets/title.png": "30ed8a3a0fbceda1f1e5f87b89cfd7e5637e9d44136595533712a4b97125e038",
+    "assets/story.pyxres": "5a58b0c5a017cbdf57fd4e4a18656a914e62745ad27906ec96d5ad71c880e446",
+    "assets/story.pyxpal": "8bdbe7337bf6a347642b9c1a1a1afb782d6e3442c7c1af5fea7f37276c5686f3",
+    "assets/umplus_j12r.bdf": "41ecb8e016acf69476a4cbf82fc100dc66a0259607bc12245ae7dcdf41349ab7",
+    "assets/story-font-LICENSE.txt": "61b6c641f99a067fd53aae8df127e2162730eff0583d821ba7d6da9c42883084",
+    "assets/stage1_intro.txt": "1549f182009096720d689bc8dfc8c0149523d6c9618635d7f26ce1ee7a4cfa3d",
+    "assets/stage2_intro.txt": "de55c5c7badf89af318dbd71091db7dcfa2289d8c2a06d0288c173d977179366",
+    "assets/stage3_intro.txt": "7361bf8e4f10058d6ae1ab87caa833682016fa8bead5546027491c6e791a9f3d",
+    "assets/ending_story.txt": "b6d245b0bfa0f6f2cf0d7037f2c8ea6e703dcd182f8c885474603d06436d475a"
   }
 }

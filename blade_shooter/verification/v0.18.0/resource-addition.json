@@ -1,0 +1,38 @@
+{
+  "after_sha256": "2bf6fdaf695ddfe2e7d03d6b79a058473d8f68840b841bf1f2966fe1d6dde3d8",
+  "existing_images_sfx_other_music_preserved": true,
+  "intentional_changes": [
+    "New independent assets/story.pyxres; existing banks untouched"
+  ],
+  "story_sha256": "5a58b0c5a017cbdf57fd4e4a18656a914e62745ad27906ec96d5ad71c880e446",
+  "images": {
+    "stage1": [
+      0,
+      0,
+      0,
+      256,
+      100
+    ],
+    "stage2": [
+      0,
+      0,
+      100,
+      256,
+      100
+    ],
+    "stage3": [
+      1,
+      0,
+      0,
+      256,
+      100
+    ],
+    "ending": [
+      1,
+      0,
+      100,
+      256,
+      100
+    ]
+  }
+}

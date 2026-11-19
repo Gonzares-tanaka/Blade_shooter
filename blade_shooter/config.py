@@ -1,7 +1,7 @@
 """調整箇所。時間=秒、距離=ゲーム内px、速度=px/秒。変更後build.pyで配布版更新。"""
 from stage2_config import MISSILE,STEALTH
 
-TITLE, VERSION = "BLADE / CLOSE QUARTERS", "0.17.1"
+TITLE, VERSION = "BLADE / CLOSE QUARTERS", "0.18.0"
 WIDTH, HEIGHT, HUD_HEIGHT, FPS = 256, 320, 24, 60
 PLAYER_SIZE, PLAYER_HIT_RADIUS = 16, 2.0
 PLAYER_SPEED, PLAYER_HP, INVINCIBLE_SECONDS = 125.0, 3, 1.2
@@ -18,6 +18,7 @@ FLOW = dict(cleanup_max_seconds=2.0, clear_banner_seconds=1.8)
 HUD = dict(score_columns=6, cut_columns=4)
 BEST_SCORE_KEY = "blade-shooter.best.v1"
 DEBUG_ENABLED = False
+DEBUG_ATTACK_GUIDES = False  # Explicit developer opt-in; never show paths in normal play.
 # 武器の唯一の調整表。距離=ゲームpx、角度=右0/上-90、時間=秒。
 # cooldownは攻撃入力が受理された時点から。shot_stopは3フェーズの合計で自動算出。
 # 攻撃/弾消しはactiveのみ。near〜reachの実体だけを掃引し、柄と残像は無判定。

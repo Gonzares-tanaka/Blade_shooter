@@ -29,7 +29,7 @@ class InputTests(unittest.TestCase):
         self.assertFalse(i.read().slash)
 
     def test_select_exits_all_states_including_hitstop(self):
-        for state in ('title','settings','playing','paused','gameover','clear','stage_clear','result'):
+        for state in ('title','settings','playing','paused','gameover','clear','stage_clear','result','story','credits','ending_clear'):
             app=App.__new__(App)
             p=FakePyxel();p.held={p.GAMEPAD1_BUTTON_BACK};p.edges=set(p.held)
             app.p,app.input,app.game=p,Input(p,'gkd'),Game()
@@ -49,7 +49,7 @@ class InputTests(unittest.TestCase):
         g.step(.01,i.read());self.assertEqual(g.state,'mode_select')
         p.held.clear();p.edges.clear();g.step(.01,i.read())
         p.held={p.GAMEPAD1_BUTTON_A};p.edges=set(p.held)
-        g.step(.01,i.read());self.assertEqual((g.state,g.hp,g.score),('playing',3,0))
+        g.step(.01,i.read());self.assertEqual((g.state,g.hp,g.score),('story',3,0))
 
     def test_gkd_two_mode_menu_and_continue_with_physical_buttons(self):
         app=App.__new__(App);p=FakePyxel();app.p=p;app.input=Input(p,'gkd');app.game=Game()

@@ -1,5 +1,7 @@
 """画像はpyxres。軌跡・予告線・文字など動的な部分だけ図形描画。"""
 import math
+from pathlib import Path
+import story as S
 import config as C
 from game import point_at, weapon_pose
 from assets import SPRITES, sprite, CAVE_TEXTURE
@@ -39,6 +41,8 @@ NUMBERS={"K":("101","101","110","101","101"),
 class View:
     def __init__(self, pyxel, profile="pc"):
         self.p, self.profile = pyxel, profile
+        self.story_images=False
+        self.story_font=None
 
     def center(self, y, text, color=3):
         self.p.text((C.WIDTH-len(text)*4)//2, y, text, color)
@@ -81,6 +85,13 @@ class View:
     def draw(self, g):
         p = self.p
         p.cls(0)
+        wants_story=g.state=="story"
+        if wants_story!=self.story_images:
+            resource=S.RESOURCE if wants_story else C.RESOURCE_FILE
+            p.load(str(S.ROOT/resource),exclude_tilemaps=True,exclude_sounds=True,exclude_musics=True)
+            self.story_images=wants_story
+        if wants_story:
+            p.camera();self.story(g);return
         if g.state in ("title","mode_select","stage_select","settings") and not g.development:
             p.camera();self.menu(g);return
         shake = C.SHAKE_PIXELS*max(0, g.shake/C.SHAKE_SECONDS)
@@ -93,6 +104,25 @@ class View:
             elif g.run.current_stage==2:self.stealth_chain(g)
             else:self.battleship(g)
         self.draw_battle(g)
+
+    def story(self,g):
+        p=self.p
+        if self.story_font is None:self.story_font=p.Font(str(S.ROOT/S.FONT))
+        font=self.story_font;layout=S.LAYOUT;scene=S.SCENES[g.story.key]
+        bank,u,v,w,h=scene["image"]
+        p.blt(0,0,bank,u,v,w,h)  # Opaque 256x100; scene persists on every page.
+        p.rect(0,100,256,220,0);p.line(8,121,248,121,33)
+        p.text(8,layout['title_y'],scene['title'],6,font)
+        page=f"{g.story.page+1}/{len(g.story.pages)}"
+        p.text(248-font.text_width(page),layout['title_y'],page,39,font)
+        for i,row in enumerate(g.story.rows):
+            p.text(layout['x'],layout['y']+i*layout['line_height'],row,3,font)
+        x,y,w,h=layout['skip'];p.rectb(x,y,w,h,33)
+        p.text(x+16,y+8,"SKIP",39)
+        label="A: 次へ / B: SKIP" if self.profile=="gkd" else "タップ / Z / Enter: 次へ"
+        p.text(8,layout['footer_y'],label,39,font)
+        hint="SELECT: 終了" if self.profile=="gkd" else "X: SKIP"
+        p.text(8,305,hint,2,font)
 
     def menu(self,g):
         p=self.p
@@ -186,10 +216,12 @@ class View:
         sprite(p,'final_warning' if warning and int(g.world_time*10)%2 else 'final_fighter',part.x,part.y)
         p.rect(70,57,116,3,1);p.rect(70,57,116*part.hp/part.max_hp,3,12)
         if b.phase=='move_warning':
-            p.line(part.x,part.y,*b.destination,10);p.circb(*b.destination,18,10)
+            if C.DEBUG_ATTACK_GUIDES:
+                p.line(part.x,part.y,*b.destination,10);p.circb(*b.destination,18,10)
             self.center(67,'MOVE SIGNAL / KEEP CLEAR',10)
         elif b.phase=='warning':
-            p.line(part.x,part.y+16,*b.aim,25);p.circb(*b.aim,7,10)
+            if C.DEBUG_ATTACK_GUIDES:
+                p.line(part.x,part.y+16,*b.aim,25);p.circb(*b.aim,7,10)
             self.center(67,'DRAW THE BULLETS FORWARD',10)
         elif b.phase=='reflect':self.center(67,'REFLECT AT THE HOLD / THEN MOVE',6)
         if not b.active:self.center(176,'FINAL / REFLECT BULLETS WITH MELEE',6)
@@ -201,30 +233,31 @@ class View:
             if left.hp>0 and right.hp>0:p.line(left.x,left.y,right.x,right.y,25)
         for i,part in enumerate(b.parts):
             if part.hp<=0:continue
-            warning=part.phase=="warning"
+            warning=part.phase=="warning" or any(part is moving for moving,_ in b.motion_warnings)
             sprite(p,"stealth_warning" if warning and int(g.world_time*10)%2 else "stealth",part.x,part.y)
             p.text(part.x-2,part.y-17,str(i+1),10 if warning else 40)
             p.rect(part.x-13,part.y+12,26,2,1)
             p.rect(part.x-13,part.y+12,26*part.hp/part.max_hp,2,10 if warning else 6)
             if part.phase=='open':p.text(part.x-6,part.y+17,'CUT',6)
             if warning:p.circb(part.x,part.y,17,10)
-        for part,i in b.motion_warnings:
-            tx,ty=b.path(b.fight_time-i*STEALTH['delay']+.8)
-            ratio=min(1,32/(math.hypot(tx-part.x,ty-part.y) or 1))
-            p.line(part.x,part.y,part.x+(tx-part.x)*ratio,part.y+(ty-part.y)*ratio,33)
-        for part,target,motion in b.aim_marks:
-            if motion=='break_warning':
-                p.line(part.x,part.y+13,target[0],target[1],25)
-                p.circb(*target,5,10)
-        # 仮想先頭航跡は先頭撃破後も残り、旋回方向を予告する。
-        x,y=b.path(b.fight_time+.75)
-        hx,hy=b.path(b.fight_time)
-        ratio=min(1,38/(math.hypot(x-hx,y-hy) or 1))
-        x,y=hx+(x-hx)*ratio,hy+(y-hy)*ratio
-        angle=math.atan2(y-hy,x-hx)
-        p.line(hx,hy,x,y,33)
-        p.line(x,y,x-math.cos(angle-.65)*7,y-math.sin(angle-.65)*7,6)
-        p.line(x,y,x-math.cos(angle+.65)*7,y-math.sin(angle+.65)*7,6)
+        if C.DEBUG_ATTACK_GUIDES:
+            for part,i in b.motion_warnings:
+                tx,ty=b.path(b.fight_time-i*STEALTH['delay']+.8)
+                ratio=min(1,32/(math.hypot(tx-part.x,ty-part.y) or 1))
+                p.line(part.x,part.y,part.x+(tx-part.x)*ratio,part.y+(ty-part.y)*ratio,33)
+            for part,target,motion in b.aim_marks:
+                if motion=='break_warning':
+                    p.line(part.x,part.y+13,target[0],target[1],25)
+                    p.circb(*target,5,10)
+            # 仮想先頭航跡は先頭撃破後も残り、旋回方向を予告する。
+            x,y=b.path(b.fight_time+.75)
+            hx,hy=b.path(b.fight_time)
+            ratio=min(1,38/(math.hypot(x-hx,y-hy) or 1))
+            x,y=hx+(x-hx)*ratio,hy+(y-hy)*ratio
+            angle=math.atan2(y-hy,x-hx)
+            p.line(hx,hy,x,y,33)
+            p.line(x,y,x-math.cos(angle-.65)*7,y-math.sin(angle-.65)*7,6)
+            p.line(x,y,x-math.cos(angle+.65)*7,y-math.sin(angle+.65)*7,6)
         if not b.active:self.center(181,"STEALTH CHAIN APPROACHING",10)
         elif b.opening:self.center(57,"CUT / THEN BREAK AWAY",6)
         else:
@@ -242,8 +275,9 @@ class View:
                     angle=math.atan2(e.vy,e.vx)
                     color=10 if int(g.world_time*10)%2 else 39
                     p.circb(x,y,7,color)
-                    p.line(x,y,x+math.cos(angle)*18,y+math.sin(angle)*18,color)
-                    p.line(x+math.cos(angle)*18,y+math.sin(angle)*18,x+math.cos(angle-.6)*10,y+math.sin(angle-.6)*10,color)
+                    if C.DEBUG_ATTACK_GUIDES:
+                        p.line(x,y,x+math.cos(angle)*18,y+math.sin(angle)*18,color)
+                        p.line(x+math.cos(angle)*18,y+math.sin(angle)*18,x+math.cos(angle-.6)*10,y+math.sin(angle-.6)*10,color)
                     continue
                 sprite(p,"asteroid",e.x,e.y,rotate=e.age*e.spin+e.uid*37,scale=e.radius/12)
             elif e.kind=="missile":
@@ -275,6 +309,7 @@ class View:
                     p.text(e.x-8 if e.resting else e.x-14, e.y-e.radius-10,
                            "OPEN" if e.resting else "AIM" if e.phase=="warning" else "FIRING", 6 if e.resting else 37)
                     if e.phase=="warning":
+                        p.circb(e.x,e.y,e.radius+3,10 if int(g.world_time*10)%2 else 39)
                         self.aim_line(e)
                     if e.resting:
                         p.line(e.x-22, e.y-5, e.x-22, e.y+5, 6)
@@ -284,11 +319,12 @@ class View:
                 name="charger_warning" if e.phase=="warning" else "charger_dash" if e.phase=="dash" else "charger"
                 sprite(p,name,e.x,e.y,rotate=angle)
                 if e.phase=="warning":
-                    length=math.hypot(e.vx,e.vy) or 1
-                    ux,uy=e.vx/length,e.vy/length
-                    for distance in range(20,300,12):
-                        p.line(e.x+ux*distance,e.y+uy*distance,e.x+ux*(distance+5),e.y+uy*(distance+5),10)
-                    p.circb(e.aim_x,e.aim_y,6,10)
+                    if C.DEBUG_ATTACK_GUIDES:
+                        length=math.hypot(e.vx,e.vy) or 1
+                        ux,uy=e.vx/length,e.vy/length
+                        for distance in range(20,300,12):
+                            p.line(e.x+ux*distance,e.y+uy*distance,e.x+ux*(distance+5),e.y+uy*(distance+5),10)
+                        p.circb(e.aim_x,e.aim_y,6,10)
                     p.text(e.x-12,e.y-23,"LOCKED",37)
             elif e.kind=="rear":
                 if e.phase=="marker":
@@ -304,8 +340,9 @@ class View:
                 if e.phase=="entry" or e.contact_grace>0:
                     p.circb(e.x,e.y,15,33 if int(g.world_time*12)%2 else 39)
                 if warning:
-                    for y in range(C.HUD_HEIGHT+32,int(e.y-18),12):
-                        p.line(e.x,y,e.x,y+4,10 if e.phase=="warning" else 39)
+                    if C.DEBUG_ATTACK_GUIDES:
+                        for y in range(C.HUD_HEIGHT+32,int(e.y-18),12):
+                            p.line(e.x,y,e.x,y+4,10 if e.phase=="warning" else 39)
                     p.text(e.x-14,e.y+16,"UP SHOT",39)
                 elif e.phase=="exit":
                     p.text(e.x-12,e.y+16,"ESCAPE",39)
@@ -473,7 +510,7 @@ class View:
             p.rect(part.x-16,part.y+part.radius+5,32*max(0,part.hp)/part.max_hp,3,color)
             if part.phase=="warning":
                 p.circb(part.x,part.y,part.radius+3+(int(g.world_time*12)%2)*2,10)
-                if part.key=="center":
+                if part.key=="center" and C.DEBUG_ATTACK_GUIDES:
                     for y in range(int(part.y+22),C.HEIGHT,14):
                         p.line(part.x,y,part.x,y+5,10)
             if destroyed:p.text(part.x-8,part.y+22,"DOWN",2)
@@ -484,6 +521,7 @@ class View:
             self.center(78,"OPEN / STEP IN",6)
 
     def aim_line(self, e):
+        if not C.DEBUG_ATTACK_GUIDES:return
         dx,dy=e.aim_x-e.x,e.aim_y-e.y
         length=math.hypot(dx,dy) or 1
         for d in range(int(e.radius+7), min(150,int(length)), 14):

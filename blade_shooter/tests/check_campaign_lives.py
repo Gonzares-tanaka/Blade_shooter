@@ -17,6 +17,7 @@ def main():
         stage=g.run.current_stage
         record=records.setdefault(stage,dict(route_seconds=g.duration,hurt=0,life_lost=0,extend=0,cut_events=0,slashes=0,items=0))
         action=(p3.action(g) if stage==3 else p2.action(g) if stage==2 else boss_action(g,True) if g.boss else pilot_action(g,True,True))
+        if g.state=="story":action=Actions(settings=bool(frame%2))
         if g.state=="result":action=Actions(next_stage=True)
         g.step(DT,action)
         for event in g.events:
@@ -38,7 +39,8 @@ def main():
     assert 180<=records[2]['boss_spawn']<=182.1
     assert 150<=records[3]['boss_spawn']<=152.1
     assert g.result.score==score and g.result.max_cut==maximum
-    g.step(5.1);assert g.state=="credits"
+    g.step(5.1);assert g.state=="story"
+    g.step(DT);g.step(DT,Actions(settings=True));assert g.state=="credits"
     g.step(200);assert g.state=="title" and not g.can_continue
     result=dict(result="PASS",version=C.VERSION,seed=7,weapon="blade",input_only=True,
                 simulated_seconds=round((frame+1)*DT,3),execution_seconds=round(time.monotonic()-started,3),
