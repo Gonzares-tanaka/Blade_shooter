@@ -1,0 +1,162 @@
+{
+  "game_version": "0.18.0",
+  "source": "Actual native Pyxel renderer, input-only simulation",
+  "ai_generated": false,
+  "gameplay_modified": false,
+  "captures": {
+    "move": {
+      "stage": 1,
+      "time": 3.333,
+      "weapon": "blade",
+      "player": [
+        128.0,
+        266.0
+      ],
+      "tip": [
+        76.03847577293368,
+        292.0
+      ],
+      "melee_active": false,
+      "enemy_kinds": [
+        "small"
+      ],
+      "enemies": 2,
+      "bullets": 2,
+      "sha256": "0fab0028c51937fe47511bc108d3c494adc04e95cd176a8839107faef646fd49"
+    },
+    "weapon-blade": {
+      "stage": 1,
+      "time": 3.467,
+      "weapon": "blade",
+      "player": [
+        128.0,
+        266.0
+      ],
+      "tip": [
+        148.5212085995401,
+        205.6184427528455
+      ],
+      "melee_active": true,
+      "enemy_kinds": [
+        "small"
+      ],
+      "enemies": 2,
+      "bullets": 0,
+      "sha256": "681a11b58b756faa1a01bab82bfd3264826419517eba032fa1bb2d9e314581d2"
+    },
+    "weapon-axe": {
+      "stage": 1,
+      "time": 3.45,
+      "weapon": "axe",
+      "player": [
+        128.0,
+        266.0
+      ],
+      "tip": [
+        142.94861550557948,
+        220.6171666694226
+      ],
+      "melee_active": true,
+      "enemy_kinds": [
+        "small"
+      ],
+      "enemies": 2,
+      "bullets": 2,
+      "sha256": "1fd3b1022fdf0854a0d0cdbb857ccfc732d6937ce75b0b6545b3e04dd850a3a0"
+    },
+    "weapon-lance": {
+      "stage": 1,
+      "time": 3.483,
+      "weapon": "lance",
+      "player": [
+        128.0,
+        266.0
+      ],
+      "tip": [
+        128.0,
+        172.15384615384616
+      ],
+      "melee_active": true,
+      "enemy_kinds": [
+        "small"
+      ],
+      "enemies": 2,
+      "bullets": 0,
+      "sha256": "88d3e55291ae1e2ea57e5f8b2993fe7afd0b958946fec12e14117aafa304de34"
+    },
+    "stage1": {
+      "stage": 1,
+      "time": 56.267,
+      "weapon": "blade",
+      "player": [
+        128.52,
+        257.82
+      ],
+      "tip": [
+        76.5595270272101,
+        283.81862528286916
+      ],
+      "melee_active": false,
+      "enemy_kinds": [
+        "armor",
+        "rear"
+      ],
+      "enemies": 2,
+      "bullets": 8,
+      "sha256": "d3685296a33441be31a186574f730414df08ab47c5f082f72e193018ccfdec5e"
+    },
+    "stage2": {
+      "stage": 2,
+      "time": 78.017,
+      "weapon": "blade",
+      "player": [
+        136.53,
+        267.3
+      ],
+      "tip": [
+        84.57177759294879,
+        293.29598822764035
+      ],
+      "melee_active": false,
+      "enemy_kinds": [
+        "asteroid",
+        "missile",
+        "small"
+      ],
+      "enemies": 8,
+      "bullets": 0,
+      "sha256": "735169a745bcbec56b1a4d96a76f2044dad66e5e2a41a7d1db5abc8db9146ac8"
+    },
+    "stage3": {
+      "stage": 3,
+      "time": 26.767,
+      "weapon": "blade",
+      "player": [
+        143.32,
+        298.46
+      ],
+      "tip": [
+        91.3591226986423,
+        324.4583333333334
+      ],
+      "melee_active": false,
+      "enemy_kinds": [
+        "armor",
+        "barrier",
+        "rear",
+        "small"
+      ],
+      "enemies": 6,
+      "bullets": 7,
+      "sha256": "d9a1fe30749fcc50cf37d9af927cba91c9c2340109b80978c72dbf458ec8a7e0"
+    }
+  },
+  "game_sources": {
+    "game.py": "cd4f05acb7dfde80685ee9523676b53844e5ba8cdc2829aadc91a00a7f42a5b4",
+    "config.py": "10574223b2213fb59c4d19657a6d9150536863f35ce7a2fcdf1838bcab236531",
+    "view.py": "f1654d8687c1e47c5aec8fe4805c12e3565363de6b31b18737bfbd38db18eea3",
+    "main.py": "d8a1a3ad033d31edb2ca8ea5664693b3df1d1e0bff6f63392721f2c8a08e104c",
+    "audio.py": "c099613def8eefbd8adaaf86245dcf3dca3badba9ebe26efb2204b02884e7882"
+  },
+  "pyxapp_sha256": "687a2999c49d6769ceddcade8b680f703cc46294eb5a68c3b2bd1fe70472f715"
+}

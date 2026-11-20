@@ -1,0 +1,52 @@
+{
+  "result": "PASS",
+  "game_version": "0.18.0",
+  "introduction_revision": "2026-11-20",
+  "game_sources_resources_and_input_audio_launch_scripts_unchanged": true,
+  "gkd_zip_unchanged": true,
+  "web_zip_matches_public_directory": true,
+  "captures": "capture.json",
+  "browser": "local/result.json",
+  "packages": {
+    "blade-shooter-web.zip": {
+      "bytes": 750527,
+      "sha256": "013966849b91a68c92927d65b46ca8d712eeeee6c51c49e6440523289cc46565"
+    },
+    "blade-shooter-gkd.zip": {
+      "bytes": 349050,
+      "sha256": "77c4d16cf55d1b674a950eb7346b40449dc9bec6135776da7ae750b131e1af1e"
+    }
+  },
+  "weapon_crops": {
+    "blade": {
+      "source": "weapon-blade.png",
+      "native_crop": [
+        0,
+        144,
+        256,
+        176
+      ],
+      "scale": 3
+    },
+    "lance": {
+      "source": "weapon-lance.png",
+      "native_crop": [
+        0,
+        144,
+        256,
+        176
+      ],
+      "scale": 3
+    },
+    "axe": {
+      "source": "weapon-axe.png",
+      "native_crop": [
+        0,
+        144,
+        256,
+        176
+      ],
+      "scale": 3
+    }
+  }
+}
