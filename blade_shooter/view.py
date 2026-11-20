@@ -66,7 +66,7 @@ class View:
                         if not filled and start is not None:
                             self.p.rect(left+start,round(y)+row,col-start,1,color);start=None
 
-    def textured_segment(self, name, a, b, width, dim=False):
+    def textured_segment(self, name, a, b, width, dim=False, ramp=None):
         # リソースの画素を腕・刃の実寸へ投影。イメージバンクには書き込まない。
         u,v,w,h=SPRITES[name]
         dx,dy=b[0]-a[0],b[1]-a[1]
@@ -80,7 +80,15 @@ class View:
                 across=-(x+.5-a[0])*ty+(y+.5-a[1])*tx
                 if 0<=along<length and -width/2<=across<width/2:
                     col=self.p.images[0].pget(u+min(w-1,int(along/length*w)),v+min(h-1,int((across/width+.5)*h)))
-                    if col:self.p.pset(x,y,33 if dim else col)
+                    if col:
+                        if ramp is not None:
+                            # Tint only this weapon's opaque pixels. Keep Editor geometry,
+                            # transparency, texture shading and the global palette intact.
+                            rgb=C.PALETTE[col]
+                            light=(((rgb>>16)&255)*3+((rgb>>8)&255)*6+(rgb&255))/10
+                            col=ramp['shadow'] if light<115 else ramp['highlight'] if light>=210 and not dim else ramp['base']
+                        elif dim:col=33
+                        self.p.pset(x,y,col)
 
     def draw(self, g):
         p = self.p
@@ -374,7 +382,7 @@ class View:
             self.effect(effect)
         # 攻撃中は毎フレーム掃いた領域だけを描く。ヒットストップ中も同じ領域を保持。
         for poly in g.slash_polys:
-            self.polygon(poly, 51)
+            self.polygon(poly, C.WEAPON_COLORS[g.attack_weapon]['highlight'])
         if g.hp > 0:
             self.player(g)
         p.camera()
@@ -392,7 +400,7 @@ class View:
         p.text(6,15,"HP",2)
         for i in range(C.PLAYER_HP):
             p.rect(20+i*8,14,5,6,6 if i<g.hp else 1)
-        p.text(54,15,g.weapon_config["label"],6)
+        p.text(54,15,g.weapon_config["label"],C.WEAPON_COLORS[g.weapon]['base'])
         if g.cooldown>0:p.text(81,15,"WAIT",2)
         p.text(112,15,"LIFE",2)
         p.text(132,15,f"{g.run.lives:02d}",6)
@@ -553,9 +561,9 @@ class View:
         sprite(p,"joint",*elbow)
         if weapon!="blade":
             # 柄は装飾。アックスの刃/ランスの穂先だけが実体ポリゴンに一致。
-            self.textured_segment("arm",elbow,hand,2)
+            self.textured_segment("arm",elbow,hand,2,ramp=C.WEAPON_COLORS[weapon])
         width=w["width"] if g.swing>=0 else min(7,w["width"])
-        self.textured_segment(weapon,hand,tip,width,dim=not bool(g.slash_polys))
+        self.textured_segment(weapon,hand,tip,width,dim=not bool(g.slash_polys),ramp=C.WEAPON_COLORS[weapon])
         sprite(p,"joint",*hand)
         p.pset(x, y, 3)
 

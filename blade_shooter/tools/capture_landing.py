@@ -7,6 +7,7 @@ from pathlib import Path
 import hashlib
 import json
 import sys
+import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT), str(ROOT/'tests')]
@@ -20,7 +21,7 @@ from pilot_stage2 import Pilot
 from pilot_stage3 import CavePilot
 
 OUT = ROOT/'web/assets/guide'
-RECORD = ROOT/'verification/landing-20261120'
+RECORD = ROOT/'verification'/('v'+C.VERSION)/'landing-capture'
 DT = 1/C.FPS
 
 
@@ -36,6 +37,10 @@ def main():
         view.draw(g)
         p.screenshot(str(OUT/(name+'.png')), scale=3)
         pose = weapon_pose(g.attack_weapon, max(0, g.swing))
+        if name.startswith('weapon-'):
+            detail=p.Image(256,176)
+            detail.blt(0,0,p.screen,0,144,256,176)
+            detail.save(str(OUT/('detail-'+name[7:]+'.png')),3)
         captures[name] = dict(stage=g.run.current_stage, time=round(g.time, 3),
             weapon=g.weapon, player=[round(g.px, 2), round(g.py, 2)],
             tip=list(point_at(*g.blade_pivot, pose[2], pose[0])),
@@ -74,11 +79,15 @@ def main():
                 best=score
         assert 'stage'+str(stage) in captures,stage
 
+    app=ROOT/'dist/web/blade-shooter.pyxapp'
+    with zipfile.ZipFile(app) as archive:
+        packaged_matches=all(archive.read('blade-shooter/'+name)==(ROOT/name).read_text(encoding='utf8').replace('\r\n','\n').encode('utf8')
+                            for name in ('game.py','config.py','view.py','main.py'))
     report=dict(game_version=C.VERSION, source='Actual native Pyxel renderer, input-only simulation',
                 ai_generated=False, gameplay_modified=False, captures=captures,
                 game_sources={name:hashlib.sha256((ROOT/name).read_bytes()).hexdigest()
                     for name in ('game.py','config.py','view.py','main.py','audio.py')},
-                pyxapp_sha256=hashlib.sha256((ROOT/'dist/web/blade-shooter.pyxapp').read_bytes()).hexdigest())
+                pyxapp_sha256=hashlib.sha256(app.read_bytes()).hexdigest() if packaged_matches else None)
     (RECORD/'capture.json').write_text(json.dumps(report,indent=2),encoding='utf8')
     print(json.dumps(report),flush=True)
     p.quit()

@@ -1,10 +1,10 @@
 {
-  "version": "0.18.0",
+  "version": "0.18.1",
   "pyxel_web_version": "2.9.9",
   "sources": {
-    "main.py": "d8a1a3ad033d31edb2ca8ea5664693b3df1d1e0bff6f63392721f2c8a08e104c",
+    "main.py": "0beb118bed8ad74d0e47e296c051cff9558aaa15d10319460cb4c4e1a3b9564c",
     "story.py": "530406541e33ffc85e24584edd590c36754d112d4d13b0d7eb1a07ba4136fc02",
-    "config.py": "10574223b2213fb59c4d19657a6d9150536863f35ce7a2fcdf1838bcab236531",
+    "config.py": "6c0b3fea75817f929e1468abf7ad9f534432b875e93fb8dd65557ae2f3f99599",
     "game.py": "cd4f05acb7dfde80685ee9523676b53844e5ba8cdc2829aadc91a00a7f42a5b4",
     "boss.py": "62669b4c2d2e3e47311b446138e7b8e40fa2a09611d477d3778658c6df2377dd",
     "items.py": "d60530c9f18d7c399271126a3122c5e8d1873ee874c5c6ecb28f06a69aadbf63",
@@ -16,7 +16,7 @@
     "stage3_config.py": "a9057a87035ea21c893c11a04078b5b41c3c20088363a89a13747cecafca39fe",
     "cave.py": "54f7037a822591b6a4d62a17429ede1c1140cba199f828410fc3a439066c891e",
     "final_boss.py": "85ac7dab9e1d60f224ceb48e2e4e90536c9342edd505d7e2b766d8eecae8111e",
-    "view.py": "f1654d8687c1e47c5aec8fe4805c12e3565363de6b31b18737bfbd38db18eea3",
+    "view.py": "c52f171d9904fc94dedc47efa49da84bf8822dab37a9bfd146d8dfdb2e0c30d3",
     "assets.py": "065e0c7528058173b09f0844f840fc9b3ae287abd7ed0fa3cbd556014b965926",
     "audio.py": "c099613def8eefbd8adaaf86245dcf3dca3badba9ebe26efb2204b02884e7882",
     "assets/blade.pyxres": "2bf6fdaf695ddfe2e7d03d6b79a058473d8f68840b841bf1f2966fe1d6dde3d8",

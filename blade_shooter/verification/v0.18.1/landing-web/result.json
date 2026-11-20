@@ -1,0 +1,63 @@
+{
+  "result": "PASS",
+  "browser": "157.0.4341.60",
+  "realIPhone": false,
+  "realGkd": false,
+  "results": [
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "layout": "PASS",
+      "relativeImages": 11,
+      "horizontalOverflow": false,
+      "modeAndControlTabs": "PASS",
+      "game": {
+        "state": "playing",
+        "music": 0,
+        "music_playing": true
+      },
+      "weaponColors": "PASS",
+      "audioContext": "running"
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "layout": "PASS",
+      "relativeImages": 11,
+      "horizontalOverflow": false,
+      "modeAndControlTabs": "PASS",
+      "game": {
+        "state": "playing",
+        "music": 0,
+        "music_playing": true
+      },
+      "weaponColors": "PASS",
+      "audioContext": "running"
+    },
+    {
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "layout": "PASS",
+      "relativeImages": 11,
+      "horizontalOverflow": false,
+      "modeAndControlTabs": "PASS"
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "layout": "PASS",
+      "relativeImages": 11,
+      "horizontalOverflow": false,
+      "modeAndControlTabs": "PASS"
+    }
+  ],
+  "errors": []
+}

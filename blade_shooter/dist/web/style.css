@@ -229,3 +229,7 @@ h2 { font-size:clamp(30px,3.2vw,43px); letter-spacing:-.04em; line-height:1.5; f
  .characters-section .section-heading { margin-bottom:26px; }
  .cover-wordmark { font-size:48px; letter-spacing:3px; }
 }
+
+/* Shared wordmark colors: header, hero, player cover and footer. */
+.logo-slash { color:var(--mint); }
+.logo-word { color:#fffeff; }

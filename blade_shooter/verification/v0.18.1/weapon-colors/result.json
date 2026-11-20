@@ -1,0 +1,119 @@
+{
+  "result": "PASS",
+  "version": "0.18.1",
+  "weapons": {
+    "blade": {
+      "base_index": 6,
+      "base_rgb": "#48cdde",
+      "phases": {
+        "idle": {
+          "weapon": "blade",
+          "swing": -1.0,
+          "cooldown": 0.0,
+          "active": false
+        },
+        "windup": {
+          "weapon": "blade",
+          "swing": 0.016666666666666666,
+          "cooldown": 1.0,
+          "active": false
+        },
+        "active": {
+          "weapon": "blade",
+          "swing": 0.13333333333333333,
+          "cooldown": 0.883333333333333,
+          "active": true
+        },
+        "recovery": {
+          "weapon": "blade",
+          "swing": 0.21666666666666665,
+          "cooldown": 0.7999999999999994,
+          "active": false
+        },
+        "cooldown": {
+          "weapon": "blade",
+          "swing": -1,
+          "cooldown": 0.5999999999999988,
+          "active": false
+        }
+      }
+    },
+    "axe": {
+      "base_index": 12,
+      "base_rgb": "#fe6ecc",
+      "phases": {
+        "idle": {
+          "weapon": "axe",
+          "swing": -1.0,
+          "cooldown": 0.0,
+          "active": false
+        },
+        "windup": {
+          "weapon": "axe",
+          "swing": 0.016666666666666666,
+          "cooldown": 1.2,
+          "active": false
+        },
+        "active": {
+          "weapon": "axe",
+          "swing": 0.09999999999999999,
+          "cooldown": 1.116666666666667,
+          "active": true
+        },
+        "recovery": {
+          "weapon": "axe",
+          "swing": 0.19999999999999998,
+          "cooldown": 1.0166666666666673,
+          "active": false
+        },
+        "cooldown": {
+          "weapon": "axe",
+          "swing": -1,
+          "cooldown": 0.5499999999999993,
+          "active": false
+        }
+      }
+    },
+    "lance": {
+      "base_index": 10,
+      "base_rgb": "#ea9e22",
+      "phases": {
+        "idle": {
+          "weapon": "lance",
+          "swing": -1.0,
+          "cooldown": 0.0,
+          "active": false
+        },
+        "windup": {
+          "weapon": "lance",
+          "swing": 0.016666666666666666,
+          "cooldown": 0.82,
+          "active": false
+        },
+        "active": {
+          "weapon": "lance",
+          "swing": 0.15,
+          "cooldown": 0.6866666666666662,
+          "active": true
+        },
+        "recovery": {
+          "weapon": "lance",
+          "swing": 0.26666666666666666,
+          "cooldown": 0.5699999999999992,
+          "active": false
+        },
+        "cooldown": {
+          "weapon": "lance",
+          "swing": -1,
+          "cooldown": 0.419999999999999,
+          "active": false
+        }
+      }
+    }
+  },
+  "weapon_performance_and_collision_unchanged": true,
+  "no_image_bank_mutation": true,
+  "palette_order_unchanged": true,
+  "real_gkd": false,
+  "real_iphone": false
+}

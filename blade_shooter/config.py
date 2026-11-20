@@ -1,7 +1,7 @@
 """調整箇所。時間=秒、距離=ゲーム内px、速度=px/秒。変更後build.pyで配布版更新。"""
 from stage2_config import MISSILE,STEALTH
 
-TITLE, VERSION = "BLADE / CLOSE QUARTERS", "0.18.0"
+TITLE, VERSION = "BLADE / CLOSE QUARTERS", "0.18.1"
 WIDTH, HEIGHT, HUD_HEIGHT, FPS = 256, 320, 24, 60
 PLAYER_SIZE, PLAYER_HIT_RADIUS = 16, 2.0
 PLAYER_SPEED, PLAYER_HP, INVINCIBLE_SECONDS = 125.0, 3, 1.2
@@ -42,6 +42,12 @@ BLADE_WINDUP, BLADE_ACTIVE, BLADE_RECOVERY = (WEAPONS["blade"][k] for k in ("win
 BLADE_START_ANGLE, BLADE_END_ANGLE = (WEAPONS["blade"][k] for k in ("start_angle","end_angle"))
 TOUCH_MODES = {"flick": "FLICK"}
 DEFAULT_WEAPON, DEFAULT_TOUCH_MODE = "blade", "flick"
+# Display only: indices in the unchanged 52-color palette. Idle/cooldown keep the hue.
+WEAPON_COLORS = {
+    "blade": dict(base=6, shadow=33, highlight=51),   # cyan
+    "axe": dict(base=12, shadow=28, highlight=44),   # pink
+    "lance": dict(base=10, shadow=15, highlight=46), # orange
+}
 # エリア報酬の唯一の調整表。時間=秒、位置/距離=ゲームpx、速度=px/秒。
 # stageのplanの各lengthの累積時刻に1個。比較コースの固定条件は変えない。
 AREA_ITEM = dict(

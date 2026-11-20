@@ -2,7 +2,7 @@
 const {chromium}=require('playwright');
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const root=path.resolve(__dirname,'../dist/web');
-const folder=path.resolve(__dirname,'../verification/landing-20261120/'+(process.env.BLADE_LANDING_URL?'published':'local'));
+const folder=path.resolve(process.env.BLADE_LANDING_REPORT||path.resolve(__dirname,'../verification/landing-20261120/'+(process.env.BLADE_LANDING_URL?'published':'local')));
 fs.mkdirSync(folder,{recursive:true});
 const server=require('node:http').createServer((req,res)=>{
  const url=new URL(req.url,'http://localhost');
@@ -31,6 +31,9 @@ const server=require('node:http').createServer((req,res)=>{
    assert.deepEqual(await page.locator('.weapon-grid h3').allTextContents(),['ブレード','ランス','アックス']);
    assert.deepEqual(await page.locator('.glossary dt').allTextContents(),['ブレイド','ステラースカル','デクストルシップ']);
    assert.equal(await page.locator('.control-annotation').count(),3);
+   const logoColors=await page.locator('.logo-word,.logo-slash').evaluateAll(nodes=>nodes.map(n=>({text:n.textContent,color:getComputedStyle(n).color})));
+   assert.equal(logoColors.filter(x=>x.text==='BLADE').length,4);
+   for(const mark of logoColors)assert.equal(mark.color,mark.text==='/'?'rgb(103, 240, 209)':'rgb(255, 254, 255)');
    assert.equal(await page.locator('#game-frame').getAttribute('src'),null);
    const images=page.locator('img');
    for(let i=0;i<await images.count();i++){
@@ -63,6 +66,23 @@ const server=require('node:http').createServer((req,res)=>{
     await frame.locator('#story-skip').click();await frame.waitForFunction(()=>window.bladeInput.state==='playing');
     result.game=JSON.parse(await frame.evaluate(()=>window.pyxelContext.pyodide.runPython('import gc,json\napp=next(o for o in gc.get_objects() if type(o).__name__=="App" and type(o).__module__=="__main__")\njson.dumps(dict(state=app.game.state,music=app.audio.music_number,music_playing=app.audio.music_playing))')));
     assert.equal(result.game.state,'playing');assert.equal(result.game.music,0);assert.equal(result.game.music_playing,true);
+    assert.equal(await frame.locator('.logo-word').evaluate(n=>getComputedStyle(n).color),'rgb(255, 254, 255)');
+    assert.equal(await frame.locator('.logo-slash').evaluate(n=>getComputedStyle(n).color),'rgb(103, 240, 209)');
+    // Actual WASM rendering, controlled visual fixture: no edits to game mechanics.
+    for(const weapon of ['blade','axe','lance']){
+     const outcome=JSON.parse(await frame.evaluate(weapon=>window.pyxelContext.pyodide.runPython(`import config as C,pyxel
+app.game.reset()
+app.game.weapon="${weapon}"
+app.game.step=lambda *args:None
+pyxel.cls(0)
+app.view.textured_segment("${weapon}",(70,180),(170,180),16,dim=True,ramp=C.WEAPON_COLORS["${weapon}"])
+colors={pyxel.screen.pget(x,y) for y in range(168,192) for x in range(65,175)}-{0}
+json.dumps(dict(base_present=C.WEAPON_COLORS["${weapon}"]["base"] in colors,ramp_only=colors<=set(C.WEAPON_COLORS["${weapon}"].values())))`),weapon));
+     assert.equal(outcome.base_present,true);assert.equal(outcome.ramp_only,true);
+     await page.waitForTimeout(60);
+     await page.screenshot({path:folder+`/weapon-${weapon}-${viewport.width}.png`});
+    }
+    result.weaponColors='PASS';
     result.audioContext=await frame.evaluate(()=>window.pyxelContext?.pyodide?._module?.SDL2?.audioContext?.state||'unavailable');
     await page.screenshot({path:folder+`/playing-${viewport.width}.png`});
    }
