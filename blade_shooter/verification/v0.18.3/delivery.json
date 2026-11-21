@@ -1,0 +1,32 @@
+{
+  "version": "0.18.3",
+  "resource_sha256": "2bf6fdaf695ddfe2e7d03d6b79a058473d8f68840b841bf1f2966fe1d6dde3d8",
+  "core_combat_hp_and_reference_wave_tables_preserved": true,
+  "existing_resources_preserved": true,
+  "tuning_changes": {},
+  "lives_tuning": {
+    "before": {
+      "initial": 3,
+      "extend_points": 30000,
+      "respawn_invincible": 2.0,
+      "notice_seconds": 1.5
+    },
+    "after": {
+      "initial": 3,
+      "extend_points": 30000,
+      "respawn_invincible": 2.0,
+      "notice_seconds": 1.5
+    }
+  },
+  "sources_resources_and_documents_match": true,
+  "packages": {
+    "blade-shooter-web.zip": {
+      "bytes": 762332,
+      "sha256": "05d5ee2a0bb9d075d95dca4e8c3ef54fc705c54cb2a83478132199c58df74a8d"
+    },
+    "blade-shooter-gkd.zip": {
+      "bytes": 358095,
+      "sha256": "b9271a84bde4f179be9bd55fc3f2b2a801137b2f5f52cb8f7e71220041634939"
+    }
+  }
+}

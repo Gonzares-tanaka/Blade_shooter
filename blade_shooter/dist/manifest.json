@@ -1,11 +1,12 @@
 {
-  "version": "0.18.2",
+  "version": "0.18.3",
+  "build_id": "0183-D1",
   "pyxel_web_version": "2.9.9",
   "sources": {
-    "main.py": "a064f8e45733a05b19acdd071bc33a8b2f356be5f8df22e3e5e7b66193ef3322",
+    "main.py": "488e4af839cf8feabec49fdf121a17adcff508ca0b9b88dd39fd5ea69516d17a",
     "story.py": "530406541e33ffc85e24584edd590c36754d112d4d13b0d7eb1a07ba4136fc02",
-    "config.py": "b3a41dc8927b3c272e67c531052a3db5871ec5caed534edaf69815ad0014509f",
-    "game.py": "bcb26717bac470f6b565680116413277b7ea2f3f5a801261472164ab7379dc3b",
+    "config.py": "23c7765b5f84e00da6333c2b505ad0d5e0eea7a2bd44d7ad87004db32d41a8b7",
+    "game.py": "b9920a2fa172ea1b5f5ca8f1e9fefc2b0e737d330c7d4a68141b4ddc0036f4a7",
     "boss.py": "62669b4c2d2e3e47311b446138e7b8e40fa2a09611d477d3778658c6df2377dd",
     "items.py": "d60530c9f18d7c399271126a3122c5e8d1873ee874c5c6ecb28f06a69aadbf63",
     "progress.py": "dcca6e91be097c1f79b7be533cf244e9d6fc06b91076d3fccd65211a9acb119e",

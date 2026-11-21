@@ -1,7 +1,9 @@
 "use strict";
 // 初回は公式ランタイムを取得する。失敗時はゲーム領域に再試行の導線を出す。
 (() => {
+  window.bladeDiagnostics?.build("loader","0183-D1");
   const fail = () => {
+    window.bladeDiagnostics?.error("runtime_network","Pyxel / boot script could not be loaded");
     document.getElementById("load-error").hidden = false;
     document.getElementById("status").textContent = "通信エラー：ゲームを読み込めませんでした";
   };

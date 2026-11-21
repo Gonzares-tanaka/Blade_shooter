@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ja">
+<html lang="ja" data-build="0183-D1">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -7,13 +7,19 @@
   <meta name="description" content="BLADE / CLOSE QUARTERS ゲーム専用画面。3武器を選択。左手のドラッグで移動、右手のフリックで近接攻撃。">
   <title>遊ぶ — /BLADE 超接近戦</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="play.css?v=0.18.2">
+  <link rel="stylesheet" href="play.css?v=0.18.3">
 </head>
 <body>
   <main>
     <header><a class="back-link" href="index.html#play" target="_top" aria-label="紹介ページへ戻る">←</a><span class="game-wordmark"><span class="logo-slash">/</span><span class="logo-word">BLADE</span> <b>超接近戦</b></span><button id="start" type="button" disabled>読み込み中</button></header>
     <nav aria-label="ゲームメニュー"><div id="menu-options" role="group" aria-label="モードとステージ"></div><button id="story-skip" type="button" hidden>SKIP（全文）</button><button id="settings" type="button" disabled>武器設定 ⚙</button><button id="next-stage" type="button" hidden>次の面へ進む</button><button id="title-return" type="button" hidden>タイトルへ戻る</button></nav>
-    <section id="display" aria-label="ゲーム画面"><div id="pyxel-screen"></div><div id="touch-zones" aria-hidden="true" hidden><div id="move-zone"><span>移動エリア</span></div><div id="attack-zone"><span id="attack-zone-label">斬撃エリア ←→</span></div></div></section>
+    <section id="display" aria-label="ゲーム画面"><div id="pyxel-screen"></div><div id="touch-zones" aria-hidden="true" hidden><div id="move-zone"><span>移動エリア</span></div><div id="attack-zone"><span id="attack-zone-label">斬撃エリア ←→</span></div></div><span id="build-badge" aria-label="ビルド番号">B0183-D1</span><div id="input-diagnostics" hidden><pre id="input-diagnostics-text"></pre><button id="diagnostics-open" type="button">ログ表示・保存</button></div></section>
+    <section id="diagnostics-log" role="dialog" aria-label="入力診断ログ" hidden>
+      <p>症状を選び、ログ保存またはコピーでテスト結果を共有してください。送信は自動では行いません。</p>
+      <label>症状 <select id="diagnostics-issue"><option>未選択</option><option>正常</option><option>自機の移動のみ不可</option><option>移動と攻撃不可・敵や背景は動く</option><option>ゲーム全体が停止</option></select></label>
+      <textarea id="diagnostics-json" readonly aria-label="診断JSON" spellcheck="false"></textarea>
+      <div><button id="diagnostics-save" type="button">ログ保存</button><button id="diagnostics-copy" type="button">コピー</button><button id="diagnostics-close" type="button">閉じる</button></div>
+    </section>
     <section id="settings-panel" aria-label="武器設定" hidden>
       <h1>出撃前の設定</h1>
       <button id="weapon" type="button">武器：ブレイド（変更）</button>
@@ -29,10 +35,11 @@
     <div id="load-error" role="alert" hidden><p>ゲームを読み込めませんでした。ネット接続を確認して、もう一度お試しください。</p><button id="retry-load" type="button">再読み込み</button></div>
     <footer><span>左手：移動 / 右手：横フリック（剣・斧）・縦（槍）</span><span>矢印 / Z / Enter / P / X：設定</span><button id="fullscreen" type="button" hidden>画面拡大 ↗</button></footer>
   </main>
-  <script src="touch-config.js?v=0.18.2"></script>
-  <script src="gestures.js?v=0.18.2"></script>
-  <script src="touch-space.js?v=0.18.2"></script>
-  <script src="controls.js?v=0.18.2"></script>
-  <script src="runtime.js?v=0.18.2"></script>
+  <script src="touch-config.js?v=0.18.3"></script>
+  <script src="touch-diagnostics.js?v=0.18.3"></script>
+  <script src="gestures.js?v=0.18.3"></script>
+  <script src="touch-space.js?v=0.18.3"></script>
+  <script src="controls.js?v=0.18.3"></script>
+  <script src="runtime.js?v=0.18.3"></script>
 </body>
 </html>

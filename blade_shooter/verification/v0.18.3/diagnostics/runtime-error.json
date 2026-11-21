@@ -1,0 +1,2641 @@
+{
+  "schema": 1,
+  "build": {
+    "expected": "0183-D1",
+    "components": {
+      "html": "0183-D1",
+      "diagnostics": "0183-D1",
+      "config": "0183-D1",
+      "gestures": "0183-D1",
+      "space": "0183-D1",
+      "input": "0183-D1",
+      "loader": "0183-D1",
+      "boot": "0183-D1",
+      "python": "0183-D1"
+    },
+    "mismatches": [],
+    "missing": []
+  },
+  "enabled": true,
+  "issue": "未選択",
+  "at": "2026-11-21T07:28:08.154Z",
+  "url": "http://127.0.0.1:65338/play.html?touchdebug=1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/158.0.0.0 Safari/537.36 Edg/158.0.0.0",
+  "platform": "Win32",
+  "dpr": 1,
+  "counts": {
+    "invalidate": 7,
+    "layout_change": 13,
+    "received": 13,
+    "reset": 12,
+    "end": 1,
+    "consume": 369,
+    "python_read": 369,
+    "frame": 369,
+    "movement": 4,
+    "error": 1
+  },
+  "latest": {
+    "invalidate": {
+      "at": 6795,
+      "kind": "invalidate",
+      "seq": 7,
+      "consumeSeq": 23,
+      "readSeq": 23,
+      "reason": "resize_observer"
+    },
+    "layout_change": {
+      "at": 6797.5,
+      "kind": "layout_change",
+      "seq": 13,
+      "consumeSeq": 23,
+      "readSeq": 23,
+      "rect": {
+        "left": 13,
+        "top": 178.75,
+        "width": 364,
+        "height": 455.5,
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "vw": 390,
+        "vh": 844,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "viewport": {
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "vw": 390,
+        "vh": 844,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 1,
+      "reason": "notification:resize_observer",
+      "changes": [
+        "top"
+      ]
+    },
+    "received": {
+      "at": 12214.399999976158,
+      "kind": "received",
+      "seq": 13,
+      "consumeSeq": 353,
+      "readSeq": 353,
+      "type": "touchmove",
+      "id": null,
+      "client": [
+        null,
+        null
+      ],
+      "target": "CANVAS",
+      "button": null
+    },
+    "pointer_received": {
+      "at": 12213.899999976158,
+      "kind": "received",
+      "seq": 12,
+      "consumeSeq": 353,
+      "readSeq": 353,
+      "type": "pointermove",
+      "id": 6,
+      "client": [
+        328.65625,
+        491.90625
+      ],
+      "target": "DIV",
+      "button": -1
+    },
+    "reset": {
+      "at": 6700.599999964237,
+      "kind": "reset",
+      "seq": 12,
+      "consumeSeq": 23,
+      "readSeq": 23,
+      "reason": "story_page"
+    },
+    "end": {
+      "at": 4604.199999988079,
+      "kind": "end",
+      "seq": 1,
+      "consumeSeq": 0,
+      "readSeq": 0,
+      "id": 2,
+      "event": "pointerup"
+    },
+    "consume": {
+      "at": 12463.899999976158,
+      "kind": "consume",
+      "seq": 369,
+      "consumeSeq": 368,
+      "readSeq": 368,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "idle",
+      "owner": 7
+    },
+    "python_read": {
+      "at": 12464,
+      "kind": "python_read",
+      "seq": 369,
+      "consumeSeq": 369,
+      "readSeq": 368,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "accepted"
+    },
+    "frame": {
+      "at": 12465.599999964237,
+      "kind": "frame",
+      "seq": 369,
+      "consumeSeq": 369,
+      "readSeq": 369,
+      "after": [
+        135.8,
+        259.7599933109221
+      ],
+      "before": [
+        135.8,
+        259.7599933109221
+      ],
+      "scene": "playing",
+      "time": 5.7666666666666515,
+      "reason": "idle",
+      "drag": [
+        0,
+        0
+      ],
+      "positionWrites": [
+        {
+          "before": [
+            135.8,
+            259.7599933109221
+          ],
+          "after": [
+            135.8,
+            259.7599933109221
+          ],
+          "reason": "idle"
+        }
+      ],
+      "phase": "playing"
+    },
+    "movement": {
+      "at": 12214.399999976158,
+      "kind": "movement",
+      "seq": 4,
+      "consumeSeq": 353,
+      "readSeq": 353,
+      "status": "attack_only",
+      "reason": "right_pointer",
+      "point": [
+        222,
+        220
+      ],
+      "delta": [
+        0,
+        0
+      ],
+      "id": 6
+    },
+    "move_movement": {
+      "at": 12100.399999976158,
+      "kind": "movement",
+      "seq": 3,
+      "consumeSeq": 346,
+      "readSeq": 346,
+      "status": "queued",
+      "reason": "relative_drag",
+      "point": [
+        65,
+        215.99999571212953
+      ],
+      "delta": [
+        5,
+        -4.000004287870468
+      ],
+      "id": 7,
+      "pending": [
+        6,
+        -4.800005145444561
+      ]
+    },
+    "consume_active": {
+      "at": 12102,
+      "kind": "consume",
+      "seq": 347,
+      "consumeSeq": 346,
+      "readSeq": 346,
+      "received": [
+        6,
+        -4.800005145444561
+      ],
+      "out": [
+        6,
+        -4.800005145444561
+      ],
+      "reason": "accepted",
+      "owner": 7
+    },
+    "python_read_active": {
+      "at": 12102.299999952316,
+      "kind": "python_read",
+      "seq": 347,
+      "consumeSeq": 347,
+      "readSeq": 346,
+      "received": [
+        6,
+        -4.800005145444561
+      ],
+      "out": [
+        6,
+        -4.800005145444561
+      ],
+      "reason": "accepted"
+    },
+    "frame_active": {
+      "at": 12104.799999952316,
+      "kind": "frame",
+      "seq": 347,
+      "consumeSeq": 347,
+      "readSeq": 347,
+      "after": [
+        135.8,
+        259.7599933109221
+      ],
+      "before": [
+        128,
+        266
+      ],
+      "scene": "playing",
+      "time": 5.399999999999986,
+      "reason": "touch_drag",
+      "drag": [
+        6,
+        -4.800005145444561
+      ],
+      "positionWrites": [
+        {
+          "before": [
+            128,
+            266
+          ],
+          "after": [
+            135.8,
+            259.7599933109221
+          ],
+          "reason": "touch_drag"
+        }
+      ],
+      "phase": "playing"
+    },
+    "error": {
+      "at": 12484.599999964237,
+      "kind": "error",
+      "seq": 1,
+      "consumeSeq": 369,
+      "readSeq": 369,
+      "source": "Python:update",
+      "message": "DIAGNOSTIC_PYTHON_TEST_ERROR",
+      "stack": "Traceback (most recent call last):\n  File \"/tmp/.pyxel/play/42_c64bd842-2f88-417f-b3b4-233d71239c94/blade-shooter/main.py\", line 139, in update\n    try:self.update_frame()\n        ~~~~~~~~~~~~~~~~~^^\n  File \"/tmp/.pyxel/play/42_c64bd842-2f88-417f-b3b4-233d71239c94/blade-shooter/main.py\", line 145, in update_frame\n    action = self.input.read()\n  File \"<exec>\", line 2, in diagnostic_raise\nRuntimeError: DIAGNOSTIC_PYTHON_TEST_ERROR\n"
+    }
+  },
+  "lastError": {
+    "at": 12484.599999964237,
+    "source": "Python:update",
+    "message": "DIAGNOSTIC_PYTHON_TEST_ERROR",
+    "stack": "Traceback (most recent call last):\n  File \"/tmp/.pyxel/play/42_c64bd842-2f88-417f-b3b4-233d71239c94/blade-shooter/main.py\", line 139, in update\n    try:self.update_frame()\n        ~~~~~~~~~~~~~~~~~^^\n  File \"/tmp/.pyxel/play/42_c64bd842-2f88-417f-b3b4-233d71239c94/blade-shooter/main.py\", line 145, in update_frame\n    action = self.input.read()\n  File \"<exec>\", line 2, in diagnostic_raise\nRuntimeError: DIAGNOSTIC_PYTHON_TEST_ERROR\n"
+  },
+  "events": [
+    {
+      "at": 72.09999996423721,
+      "kind": "invalidate",
+      "seq": 1,
+      "consumeSeq": 0,
+      "readSeq": 0,
+      "reason": "resize_observer"
+    },
+    {
+      "at": 251.5999999642372,
+      "kind": "invalidate",
+      "seq": 2,
+      "consumeSeq": 0,
+      "readSeq": 0,
+      "reason": "resize"
+    },
+    {
+      "at": 251.69999998807907,
+      "kind": "invalidate",
+      "seq": 3,
+      "consumeSeq": 0,
+      "readSeq": 0,
+      "reason": "resize"
+    },
+    {
+      "at": 256.0999999642372,
+      "kind": "layout_change",
+      "seq": 1,
+      "consumeSeq": 0,
+      "readSeq": 0,
+      "rect": null,
+      "viewport": {
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "vw": 390,
+        "vh": 844,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 1,
+      "reason": "no_canvas",
+      "changes": []
+    },
+    {
+      "at": 256.5999999642372,
+      "kind": "invalidate",
+      "seq": 4,
+      "consumeSeq": 0,
+      "readSeq": 0,
+      "reason": "resize_observer"
+    },
+    {
+      "at": 260.2999999523163,
+      "kind": "layout_change",
+      "seq": 2,
+      "consumeSeq": 0,
+      "readSeq": 0,
+      "rect": null,
+      "viewport": {
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "vw": 390,
+        "vh": 844,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 1,
+      "reason": "no_canvas",
+      "changes": []
+    },
+    {
+      "at": 274.5,
+      "kind": "layout_change",
+      "seq": 3,
+      "consumeSeq": 0,
+      "readSeq": 0,
+      "rect": null,
+      "viewport": {
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "vw": 390,
+        "vh": 844,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 1,
+      "reason": "no_canvas",
+      "changes": []
+    },
+    {
+      "at": 280.5999999642372,
+      "kind": "layout_change",
+      "seq": 4,
+      "consumeSeq": 0,
+      "readSeq": 0,
+      "rect": null,
+      "viewport": {
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "vw": 390,
+        "vh": 844,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 1,
+      "reason": "no_canvas",
+      "changes": []
+    },
+    {
+      "at": 297.0999999642372,
+      "kind": "layout_change",
+      "seq": 5,
+      "consumeSeq": 0,
+      "readSeq": 0,
+      "rect": null,
+      "viewport": {
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "vw": 390,
+        "vh": 844,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 1,
+      "reason": "no_canvas",
+      "changes": []
+    },
+    {
+      "at": 313.7999999523163,
+      "kind": "layout_change",
+      "seq": 6,
+      "consumeSeq": 0,
+      "readSeq": 0,
+      "rect": null,
+      "viewport": {
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "vw": 390,
+        "vh": 844,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 1,
+      "reason": "no_canvas",
+      "changes": []
+    },
+    {
+      "at": 330.5,
+      "kind": "layout_change",
+      "seq": 7,
+      "consumeSeq": 0,
+      "readSeq": 0,
+      "rect": null,
+      "viewport": {
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "vw": 390,
+        "vh": 844,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 1,
+      "reason": "no_canvas",
+      "changes": []
+    },
+    {
+      "at": 347.0999999642372,
+      "kind": "layout_change",
+      "seq": 8,
+      "consumeSeq": 0,
+      "readSeq": 0,
+      "rect": null,
+      "viewport": {
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "vw": 390,
+        "vh": 844,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 1,
+      "reason": "no_canvas",
+      "changes": []
+    },
+    {
+      "at": 363.7999999523163,
+      "kind": "layout_change",
+      "seq": 9,
+      "consumeSeq": 0,
+      "readSeq": 0,
+      "rect": null,
+      "viewport": {
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "vw": 390,
+        "vh": 844,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 1,
+      "reason": "no_canvas",
+      "changes": []
+    },
+    {
+      "at": 382.5999999642372,
+      "kind": "layout_change",
+      "seq": 10,
+      "consumeSeq": 0,
+      "readSeq": 0,
+      "rect": {
+        "left": 13,
+        "top": 178.75,
+        "width": 364,
+        "height": 455.5,
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "vw": 390,
+        "vh": 844,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "viewport": {
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "vw": 390,
+        "vh": 844,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 1,
+      "reason": "first_valid_rect",
+      "changes": []
+    },
+    {
+      "at": 4601.299999952316,
+      "kind": "received",
+      "seq": 1,
+      "consumeSeq": 0,
+      "readSeq": 0,
+      "type": "pointerdown",
+      "id": 2,
+      "client": [
+        195,
+        406.5
+      ],
+      "target": "CANVAS",
+      "button": 0
+    },
+    {
+      "at": 4602,
+      "kind": "reset",
+      "seq": 1,
+      "consumeSeq": 0,
+      "readSeq": 0,
+      "reason": "menu_contact"
+    },
+    {
+      "at": 4602.699999988079,
+      "kind": "received",
+      "seq": 2,
+      "consumeSeq": 0,
+      "readSeq": 0,
+      "type": "touchstart",
+      "id": null,
+      "client": [
+        null,
+        null
+      ],
+      "target": "CANVAS",
+      "button": null
+    },
+    {
+      "at": 4603.599999964237,
+      "kind": "received",
+      "seq": 3,
+      "consumeSeq": 0,
+      "readSeq": 0,
+      "type": "pointerup",
+      "id": 2,
+      "client": [
+        195,
+        406.5
+      ],
+      "target": "DIV",
+      "button": 0
+    },
+    {
+      "at": 4604.199999988079,
+      "kind": "end",
+      "seq": 1,
+      "consumeSeq": 0,
+      "readSeq": 0,
+      "id": 2,
+      "event": "pointerup"
+    },
+    {
+      "at": 4604.199999988079,
+      "kind": "reset",
+      "seq": 2,
+      "consumeSeq": 0,
+      "readSeq": 0,
+      "reason": "menu_release"
+    },
+    {
+      "at": 4604.299999952316,
+      "kind": "received",
+      "seq": 4,
+      "consumeSeq": 0,
+      "readSeq": 0,
+      "type": "lostpointercapture",
+      "id": 2,
+      "client": [
+        195,
+        406.5
+      ],
+      "target": "DIV",
+      "button": 0
+    },
+    {
+      "at": 4604.399999976158,
+      "kind": "received",
+      "seq": 5,
+      "consumeSeq": 0,
+      "readSeq": 0,
+      "type": "touchend",
+      "id": null,
+      "client": [
+        null,
+        null
+      ],
+      "target": "CANVAS",
+      "button": null
+    },
+    {
+      "at": 6053.299999952316,
+      "kind": "consume",
+      "seq": 1,
+      "consumeSeq": 0,
+      "readSeq": 0,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "scene:loading",
+      "owner": null
+    },
+    {
+      "at": 6054.599999964237,
+      "kind": "frame",
+      "seq": 1,
+      "consumeSeq": 1,
+      "readSeq": 1,
+      "after": [
+        128,
+        266
+      ],
+      "before": [
+        128,
+        266
+      ],
+      "scene": "title",
+      "time": 0,
+      "reason": "stage_start",
+      "drag": [
+        0,
+        0
+      ],
+      "positionWrites": [],
+      "phase": "title"
+    },
+    {
+      "at": 6054.799999952316,
+      "kind": "reset",
+      "seq": 3,
+      "consumeSeq": 1,
+      "readSeq": 1,
+      "reason": "scene:loading->title"
+    },
+    {
+      "at": 6106.899999976158,
+      "kind": "invalidate",
+      "seq": 5,
+      "consumeSeq": 1,
+      "readSeq": 1,
+      "reason": "resize_observer"
+    },
+    {
+      "at": 6111.299999952316,
+      "kind": "layout_change",
+      "seq": 11,
+      "consumeSeq": 1,
+      "readSeq": 1,
+      "rect": {
+        "left": 13,
+        "top": 215.25,
+        "width": 364,
+        "height": 455.5,
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "vw": 390,
+        "vh": 844,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "viewport": {
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "vw": 390,
+        "vh": 844,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 1,
+      "reason": "notification:resize_observer",
+      "changes": [
+        "top"
+      ]
+    },
+    {
+      "at": 6112,
+      "kind": "consume",
+      "seq": 2,
+      "consumeSeq": 1,
+      "readSeq": 1,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "scene:title",
+      "owner": null
+    },
+    {
+      "at": 6112.699999988079,
+      "kind": "frame",
+      "seq": 2,
+      "consumeSeq": 2,
+      "readSeq": 2,
+      "after": [
+        128,
+        266
+      ],
+      "before": [
+        128,
+        266
+      ],
+      "scene": "title",
+      "time": 0,
+      "reason": "stage_start",
+      "drag": [
+        0,
+        0
+      ],
+      "positionWrites": [],
+      "phase": "title"
+    },
+    {
+      "at": 6119.299999952316,
+      "kind": "consume",
+      "seq": 3,
+      "consumeSeq": 2,
+      "readSeq": 2,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "scene:title",
+      "owner": null
+    },
+    {
+      "at": 6119.699999988079,
+      "kind": "frame",
+      "seq": 3,
+      "consumeSeq": 3,
+      "readSeq": 3,
+      "after": [
+        128,
+        266
+      ],
+      "before": [
+        128,
+        266
+      ],
+      "scene": "title",
+      "time": 0,
+      "reason": "stage_start",
+      "drag": [
+        0,
+        0
+      ],
+      "positionWrites": [],
+      "phase": "title"
+    },
+    {
+      "at": 6120.299999952316,
+      "kind": "consume",
+      "seq": 4,
+      "consumeSeq": 3,
+      "readSeq": 3,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "scene:title",
+      "owner": null
+    },
+    {
+      "at": 6120.799999952316,
+      "kind": "frame",
+      "seq": 4,
+      "consumeSeq": 4,
+      "readSeq": 4,
+      "after": [
+        128,
+        266
+      ],
+      "before": [
+        128,
+        266
+      ],
+      "scene": "title",
+      "time": 0,
+      "reason": "stage_start",
+      "drag": [
+        0,
+        0
+      ],
+      "positionWrites": [],
+      "phase": "title"
+    },
+    {
+      "at": 6121.199999988079,
+      "kind": "consume",
+      "seq": 5,
+      "consumeSeq": 4,
+      "readSeq": 4,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "scene:title",
+      "owner": null
+    },
+    {
+      "at": 6121.599999964237,
+      "kind": "frame",
+      "seq": 5,
+      "consumeSeq": 5,
+      "readSeq": 5,
+      "after": [
+        128,
+        266
+      ],
+      "before": [
+        128,
+        266
+      ],
+      "scene": "title",
+      "time": 0,
+      "reason": "stage_start",
+      "drag": [
+        0,
+        0
+      ],
+      "positionWrites": [],
+      "phase": "title"
+    },
+    {
+      "at": 6131.099999964237,
+      "kind": "consume",
+      "seq": 6,
+      "consumeSeq": 5,
+      "readSeq": 5,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "scene:title",
+      "owner": null
+    },
+    {
+      "at": 6131.699999988079,
+      "kind": "frame",
+      "seq": 6,
+      "consumeSeq": 6,
+      "readSeq": 6,
+      "after": [
+        128,
+        266
+      ],
+      "before": [
+        128,
+        266
+      ],
+      "scene": "title",
+      "time": 0,
+      "reason": "stage_start",
+      "drag": [
+        0,
+        0
+      ],
+      "positionWrites": [],
+      "phase": "title"
+    },
+    {
+      "at": 6147.599999964237,
+      "kind": "consume",
+      "seq": 7,
+      "consumeSeq": 6,
+      "readSeq": 6,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "scene:title",
+      "owner": null
+    },
+    {
+      "at": 6148.199999988079,
+      "kind": "frame",
+      "seq": 7,
+      "consumeSeq": 7,
+      "readSeq": 7,
+      "after": [
+        128,
+        266
+      ],
+      "before": [
+        128,
+        266
+      ],
+      "scene": "title",
+      "time": 0,
+      "reason": "stage_start",
+      "drag": [
+        0,
+        0
+      ],
+      "positionWrites": [],
+      "phase": "title"
+    },
+    {
+      "at": 6166.899999976158,
+      "kind": "consume",
+      "seq": 8,
+      "consumeSeq": 7,
+      "readSeq": 7,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "scene:title",
+      "owner": null
+    },
+    {
+      "at": 6167.299999952316,
+      "kind": "frame",
+      "seq": 8,
+      "consumeSeq": 8,
+      "readSeq": 8,
+      "after": [
+        128,
+        266
+      ],
+      "before": [
+        128,
+        266
+      ],
+      "scene": "title",
+      "time": 0,
+      "reason": "stage_start",
+      "drag": [
+        0,
+        0
+      ],
+      "positionWrites": [],
+      "phase": "title"
+    },
+    {
+      "at": 6181,
+      "kind": "consume",
+      "seq": 9,
+      "consumeSeq": 8,
+      "readSeq": 8,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "scene:title",
+      "owner": null
+    },
+    {
+      "at": 6181.299999952316,
+      "kind": "frame",
+      "seq": 9,
+      "consumeSeq": 9,
+      "readSeq": 9,
+      "after": [
+        128,
+        266
+      ],
+      "before": [
+        128,
+        266
+      ],
+      "scene": "title",
+      "time": 0,
+      "reason": "stage_start",
+      "drag": [
+        0,
+        0
+      ],
+      "positionWrites": [],
+      "phase": "title"
+    },
+    {
+      "at": 6197.5,
+      "kind": "consume",
+      "seq": 10,
+      "consumeSeq": 9,
+      "readSeq": 9,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "scene:title",
+      "owner": null
+    },
+    {
+      "at": 6198.299999952316,
+      "kind": "frame",
+      "seq": 10,
+      "consumeSeq": 10,
+      "readSeq": 10,
+      "after": [
+        128,
+        266
+      ],
+      "before": [
+        128,
+        266
+      ],
+      "scene": "title",
+      "time": 0,
+      "reason": "stage_start",
+      "drag": [
+        0,
+        0
+      ],
+      "positionWrites": [],
+      "phase": "title"
+    },
+    {
+      "at": 6203.399999976158,
+      "kind": "reset",
+      "seq": 4,
+      "consumeSeq": 10,
+      "readSeq": 10,
+      "reason": "start_button:title"
+    },
+    {
+      "at": 6203.399999976158,
+      "kind": "reset",
+      "seq": 5,
+      "consumeSeq": 10,
+      "readSeq": 10,
+      "reason": "menu_pick:1"
+    },
+    {
+      "at": 6214.399999976158,
+      "kind": "consume",
+      "seq": 11,
+      "consumeSeq": 10,
+      "readSeq": 10,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "scene:title",
+      "owner": null
+    },
+    {
+      "at": 6215.5,
+      "kind": "frame",
+      "seq": 11,
+      "consumeSeq": 11,
+      "readSeq": 11,
+      "after": [
+        128,
+        266
+      ],
+      "before": [
+        128,
+        266
+      ],
+      "scene": "mode_select",
+      "time": 0,
+      "reason": "stage_start",
+      "drag": [
+        0,
+        0
+      ],
+      "positionWrites": [],
+      "phase": "mode_select"
+    },
+    {
+      "at": 6215.599999964237,
+      "kind": "reset",
+      "seq": 6,
+      "consumeSeq": 11,
+      "readSeq": 11,
+      "reason": "scene:title->mode_select"
+    },
+    {
+      "at": 6232.199999988079,
+      "kind": "consume",
+      "seq": 12,
+      "consumeSeq": 11,
+      "readSeq": 11,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "scene:mode_select",
+      "owner": null
+    },
+    {
+      "at": 6232.599999964237,
+      "kind": "frame",
+      "seq": 12,
+      "consumeSeq": 12,
+      "readSeq": 12,
+      "after": [
+        128,
+        266
+      ],
+      "before": [
+        128,
+        266
+      ],
+      "scene": "mode_select",
+      "time": 0,
+      "reason": "stage_start",
+      "drag": [
+        0,
+        0
+      ],
+      "positionWrites": [],
+      "phase": "mode_select"
+    },
+    {
+      "at": 6247.299999952316,
+      "kind": "consume",
+      "seq": 13,
+      "consumeSeq": 12,
+      "readSeq": 12,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "scene:mode_select",
+      "owner": null
+    },
+    {
+      "at": 6247.599999964237,
+      "kind": "frame",
+      "seq": 13,
+      "consumeSeq": 13,
+      "readSeq": 13,
+      "after": [
+        128,
+        266
+      ],
+      "before": [
+        128,
+        266
+      ],
+      "scene": "mode_select",
+      "time": 0,
+      "reason": "stage_start",
+      "drag": [
+        0,
+        0
+      ],
+      "positionWrites": [],
+      "phase": "mode_select"
+    },
+    {
+      "at": 6264.099999964237,
+      "kind": "consume",
+      "seq": 14,
+      "consumeSeq": 13,
+      "readSeq": 13,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "scene:mode_select",
+      "owner": null
+    },
+    {
+      "at": 6264.599999964237,
+      "kind": "frame",
+      "seq": 14,
+      "consumeSeq": 14,
+      "readSeq": 14,
+      "after": [
+        128,
+        266
+      ],
+      "before": [
+        128,
+        266
+      ],
+      "scene": "mode_select",
+      "time": 0,
+      "reason": "stage_start",
+      "drag": [
+        0,
+        0
+      ],
+      "positionWrites": [],
+      "phase": "mode_select"
+    },
+    {
+      "at": 6281.5,
+      "kind": "consume",
+      "seq": 15,
+      "consumeSeq": 14,
+      "readSeq": 14,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "scene:mode_select",
+      "owner": null
+    },
+    {
+      "at": 6282.099999964237,
+      "kind": "frame",
+      "seq": 15,
+      "consumeSeq": 15,
+      "readSeq": 15,
+      "after": [
+        128,
+        266
+      ],
+      "before": [
+        128,
+        266
+      ],
+      "scene": "mode_select",
+      "time": 0,
+      "reason": "stage_start",
+      "drag": [
+        0,
+        0
+      ],
+      "positionWrites": [],
+      "phase": "mode_select"
+    },
+    {
+      "at": 6286.5,
+      "kind": "reset",
+      "seq": 7,
+      "consumeSeq": 15,
+      "readSeq": 15,
+      "reason": "menu_pick:1"
+    },
+    {
+      "at": 6298.099999964237,
+      "kind": "consume",
+      "seq": 16,
+      "consumeSeq": 15,
+      "readSeq": 15,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "scene:mode_select",
+      "owner": null
+    },
+    {
+      "at": 6480.699999988079,
+      "kind": "frame",
+      "seq": 16,
+      "consumeSeq": 16,
+      "readSeq": 16,
+      "after": [
+        128,
+        266
+      ],
+      "before": [
+        128,
+        266
+      ],
+      "scene": "story",
+      "time": 0,
+      "reason": "stage_start",
+      "drag": [
+        0,
+        0
+      ],
+      "positionWrites": [
+        {
+          "before": [
+            128,
+            266
+          ],
+          "after": [
+            128,
+            266
+          ],
+          "reason": "stage_start"
+        }
+      ],
+      "phase": "story"
+    },
+    {
+      "at": 6480.899999976158,
+      "kind": "reset",
+      "seq": 8,
+      "consumeSeq": 16,
+      "readSeq": 16,
+      "reason": "scene:mode_select->story"
+    },
+    {
+      "at": 6481.199999988079,
+      "kind": "reset",
+      "seq": 9,
+      "consumeSeq": 16,
+      "readSeq": 16,
+      "reason": "story_page"
+    },
+    {
+      "at": 6601,
+      "kind": "invalidate",
+      "seq": 6,
+      "consumeSeq": 16,
+      "readSeq": 16,
+      "reason": "resize_observer"
+    },
+    {
+      "at": 6606.899999976158,
+      "kind": "layout_change",
+      "seq": 12,
+      "consumeSeq": 16,
+      "readSeq": 16,
+      "rect": {
+        "left": 13,
+        "top": 196.75,
+        "width": 364,
+        "height": 455.5,
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "vw": 390,
+        "vh": 844,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "viewport": {
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "vw": 390,
+        "vh": 844,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 1,
+      "reason": "notification:resize_observer",
+      "changes": [
+        "top"
+      ]
+    },
+    {
+      "at": 6607.099999964237,
+      "kind": "consume",
+      "seq": 17,
+      "consumeSeq": 16,
+      "readSeq": 16,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "scene:story",
+      "owner": null
+    },
+    {
+      "at": 6607.799999952316,
+      "kind": "frame",
+      "seq": 17,
+      "consumeSeq": 17,
+      "readSeq": 17,
+      "after": [
+        128,
+        266
+      ],
+      "before": [
+        128,
+        266
+      ],
+      "scene": "story",
+      "time": 0,
+      "reason": "stage_start",
+      "drag": [
+        0,
+        0
+      ],
+      "positionWrites": [],
+      "phase": "story"
+    },
+    {
+      "at": 6614.699999988079,
+      "kind": "consume",
+      "seq": 18,
+      "consumeSeq": 17,
+      "readSeq": 17,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "scene:story",
+      "owner": null
+    },
+    {
+      "at": 6615.099999964237,
+      "kind": "frame",
+      "seq": 18,
+      "consumeSeq": 18,
+      "readSeq": 18,
+      "after": [
+        128,
+        266
+      ],
+      "before": [
+        128,
+        266
+      ],
+      "scene": "story",
+      "time": 0,
+      "reason": "stage_start",
+      "drag": [
+        0,
+        0
+      ],
+      "positionWrites": [],
+      "phase": "story"
+    },
+    {
+      "at": 6630.799999952316,
+      "kind": "consume",
+      "seq": 19,
+      "consumeSeq": 18,
+      "readSeq": 18,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "scene:story",
+      "owner": null
+    },
+    {
+      "at": 6631.599999964237,
+      "kind": "frame",
+      "seq": 19,
+      "consumeSeq": 19,
+      "readSeq": 19,
+      "after": [
+        128,
+        266
+      ],
+      "before": [
+        128,
+        266
+      ],
+      "scene": "story",
+      "time": 0,
+      "reason": "stage_start",
+      "drag": [
+        0,
+        0
+      ],
+      "positionWrites": [],
+      "phase": "story"
+    },
+    {
+      "at": 6647.199999988079,
+      "kind": "consume",
+      "seq": 20,
+      "consumeSeq": 19,
+      "readSeq": 19,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "scene:story",
+      "owner": null
+    },
+    {
+      "at": 6647.5,
+      "kind": "frame",
+      "seq": 20,
+      "consumeSeq": 20,
+      "readSeq": 20,
+      "after": [
+        128,
+        266
+      ],
+      "before": [
+        128,
+        266
+      ],
+      "scene": "story",
+      "time": 0,
+      "reason": "stage_start",
+      "drag": [
+        0,
+        0
+      ],
+      "positionWrites": [],
+      "phase": "story"
+    },
+    {
+      "at": 6663.899999976158,
+      "kind": "consume",
+      "seq": 21,
+      "consumeSeq": 20,
+      "readSeq": 20,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "scene:story",
+      "owner": null
+    },
+    {
+      "at": 6664.399999976158,
+      "kind": "frame",
+      "seq": 21,
+      "consumeSeq": 21,
+      "readSeq": 21,
+      "after": [
+        128,
+        266
+      ],
+      "before": [
+        128,
+        266
+      ],
+      "scene": "story",
+      "time": 0,
+      "reason": "stage_start",
+      "drag": [
+        0,
+        0
+      ],
+      "positionWrites": [],
+      "phase": "story"
+    },
+    {
+      "at": 6682.599999964237,
+      "kind": "consume",
+      "seq": 22,
+      "consumeSeq": 21,
+      "readSeq": 21,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "scene:story",
+      "owner": null
+    },
+    {
+      "at": 6683.599999964237,
+      "kind": "frame",
+      "seq": 22,
+      "consumeSeq": 22,
+      "readSeq": 22,
+      "after": [
+        128,
+        266
+      ],
+      "before": [
+        128,
+        266
+      ],
+      "scene": "story",
+      "time": 0,
+      "reason": "stage_start",
+      "drag": [
+        0,
+        0
+      ],
+      "positionWrites": [],
+      "phase": "story"
+    },
+    {
+      "at": 6689.5,
+      "kind": "reset",
+      "seq": 10,
+      "consumeSeq": 22,
+      "readSeq": 22,
+      "reason": "story_skip"
+    },
+    {
+      "at": 6698.5,
+      "kind": "consume",
+      "seq": 23,
+      "consumeSeq": 22,
+      "readSeq": 22,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "scene:story",
+      "owner": null
+    },
+    {
+      "at": 6699.799999952316,
+      "kind": "frame",
+      "seq": 23,
+      "consumeSeq": 23,
+      "readSeq": 23,
+      "after": [
+        128,
+        266
+      ],
+      "before": [
+        128,
+        266
+      ],
+      "scene": "playing",
+      "time": 0,
+      "reason": "stage_start",
+      "drag": [
+        0,
+        0
+      ],
+      "positionWrites": [],
+      "phase": "playing"
+    },
+    {
+      "at": 6699.899999976158,
+      "kind": "reset",
+      "seq": 11,
+      "consumeSeq": 23,
+      "readSeq": 23,
+      "reason": "scene:story->playing"
+    },
+    {
+      "at": 6700.599999964237,
+      "kind": "reset",
+      "seq": 12,
+      "consumeSeq": 23,
+      "readSeq": 23,
+      "reason": "story_page"
+    },
+    {
+      "at": 6795,
+      "kind": "invalidate",
+      "seq": 7,
+      "consumeSeq": 23,
+      "readSeq": 23,
+      "reason": "resize_observer"
+    },
+    {
+      "at": 6797.5,
+      "kind": "layout_change",
+      "seq": 13,
+      "consumeSeq": 23,
+      "readSeq": 23,
+      "rect": {
+        "left": 13,
+        "top": 178.75,
+        "width": 364,
+        "height": 455.5,
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "vw": 390,
+        "vh": 844,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "viewport": {
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "vw": 390,
+        "vh": 844,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 1,
+      "reason": "notification:resize_observer",
+      "changes": [
+        "top"
+      ]
+    },
+    {
+      "at": 11923.099999964237,
+      "kind": "received",
+      "seq": 6,
+      "consumeSeq": 336,
+      "readSeq": 336,
+      "type": "pointerdown",
+      "id": 6,
+      "client": [
+        297.375,
+        491.90625
+      ],
+      "target": "CANVAS",
+      "button": 0
+    },
+    {
+      "at": 11923.699999988079,
+      "kind": "movement",
+      "seq": 1,
+      "consumeSeq": 336,
+      "readSeq": 336,
+      "status": "registered",
+      "reason": "attack",
+      "id": 6,
+      "point": [
+        200,
+        220
+      ],
+      "delta": [
+        0,
+        0
+      ]
+    },
+    {
+      "at": 11924,
+      "kind": "received",
+      "seq": 7,
+      "consumeSeq": 336,
+      "readSeq": 336,
+      "type": "touchstart",
+      "id": null,
+      "client": [
+        null,
+        null
+      ],
+      "target": "CANVAS",
+      "button": null
+    },
+    {
+      "at": 11988.099999964237,
+      "kind": "received",
+      "seq": 8,
+      "consumeSeq": 340,
+      "readSeq": 340,
+      "type": "pointerdown",
+      "id": 7,
+      "client": [
+        98.3125,
+        491.90625
+      ],
+      "target": "CANVAS",
+      "button": 0
+    },
+    {
+      "at": 11988.299999952316,
+      "kind": "movement",
+      "seq": 2,
+      "consumeSeq": 340,
+      "readSeq": 340,
+      "status": "registered",
+      "reason": "move",
+      "id": 7,
+      "point": [
+        60,
+        220
+      ],
+      "delta": [
+        0,
+        0
+      ]
+    },
+    {
+      "at": 11988.5,
+      "kind": "received",
+      "seq": 9,
+      "consumeSeq": 340,
+      "readSeq": 340,
+      "type": "touchstart",
+      "id": null,
+      "client": [
+        null,
+        null
+      ],
+      "target": "CANVAS",
+      "button": null
+    },
+    {
+      "at": 12097.799999952316,
+      "kind": "received",
+      "seq": 10,
+      "consumeSeq": 346,
+      "readSeq": 346,
+      "type": "pointermove",
+      "id": 7,
+      "client": [
+        105.421875,
+        486.2124938964844
+      ],
+      "target": "DIV",
+      "button": -1
+    },
+    {
+      "at": 12100.399999976158,
+      "kind": "movement",
+      "seq": 3,
+      "consumeSeq": 346,
+      "readSeq": 346,
+      "status": "queued",
+      "reason": "relative_drag",
+      "point": [
+        65,
+        215.99999571212953
+      ],
+      "delta": [
+        5,
+        -4.000004287870468
+      ],
+      "id": 7,
+      "pending": [
+        6,
+        -4.800005145444561
+      ]
+    },
+    {
+      "at": 12100.699999988079,
+      "kind": "received",
+      "seq": 11,
+      "consumeSeq": 346,
+      "readSeq": 346,
+      "type": "touchmove",
+      "id": null,
+      "client": [
+        null,
+        null
+      ],
+      "target": "CANVAS",
+      "button": null
+    },
+    {
+      "at": 12102,
+      "kind": "consume",
+      "seq": 347,
+      "consumeSeq": 346,
+      "readSeq": 346,
+      "received": [
+        6,
+        -4.800005145444561
+      ],
+      "out": [
+        6,
+        -4.800005145444561
+      ],
+      "reason": "accepted",
+      "owner": 7
+    },
+    {
+      "at": 12102.299999952316,
+      "kind": "python_read",
+      "seq": 347,
+      "consumeSeq": 347,
+      "readSeq": 346,
+      "received": [
+        6,
+        -4.800005145444561
+      ],
+      "out": [
+        6,
+        -4.800005145444561
+      ],
+      "reason": "accepted"
+    },
+    {
+      "at": 12104.799999952316,
+      "kind": "frame",
+      "seq": 347,
+      "consumeSeq": 347,
+      "readSeq": 347,
+      "after": [
+        135.8,
+        259.7599933109221
+      ],
+      "before": [
+        128,
+        266
+      ],
+      "scene": "playing",
+      "time": 5.399999999999986,
+      "reason": "touch_drag",
+      "drag": [
+        6,
+        -4.800005145444561
+      ],
+      "positionWrites": [
+        {
+          "before": [
+            128,
+            266
+          ],
+          "after": [
+            135.8,
+            259.7599933109221
+          ],
+          "reason": "touch_drag"
+        }
+      ],
+      "phase": "playing"
+    },
+    {
+      "at": 12213.899999976158,
+      "kind": "received",
+      "seq": 12,
+      "consumeSeq": 353,
+      "readSeq": 353,
+      "type": "pointermove",
+      "id": 6,
+      "client": [
+        328.65625,
+        491.90625
+      ],
+      "target": "DIV",
+      "button": -1
+    },
+    {
+      "at": 12214.399999976158,
+      "kind": "movement",
+      "seq": 4,
+      "consumeSeq": 353,
+      "readSeq": 353,
+      "status": "attack_only",
+      "reason": "right_pointer",
+      "point": [
+        222,
+        220
+      ],
+      "delta": [
+        0,
+        0
+      ],
+      "id": 6
+    },
+    {
+      "at": 12214.399999976158,
+      "kind": "received",
+      "seq": 13,
+      "consumeSeq": 353,
+      "readSeq": 353,
+      "type": "touchmove",
+      "id": null,
+      "client": [
+        null,
+        null
+      ],
+      "target": "CANVAS",
+      "button": null
+    },
+    {
+      "at": 12484.599999964237,
+      "kind": "error",
+      "seq": 1,
+      "consumeSeq": 369,
+      "readSeq": 369,
+      "source": "Python:update",
+      "message": "DIAGNOSTIC_PYTHON_TEST_ERROR",
+      "stack": "Traceback (most recent call last):\n  File \"/tmp/.pyxel/play/42_c64bd842-2f88-417f-b3b4-233d71239c94/blade-shooter/main.py\", line 139, in update\n    try:self.update_frame()\n        ~~~~~~~~~~~~~~~~~^^\n  File \"/tmp/.pyxel/play/42_c64bd842-2f88-417f-b3b4-233d71239c94/blade-shooter/main.py\", line 145, in update_frame\n    action = self.input.read()\n  File \"<exec>\", line 2, in diagnostic_raise\nRuntimeError: DIAGNOSTIC_PYTHON_TEST_ERROR\n"
+    }
+  ],
+  "timeline": [
+    {
+      "at": 4080,
+      "lastEvent": null,
+      "movePointerId": null,
+      "attackPointerId": null,
+      "drag": [
+        0,
+        0
+      ],
+      "rect": {
+        "left": 13,
+        "top": 178.75,
+        "width": 364,
+        "height": 455.5,
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "vw": 390,
+        "vh": 844,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "revision": 10,
+      "clientPoints": {
+        "move": null,
+        "attack": null
+      },
+      "stageNumber": 1,
+      "gamePoints": {
+        "move": null,
+        "attack": null
+      },
+      "viewport": {
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "vw": 390,
+        "vh": 844,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 1,
+      "css": {
+        "width": "364px",
+        "height": "455.5px"
+      }
+    },
+    {
+      "at": 6096.6,
+      "lastEvent": {
+        "type": "pointerup",
+        "id": 2,
+        "clientX": 195,
+        "clientY": 406.5,
+        "at": 4604
+      },
+      "movePointerId": null,
+      "attackPointerId": null,
+      "drag": [
+        0,
+        0
+      ],
+      "rect": {
+        "left": 13,
+        "top": 215.25,
+        "width": 364,
+        "height": 455.5,
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "vw": 390,
+        "vh": 844,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "revision": 11,
+      "clientPoints": {
+        "move": null,
+        "attack": null
+      },
+      "stageNumber": 1,
+      "gamePoints": {
+        "move": null,
+        "attack": null
+      },
+      "viewport": {
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "vw": 390,
+        "vh": 844,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 1,
+      "css": {
+        "width": "364px",
+        "height": "455.5px"
+      },
+      "player": {
+        "x": 128,
+        "y": 266,
+        "scene": "title",
+        "time": 0,
+        "reason": "stage_start",
+        "drag": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "at": 7096.9,
+      "lastEvent": {
+        "type": "pointerup",
+        "id": 2,
+        "clientX": 195,
+        "clientY": 406.5,
+        "at": 4604
+      },
+      "movePointerId": null,
+      "attackPointerId": null,
+      "drag": [
+        0,
+        0
+      ],
+      "rect": {
+        "left": 13,
+        "top": 178.75,
+        "width": 364,
+        "height": 455.5,
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "vw": 390,
+        "vh": 844,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "revision": 13,
+      "clientPoints": {
+        "move": null,
+        "attack": null
+      },
+      "stageNumber": 1,
+      "gamePoints": {
+        "move": null,
+        "attack": null
+      },
+      "viewport": {
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "vw": 390,
+        "vh": 844,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 1,
+      "css": {
+        "width": "364px",
+        "height": "455.5px"
+      },
+      "player": {
+        "x": 128,
+        "y": 266,
+        "scene": "playing",
+        "time": 0.3833333333333333,
+        "reason": "idle",
+        "drag": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "at": 8113.7,
+      "lastEvent": {
+        "type": "pointerup",
+        "id": 2,
+        "clientX": 195,
+        "clientY": 406.5,
+        "at": 4604
+      },
+      "movePointerId": null,
+      "attackPointerId": null,
+      "drag": [
+        0,
+        0
+      ],
+      "rect": {
+        "left": 13,
+        "top": 178.75,
+        "width": 364,
+        "height": 455.5,
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "vw": 390,
+        "vh": 844,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "revision": 13,
+      "clientPoints": {
+        "move": null,
+        "attack": null
+      },
+      "stageNumber": 1,
+      "gamePoints": {
+        "move": null,
+        "attack": null
+      },
+      "viewport": {
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "vw": 390,
+        "vh": 844,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 1,
+      "css": {
+        "width": "364px",
+        "height": "455.5px"
+      },
+      "player": {
+        "x": 128,
+        "y": 266,
+        "scene": "playing",
+        "time": 1.4,
+        "reason": "idle",
+        "drag": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "at": 9130,
+      "lastEvent": {
+        "type": "pointerup",
+        "id": 2,
+        "clientX": 195,
+        "clientY": 406.5,
+        "at": 4604
+      },
+      "movePointerId": null,
+      "attackPointerId": null,
+      "drag": [
+        0,
+        0
+      ],
+      "rect": {
+        "left": 13,
+        "top": 178.75,
+        "width": 364,
+        "height": 455.5,
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "vw": 390,
+        "vh": 844,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "revision": 13,
+      "clientPoints": {
+        "move": null,
+        "attack": null
+      },
+      "stageNumber": 1,
+      "gamePoints": {
+        "move": null,
+        "attack": null
+      },
+      "viewport": {
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "vw": 390,
+        "vh": 844,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 1,
+      "css": {
+        "width": "364px",
+        "height": "455.5px"
+      },
+      "player": {
+        "x": 128,
+        "y": 266,
+        "scene": "playing",
+        "time": 2.416666666666663,
+        "reason": "idle",
+        "drag": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "at": 10130,
+      "lastEvent": {
+        "type": "pointerup",
+        "id": 2,
+        "clientX": 195,
+        "clientY": 406.5,
+        "at": 4604
+      },
+      "movePointerId": null,
+      "attackPointerId": null,
+      "drag": [
+        0,
+        0
+      ],
+      "rect": {
+        "left": 13,
+        "top": 178.75,
+        "width": 364,
+        "height": 455.5,
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "vw": 390,
+        "vh": 844,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "revision": 13,
+      "clientPoints": {
+        "move": null,
+        "attack": null
+      },
+      "stageNumber": 1,
+      "gamePoints": {
+        "move": null,
+        "attack": null
+      },
+      "viewport": {
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "vw": 390,
+        "vh": 844,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 1,
+      "css": {
+        "width": "364px",
+        "height": "455.5px"
+      },
+      "player": {
+        "x": 128,
+        "y": 266,
+        "scene": "playing",
+        "time": 3.4166666666666594,
+        "reason": "idle",
+        "drag": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "at": 11130,
+      "lastEvent": {
+        "type": "pointerup",
+        "id": 2,
+        "clientX": 195,
+        "clientY": 406.5,
+        "at": 4604
+      },
+      "movePointerId": null,
+      "attackPointerId": null,
+      "drag": [
+        0,
+        0
+      ],
+      "rect": {
+        "left": 13,
+        "top": 178.75,
+        "width": 364,
+        "height": 455.5,
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "vw": 390,
+        "vh": 844,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "revision": 13,
+      "clientPoints": {
+        "move": null,
+        "attack": null
+      },
+      "stageNumber": 1,
+      "gamePoints": {
+        "move": null,
+        "attack": null
+      },
+      "viewport": {
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "vw": 390,
+        "vh": 844,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 1,
+      "css": {
+        "width": "364px",
+        "height": "455.5px"
+      },
+      "player": {
+        "x": 128,
+        "y": 266,
+        "scene": "playing",
+        "time": 4.416666666666656,
+        "reason": "idle",
+        "drag": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "at": 12146.6,
+      "lastEvent": {
+        "type": "pointermove",
+        "id": 7,
+        "clientX": 105.421875,
+        "clientY": 486.2124938964844,
+        "at": 12098
+      },
+      "movePointerId": 7,
+      "attackPointerId": 6,
+      "drag": [
+        0,
+        0
+      ],
+      "rect": {
+        "left": 13,
+        "top": 178.75,
+        "width": 364,
+        "height": 455.5,
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "vw": 390,
+        "vh": 844,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "revision": 13,
+      "clientPoints": {
+        "move": [
+          105.421875,
+          486.2124938964844
+        ],
+        "attack": [
+          297.375,
+          491.90625
+        ]
+      },
+      "stageNumber": 1,
+      "gamePoints": {
+        "move": {
+          "x": 65,
+          "y": 215.99999571212953
+        },
+        "attack": {
+          "x": 200,
+          "y": 220
+        }
+      },
+      "viewport": {
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "vw": 390,
+        "vh": 844,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 1,
+      "css": {
+        "width": "364px",
+        "height": "455.5px"
+      },
+      "player": {
+        "x": 135.8,
+        "y": 259.7599933109221,
+        "scene": "playing",
+        "time": 5.433333333333319,
+        "reason": "idle",
+        "drag": [
+          0,
+          0
+        ]
+      }
+    }
+  ],
+  "controls": {
+    "lastEvent": {
+      "type": "pointermove",
+      "id": 6,
+      "clientX": 328.65625,
+      "clientY": 491.90625,
+      "at": 12213.899999976158
+    },
+    "movePointerId": 7,
+    "attackPointerId": 6,
+    "drag": [
+      0,
+      0
+    ],
+    "rect": {
+      "left": 13,
+      "top": 178.75,
+      "width": 364,
+      "height": 455.5,
+      "innerWidth": 390,
+      "innerHeight": 844,
+      "vw": 390,
+      "vh": 844,
+      "offsetLeft": 0,
+      "offsetTop": 0
+    },
+    "revision": 13,
+    "clientPoints": {
+      "move": [
+        105.421875,
+        486.2124938964844
+      ],
+      "attack": [
+        328.65625,
+        491.90625
+      ]
+    },
+    "stageNumber": 1,
+    "gamePoints": {
+      "move": {
+        "x": 65,
+        "y": 215.99999571212953
+      },
+      "attack": {
+        "x": 222,
+        "y": 220
+      }
+    },
+    "viewport": {
+      "innerWidth": 390,
+      "innerHeight": 844,
+      "vw": 390,
+      "vh": 844,
+      "offsetLeft": 0,
+      "offsetTop": 0
+    },
+    "dpr": 1,
+    "css": {
+      "width": "364px",
+      "height": "455.5px"
+    }
+  }
+}

@@ -5,7 +5,9 @@
   const launch = document.getElementById("launch-game");
   function launchGame() {
     if (frame.hasAttribute("src")) return;
-    frame.src = frame.dataset.src;
+    const url=new URL(frame.dataset.src,location.href);
+    for(const key of ["touchdebug","debug"])if(new URLSearchParams(location.search).get(key)==="1")url.searchParams.set(key,"1");
+    frame.src = url.href;
     frame.hidden = false;
     cover.hidden = true;
     launch.disabled = true;

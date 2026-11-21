@@ -1,8 +1,9 @@
 # title: Blade Close Quarters
-# version: 0.18.2
+# version: 0.18.3
 """PC / GKD / Web共通入口。SELECTは状態・ヒットストップより先に処理。"""
 import sys
 import math
+import json
 import config as C
 from game import Game, Actions
 from view import View
@@ -48,15 +49,21 @@ class Input:
             else:
                 dx, dy = float(b.dragX), float(b.dragY)
                 b.dragX = b.dragY = 0
+            received_dx,received_dy=dx,dy
+            drag_reason="accepted"
             # Secondary boundary defense; the JS layer validates geometry and ownership first.
             if (not math.isfinite(dx) or not math.isfinite(dy) or
                     math.hypot(dx,dy)>C.WEB_TOUCH["max_drag_frame_px"] or
                     (hasattr(b,"movePointerId") and b.movePointerId is None)):
+                drag_reason="nonfinite" if not math.isfinite(dx) or not math.isfinite(dy) else "frame_limit" if math.hypot(dx,dy)>C.WEB_TOUCH["max_drag_frame_px"] else "no_owner"
                 dx=dy=0
             if bool(b.suspended):
                 held.clear()
                 pulses.clear()
                 dx = dy = 0
+                drag_reason="suspended"
+            if bool(getattr(b,"touchDebugEnabled",False)) and callable(getattr(b,"reportRead",None)):
+                b.reportRead(received_dx,received_dy,dx,dy,drag_reason)
         def down(name):
             return any(k in held and k not in self.blocked for k in self.keys[name])
         def pressed(name):
@@ -86,6 +93,8 @@ class App:
         if "--course" in sys.argv or "--section" in sys.argv:self.game.development=True
         self.store=BestStore(self.input.bridge)
         self.game.best_score=self.store.best
+        if self.input.bridge is not None and callable(getattr(self.input.bridge,"reportBuild",None)):
+            self.input.bridge.reportBuild(C.BUILD_ID)
         self.game.debug="--debug" in sys.argv or bool(getattr(self.input.bridge,"debug",False))
         for flag,attribute in (("--weapon","weapon"),("--touch-mode","touch_mode")):
             if flag in sys.argv:
@@ -119,7 +128,20 @@ class App:
         if not 0<=section<len(C.COURSES[course]["sections"]):raise ValueError("Section number outside course")
         return course,section
 
+    def report_error(self,source):
+        import traceback
+        bridge=self.input.bridge
+        if bridge is not None and callable(getattr(bridge,"reportError",None)):
+            try:bridge.reportError("Python:"+source,str(sys.exc_info()[1]),traceback.format_exc())
+            except Exception:pass
+
     def update(self):
+        try:self.update_frame()
+        except Exception:
+            self.report_error("update")
+            raise
+
+    def update_frame(self):
         action = self.input.read()
         if action.quit:
             self.p.quit()
@@ -127,6 +149,8 @@ class App:
         previous_state=self.game.state
         previous_story_revision=self.game.story_revision
         previous_position=(self.game.px,self.game.py)
+        previous_hitstop=self.game.hitstop
+        self.game.touch_trace_enabled=bool(getattr(self.input.bridge,"touchDebugEnabled",False))
         self.game.step(1/C.FPS, action)
         if self.game.result is not None:self.store.save(self.game.best_score)
         self.game.save_failed=self.store.failed
@@ -137,9 +161,11 @@ class App:
             bridge=self.input.bridge
             if "life_lost" in self.game.events and callable(getattr(bridge,"resetTouch",None)):
                 bridge.resetTouch("respawn")
-            if self.game.debug and callable(getattr(bridge,"recordPlayer",None)):
+            if (self.game.debug or self.game.touch_trace_enabled) and callable(getattr(bridge,"recordPlayer",None)):
                 bridge.recordPlayer(self.game.px,self.game.py,self.game.state,self.game.time,
-                                    self.game.last_position_reason,action.drag_x,action.drag_y,*previous_position)
+                                    self.game.last_position_reason,action.drag_x,action.drag_y,*previous_position,
+                                    json.dumps(self.game.position_writes),
+                                    "hitstop" if previous_hitstop>0 else self.game.state)
             self.input.bridge.canContinue=self.game.can_continue
             self.input.bridge.playMode=self.game.play_mode
             self.input.bridge.stageNumber = self.game.run.current_stage
@@ -157,7 +183,10 @@ class App:
         self.audio.update(self.game)
 
     def draw(self):
-        self.view.draw(self.game)
+        try:self.view.draw(self.game)
+        except Exception:
+            self.report_error("draw")
+            raise
 
 
 if __name__ == "__main__":

@@ -252,6 +252,8 @@ class Game:
         self.continue_max_cut=0
         self.stage_entry=None
         self.best_score=0
+        self.touch_trace_enabled=False
+        self.position_writes=[]
         self.debug=debug
         self.debug_log=[]
         self.stage_definition=get_stage(C.COURSES[course].get("stage_number",1))
@@ -471,6 +473,9 @@ class Game:
         before=(getattr(self,"px",x),getattr(self,"py",y))
         self.px,self.py=x,y
         self.last_position_reason=reason
+        if self.touch_trace_enabled:
+            self.position_writes.append(dict(before=before,after=(x,y),reason=reason))
+            self.position_writes=self.position_writes[-16:]
         if self.debug and math.dist(before,(x,y))>32:
             self.log("player_position",before=before,after=(x,y),reason=reason,stage=self.run.current_stage)
 
@@ -738,6 +743,7 @@ class Game:
                 self.swing_hitstop = True
 
     def step(self, dt, action=None):
+        if self.touch_trace_enabled:self.position_writes=[]
         action = action or Actions()
         self.events = []
         if self.state=="story":

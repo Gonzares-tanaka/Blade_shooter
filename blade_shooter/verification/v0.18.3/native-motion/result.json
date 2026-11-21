@@ -1,0 +1,24 @@
+{
+  "result": "PASS",
+  "engine": "Edge",
+  "version": "158.0.4370.33",
+  "runtime": "actual Pyxel 2.9.9 + CDP native touches",
+  "realIPhone": false,
+  "secondsPerScenario": 60,
+  "results": [
+    {
+      "scenario": "runtime-native",
+      "wallSeconds": 61.18,
+      "cycles": 86,
+      "maxStep": 9.988877484851402,
+      "attacks": 40,
+      "idleTests": [],
+      "debug_counts": {
+        "events": 512,
+        "timeline": 65
+      }
+    }
+  ],
+  "errors": [],
+  "trace_file": "trace.json.gz"
+}

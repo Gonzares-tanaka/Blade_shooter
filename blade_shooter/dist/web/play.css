@@ -65,3 +65,18 @@ nav { flex-wrap:wrap; }
 
 /* Apply to the real canvas as well as its operation surface (CSS pixels, no browser gestures). */
 #display,#pyxel-screen,#pyxel-screen canvas,#touch-zones { touch-action:none; user-select:none; -webkit-user-select:none; -webkit-touch-callout:none; overscroll-behavior:none; }
+
+/* Diagnostic UI is a grid overlay: it does not resize the canvas or take drag/flick events. */
+#display { position:relative; }
+#build-badge { position:absolute; right:calc((100% - var(--game-width,256px))/2 + 2px); bottom:calc((100% - var(--game-height,320px))/2 + 2px); z-index:5; pointer-events:none; color:#b5ebf2; background:#090e12b8; padding:1px 3px; font:8px/12px Consolas,monospace; }
+#build-badge[data-mismatch="true"] { color:#ffb87a; }
+#input-diagnostics { grid-area:1 / 1; position:relative; align-self:center; width:var(--game-width,256px); height:var(--game-height,320px); z-index:6; pointer-events:none; overflow:hidden; }
+#input-diagnostics pre { position:absolute; top:8%; left:2px; right:2px; margin:0; padding:3px; background:#050b10d9; color:#d6f5ee; font:9px/12px Consolas,Meiryo,monospace; white-space:pre-wrap; overflow-wrap:anywhere; }
+#input-diagnostics button { position:absolute; bottom:18px; right:2px; pointer-events:auto; min-height:26px; color:#b5ebf2; background:#12252de8; border:1px solid #487481; font-size:9px; }
+#input-diagnostics[data-stalled="true"] pre { border:1px solid #ed9d65; }
+#diagnostics-log { position:absolute; inset:8px; z-index:20; background:#0b161ff5; border:1px solid #67f0d1; padding:12px; display:flex; flex-direction:column; gap:10px; font-size:12px; overflow:auto; }
+#diagnostics-log p { margin:0; }
+#diagnostics-log select { max-width:100%; font:inherit; color:#eef3eb; background:#172c35; padding:6px; }
+#diagnostics-log textarea { flex:1; min-height:80px; width:100%; font:10px/1.5 Consolas,monospace; resize:none; color:#d6f5ee; background:#050b10; user-select:text; -webkit-user-select:text; }
+#diagnostics-log>div { display:flex; gap:6px; flex-wrap:wrap; }
+#diagnostics-log button { min-height:36px; padding:6px 12px; border:1px solid #487481; color:#d6f5ee; background:#172c35; }

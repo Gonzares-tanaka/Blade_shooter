@@ -10,11 +10,17 @@ window.bladeInput = {
 (() => {
   document.documentElement.dataset.embedded = String(new URLSearchParams(location.search).has("embed"));
   const bridge = window.bladeInput;
+  const D=window.bladeDiagnostics||{enabled:false,note(){},build(){},error(){}};
+  D.build("input","__BLADE_BUILD_ID__");
+  bridge.touchDebugEnabled=D.enabled;
+  bridge.reportBuild=(id)=>D.build("python",id);
+  bridge.reportRead=(receivedX,receivedY,x,y,reason)=>D.note("python_read",{received:[receivedX,receivedY],out:[x,y],reason});
+  bridge.reportError=(source,message,stack)=>D.error(source,message,stack);
   const config = window.BLADE_TOUCH_CONFIG;
   const gestures = new window.BladeGestures(config);
   const space = new window.BladeTouchSpace(config);
   const contacts = new Map();
-  let lastEvent=null, discardFrame=false, lastTimeline=0;
+  let lastEvent=null, discardFrame=false, discardReason=null, lastTimeline=0;
   const screen = document.getElementById("pyxel-screen");
   const zones = document.getElementById("touch-zones");
   document.documentElement.style.setProperty("--move-zone-width",`${config.move_region_ratio*100}%`);
@@ -35,7 +41,8 @@ window.bladeInput = {
   let courseLabel = "1面 / 5分＋巨大戦艦", sectionLabel = "最初から";
 
   function record(kind,data={}) {
-    if(!bridge.debug)return;
+    if(!bridge.debug&&!D.enabled)return;
+    D.note(kind,data);
     const item={at:performance.now(),kind,state,...data};
     bridge.touchDebug.events.push(item);
     if(bridge.touchDebug.events.length>512)bridge.touchDebug.events.shift();
@@ -48,12 +55,15 @@ window.bladeInput = {
   bridge.touchDebug={events:[],timeline:[],snapshot:()=>({
     lastEvent,movePointerId:gestures.movePointer?.id??null,attackPointerId:gestures.attackPointer?.id??null,
     drag:[bridge.dragX,bridge.dragY],rect:space.layout,revision:space.revision,
+    clientPoints:{move:contacts.has(gestures.movePointer?.id)?[contacts.get(gestures.movePointer.id).x,contacts.get(gestures.movePointer.id).y]:null,attack:contacts.has(gestures.attackPointer?.id)?[contacts.get(gestures.attackPointer.id).x,contacts.get(gestures.attackPointer.id).y]:null},
     stageNumber,gamePoints:{move:gestures.movePointer?{x:gestures.movePointer.x,y:gestures.movePointer.y}:null,attack:gestures.attackPointer?{x:gestures.attackPointer.x,y:gestures.attackPointer.y}:null},
     viewport:viewport(),dpr:devicePixelRatio,css:screen.querySelector("canvas")?{
       width:getComputedStyle(screen.querySelector("canvas")).width,height:getComputedStyle(screen.querySelector("canvas")).height}:null
   })};
-  bridge.recordPlayer=(x,y,scene,time,reason,dx,dy,beforeX,beforeY)=>{
-    if(!bridge.debug)return;
+  bridge.recordPlayer=(x,y,scene,time,reason,dx,dy,beforeX,beforeY,writes="[]",phase="")=>{
+    if(!bridge.debug&&!D.enabled)return;
+    let positions=[];try{positions=JSON.parse(writes);}catch{}
+    D.note("frame",{after:[x,y],before:[beforeX,beforeY],scene,time,reason,drag:[dx,dy],positionWrites:positions,phase});
     const player={x,y,scene,time,reason,drag:[dx,dy]};
     bridge.touchDebug.player=player;
     if(Math.hypot(x-beforeX,y-beforeY)>32){
@@ -77,8 +87,12 @@ window.bladeInput = {
     const x=bridge.dragX,y=bridge.dragY;bridge.dragX=bridge.dragY=0;
     const valid=state==="playing"&&!bridge.suspended&&gestures.movePointer&&!discardFrame&&
       Number.isFinite(x)&&Number.isFinite(y)&&Math.hypot(x,y)<=config.max_drag_frame_px;
-    discardFrame=false;
-    if(!valid){if(x||y)record("discard_frame",{drag:[x,y]});return {x:0,y:0};}
+    const reason=state!=="playing"?"scene:"+state:bridge.suspended?"suspended":!gestures.movePointer?"no_owner":
+      discardFrame?discardReason||"pending_discard":!Number.isFinite(x)||!Number.isFinite(y)?"nonfinite":
+      Math.hypot(x,y)>config.max_drag_frame_px?"frame_limit":!x&&!y?"idle":"accepted";
+    if(D.enabled)D.note("consume",{received:[x,y],out:valid?[x,y]:[0,0],reason,owner:gestures.movePointer?.id??null});
+    discardFrame=false;discardReason=null;
+    if(!valid){if(x||y){record("discard_frame",{drag:[x,y],reason});record("discard",{drag:[x,y],reason});}return {x:0,y:0};}
     return {x,y};
   };
 
@@ -124,7 +138,7 @@ window.bladeInput = {
     get: () => state,
     set: value => {
       if (state !== value) {
-        clearTouch();
+        clearTouch("scene:"+state+"->"+value);
         state = value;
         updateLabels();
         if(["result","gameover"].includes(state)&&document.activeElement instanceof HTMLButtonElement)document.activeElement.blur();
@@ -132,7 +146,7 @@ window.bladeInput = {
     },
   });
   Object.defineProperty(bridge,"storyRevision",{get:()=>storyRevision,set:value=>{
-    if(storyRevision!==value){storyRevision=value;clearTouch();}
+    if(storyRevision!==value){storyRevision=value;clearTouch("story_page");}
   }});
   Object.defineProperty(bridge,"canContinue",{get:()=>canContinue,set:value=>{
     if(canContinue!==value){canContinue=value;updateLabels();}
@@ -159,7 +173,7 @@ window.bladeInput = {
       if(state==="playing") {
         gestures.setWeapon(value,true);
         bridge.cancelSlashSerial=bridge.slashSerial;bridge.inputResetSerial++;
-      } else {gestures.setWeapon(value);clearTouch();}
+      } else {gestures.setWeapon(value);clearTouch("weapon_menu");}
     }],
     ["labMode",()=>labMode,value=>{labMode=value;}],
   ]) Object.defineProperty(bridge,property,{get:read,set:value=>{
@@ -175,14 +189,14 @@ window.bladeInput = {
     const canvas=screen.querySelector("canvas");
     const status=space.observe(canvas?.getBoundingClientRect(),viewport());
     if(status.changed){
-      bridge.dragX=bridge.dragY=0;discardFrame=true;
+      bridge.dragX=bridge.dragY=0;discardFrame=true;discardReason="layout:"+status.reason;
       for(const [id,c] of contacts){
         c.revision=-1;
         const point=space.point(c.x,c.y);
         if(point)gestures.rebase(id,...point,performance.now());
       }
       if(menuContact)menuContact=null;
-      record("layout_change",{rect:space.layout,viewport:viewport(),dpr:devicePixelRatio});
+      record("layout_change",{rect:space.layout,viewport:viewport(),dpr:devicePixelRatio,reason:status.reason,changes:status.changes});
     }
     return status;
   }
@@ -194,7 +208,7 @@ window.bladeInput = {
   function flushAttack() { if(gestures.takeAttack()) bridge.slashSerial++; }
   function tick(time) {
     syncLayout();gestures.tick(time);
-    if(bridge.debug&&time-lastTimeline>=1000){
+    if((bridge.debug||D.enabled)&&time-lastTimeline>=1000){
       lastTimeline=time;bridge.touchDebug.timeline.push({at:time,...bridge.touchDebug.snapshot(),player:bridge.touchDebug.player});
       if(bridge.touchDebug.timeline.length>600)bridge.touchDebug.timeline.shift();
     }
@@ -212,48 +226,54 @@ window.bladeInput = {
   }
   function queueMovement(e) {
     const c=contacts.get(e.pointerId);
-    if(!c||!gestures.owns(e.pointerId))return;
+    if(!c||!gestures.owns(e.pointerId)){
+      record("movement",{status:"ignored",reason:!c?"unregistered_pointer":"not_owner",id:e.pointerId,delta:[0,0]});return;
+    }
     const point=coordinates(e),time=eventTime(e);
     c.x=e.clientX;c.y=e.clientY;
-    if(!point){record("invalid_coordinate",{event:lastEvent});return;}
+    if(!point){record("invalid_coordinate",{event:lastEvent});record("movement",{status:"discarded",reason:"invalid_canvas_or_coordinate",id:e.pointerId,delta:null});record("discard",{reason:"invalid_canvas_or_coordinate"});return;}
     if(c.revision!==space.revision){
       c.revision=space.revision;gestures.rebase(e.pointerId,...point,time);
-      record("rebase",{id:e.pointerId,point});return;
+      record("rebase",{id:e.pointerId,point});record("movement",{status:"rebased",reason:"layout_revision",point,delta:[0,0],id:e.pointerId});return;
     }
     const owner=gestures.role(e.pointerId)==="move"?gestures.movePointer:gestures.attackPointer;
     const delta=[point[0]-owner.x,point[1]-owner.y];
     if(!delta.every(Number.isFinite)||Math.hypot(...delta)>config.max_drag_event_px){
       gestures.rebase(e.pointerId,...point,time);
-      if(gestures.role(e.pointerId)==="move"){bridge.dragX=bridge.dragY=0;discardFrame=true;}
-      record("discard_event",{id:e.pointerId,point,delta,rect:space.layout});return;
+      if(gestures.role(e.pointerId)==="move"){bridge.dragX=bridge.dragY=0;discardFrame=true;discardReason="event_limit";}
+      record("discard_event",{id:e.pointerId,point,delta,rect:space.layout});record("discard",{reason:"event_limit",delta,limit:config.max_drag_event_px});record("movement",{status:"discarded",reason:"event_limit",id:e.pointerId,point,delta});return;
     }
     const movement=gestures.move(e.pointerId,...point,time,bridge.meleeReady);
     flushAttack();
-    if(!movement||gestures.role(e.pointerId)!=="move")return;
-    if(discardFrame)return;
+    if(!movement||gestures.role(e.pointerId)!=="move"){
+      record("movement",{status:"attack_only",reason:"right_pointer",point,delta:[0,0],id:e.pointerId});return;
+    }
+    if(discardFrame){record("movement",{status:"discarded",reason:discardReason,point,delta,id:e.pointerId});record("discard",{reason:discardReason,delta});return;}
     bridge.dragX+=movement.x*config.drag_gain;
     bridge.dragY+=movement.y*config.drag_gain;
     if(Math.hypot(bridge.dragX,bridge.dragY)>config.max_drag_frame_px){
-      record("discard_frame",{drag:[bridge.dragX,bridge.dragY]});
-      bridge.dragX=bridge.dragY=0;discardFrame=true;
-    }
+      record("discard_frame",{drag:[bridge.dragX,bridge.dragY]});record("discard",{reason:"frame_accumulation_limit",drag:[bridge.dragX,bridge.dragY],limit:config.max_drag_frame_px});
+      record("movement",{status:"discarded",reason:"frame_accumulation_limit",point,delta,id:e.pointerId});
+      bridge.dragX=bridge.dragY=0;discardFrame=true;discardReason="frame_accumulation_limit";
+    }else record("movement",{status:"queued",reason:delta[0]||delta[1]?"relative_drag":"zero_delta",point,delta,id:e.pointerId,pending:[bridge.dragX,bridge.dragY]});
   }
   const nonPassive={passive:false};
   screen.addEventListener("pointerdown",e=>{
-    if(e.button!==0)return;
+    if(e.button!==0){record("movement",{status:"ignored",reason:"non_primary_button",id:e.pointerId,button:e.button});return;}
     e.preventDefault();rememberEvent(e);bridge.suspended=false;resumeAudio();
-    const point=coordinates(e);if(!point)return;
+    const point=coordinates(e);if(!point){record("movement",{status:"discarded",reason:"invalid_canvas_down",id:e.pointerId,delta:null});record("discard",{reason:"invalid_canvas_down"});return;}
     if(state!=="playing"){
       if(menuContact)return;
       clearTouch("menu_contact");menuContact={id:e.pointerId,point,state,revision:space.revision};
       contacts.set(e.pointerId,{x:e.clientX,y:e.clientY,revision:space.revision});
     }else{
-      if(contacts.has(e.pointerId))return;
+      if(contacts.has(e.pointerId)){record("movement",{status:"ignored",reason:"duplicate_down",id:e.pointerId});return;}
       gestures.begin(e.pointerId,...point,eventTime(e),e.pointerType);
       contacts.set(e.pointerId,{x:e.clientX,y:e.clientY,revision:space.revision});publishOwners();
       if(gestures.role(e.pointerId)==="move"){bridge.dragX=bridge.dragY=0;}
+      record("movement",{status:"registered",reason:gestures.role(e.pointerId),id:e.pointerId,point,delta:[0,0]});
     }
-    try{screen.setPointerCapture(e.pointerId);}catch{endPointer(e);}
+    try{screen.setPointerCapture(e.pointerId);}catch(error){record("discard",{reason:"pointer_capture_failed",id:e.pointerId});D.error("pointer_capture",error.message,error.stack);endPointer(e);}
   },nonPassive);
   screen.addEventListener("pointermove",e=>{
     if(state!=="playing")return;
@@ -300,7 +320,7 @@ window.bladeInput = {
   start.addEventListener("click", () => {
     bridge.suspended = false;
     resumeAudio();
-    clearTouch();
+    clearTouch("start_button:"+state);
     if (["playing", "paused"].includes(state)) bridge.pauseSerial++;
     else if(state==="gameover")bridge.continueSerial++;
     else if(state==="result")bridge.retrySerial++;
@@ -309,33 +329,33 @@ window.bladeInput = {
   });
   storySkip.addEventListener("click",()=>{
     if(state!=="story")return;
-    clearTouch();bridge.suspended=false;resumeAudio();bridge.settingsSerial++;
+    clearTouch("story_skip");bridge.suspended=false;resumeAudio();bridge.settingsSerial++;
   });
   nextStageButton.addEventListener("click",()=>{
     if(state!=="result"||!bridge.canAdvanceStage)return;
-    clearTouch();bridge.suspended=false;resumeAudio();bridge.nextStageSerial++;
+    clearTouch("next_stage_button");bridge.suspended=false;resumeAudio();bridge.nextStageSerial++;
   });
   titleButton.addEventListener("click",()=>{
     if(!["result","gameover"].includes(state))return;
-    clearTouch();bridge.suspended=false;bridge.titleSerial++;
+    clearTouch("title_button");bridge.suspended=false;bridge.titleSerial++;
   });
   function pickMenu(row){
     if(state==="title"&&row===2&&!canContinue)return;
-    bridge.suspended=false;resumeAudio();clearTouch();
+    bridge.suspended=false;resumeAudio();clearTouch("menu_pick:"+row);
     bridge.menuPickValue=row;bridge.menuPickSerial++;
   }
   settings.addEventListener("click",()=>{
     if(settings.disabled)return;
-    clearTouch();bridge.suspended=false;resumeAudio();bridge.settingsSerial++;
+    clearTouch("settings_button");bridge.suspended=false;resumeAudio();bridge.settingsSerial++;
   });
   for(const [button,serial] of [[weapon,"weaponSerial"]]) {
     button.addEventListener("click",()=>{
       if(state!=="settings" || button.disabled)return;
-      clearTouch();bridge.suspended=false;bridge[serial]++;
+      clearTouch("weapon_button");bridge.suspended=false;bridge[serial]++;
     });
   }
   function suspend() {
-    clearTouch();
+    clearTouch("focus_or_visibility");
     bridge.suspended = true;
     bridge.focusSerial++;
   }
@@ -354,8 +374,10 @@ window.bladeInput = {
     }
     if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) e.preventDefault();
   }, {capture:true});
-  function invalidateLayout() {
-    bridge.dragX=bridge.dragY=0;discardFrame=true;space.invalidate();
+  function invalidateLayout(event) {
+    const reason=event?.type||"resize_observer";
+    bridge.dragX=bridge.dragY=0;discardFrame=true;discardReason="notification:"+reason;space.invalidate(reason);
+    record("invalidate",{reason});
   }
   window.addEventListener("orientationchange",()=>{clearTouch("orientationchange");invalidateLayout();});
   window.addEventListener("resize",invalidateLayout);
@@ -374,7 +396,7 @@ window.bladeInput = {
   if (document.documentElement.requestFullscreen) {
     fullscreen.hidden = false;
     fullscreen.addEventListener("click", async () => {
-      clearTouch();
+      clearTouch("fullscreen_button");
       try {
         if (document.fullscreenElement) await document.exitFullscreen();
         else await document.documentElement.requestFullscreen();

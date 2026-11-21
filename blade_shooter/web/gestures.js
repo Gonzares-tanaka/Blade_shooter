@@ -89,3 +89,5 @@ class BladeGestures {
 }
 if(typeof module!=="undefined")module.exports=BladeGestures;
 if(typeof window!=="undefined")window.BladeGestures=BladeGestures;
+
+if(typeof window!=="undefined")window.bladeDiagnostics?.build("gestures","__BLADE_BUILD_ID__");

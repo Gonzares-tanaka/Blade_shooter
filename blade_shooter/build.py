@@ -43,15 +43,17 @@ def build():
     app_data = app.getvalue()
     (web/"blade-shooter.pyxapp").write_bytes(app_data)
     # 埋め込みpyxappにより、importした共通ソースを別途fetchする必要がない。
-    boot = ('launchPyxel({command:"play", name:"blade-shooter.pyxapp", '
+    boot = ('window.bladeDiagnostics?.build("boot",'+json.dumps(C.BUILD_ID)+');\nlaunchPyxel({command:"play", name:"blade-shooter.pyxapp", '
             'gamepad:"disabled", base64:' + json.dumps(base64.b64encode(app_data).decode()) + '});\n')
     (web/"boot.js").write_text(boot, encoding="utf-8", newline="\n")
     for path in (ROOT/"web").rglob("*"):
         if path.is_file():
             target=web/path.relative_to(ROOT/"web")
             target.parent.mkdir(parents=True,exist_ok=True)
-            target.write_bytes(path.read_bytes())
-    touch_config = dict(C.WEB_TOUCH, game_width=C.WIDTH, game_height=C.HEIGHT,version=C.VERSION)
+            if path.suffix in (".js",".html"):
+                target.write_text(path.read_text(encoding="utf8").replace("__BLADE_BUILD_ID__",C.BUILD_ID),encoding="utf8",newline="\n")
+            else:target.write_bytes(path.read_bytes())
+    touch_config = dict(C.WEB_TOUCH, game_width=C.WIDTH, game_height=C.HEIGHT,version=C.VERSION,build_id=C.BUILD_ID)
     (web/"touch-config.js").write_text("window.BLADE_TOUCH_CONFIG = "+json.dumps(touch_config)+";\n",
                                        encoding="utf-8", newline="\n")
     (web/".nojekyll").write_bytes(b"")
@@ -64,7 +66,7 @@ def build():
         html=html.replace('"play.html"','"play.html?v='+C.VERSION+'"')
         html=html.replace('play.html?embed=1','play.html?embed=1&v='+C.VERSION)
         page.write_text(html,encoding='utf8',newline='\n')
-    manifest = {"version": C.VERSION, "pyxel_web_version": "2.9.9",
+    manifest = {"version": C.VERSION, "build_id": C.BUILD_ID, "pyxel_web_version": "2.9.9",
                 "sources": {name: hashlib.sha256(data).hexdigest() for name, data in contents.items()}}
     (dist/"manifest.json").write_text(json.dumps(manifest, indent=2)+"\n", encoding="utf-8")
     with zipfile.ZipFile(dist/"blade-shooter-web.zip", "w") as archive:
