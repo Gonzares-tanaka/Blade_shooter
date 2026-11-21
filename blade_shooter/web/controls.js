@@ -12,6 +12,9 @@ window.bladeInput = {
   const bridge = window.bladeInput;
   const config = window.BLADE_TOUCH_CONFIG;
   const gestures = new window.BladeGestures(config);
+  const space = new window.BladeTouchSpace(config);
+  const contacts = new Map();
+  let lastEvent=null, discardFrame=false, lastTimeline=0;
   const screen = document.getElementById("pyxel-screen");
   const zones = document.getElementById("touch-zones");
   document.documentElement.style.setProperty("--move-zone-width",`${config.move_region_ratio*100}%`);
@@ -31,14 +34,53 @@ window.bladeInput = {
   let courseName = "stage";
   let courseLabel = "1面 / 5分＋巨大戦艦", sectionLabel = "最初から";
 
-  function clearTouch() {
+  function record(kind,data={}) {
+    if(!bridge.debug)return;
+    const item={at:performance.now(),kind,state,...data};
+    bridge.touchDebug.events.push(item);
+    if(bridge.touchDebug.events.length>512)bridge.touchDebug.events.shift();
+  }
+  function publishOwners() {
+    bridge.movePointerId=gestures.movePointer?.id??null;
+    bridge.attackPointerId=gestures.attackPointer?.id??null;
+    bridge.touchActive=gestures.hasContacts;
+  }
+  bridge.touchDebug={events:[],timeline:[],snapshot:()=>({
+    lastEvent,movePointerId:gestures.movePointer?.id??null,attackPointerId:gestures.attackPointer?.id??null,
+    drag:[bridge.dragX,bridge.dragY],rect:space.layout,revision:space.revision,
+    stageNumber,gamePoints:{move:gestures.movePointer?{x:gestures.movePointer.x,y:gestures.movePointer.y}:null,attack:gestures.attackPointer?{x:gestures.attackPointer.x,y:gestures.attackPointer.y}:null},
+    viewport:viewport(),dpr:devicePixelRatio,css:screen.querySelector("canvas")?{
+      width:getComputedStyle(screen.querySelector("canvas")).width,height:getComputedStyle(screen.querySelector("canvas")).height}:null
+  })};
+  bridge.recordPlayer=(x,y,scene,time,reason,dx,dy,beforeX,beforeY)=>{
+    if(!bridge.debug)return;
+    const player={x,y,scene,time,reason,drag:[dx,dy]};
+    bridge.touchDebug.player=player;
+    if(Math.hypot(x-beforeX,y-beforeY)>32){
+      const item={before:[beforeX,beforeY],after:[x,y],...player,...bridge.touchDebug.snapshot()};
+      record("player_jump",item);console.warn("BLADE_TOUCH_PLAYER_JUMP",JSON.stringify(item));
+    }
+  };
+  function clearTouch(reason="reset") {
     menuContact=null;
+    const ids=[...contacts.keys()];contacts.clear();
     gestures.cancel();
     bridge.cancelSlashSerial = bridge.slashSerial;
     bridge.inputResetSerial++;
     bridge.dragX = bridge.dragY = 0;
-    bridge.touchActive = false;
+    publishOwners();
+    for(const id of ids)try{if(screen.hasPointerCapture(id))screen.releasePointerCapture(id);}catch{}
+    record("reset",{reason:typeof reason==="string"?reason:reason.type});
   }
+  bridge.resetTouch=clearTouch;
+  bridge.consumeDrag=()=>{
+    const x=bridge.dragX,y=bridge.dragY;bridge.dragX=bridge.dragY=0;
+    const valid=state==="playing"&&!bridge.suspended&&gestures.movePointer&&!discardFrame&&
+      Number.isFinite(x)&&Number.isFinite(y)&&Math.hypot(x,y)<=config.max_drag_frame_px;
+    discardFrame=false;
+    if(!valid){if(x||y)record("discard_frame",{drag:[x,y]});return {x:0,y:0};}
+    return {x,y};
+  };
 
   function updateLabels() {
     const menus={title:["START","CONTINUE"],mode_select:["通しプレイ","ステージセレクト","戻る"],stage_select:["1面","2面","3面","戻る"]};
@@ -124,15 +166,40 @@ window.bladeInput = {
     if(read()!==value){write(value);updateLabels();}
   }});
 
-  function coordinates(e) {
-    const rect=screen.getBoundingClientRect();
-    return [(e.clientX-rect.left)*config.game_width/Math.max(1,rect.width),
-            (e.clientY-rect.top)*config.game_height/Math.max(1,rect.height)];
+  function viewport() {
+    const v=window.visualViewport;
+    return {innerWidth:innerWidth,innerHeight:innerHeight,vw:v?.width??innerWidth,vh:v?.height??innerHeight,
+      offsetLeft:v?.offsetLeft??0,offsetTop:v?.offsetTop??0};
   }
-  function eventTime(e) { return e.timeStamp > 0 ? e.timeStamp : performance.now(); }
+  function syncLayout() {
+    const canvas=screen.querySelector("canvas");
+    const status=space.observe(canvas?.getBoundingClientRect(),viewport());
+    if(status.changed){
+      bridge.dragX=bridge.dragY=0;discardFrame=true;
+      for(const [id,c] of contacts){
+        c.revision=-1;
+        const point=space.point(c.x,c.y);
+        if(point)gestures.rebase(id,...point,performance.now());
+      }
+      if(menuContact)menuContact=null;
+      record("layout_change",{rect:space.layout,viewport:viewport(),dpr:devicePixelRatio});
+    }
+    return status;
+  }
+  function coordinates(e) {syncLayout();return space.point(e.clientX,e.clientY);}
+  function eventTime(e) {
+    const now=performance.now(),stamp=e.timeStamp>1e12?e.timeStamp-performance.timeOrigin:e.timeStamp;
+    return Number.isFinite(stamp)&&stamp>0&&stamp<=now+1000?stamp:now;
+  } // Normalize legacy epoch-based Safari timestamps to the RAF clock.
   function flushAttack() { if(gestures.takeAttack()) bridge.slashSerial++; }
-  // 右担当のフリックだけを更新。攻撃側の変位は移動へ戻さない。
-  function tick(time) { gestures.tick(time); requestAnimationFrame(tick); }
+  function tick(time) {
+    syncLayout();gestures.tick(time);
+    if(bridge.debug&&time-lastTimeline>=1000){
+      lastTimeline=time;bridge.touchDebug.timeline.push({at:time,...bridge.touchDebug.snapshot(),player:bridge.touchDebug.player});
+      if(bridge.touchDebug.timeline.length>600)bridge.touchDebug.timeline.shift();
+    }
+    requestAnimationFrame(tick);
+  }
   requestAnimationFrame(tick);
 
   function resumeAudio() {
@@ -140,74 +207,94 @@ window.bladeInput = {
     if (context?.state === "suspended") context.resume().catch(() => {});
   }
 
+  function rememberEvent(e) {
+    lastEvent={type:e.type,id:e.pointerId,clientX:e.clientX,clientY:e.clientY,at:performance.now()};
+  }
   function queueMovement(e) {
-    const movement = gestures.move(e.pointerId, ...coordinates(e), eventTime(e), bridge.meleeReady);
+    const c=contacts.get(e.pointerId);
+    if(!c||!gestures.owns(e.pointerId))return;
+    const point=coordinates(e),time=eventTime(e);
+    c.x=e.clientX;c.y=e.clientY;
+    if(!point){record("invalid_coordinate",{event:lastEvent});return;}
+    if(c.revision!==space.revision){
+      c.revision=space.revision;gestures.rebase(e.pointerId,...point,time);
+      record("rebase",{id:e.pointerId,point});return;
+    }
+    const owner=gestures.role(e.pointerId)==="move"?gestures.movePointer:gestures.attackPointer;
+    const delta=[point[0]-owner.x,point[1]-owner.y];
+    if(!delta.every(Number.isFinite)||Math.hypot(...delta)>config.max_drag_event_px){
+      gestures.rebase(e.pointerId,...point,time);
+      if(gestures.role(e.pointerId)==="move"){bridge.dragX=bridge.dragY=0;discardFrame=true;}
+      record("discard_event",{id:e.pointerId,point,delta,rect:space.layout});return;
+    }
+    const movement=gestures.move(e.pointerId,...point,time,bridge.meleeReady);
     flushAttack();
-    if (!movement) return;
-    bridge.dragX += movement.x*config.drag_gain;
-    bridge.dragY += movement.y*config.drag_gain;
-  }
-
-  screen.addEventListener("pointerdown", e => {
-    if (e.button !== 0) return;
-    e.preventDefault();
-    bridge.suspended = false;
-    resumeAudio();
-    if (state !== "playing") {
-      if(menuContact)return; // Extra fingers never replace the page-turn owner.
-      clearTouch();menuContact={id:e.pointerId,point:coordinates(e),state};
-      screen.setPointerCapture(e.pointerId);return;
+    if(!movement||gestures.role(e.pointerId)!=="move")return;
+    if(discardFrame)return;
+    bridge.dragX+=movement.x*config.drag_gain;
+    bridge.dragY+=movement.y*config.drag_gain;
+    if(Math.hypot(bridge.dragX,bridge.dragY)>config.max_drag_frame_px){
+      record("discard_frame",{drag:[bridge.dragX,bridge.dragY]});
+      bridge.dragX=bridge.dragY=0;discardFrame=true;
     }
-    gestures.begin(e.pointerId, ...coordinates(e), eventTime(e), e.pointerType);
-    screen.setPointerCapture(e.pointerId);
-    bridge.touchActive = gestures.hasContacts;
-    // 押下位置は移動に使わない。自機から離れた場所で操作を始められる。
-  });
-  screen.addEventListener("pointermove", e => {
-    if (state !== "playing") return;
-    e.preventDefault();
-    if (!gestures.owns(e.pointerId)) return;
-    // 合成イベントの時刻と変位も使い、短い払いを最終点だけで判定しない。
-    const samples = e.getCoalescedEvents ? e.getCoalescedEvents() : [];
-    for (const sample of samples) queueMovement(sample);
+  }
+  const nonPassive={passive:false};
+  screen.addEventListener("pointerdown",e=>{
+    if(e.button!==0)return;
+    e.preventDefault();rememberEvent(e);bridge.suspended=false;resumeAudio();
+    const point=coordinates(e);if(!point)return;
+    if(state!=="playing"){
+      if(menuContact)return;
+      clearTouch("menu_contact");menuContact={id:e.pointerId,point,state,revision:space.revision};
+      contacts.set(e.pointerId,{x:e.clientX,y:e.clientY,revision:space.revision});
+    }else{
+      if(contacts.has(e.pointerId))return;
+      gestures.begin(e.pointerId,...point,eventTime(e),e.pointerType);
+      contacts.set(e.pointerId,{x:e.clientX,y:e.clientY,revision:space.revision});publishOwners();
+      if(gestures.role(e.pointerId)==="move"){bridge.dragX=bridge.dragY=0;}
+    }
+    try{screen.setPointerCapture(e.pointerId);}catch{endPointer(e);}
+  },nonPassive);
+  screen.addEventListener("pointermove",e=>{
+    if(state!=="playing")return;
+    e.preventDefault();rememberEvent(e);
+    // One current client-coordinate sample per event. Safari coalesced history can belong to an old layout.
     queueMovement(e);
-  });
-  screen.addEventListener("pointerup", e => {
-    e.preventDefault();
-    if (state !== "playing") {
-      const contact=menuContact,point=coordinates(e);
-      if(!contact||contact.id!==e.pointerId)return;
-      clearTouch();
-      if(!contact||contact.id!==e.pointerId||contact.state!==state||Math.hypot(point[0]-contact.point[0],point[1]-contact.point[1])>12)return;
-      if(state==="story"){
-        if(point[0]>=192&&point[0]<248&&point[1]>=284&&point[1]<308)bridge.settingsSerial++;
-        else bridge.confirmSerial++;
-      }else if(["title","mode_select","stage_select"].includes(state)){
-        const row=Math.floor((point[1]-140)/26);
-        if(point[0]>=20&&point[0]<=236&&row>=0&&row<menuOptions.children.length)pickMenu(row+1);
-      }else if(["result","gameover"].includes(state)&&point[0]>=20&&point[0]<=236){
-        const count=state==="gameover"?2:bridge.canAdvanceStage?3:2;
-        const row=Math.floor((point[1]-214)/15);
-        if(row>=0&&row<count)pickMenu(row+1);
-      }
-      return;
-    }
-    // 離指の座標は左の最終移動にのみ使う。右はpointermoveでだけ即発動する。
-    if (gestures.role(e.pointerId)==="move") queueMovement(e);
-    gestures.end(e.pointerId);
-    bridge.touchActive = gestures.hasContacts;
-    // 相対移動は次の1フレームで消費。継続する方向入力は保持しない。
-  });
-  screen.addEventListener("pointercancel", clearTouch);
-  screen.addEventListener("lostpointercapture", e => {
-    if (gestures.owns(e.pointerId)||menuContact?.id===e.pointerId) clearTouch();
-  });
-  for (const event of ["contextmenu", "dblclick", "gesturestart", "gesturechange"]) {
-    screen.addEventListener(event, e => e.preventDefault(), { passive: false });
+  },nonPassive);
+  function endPointer(e) {
+    if(!contacts.has(e.pointerId)&&!gestures.role(e.pointerId)&&menuContact?.id!==e.pointerId)return;
+    rememberEvent(e);
+    if(menuContact?.id===e.pointerId)menuContact=null;
+    if(gestures.role(e.pointerId)==="move")bridge.dragX=bridge.dragY=0;
+    contacts.delete(e.pointerId);gestures.end(e.pointerId);publishOwners();
+    try{if(screen.hasPointerCapture(e.pointerId))screen.releasePointerCapture(e.pointerId);}catch{}
+    record("end",{id:e.pointerId,event:e.type});
   }
-  // 古いSafariでもゲーム操作領域内のスクロール・ピンチを抑止。
-  for (const event of ["touchstart", "touchmove", "touchend"]) {
-    screen.addEventListener(event, e => e.preventDefault(), { passive: false });
+  screen.addEventListener("pointerup",e=>{
+    e.preventDefault();rememberEvent(e);
+    const contact=menuContact,point=coordinates(e);
+    endPointer(e); // Never turn the release location into a final drag or flick.
+    if(state==="playing"||!point||!contact||contact.id!==e.pointerId||contact.state!==state||contact.revision!==space.revision||
+      Math.hypot(point[0]-contact.point[0],point[1]-contact.point[1])>12)return;
+    clearTouch("menu_release");
+    if(state==="story"){
+      if(point[0]>=192&&point[0]<248&&point[1]>=284&&point[1]<308)bridge.settingsSerial++;
+      else bridge.confirmSerial++;
+    }else if(["title","mode_select","stage_select"].includes(state)){
+      const row=Math.floor((point[1]-140)/26);
+      if(point[0]>=20&&point[0]<=236&&row>=0&&row<menuOptions.children.length)pickMenu(row+1);
+    }else if(["result","gameover"].includes(state)&&point[0]>=20&&point[0]<=236){
+      const count=state==="gameover"?2:bridge.canAdvanceStage?3:2,row=Math.floor((point[1]-214)/15);
+      if(row>=0&&row<count)pickMenu(row+1);
+    }
+  },nonPassive);
+  screen.addEventListener("pointercancel",e=>{e.preventDefault();endPointer(e);},nonPassive);
+  screen.addEventListener("lostpointercapture",endPointer,nonPassive);
+  // Captured pointers end on the screen; window also handles a lost capture / off-canvas release.
+  window.addEventListener("pointerup",endPointer,nonPassive);
+  window.addEventListener("pointercancel",endPointer,nonPassive);
+  for(const event of ["contextmenu","dblclick","gesturestart","gesturechange","gestureend","touchstart","touchmove","touchend","touchcancel"]){
+    screen.addEventListener(event,e=>e.preventDefault(),nonPassive);
   }
 
   start.addEventListener("click", () => {
@@ -267,11 +354,17 @@ window.bladeInput = {
     }
     if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) e.preventDefault();
   }, {capture:true});
-  window.addEventListener("orientationchange", clearTouch);
+  function invalidateLayout() {
+    bridge.dragX=bridge.dragY=0;discardFrame=true;space.invalidate();
+  }
+  window.addEventListener("orientationchange",()=>{clearTouch("orientationchange");invalidateLayout();});
+  window.addEventListener("resize",invalidateLayout);
+  window.visualViewport?.addEventListener("resize",invalidateLayout);
+  window.visualViewport?.addEventListener("scroll",invalidateLayout);
 
   const display = document.getElementById("display");
   const resize = () => {
-    clearTouch();
+    invalidateLayout();
     const scale = Math.min(display.clientWidth/config.game_width, display.clientHeight/config.game_height);
     document.documentElement.style.setProperty("--game-width", `${config.game_width*scale}px`);
     document.documentElement.style.setProperty("--game-height", `${config.game_height*scale}px`);

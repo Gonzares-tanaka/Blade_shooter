@@ -1,0 +1,422 @@
+{
+  "samples": [
+    {
+      "afterSeconds": 5,
+      "js": {
+        "rect": {
+          "x": 12,
+          "y": 202.5,
+          "width": 416,
+          "height": 520,
+          "top": 202.5,
+          "right": 428,
+          "bottom": 722.5,
+          "left": 12
+        },
+        "canvas": [
+          {
+            "rect": {
+              "x": 13,
+              "y": 203.5,
+              "width": 414,
+              "height": 518,
+              "top": 203.5,
+              "right": 427,
+              "bottom": 721.5,
+              "left": 13
+            },
+            "w": 414,
+            "h": 518
+          }
+        ],
+        "drag": [
+          0,
+          0
+        ],
+        "state": "playing",
+        "viewport": [
+          440,
+          956,
+          440,
+          956,
+          0,
+          0
+        ],
+        "dpr": 3
+      },
+      "game": {
+        "time": 5.033333333333321,
+        "x": 128,
+        "y": 266,
+        "hp": 2,
+        "state": "playing"
+      }
+    },
+    {
+      "afterSeconds": 10,
+      "js": {
+        "rect": {
+          "x": 12,
+          "y": 202.5,
+          "width": 416,
+          "height": 520,
+          "top": 202.5,
+          "right": 428,
+          "bottom": 722.5,
+          "left": 12
+        },
+        "canvas": [
+          {
+            "rect": {
+              "x": 13,
+              "y": 203.5,
+              "width": 414,
+              "height": 518,
+              "top": 203.5,
+              "right": 427,
+              "bottom": 721.5,
+              "left": 13
+            },
+            "w": 414,
+            "h": 518
+          }
+        ],
+        "drag": [
+          0,
+          0
+        ],
+        "state": "playing",
+        "viewport": [
+          440,
+          956,
+          440,
+          956,
+          0,
+          0
+        ],
+        "dpr": 3
+      },
+      "game": {
+        "time": 10.066666666666746,
+        "x": 128,
+        "y": 266,
+        "hp": 1,
+        "state": "playing"
+      }
+    },
+    {
+      "afterSeconds": 15,
+      "js": {
+        "rect": {
+          "x": 12,
+          "y": 202.5,
+          "width": 416,
+          "height": 520,
+          "top": 202.5,
+          "right": 428,
+          "bottom": 722.5,
+          "left": 12
+        },
+        "canvas": [
+          {
+            "rect": {
+              "x": 13,
+              "y": 203.5,
+              "width": 414,
+              "height": 518,
+              "top": 203.5,
+              "right": 427,
+              "bottom": 721.5,
+              "left": 13
+            },
+            "w": 414,
+            "h": 518
+          }
+        ],
+        "drag": [
+          0,
+          0
+        ],
+        "state": "playing",
+        "viewport": [
+          440,
+          956,
+          440,
+          956,
+          0,
+          0
+        ],
+        "dpr": 3
+      },
+      "game": {
+        "time": 15.116666666666998,
+        "x": 128,
+        "y": 266,
+        "hp": 3,
+        "state": "playing"
+      }
+    },
+    {
+      "afterSeconds": 20,
+      "js": {
+        "rect": {
+          "x": 12,
+          "y": 202.5,
+          "width": 416,
+          "height": 520,
+          "top": 202.5,
+          "right": 428,
+          "bottom": 722.5,
+          "left": 12
+        },
+        "canvas": [
+          {
+            "rect": {
+              "x": 13,
+              "y": 203.5,
+              "width": 414,
+              "height": 518,
+              "top": 203.5,
+              "right": 427,
+              "bottom": 721.5,
+              "left": 13
+            },
+            "w": 414,
+            "h": 518
+          }
+        ],
+        "drag": [
+          0,
+          0
+        ],
+        "state": "playing",
+        "viewport": [
+          440,
+          956,
+          440,
+          956,
+          0,
+          0
+        ],
+        "dpr": 3
+      },
+      "game": {
+        "time": 20.150000000000137,
+        "x": 128,
+        "y": 266,
+        "hp": 1,
+        "state": "playing"
+      }
+    },
+    {
+      "afterSeconds": 25,
+      "js": {
+        "rect": {
+          "x": 12,
+          "y": 202.5,
+          "width": 416,
+          "height": 520,
+          "top": 202.5,
+          "right": 428,
+          "bottom": 722.5,
+          "left": 12
+        },
+        "canvas": [
+          {
+            "rect": {
+              "x": 13,
+              "y": 203.5,
+              "width": 414,
+              "height": 518,
+              "top": 203.5,
+              "right": 427,
+              "bottom": 721.5,
+              "left": 13
+            },
+            "w": 414,
+            "h": 518
+          }
+        ],
+        "drag": [
+          0,
+          0
+        ],
+        "state": "playing",
+        "viewport": [
+          440,
+          956,
+          440,
+          956,
+          0,
+          0
+        ],
+        "dpr": 3
+      },
+      "game": {
+        "time": 25.19999999999985,
+        "x": 128,
+        "y": 266,
+        "hp": 3,
+        "state": "playing"
+      }
+    },
+    {
+      "afterSeconds": 30,
+      "js": {
+        "rect": {
+          "x": 12,
+          "y": 202.5,
+          "width": 416,
+          "height": 520,
+          "top": 202.5,
+          "right": 428,
+          "bottom": 722.5,
+          "left": 12
+        },
+        "canvas": [
+          {
+            "rect": {
+              "x": 13,
+              "y": 203.5,
+              "width": 414,
+              "height": 518,
+              "top": 203.5,
+              "right": 427,
+              "bottom": 721.5,
+              "left": 13
+            },
+            "w": 414,
+            "h": 518
+          }
+        ],
+        "drag": [
+          0,
+          0
+        ],
+        "state": "playing",
+        "viewport": [
+          440,
+          956,
+          440,
+          956,
+          0,
+          0
+        ],
+        "dpr": 3
+      },
+      "game": {
+        "time": 30.233333333332897,
+        "x": 128,
+        "y": 266,
+        "hp": 2,
+        "state": "playing"
+      }
+    },
+    {
+      "afterSeconds": 35,
+      "js": {
+        "rect": {
+          "x": 12,
+          "y": 202.5,
+          "width": 416,
+          "height": 520,
+          "top": 202.5,
+          "right": 428,
+          "bottom": 722.5,
+          "left": 12
+        },
+        "canvas": [
+          {
+            "rect": {
+              "x": 13,
+              "y": 203.5,
+              "width": 414,
+              "height": 518,
+              "top": 203.5,
+              "right": 427,
+              "bottom": 721.5,
+              "left": 13
+            },
+            "w": 414,
+            "h": 518
+          }
+        ],
+        "drag": [
+          0,
+          0
+        ],
+        "state": "playing",
+        "viewport": [
+          440,
+          956,
+          440,
+          956,
+          0,
+          0
+        ],
+        "dpr": 3
+      },
+      "game": {
+        "time": 35.26666666666595,
+        "x": 128,
+        "y": 266,
+        "hp": 1,
+        "state": "playing"
+      }
+    },
+    {
+      "afterSeconds": 40,
+      "js": {
+        "rect": {
+          "x": 12,
+          "y": 220.5,
+          "width": 416,
+          "height": 520,
+          "top": 220.5,
+          "right": 428,
+          "bottom": 740.5,
+          "left": 12
+        },
+        "canvas": [
+          {
+            "rect": {
+              "x": 13,
+              "y": 221.5,
+              "width": 414,
+              "height": 518,
+              "top": 221.5,
+              "right": 427,
+              "bottom": 739.5,
+              "left": 13
+            },
+            "w": 414,
+            "h": 518
+          }
+        ],
+        "drag": [
+          0,
+          0
+        ],
+        "state": "gameover",
+        "viewport": [
+          440,
+          956,
+          440,
+          956,
+          0,
+          0
+        ],
+        "dpr": 3
+      },
+      "game": {
+        "time": 35.29999999999928,
+        "x": 128,
+        "y": 266,
+        "hp": 0,
+        "state": "gameover"
+      }
+    }
+  ],
+  "trace": [],
+  "errors": []
+}

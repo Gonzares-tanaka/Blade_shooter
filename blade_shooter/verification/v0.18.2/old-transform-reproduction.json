@@ -1,0 +1,78 @@
+{
+  "injectedLayout": true,
+  "actualReportedDeviceCauseConfirmed": false,
+  "cases": [
+    {
+      "cssDelta": [
+        -5,
+        -5
+      ],
+      "rect": {
+        "width": 2,
+        "height": 2
+      },
+      "oldDelta": [
+        -640,
+        -800
+      ],
+      "after": [
+        8,
+        32
+      ]
+    },
+    {
+      "cssDelta": [
+        -5,
+        5
+      ],
+      "rect": {
+        "width": 2,
+        "height": 2
+      },
+      "oldDelta": [
+        -640,
+        800
+      ],
+      "after": [
+        8,
+        312
+      ]
+    },
+    {
+      "cssDelta": [
+        5,
+        -5
+      ],
+      "rect": {
+        "width": 2,
+        "height": 2
+      },
+      "oldDelta": [
+        640,
+        -800
+      ],
+      "after": [
+        248,
+        32
+      ]
+    },
+    {
+      "cssDelta": [
+        5,
+        5
+      ],
+      "rect": {
+        "width": 2,
+        "height": 2
+      },
+      "oldDelta": [
+        640,
+        800
+      ],
+      "after": [
+        248,
+        312
+      ]
+    }
+  ]
+}

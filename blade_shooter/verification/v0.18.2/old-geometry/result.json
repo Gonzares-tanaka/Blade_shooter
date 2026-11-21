@@ -1,0 +1,207 @@
+{
+  "debug": {
+    "rect": {
+      "x": 219,
+      "y": 461.5,
+      "width": 2,
+      "height": 2,
+      "top": 461.5,
+      "right": 221,
+      "bottom": 463.5,
+      "left": 219
+    },
+    "move": null,
+    "drag": [
+      0,
+      0
+    ],
+    "state": "playing"
+  },
+  "injectedCollapsedLayout": true,
+  "actualIPhoneCauseConfirmed": false,
+  "samples": [
+    {
+      "afterSeconds": 3,
+      "js": {
+        "rect": {
+          "x": 12,
+          "y": 202.5,
+          "width": 416,
+          "height": 520,
+          "top": 202.5,
+          "right": 428,
+          "bottom": 722.5,
+          "left": 12
+        },
+        "canvas": [
+          {
+            "rect": {
+              "x": 13,
+              "y": 203.5,
+              "width": 414,
+              "height": 518,
+              "top": 203.5,
+              "right": 427,
+              "bottom": 721.5,
+              "left": 13
+            },
+            "w": 414,
+            "h": 518
+          }
+        ],
+        "drag": [
+          0,
+          0
+        ],
+        "state": "playing",
+        "viewport": [
+          440,
+          956,
+          440,
+          956,
+          0,
+          0
+        ],
+        "dpr": 3
+      },
+      "game": {
+        "time": 3.099999999999994,
+        "x": 128,
+        "y": 266,
+        "hp": 3,
+        "state": "playing"
+      }
+    }
+  ],
+  "trace": [
+    {
+      "time": 3.3166666666666598,
+      "before": [
+        128,
+        266
+      ],
+      "after": [
+        248,
+        312
+      ],
+      "drag": [
+        768,
+        960
+      ],
+      "state": "playing"
+    },
+    {
+      "time": 3.4166666666666594,
+      "before": [
+        248,
+        312
+      ],
+      "after": [
+        8,
+        32
+      ],
+      "drag": [
+        -34478.4,
+        -89844
+      ],
+      "state": "playing"
+    },
+    {
+      "time": 3.4999999999999925,
+      "before": [
+        128,
+        266
+      ],
+      "after": [
+        8,
+        312
+      ],
+      "drag": [
+        -768,
+        960
+      ],
+      "state": "playing"
+    },
+    {
+      "time": 3.5833333333333255,
+      "before": [
+        8,
+        312
+      ],
+      "after": [
+        8,
+        32
+      ],
+      "drag": [
+        -32942.4,
+        -89844
+      ],
+      "state": "playing"
+    },
+    {
+      "time": 3.6666666666666585,
+      "before": [
+        128,
+        266
+      ],
+      "after": [
+        248,
+        32
+      ],
+      "drag": [
+        768,
+        -960
+      ],
+      "state": "playing"
+    },
+    {
+      "time": 3.7499999999999916,
+      "before": [
+        248,
+        32
+      ],
+      "after": [
+        8,
+        32
+      ],
+      "drag": [
+        -34478.4,
+        -87924
+      ],
+      "state": "playing"
+    },
+    {
+      "time": 3.816666666666658,
+      "before": [
+        128,
+        266
+      ],
+      "after": [
+        8,
+        32
+      ],
+      "drag": [
+        -768,
+        -960
+      ],
+      "state": "playing"
+    },
+    {
+      "time": 3.899999999999991,
+      "before": [
+        8,
+        32
+      ],
+      "after": [
+        8,
+        32
+      ],
+      "drag": [
+        -32942.4,
+        -87924
+      ],
+      "state": "playing"
+    }
+  ],
+  "errors": []
+}

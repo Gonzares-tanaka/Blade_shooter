@@ -1,7 +1,7 @@
 """調整箇所。時間=秒、距離=ゲーム内px、速度=px/秒。変更後build.pyで配布版更新。"""
 from stage2_config import MISSILE,STEALTH
 
-TITLE, VERSION = "BLADE / CLOSE QUARTERS", "0.18.1"
+TITLE, VERSION = "BLADE / CLOSE QUARTERS", "0.18.2"
 WIDTH, HEIGHT, HUD_HEIGHT, FPS = 256, 320, 24, 60
 PLAYER_SIZE, PLAYER_HIT_RADIUS = 16, 2.0
 PLAYER_SPEED, PLAYER_HP, INVINCIBLE_SECONDS = 125.0, 3, 1.2
@@ -362,6 +362,8 @@ GKD_INPUTS = {
 }
 # 距離=256x320ゲームpx、時刻=ms。ドラッグの倍率は判定に掛けない。
 WEB_TOUCH = {
+    "rect_epsilon_css_px": 0.25, "min_canvas_css_px": 16.0,
+    "max_drag_event_px": 48.0, "max_drag_frame_px": 64.0, # ゲームpx。異常差分は破棄。
     "drag_gain": 1.2, "move_region_ratio": 0.5, # 左側の幅。境界ちょうどは攻撃側。
     "flick_axes": {"blade":"horizontal", "axe":"horizontal", "lance":"vertical"},
     "flick_distance_px": 14.0, "flick_min_speed_px_ms": 0.40,

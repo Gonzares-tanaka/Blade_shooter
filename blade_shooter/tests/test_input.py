@@ -19,6 +19,22 @@ class FakePyxel:
 
 
 class InputTests(unittest.TestCase):
+    def test_web_no_owner_nonfinite_and_oversized_drag_are_discarded(self):
+        i=Input(FakePyxel(),'web')
+        for dx,dy,owner in ((10,20,None),(float('nan'),0,1),(0,float('inf'),1),(500,-500,1)):
+            i.bridge=SimpleNamespace(dragX=dx,dragY=dy,movePointerId=owner,suspended=False)
+            a=i.read()
+            self.assertEqual((a.drag_x,a.drag_y),(0,0))
+            self.assertEqual((i.bridge.dragX,i.bridge.dragY),(0,0))
+
+    def test_web_atomic_consumer_does_not_reuse_previous_frame(self):
+        i=Input(FakePyxel(),'web');pending=[10,-8]
+        def consume():
+            result=SimpleNamespace(x=pending[0],y=pending[1]);pending[:]=[0,0];return result
+        i.bridge=SimpleNamespace(consumeDrag=consume,movePointerId=17,suspended=False)
+        a=i.read();self.assertEqual((a.drag_x,a.drag_y),(10,-8))
+        a=i.read();self.assertEqual((a.drag_x,a.drag_y),(0,0))
+
     def test_gkd_profile_isolated_and_edge_triggered(self):
         p=FakePyxel();i=Input(p,'gkd')
         p.held={p.KEY_Z};p.edges=set(p.held)

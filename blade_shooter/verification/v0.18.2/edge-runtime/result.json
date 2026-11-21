@@ -1,0 +1,445 @@
+{
+  "result": "PASS",
+  "engine": "Edge",
+  "version": "157.0.4341.60",
+  "runtime": "actual Pyxel 2.9.9 + CDP native touches",
+  "realIPhone": false,
+  "secondsPerScenario": 60,
+  "results": [
+    {
+      "scenario": "runtime-native",
+      "wallSeconds": 61.233,
+      "cycles": 73,
+      "maxStep": 9.988877484851383,
+      "attacks": 40,
+      "idleTests": [
+        {
+          "entry": "start-story",
+          "before": {
+            "x": 128,
+            "y": 266,
+            "time": 0
+          },
+          "after": {
+            "x": 128,
+            "y": 266,
+            "time": 30.116666666666237,
+            "hp": 2,
+            "lives": 1,
+            "state": "playing"
+          },
+          "owners": [
+            null,
+            null
+          ],
+          "drag": [
+            0,
+            0
+          ],
+          "last_layout_changes": [
+            {
+              "at": 10333.699999988079,
+              "kind": "layout_change",
+              "state": "title",
+              "rect": {
+                "left": 13,
+                "top": 240,
+                "width": 414,
+                "height": 518,
+                "innerWidth": 440,
+                "innerHeight": 956,
+                "vw": 440,
+                "vh": 956,
+                "offsetLeft": 0,
+                "offsetTop": 0
+              },
+              "viewport": {
+                "innerWidth": 440,
+                "innerHeight": 956,
+                "vw": 440,
+                "vh": 956,
+                "offsetLeft": 0,
+                "offsetTop": 0
+              },
+              "dpr": 3
+            },
+            {
+              "at": 10888.900000035763,
+              "kind": "layout_change",
+              "state": "story",
+              "rect": {
+                "left": 13,
+                "top": 221.5,
+                "width": 414,
+                "height": 518,
+                "innerWidth": 440,
+                "innerHeight": 956,
+                "vw": 440,
+                "vh": 956,
+                "offsetLeft": 0,
+                "offsetTop": 0
+              },
+              "viewport": {
+                "innerWidth": 440,
+                "innerHeight": 956,
+                "vw": 440,
+                "vh": 956,
+                "offsetLeft": 0,
+                "offsetTop": 0
+              },
+              "dpr": 3
+            },
+            {
+              "at": 11082.100000023842,
+              "kind": "layout_change",
+              "state": "playing",
+              "rect": {
+                "left": 13,
+                "top": 203.5,
+                "width": 414,
+                "height": 518,
+                "innerWidth": 440,
+                "innerHeight": 956,
+                "vw": 440,
+                "vh": 956,
+                "offsetLeft": 0,
+                "offsetTop": 0
+              },
+              "viewport": {
+                "innerWidth": 440,
+                "innerHeight": 956,
+                "vw": 440,
+                "vh": 956,
+                "offsetLeft": 0,
+                "offsetTop": 0
+              },
+              "dpr": 3
+            }
+          ],
+          "timeline_samples": 34
+        },
+        {
+          "entry": "story-pages",
+          "before": {
+            "x": 128,
+            "y": 266,
+            "time": 0.09999999999999999
+          },
+          "after": {
+            "x": 128,
+            "y": 266,
+            "time": 30.133333333332903,
+            "hp": 2,
+            "lives": 1,
+            "state": "playing"
+          },
+          "owners": [
+            null,
+            null
+          ],
+          "drag": [
+            0,
+            0
+          ],
+          "last_layout_changes": [
+            {
+              "at": 41365,
+              "kind": "layout_change",
+              "state": "title",
+              "rect": {
+                "left": 13,
+                "top": 240,
+                "width": 414,
+                "height": 518,
+                "innerWidth": 440,
+                "innerHeight": 956,
+                "vw": 440,
+                "vh": 956,
+                "offsetLeft": 0,
+                "offsetTop": 0
+              },
+              "viewport": {
+                "innerWidth": 440,
+                "innerHeight": 956,
+                "vw": 440,
+                "vh": 956,
+                "offsetLeft": 0,
+                "offsetTop": 0
+              },
+              "dpr": 3
+            },
+            {
+              "at": 41601.60000002384,
+              "kind": "layout_change",
+              "state": "story",
+              "rect": {
+                "left": 13,
+                "top": 221.5,
+                "width": 414,
+                "height": 518,
+                "innerWidth": 440,
+                "innerHeight": 956,
+                "vw": 440,
+                "vh": 956,
+                "offsetLeft": 0,
+                "offsetTop": 0
+              },
+              "viewport": {
+                "innerWidth": 440,
+                "innerHeight": 956,
+                "vw": 440,
+                "vh": 956,
+                "offsetLeft": 0,
+                "offsetTop": 0
+              },
+              "dpr": 3
+            },
+            {
+              "at": 42134.90000003576,
+              "kind": "layout_change",
+              "state": "playing",
+              "rect": {
+                "left": 13,
+                "top": 203.5,
+                "width": 414,
+                "height": 518,
+                "innerWidth": 440,
+                "innerHeight": 956,
+                "vw": 440,
+                "vh": 956,
+                "offsetLeft": 0,
+                "offsetTop": 0
+              },
+              "viewport": {
+                "innerWidth": 440,
+                "innerHeight": 956,
+                "vw": 440,
+                "vh": 956,
+                "offsetLeft": 0,
+                "offsetTop": 0
+              },
+              "dpr": 3
+            }
+          ],
+          "timeline_samples": 65
+        },
+        {
+          "entry": "stage-select",
+          "before": {
+            "x": 128,
+            "y": 266,
+            "time": 0.016666666666666666
+          },
+          "after": {
+            "x": 128,
+            "y": 266,
+            "time": 30.06666666666624,
+            "hp": 2,
+            "lives": 1,
+            "state": "playing"
+          },
+          "owners": [
+            null,
+            null
+          ],
+          "drag": [
+            0,
+            0
+          ],
+          "last_layout_changes": [
+            {
+              "at": 42134.90000003576,
+              "kind": "layout_change",
+              "state": "playing",
+              "rect": {
+                "left": 13,
+                "top": 203.5,
+                "width": 414,
+                "height": 518,
+                "innerWidth": 440,
+                "innerHeight": 956,
+                "vw": 440,
+                "vh": 956,
+                "offsetLeft": 0,
+                "offsetTop": 0
+              },
+              "viewport": {
+                "innerWidth": 440,
+                "innerHeight": 956,
+                "vw": 440,
+                "vh": 956,
+                "offsetLeft": 0,
+                "offsetTop": 0
+              },
+              "dpr": 3
+            },
+            {
+              "at": 72425.5,
+              "kind": "layout_change",
+              "state": "title",
+              "rect": {
+                "left": 13,
+                "top": 240,
+                "width": 414,
+                "height": 518,
+                "innerWidth": 440,
+                "innerHeight": 956,
+                "vw": 440,
+                "vh": 956,
+                "offsetLeft": 0,
+                "offsetTop": 0
+              },
+              "viewport": {
+                "innerWidth": 440,
+                "innerHeight": 956,
+                "vw": 440,
+                "vh": 956,
+                "offsetLeft": 0,
+                "offsetTop": 0
+              },
+              "dpr": 3
+            },
+            {
+              "at": 72805.19999998808,
+              "kind": "layout_change",
+              "state": "playing",
+              "rect": {
+                "left": 13,
+                "top": 203.5,
+                "width": 414,
+                "height": 518,
+                "innerWidth": 440,
+                "innerHeight": 956,
+                "vw": 440,
+                "vh": 956,
+                "offsetLeft": 0,
+                "offsetTop": 0
+              },
+              "viewport": {
+                "innerWidth": 440,
+                "innerHeight": 956,
+                "vw": 440,
+                "vh": 956,
+                "offsetLeft": 0,
+                "offsetTop": 0
+              },
+              "dpr": 3
+            }
+          ],
+          "timeline_samples": 96
+        },
+        {
+          "entry": "keyboard",
+          "before": {
+            "x": 128,
+            "y": 266,
+            "time": 0.09999999999999999
+          },
+          "after": {
+            "x": 128,
+            "y": 266,
+            "time": 30.09999999999957,
+            "hp": 2,
+            "lives": 1,
+            "state": "playing"
+          },
+          "owners": [
+            null,
+            null
+          ],
+          "drag": [
+            0,
+            0
+          ],
+          "last_layout_changes": [
+            {
+              "at": 103033,
+              "kind": "layout_change",
+              "state": "title",
+              "rect": {
+                "left": 13,
+                "top": 240,
+                "width": 414,
+                "height": 518,
+                "innerWidth": 440,
+                "innerHeight": 956,
+                "vw": 440,
+                "vh": 956,
+                "offsetLeft": 0,
+                "offsetTop": 0
+              },
+              "viewport": {
+                "innerWidth": 440,
+                "innerHeight": 956,
+                "vw": 440,
+                "vh": 956,
+                "offsetLeft": 0,
+                "offsetTop": 0
+              },
+              "dpr": 3
+            },
+            {
+              "at": 103292.19999998808,
+              "kind": "layout_change",
+              "state": "story",
+              "rect": {
+                "left": 13,
+                "top": 221.5,
+                "width": 414,
+                "height": 518,
+                "innerWidth": 440,
+                "innerHeight": 956,
+                "vw": 440,
+                "vh": 956,
+                "offsetLeft": 0,
+                "offsetTop": 0
+              },
+              "viewport": {
+                "innerWidth": 440,
+                "innerHeight": 956,
+                "vw": 440,
+                "vh": 956,
+                "offsetLeft": 0,
+                "offsetTop": 0
+              },
+              "dpr": 3
+            },
+            {
+              "at": 103492.10000002384,
+              "kind": "layout_change",
+              "state": "playing",
+              "rect": {
+                "left": 13,
+                "top": 203.5,
+                "width": 414,
+                "height": 518,
+                "innerWidth": 440,
+                "innerHeight": 956,
+                "vw": 440,
+                "vh": 956,
+                "offsetLeft": 0,
+                "offsetTop": 0
+              },
+              "viewport": {
+                "innerWidth": 440,
+                "innerHeight": 956,
+                "vw": 440,
+                "vh": 956,
+                "offsetLeft": 0,
+                "offsetTop": 0
+              },
+              "dpr": 3
+            }
+          ],
+          "timeline_samples": 126
+        }
+      ],
+      "debug_counts": {
+        "events": 512,
+        "timeline": 186
+      }
+    }
+  ],
+  "errors": [],
+  "trace_file": "trace.json.gz"
+}

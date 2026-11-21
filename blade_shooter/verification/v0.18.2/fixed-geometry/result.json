@@ -1,0 +1,78 @@
+{
+  "debug": {
+    "rect": {
+      "x": 219,
+      "y": 461.5,
+      "width": 2,
+      "height": 2,
+      "top": 461.5,
+      "right": 221,
+      "bottom": 463.5,
+      "left": 219
+    },
+    "drag": [
+      0,
+      0
+    ],
+    "state": "playing"
+  },
+  "fixedInput": true,
+  "injectedCollapsedLayout": true,
+  "actualIPhoneCauseConfirmed": false,
+  "samples": [
+    {
+      "afterSeconds": 3,
+      "js": {
+        "rect": {
+          "x": 12,
+          "y": 202.5,
+          "width": 416,
+          "height": 520,
+          "top": 202.5,
+          "right": 428,
+          "bottom": 722.5,
+          "left": 12
+        },
+        "canvas": [
+          {
+            "rect": {
+              "x": 13,
+              "y": 203.5,
+              "width": 414,
+              "height": 518,
+              "top": 203.5,
+              "right": 427,
+              "bottom": 721.5,
+              "left": 13
+            },
+            "w": 414,
+            "h": 518
+          }
+        ],
+        "drag": [
+          0,
+          0
+        ],
+        "state": "playing",
+        "viewport": [
+          440,
+          956,
+          440,
+          956,
+          0,
+          0
+        ],
+        "dpr": 3
+      },
+      "game": {
+        "time": 3.1166666666666605,
+        "x": 128,
+        "y": 266,
+        "hp": 3,
+        "state": "playing"
+      }
+    }
+  ],
+  "trace": [],
+  "errors": []
+}

@@ -57,6 +57,6 @@ class CaveWalls:
                 if x-8<a or x+8>b:blocked=True;break
         if blocked:
             if not self.latched:game.hurt();self.contacts+=1
-            game.px=max(left+S['player_margin'],min(right-S['player_margin'],game.px))
+            game.set_player_position(max(left+S['player_margin'],min(right-S['player_margin'],game.px)),game.py,"cave_wall")
             self.latched=True
         elif min(game.px-left,right-game.px)>=S['release_margin']:self.latched=False

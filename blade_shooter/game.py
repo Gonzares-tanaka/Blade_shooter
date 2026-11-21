@@ -272,7 +272,7 @@ class Game:
         self.state = "playing"
         self.checkpoint=max(0,min(self.checkpoint,len(self.course_config["sections"])-1))
         self.time = self.world_time = self.course_config["sections"][self.checkpoint][0]
-        self.px, self.py = C.WIDTH/2, C.HEIGHT-54
+        self.set_player_position(C.WIDTH/2, C.HEIGHT-54, "stage_start")
         self.invincible = 0.0
         self.cooldown, self.swing, self.shot_clock = 0.0, -1.0, 0.0
         self.swing_weapon = self.weapon
@@ -466,6 +466,13 @@ class Game:
         self.course=course
         self.stage_definition=get_stage(C.COURSES[course].get("stage_number",1))
         self.stage_data=self.stage_definition.build(self.seed)
+
+    def set_player_position(self,x,y,reason):
+        before=(getattr(self,"px",x),getattr(self,"py",y))
+        self.px,self.py=x,y
+        self.last_position_reason=reason
+        if self.debug and math.dist(before,(x,y))>32:
+            self.log("player_position",before=before,after=(x,y),reason=reason,stage=self.run.current_stage)
 
     def log(self,event,**data):
         if not self.debug:return
@@ -867,8 +874,10 @@ class Game:
         previous_pivot = (self.px, self.py-4)
         length = max(1.0, math.hypot(action.x, action.y))
         gain = self.player_speed/C.PLAYER_SPEED
-        self.px = max(8, min(C.WIDTH-8, self.px+action.x/length*self.player_speed*dt+action.drag_x*gain))
-        self.py = max(C.HUD_HEIGHT+8, min(C.HEIGHT-8, self.py+action.y/length*self.player_speed*dt+action.drag_y*gain))
+        self.set_player_position(
+            max(8,min(C.WIDTH-8,self.px+action.x/length*self.player_speed*dt+action.drag_x*gain)),
+            max(C.HUD_HEIGHT+8,min(C.HEIGHT-8,self.py+action.y/length*self.player_speed*dt+action.drag_y*gain)),
+            "touch_drag" if action.drag_x or action.drag_y else "keyboard" if action.x or action.y else "idle")
         if self.cave and not self.route_complete:
             self.cave.update(dt);self.cave.constrain(self,(previous_pivot[0],previous_pivot[1]+4))
         self.items.update(self, dt, (previous_pivot[0], previous_pivot[1]+4))

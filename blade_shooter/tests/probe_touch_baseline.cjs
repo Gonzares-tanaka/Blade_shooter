@@ -1,0 +1,27 @@
+// Unmodified runtime: wait without input, then send bounded relative drags.
+const {chromium}=require('playwright'),fs=require('node:fs'),path=require('node:path');
+const fixed=process.argv.includes('--fixed-geometry'),geometry=fixed||process.argv.includes('--geometry');
+const root=path.resolve(__dirname,'../dist/web'),folder=path.resolve(__dirname,'../verification/v0.18.2/'+(fixed?'fixed-geometry':geometry?'old-geometry':'baseline'));
+fs.mkdirSync(folder,{recursive:true});
+const server=require('node:http').createServer((req,res)=>{const file=path.join(root,new URL(req.url,'http://localhost').pathname);if(!fs.existsSync(file)){res.writeHead(404);res.end();return;}res.setHeader('Content-Type',file.endsWith('.js')?'text/javascript':file.endsWith('.css')?'text/css':'text/html');res.end(fs.readFileSync(file));});
+(async()=>{await new Promise(r=>server.listen(0,'127.0.0.1',r));const browser=await chromium.launch({channel:'msedge',headless:true});let page;
+ try{page=await browser.newPage({viewport:{width:440,height:956},deviceScaleFactor:3,hasTouch:true,isMobile:true});const errors=[];page.on('pageerror',e=>errors.push(String(e)));
+ if(geometry&&!fixed)await page.route('**/controls.js*',r=>r.fulfill({contentType:'text/javascript',body:fs.readFileSync(path.resolve(__dirname,'../verification/v0.18.2/before/web/controls.js'),'utf8')}));
+ await page.goto(`http://127.0.0.1:${server.address().port}/play.html`);await page.waitForFunction(()=>!!window.pyxelContext?.resolveInput,null,{timeout:60000});await page.locator('#pyxel-screen').tap();await page.waitForFunction(()=>window.bladeInput.state==='title',null,{timeout:60000});
+ const py=code=>page.evaluate(code=>window.pyxelContext.pyodide.runPython(code),code);
+ await py('import gc,json\na=next(o for o in gc.get_objects() if type(o).__name__=="App" and type(o).__module__=="__main__")\ng=a.game\ntrace=[]\nold_step=g.step\ndef probe_step(dt,action):\n    before=(g.px,g.py)\n    old_step(dt,action)\n    if action.drag_x or action.drag_y or abs(g.px-before[0])+abs(g.py-before[1])>30:\n        trace.append(dict(time=g.time,before=before,after=(g.px,g.py),drag=(action.drag_x,action.drag_y),state=g.state))\ng.step=probe_step');
+ if(geometry&&!fixed){const old=fs.readFileSync(path.resolve(__dirname,'../verification/v0.18.2/before/main.py'),'utf8');await py('ns={"__name__":"old_probe"}\nexec('+JSON.stringify(old)+',ns)\na.input=ns["Input"](a.p,"web")');}
+ await page.locator('#start').tap();await page.waitForFunction(()=>window.bladeInput.state==='mode_select');await page.locator('#menu-options button').nth(0).tap();await page.waitForFunction(()=>window.bladeInput.state==='story');await page.locator('#story-skip').tap();await page.waitForFunction(()=>window.bladeInput.state==='playing');
+ const samples=[];
+ for(let i=0;i<(geometry?1:8);i++){await page.waitForTimeout(geometry?3000:5000);samples.push({afterSeconds:geometry?3:(i+1)*5,js:await page.evaluate(()=>({rect:document.querySelector('#pyxel-screen').getBoundingClientRect().toJSON(),canvas:[...document.querySelectorAll('canvas')].map(n=>({rect:n.getBoundingClientRect().toJSON(),w:n.width,h:n.height})),drag:[window.bladeInput.dragX,window.bladeInput.dragY],state:window.bladeInput.state,viewport:[innerWidth,innerHeight,visualViewport.width,visualViewport.height,visualViewport.offsetLeft,visualViewport.offsetTop],dpr:devicePixelRatio})),game:JSON.parse(await py('json.dumps(dict(time=g.time,x=g.px,y=g.py,hp=g.hp,state=g.state))'))});}
+ await page.evaluate(()=>{window.probeGestures=null;const old=BladeGestures.prototype.move;BladeGestures.prototype.move=function(...args){window.probeGestures=this;return old.apply(this,args);};});
+ // Synthetic PointerEvents retain the real browser event timestamp / actual CSS scaling.
+ if(geometry)await page.evaluate(()=>{const s=document.querySelector('#pyxel-screen');s.style.setProperty('width','2px','important');s.style.setProperty('height','2px','important');});
+ await page.waitForTimeout(150);
+ for(const [dx,dy] of [[5,5],[-5,5],[5,-5],[-5,-5]]){
+  if(geometry)await py('g.set_player_position(128,266,"test_fixture")');
+  await page.evaluate(([dx,dy,geometry])=>{const s=document.querySelector('#pyxel-screen'),r=s.getBoundingClientRect();s.setPointerCapture=()=>{};const send=(type,x,y)=>s.dispatchEvent(new PointerEvent(type,{pointerId:31,pointerType:'touch',button:0,buttons:type==='pointerup'?0:1,clientX:r.left+x*r.width/256,clientY:r.top+y*r.height/320,bubbles:true,cancelable:true}));send('pointerdown',60,230);send('pointermove',60+dx*(geometry?256/r.width:1),230+dy*(geometry?320/r.height:1));},[dx,dy,geometry]);await page.waitForTimeout(70);await page.evaluate(()=>document.querySelector('#pyxel-screen').dispatchEvent(new PointerEvent('pointerup',{pointerId:31,pointerType:'touch',button:0,bubbles:true,cancelable:true})));await page.waitForTimeout(50);
+ }
+ const debug=await page.evaluate(()=>({rect:document.querySelector('#pyxel-screen').getBoundingClientRect().toJSON(),move:probeGestures?.movePointer,drag:[bladeInput.dragX,bladeInput.dragY],state:bladeInput.state}));
+ const result={debug,fixedInput:fixed,injectedCollapsedLayout:geometry,actualIPhoneCauseConfirmed:false,samples,trace:JSON.parse(await py('json.dumps(trace)')),errors};fs.writeFileSync(folder+'/result.json',JSON.stringify(result,null,2));console.log(JSON.stringify(result));
+ }finally{await browser.close();server.close();}})().catch(e=>{console.error(e);process.exitCode=1;server.close();});

@@ -1,0 +1,24 @@
+{
+  "player_coordinate_writes": [
+    {
+      "file": "game.py",
+      "function": "set_player_position",
+      "reasons": [
+        "stage_start",
+        "touch_drag",
+        "keyboard",
+        "idle"
+      ]
+    },
+    {
+      "file": "cave.py",
+      "function": "constrain -> set_player_position",
+      "reason": "cave_wall"
+    }
+  ],
+  "timed_enemy_spawns_write_player": false,
+  "bgm_writes_player": false,
+  "hurt_respawn_writes_player": false,
+  "view_shake_changes_world_coordinates": false,
+  "reported_iphone_trigger_confirmed": false
+}

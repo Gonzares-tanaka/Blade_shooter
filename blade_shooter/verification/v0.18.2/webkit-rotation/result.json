@@ -1,0 +1,122 @@
+{
+  "result": "PASS",
+  "engine": "WebKit",
+  "version": "26.5",
+  "runtime": "input layer only, synthetic PointerEvents, capture test double, frame receiver",
+  "realIPhone": false,
+  "secondsPerScenario": 60,
+  "results": [
+    {
+      "scenario": "rotation-return",
+      "wallSeconds": 60.137,
+      "cycles": 426,
+      "assertions": 853,
+      "maxStep": 7.800000000000011,
+      "appliedFrames": 176,
+      "attacks": 0,
+      "jumps": [],
+      "browserViewportRotations": [
+        {
+          "width": 956,
+          "height": 440
+        },
+        {
+          "width": 440,
+          "height": 956
+        },
+        {
+          "width": 956,
+          "height": 440
+        },
+        {
+          "width": 440,
+          "height": 956
+        },
+        {
+          "width": 956,
+          "height": 440
+        },
+        {
+          "width": 440,
+          "height": 956
+        },
+        {
+          "width": 956,
+          "height": 440
+        },
+        {
+          "width": 440,
+          "height": 956
+        },
+        {
+          "width": 956,
+          "height": 440
+        },
+        {
+          "width": 440,
+          "height": 956
+        },
+        {
+          "width": 956,
+          "height": 440
+        },
+        {
+          "width": 440,
+          "height": 956
+        },
+        {
+          "width": 956,
+          "height": 440
+        },
+        {
+          "width": 440,
+          "height": 956
+        },
+        {
+          "width": 956,
+          "height": 440
+        },
+        {
+          "width": 440,
+          "height": 956
+        },
+        {
+          "width": 956,
+          "height": 440
+        },
+        {
+          "width": 440,
+          "height": 956
+        },
+        {
+          "width": 956,
+          "height": 440
+        },
+        {
+          "width": 440,
+          "height": 956
+        },
+        {
+          "width": 956,
+          "height": 440
+        },
+        {
+          "width": 440,
+          "height": 956
+        },
+        {
+          "width": 956,
+          "height": 440
+        },
+        {
+          "width": 440,
+          "height": 956
+        }
+      ],
+      "events_count": 512,
+      "timeline_count": 57
+    }
+  ],
+  "errors": [],
+  "trace_file": "trace.json.gz"
+}

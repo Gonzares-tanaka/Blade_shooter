@@ -20,6 +20,13 @@ class BladeGestures {
   }
   owns(id) {return this.movePointer?.id===id||this.attackPointer?.id===id;}
   takeAttack() {const attack=this.attack;this.attack=false;return attack;}
+  rebase(id,x,y,time) {
+    const a=this.role(id)==="move"?this.movePointer:this.role(id)==="attack"?this.attackPointer:null;
+    if(!a)return;
+    a.x=x;a.y=y;a.time=time;a.lastMotion=time;a.candidate=null;a.idleSample=false;
+    if(a===this.attackPointer)a.locked=true;
+    this.attack=false;
+  }
   begin(id,x,y,time,type="touch") {
     if(this.role(id))return false;
     const role=x<this.config.game_width*this.config.move_region_ratio?"move":"attack";

@@ -1,5 +1,17 @@
 # BLADE 超接近戦 0.18.1
 
+## 0.18.2 Safariタッチ座標の安定化
+
+左ドラッグ／右フリック、キーボード・GKD操作、武器性能は従来どおりです。タッチは実Canvasの `getBoundingClientRect()` と `clientX/Y` だけから、`(clientX-left)*256/width` / `(clientY-top)*320/height` へ一度だけ変換します。Canvas内部バッファのピクセル数とdevicePixelRatioは掛けません。押下は基準保存だけ、移動は前回のゲーム座標との差分です。
+
+左右は別々のpointerIdで固定し、余分な指・反対側への移動・指を離した順番で引き継ぎません。pointerup/cancel/lostpointercaptureは該当する指だけを解除します。画面遷移・ポーズ・残機復帰・blur・pagehide・非表示化で全入力を破棄します。離す瞬間の座標は移動・攻撃へ使いません。
+
+`config.py` の `WEB_TOUCH` で設定できます。Canvas/viewport変化の許容誤差はCSS 0.25px、変換を受け付けるCanvas最小サイズは各辺CSS 16px。移動差分の補助防御は1イベント48ゲームpx、1消費フレーム64ゲームpx（drag_gain適用後）。異常値は丸めず破棄し、現在の指位置で基準を作り直します。Canvasの位置・サイズとvisualViewportの位置・サイズを毎フレームと入力時に確認し、resize/orientationchange/visualViewport resize・scrollも扱います。
+
+開発時は `play.html?debug=1`（公開版は `play.html?debug=1&v=0.18.2`）で診断を有効にできます。ブラウザコンソールの `bladeInput.touchDebug` に直近512イベントと最大10分の秒単位記録を保持します。`JSON.stringify(bladeInput.touchDebug)` で書き出せます。pointerId、client座標、変換後座標、Canvas rect/CSSサイズ、viewport、DPR、自機座標、シーン・面経過時間、座標更新理由を収録し、大きな座標変更は `BLADE_TOUCH_PLAYER_JUMP` に出します。通常配布時はログ収集・表示をしません。
+
+検証: `node --test tests/test_touch_space.cjs tests/test_gestures.cjs`、`node tests/verify_touch_stability.cjs --webkit`（WebKit入力層、各条件60秒）、`node tests/verify_touch_stability.cjs --runtime`（Edge実Pyxel＋ネイティブ複数タッチ、4通りの30秒無操作＋60秒操作）。詳細と実機未確認事項は `VERIFICATION.md` を参照してください。
+
 256×320・全3面の近接シューティングです。左手で弾を避け、右手で残弾を斬り、射撃の隙へ踏み込みます。52色パレットと武器・敵の性能、出現表は維持しています。
 
 ## 0.18.1 ロゴ・装備武器の色
