@@ -5,11 +5,11 @@
   const expected=document.documentElement.dataset.build||"unknown";
   const badge=document.getElementById("build-badge"),panel=document.getElementById("input-diagnostics");
   const text=document.getElementById("input-diagnostics-text"),dialog=document.getElementById("diagnostics-log");
-  const counts={},latest={},events=[],builds={html:expected,diagnostics:"0183-D1",config:window.BLADE_TOUCH_CONFIG?.build_id||"unknown"};
+  const counts={},latest={},events=[],builds={html:expected,diagnostics:"0184-F1",config:window.BLADE_TOUCH_CONFIG?.build_id||"unknown"};
   let error=null,uiTicks=0,issue="未選択",frozenReport=null;
   const now=()=>performance.now();
   function buildStatus(){
-    const keys=["html","diagnostics","config","gestures","space","input","loader","boot","python"];
+    const keys=["html","diagnostics","config","gestures","space","input","transport","loader","boot","python"];
     const mismatches=keys.filter(k=>builds[k]&&builds[k]!==expected);
     return {expected,components:{...builds},mismatches,missing:keys.filter(k=>!builds[k])};
   }
@@ -77,7 +77,7 @@
       `指 CSS:${pair(s?.clientPoints?.move||r?.client)} game:${pair(movePoint)} Δ:${pair(m?.delta)}`,
       `Canvas:${s?.rect?pair([s.rect.width,s.rect.height]):"無効"} rev:${s?.revision??"—"} L:${layoutCount} R:${resetCount}`,
       `移動 ${clean(m?.status)}:${clean(m?.reason)} ${age(m)} Q:${pair(s?.drag)}`,
-      `JS→PY:${pair(send?.out)} ${clean(send?.reason)} ${age(send)} | PY:${pair(read?.out)} ${clean(read?.reason)} ${age(read)}`,
+      `JS→PY:${pair(send?.out)} ${clean(send?.reason)} ${age(send)} | PY(${read?.transport||"legacy"}):${pair(read?.out)} ${clean(read?.reason)} ${age(read)}`,
       `自機 ${pair(pd?.before)}→${pair(pd?.after)} ${clean(pd?.reason)} ${age(pd)} t:${p?.time?.toFixed(1)??"—"}`,
       `破棄:${clean(latest.discard?.reason)} reset:${clean(reset?.reason)} ${age(reset)}`,
       `判定:${diagnosis} / 変化:${clean(l?.reason)}`,

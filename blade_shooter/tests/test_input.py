@@ -1,6 +1,8 @@
 import sys
 from pathlib import Path
 import unittest
+import json
+import struct
 from types import SimpleNamespace
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 import config as C
@@ -18,11 +20,24 @@ class FakePyxel:
     def quit(self): self.exited=True
 
 
+class FakeBridge(SimpleNamespace):
+    """The test fixture serializes in JS's place; production has no numeric fallback."""
+    def consumeDragJSON(self):
+        self.seq=getattr(self,"seq",0)+1
+        if callable(getattr(self,"consumeDrag",None)):
+            m=self.consumeDrag();x,y=m.x,m.y
+        else:
+            x,y=getattr(self,"dragX",0),getattr(self,"dragY",0)
+            self.dragX=self.dragY=0
+        return json.dumps(dict(protocol=1,seq=self.seq,x=x,y=y,
+            owner=getattr(self,"movePointerId",1),suspended=self.suspended))
+
+
 class InputTests(unittest.TestCase):
     def test_web_no_owner_nonfinite_and_oversized_drag_are_discarded(self):
         i=Input(FakePyxel(),'web')
         for dx,dy,owner in ((10,20,None),(float('nan'),0,1),(0,float('inf'),1),(500,-500,1)):
-            i.bridge=SimpleNamespace(dragX=dx,dragY=dy,movePointerId=owner,suspended=False)
+            i.bridge=FakeBridge(dragX=dx,dragY=dy,movePointerId=owner,suspended=False)
             a=i.read()
             self.assertEqual((a.drag_x,a.drag_y),(0,0))
             self.assertEqual((i.bridge.dragX,i.bridge.dragY),(0,0))
@@ -31,9 +46,49 @@ class InputTests(unittest.TestCase):
         i=Input(FakePyxel(),'web');pending=[10,-8]
         def consume():
             result=SimpleNamespace(x=pending[0],y=pending[1]);pending[:]=[0,0];return result
-        i.bridge=SimpleNamespace(consumeDrag=consume,movePointerId=17,suspended=False)
+        i.bridge=FakeBridge(consumeDrag=consume,movePointerId=17,suspended=False)
         a=i.read();self.assertEqual((a.drag_x,a.drag_y),(10,-8))
         a=i.read();self.assertEqual((a.drag_x,a.drag_y),(0,0))
+
+    def test_json_preserves_all_reported_signed_fractions_and_ignores_numeric_proxy(self):
+        values=[0,1,-1,.25,-.25,-3.2154589371980817,-2.9681159420289815,
+                -3.462801932367148,.2471042471042324]
+        i=Input(FakePyxel(),'web');reports=[]
+        for n,value in enumerate(values):
+            raw=json.dumps(dict(protocol=1,seq=n+1,x=value,y=-value,owner=1591822842,suspended=False))
+            def forbidden():raise AssertionError("Numeric JsProxy getter must not be used")
+            i.bridge=SimpleNamespace(consumeDragJSON=lambda:raw,consumeDrag=forbidden,
+                suspended=False,touchDebugEnabled=True,reportReadJSON=reports.append)
+            action=i.read();self.assertEqual((action.drag_x,action.drag_y),(value,-value))
+            self.assertEqual(json.loads(reports[-1])["received"],[value,-value])
+            self.assertEqual(json.loads(reports[-1])["wire"],raw)
+
+    def test_remote_corruption_matches_every_double_low_word(self):
+        # Deterministic replay of the remote log's bit-level signature, not a Safari reproduction.
+        for value,observed in [(-3.2154589371980817,-1996018586),
+                (-2.9681159420289815,-1842478733),(-3.462801932367148,2145408781),
+                (.2471042471042324,-1442711552)]:
+            self.assertEqual(struct.unpack('<ii',struct.pack('<d',value))[0],observed)
+
+    def test_replay_corrupt_proxy_boundary_then_bypass_with_json(self):
+        # Inject the exact remote boundary values. This is a controlled replay, not engine reproduction.
+        i=Input(FakePyxel(),'web')
+        for value in (-3.2154589371980817,-2.9681159420289815,-3.462801932367148,.2471042471042324):
+            movement=SimpleNamespace(x=struct.unpack('<i',struct.pack('<d',value)[:4])[0],y=0)
+            old_read=float(movement.x)
+            self.assertGreater(abs(old_read),C.WEB_TOUCH['max_drag_frame_px'])
+            wire=json.dumps(dict(protocol=1,seq=1,x=value,y=0,owner=1591822842,suspended=False))
+            i.bridge=SimpleNamespace(consumeDrag=lambda:movement,consumeDragJSON=lambda:wire,suspended=False)
+            self.assertEqual(i.read().drag_x,value)
+
+    def test_bad_or_missing_json_protocol_fails_closed(self):
+        i=Input(FakePyxel(),'web')
+        for raw in ('{','[]','null','{"protocol":1}',json.dumps(dict(protocol=1,seq=1,
+                x=True,y=0,owner=1,suspended=False))):
+            i.bridge=SimpleNamespace(consumeDragJSON=lambda:raw,suspended=False)
+            self.assertEqual(i.read().drag_x,0)
+        i.bridge=SimpleNamespace(dragX=10,dragY=20,suspended=False)
+        self.assertEqual(i.read().drag_x,0)
 
     def test_gkd_profile_isolated_and_edge_triggered(self):
         p=FakePyxel();i=Input(p,'gkd')
@@ -88,7 +143,7 @@ class InputTests(unittest.TestCase):
 
     def test_bridge_movement_consumed_once_and_focus_releases_keys(self):
         p=FakePyxel();i=Input(p,'web')
-        i.bridge=SimpleNamespace(slashSerial=0,confirmSerial=0,pauseSerial=0,focusSerial=0,
+        i.bridge=FakeBridge(slashSerial=0,confirmSerial=0,pauseSerial=0,focusSerial=0,
                                  dragX=10,dragY=-20,suspended=False)
         action=i.read()
         self.assertEqual((action.drag_x,action.drag_y),(10,-20))
@@ -103,7 +158,7 @@ class InputTests(unittest.TestCase):
 
     def test_web_course_pulse_is_consumed_once(self):
         i=Input(FakePyxel(),'web')
-        i.bridge=SimpleNamespace(slashSerial=0,confirmSerial=0,pauseSerial=0,focusSerial=0,
+        i.bridge=FakeBridge(slashSerial=0,confirmSerial=0,pauseSerial=0,focusSerial=0,
                                  courseSerial=1,sectionSerial=1,dragX=0,dragY=0,suspended=False)
         self.assertTrue(i.read().course)
         self.assertFalse(i.read().course)
@@ -124,7 +179,7 @@ class InputTests(unittest.TestCase):
 
     def test_reset_discards_only_attack_queued_before_reset(self):
         p=FakePyxel();i=Input(p,'web')
-        i.bridge=SimpleNamespace(slashSerial=1,cancelSlashSerial=1,inputResetSerial=1,
+        i.bridge=FakeBridge(slashSerial=1,cancelSlashSerial=1,inputResetSerial=1,
                                  dragX=0,dragY=0,suspended=False)
         self.assertFalse(i.read().slash)
         # A fresh press after the reset must not be swallowed by its next frame.

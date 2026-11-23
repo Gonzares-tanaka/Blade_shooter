@@ -11,10 +11,10 @@ window.bladeInput = {
   document.documentElement.dataset.embedded = String(new URLSearchParams(location.search).has("embed"));
   const bridge = window.bladeInput;
   const D=window.bladeDiagnostics||{enabled:false,note(){},build(){},error(){}};
-  D.build("input","0183-D1");
+  D.build("input","0184-F1");
   bridge.touchDebugEnabled=D.enabled;
   bridge.reportBuild=(id)=>D.build("python",id);
-  bridge.reportRead=(receivedX,receivedY,x,y,reason)=>D.note("python_read",{received:[receivedX,receivedY],out:[x,y],reason});
+  bridge.reportReadJSON=(text)=>D.note("python_read",JSON.parse(text));
   bridge.reportError=(source,message,stack)=>D.error(source,message,stack);
   const config = window.BLADE_TOUCH_CONFIG;
   const gestures = new window.BladeGestures(config);
@@ -83,6 +83,17 @@ window.bladeInput = {
     record("reset",{reason:typeof reason==="string"?reason:reason.type});
   }
   bridge.resetTouch=clearTouch;
+  bridge.rebaseTouch=(reason="respawn")=>{
+    // Life loss does not change scene. Cancel pending input, preserve only the original owners.
+    syncLayout();
+    bridge.cancelSlashSerial=bridge.slashSerial;bridge.inputResetSerial++;
+    bridge.dragX=bridge.dragY=0;discardFrame=true;discardReason="rebase:"+reason;
+    for(const [id,c] of contacts){
+      const point=space.point(c.x,c.y);
+      if(point){gestures.rebase(id,...point,performance.now());c.revision=space.revision;}
+    }
+    publishOwners();record("reset",{reason:reason+"_rebase",move:bridge.movePointerId,attack:bridge.attackPointerId});
+  };
   bridge.consumeDrag=()=>{
     const x=bridge.dragX,y=bridge.dragY;bridge.dragX=bridge.dragY=0;
     const valid=state==="playing"&&!bridge.suspended&&gestures.movePointer&&!discardFrame&&
@@ -95,6 +106,8 @@ window.bladeInput = {
     if(!valid){if(x||y){record("discard_frame",{drag:[x,y],reason});record("discard",{drag:[x,y],reason});}return {x:0,y:0};}
     return {x,y};
   };
+
+  window.attachBladeMovementBridge(bridge);
 
   function updateLabels() {
     const menus={title:["START","CONTINUE"],mode_select:["通しプレイ","ステージセレクト","戻る"],stage_select:["1面","2面","3面","戻る"]};

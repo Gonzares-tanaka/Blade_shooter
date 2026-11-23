@@ -1,6 +1,23 @@
-# BLADE 超接近戦 0.18.1
+# BLADE 超接近戦 0.18.4
 
-## 0.18.3 タッチ入力診断版（B0183-D1）
+## 0.18.4 小数移動量のJSON受け渡し（B0184-F1）
+
+報告ログの4値すべてで、JSの正常な小数のIEEE 754 double下位32ビットと、Pythonの異常な符号付き整数が完全一致しました。`consumeDrag()` のJSオブジェクト → JsProxyの `.x/.y` 暗黙数値変換 → Python `float()` の境界に異常を絞り込んでいます。ゲーム内に独自のTypedArray/FFIメモリ読み出しはありません。Pyodide内部／Safariエンジンのどの処理・最適化が発火したか、数秒後になる理由は未確定です。
+
+移動は `web/movement-bridge.js` の `consumeDragJSON()` で `{protocol,seq,x,y,owner,suspended}` をJSON文字列にし、`main.py` の `Input.read()` がPythonの `json.loads()` で解析します。小数のJS数値プロパティをPythonから直接読みません。欠落・不正なプロトコルは移動0と診断エラーにし、旧数値経路へ戻しません。座標変換、drag_gain、イベント48px／フレーム64pxの破棄値、武器・戦闘性能は変更していません。診断の `python_read` もJSON文字列で返し、`wire` と `packetSeq` を保存します。
+
+残機復帰のみ `rebaseTouch("respawn")` で既存の左右pointerIdとcaptureを維持し、現在の指位置へ基準を更新、未消費移動・攻撃候補を破棄します。復帰中の払いは予約しません。最初の消費フレームを捨て、次の移動／静止後の新しい払いを受け付けます。余分な指は昇格しません。離して置き直すと新しい基準から開始し、画面遷移・ポーズ・blur・非表示化では従来どおり全解除します。
+
+遠隔テスト用（通常メニューには追加しません）：
+
+- `play.html?v=0.18.4&touchdebug=1`：画面の **B0184-F1 一致** を確認。30秒無操作後の左移動、左右同時、復帰時の指保持、置き直しを試し、「ログ表示・保存」で共有できます。
+- `bridge-probe.html?v=0.18.4`：ゲーム外で「診断開始」。実ゲームと同じPyodide 314.0.4・同じJSONシリアライズを使い、0/±1/±0.25/報告の小数4値を旧オブジェクト方式とJSON方式で10秒反復比較し、「結果を保存」できます。`mismatches.object` と `mismatches.json` が不一致回数です。旧方式で0でも実端末の不具合解消を保証するものではありません。ログは自動送信しません。
+
+手元のWebKit／Edgeで旧方式のビット化は再現していません。提供された遠隔ログとビット一致の検証、ローカルでの正常値比較は区別して `verification/v0.18.4/` に保存しています。元端末・16e・SE2・Surfaceの実機再確認は未実施です。数値変換の仕様は [Pyodide公式ドキュメント](https://pyodide.org/en/stable/usage/type-conversions.html) も参照してください。
+
+検証：`node tests/verify_movement_bridge.cjs`、`node tests/verify_bridge_runtime.cjs`、既存の `verify_touch_diagnostics.cjs` / `verify_touch_stability.cjs`。`python build.py` でWeb公開一式と両ZIPを再生成します。キーボード・GKDは数値ブリッジを使わず、操作は従来どおりです。
+
+## 0.18.3 タッチ入力診断版（B0183-D1、過去版）
 
 この版は原因を調べるための計測追加です。0.18.2の移動／フリック判定、差分破棄の閾値、サイズ変更時の処理、武器・戦闘性能は変更していません。元の報告端末の「動かない」は実機で再現・原因特定できていません。
 
@@ -21,7 +38,7 @@
 
 左ドラッグ／右フリック、キーボード・GKD操作、武器性能は従来どおりです。タッチは実Canvasの `getBoundingClientRect()` と `clientX/Y` だけから、`(clientX-left)*256/width` / `(clientY-top)*320/height` へ一度だけ変換します。Canvas内部バッファのピクセル数とdevicePixelRatioは掛けません。押下は基準保存だけ、移動は前回のゲーム座標との差分です。
 
-左右は別々のpointerIdで固定し、余分な指・反対側への移動・指を離した順番で引き継ぎません。pointerup/cancel/lostpointercaptureは該当する指だけを解除します。画面遷移・ポーズ・残機復帰・blur・pagehide・非表示化で全入力を破棄します。離す瞬間の座標は移動・攻撃へ使いません。
+左右は別々のpointerIdで固定し、余分な指・反対側への移動・指を離した順番で引き継ぎません。pointerup/cancel/lostpointercaptureは該当する指だけを解除します。画面遷移・ポーズ・blur・pagehide・非表示化で全入力を破棄します（0.18.4では残機復帰だけ上記の担当維持・再基準化）。離す瞬間の座標は移動・攻撃へ使いません。
 
 `config.py` の `WEB_TOUCH` で設定できます。Canvas/viewport変化の許容誤差はCSS 0.25px、変換を受け付けるCanvas最小サイズは各辺CSS 16px。移動差分の補助防御は1イベント48ゲームpx、1消費フレーム64ゲームpx（drag_gain適用後）。異常値は丸めず破棄し、現在の指位置で基準を作り直します。Canvasの位置・サイズとvisualViewportの位置・サイズを毎フレームと入力時に確認し、resize/orientationchange/visualViewport resize・scrollも扱います。
 

@@ -1,0 +1,90 @@
+{
+  "result": "PASS",
+  "engine": "WebKit",
+  "version": "26.5",
+  "runtime": "input layer only, synthetic PointerEvents, capture test double, frame receiver",
+  "realIPhone": false,
+  "secondsPerScenario": 60,
+  "results": [
+    {
+      "scenario": "left-only",
+      "wallSeconds": 60.049,
+      "cycles": 1264,
+      "assertions": 2529,
+      "maxStep": 47.1728627851563,
+      "appliedFrames": 628,
+      "attacks": 0,
+      "jumps": [],
+      "browserViewportRotations": [],
+      "events_count": 512,
+      "timeline_count": 57
+    },
+    {
+      "scenario": "right-only",
+      "wallSeconds": 60.057,
+      "cycles": 611,
+      "assertions": 1834,
+      "maxStep": 0,
+      "appliedFrames": 0,
+      "attacks": 611,
+      "jumps": [],
+      "browserViewportRotations": [],
+      "events_count": 512,
+      "timeline_count": 57
+    },
+    {
+      "scenario": "left-hold-right-flick",
+      "wallSeconds": 60.088,
+      "cycles": 909,
+      "assertions": 2728,
+      "maxStep": 34.64027672957439,
+      "appliedFrames": 536,
+      "attacks": 909,
+      "jumps": [],
+      "browserViewportRotations": [],
+      "events_count": 512,
+      "timeline_count": 57
+    },
+    {
+      "scenario": "right-first",
+      "wallSeconds": 60.126,
+      "cycles": 760,
+      "assertions": 2281,
+      "maxStep": 13.953064179598684,
+      "appliedFrames": 341,
+      "attacks": 760,
+      "jumps": [],
+      "browserViewportRotations": [],
+      "events_count": 512,
+      "timeline_count": 57
+    },
+    {
+      "scenario": "release-orders",
+      "wallSeconds": 60.101,
+      "cycles": 768,
+      "assertions": 2305,
+      "maxStep": 13.953064179598684,
+      "appliedFrames": 365,
+      "attacks": 768,
+      "jumps": [],
+      "browserViewportRotations": [],
+      "events_count": 512,
+      "timeline_count": 57
+    },
+    {
+      "scenario": "rapid-recontact",
+      "wallSeconds": 60.105,
+      "cycles": 543,
+      "assertions": 1087,
+      "maxStep": 6.976532089799329,
+      "appliedFrames": 225,
+      "attacks": 0,
+      "jumps": [],
+      "browserViewportRotations": [],
+      "events_count": 512,
+      "timeline_count": 57
+    }
+  ],
+  "errors": [],
+  "trace_file": "trace.json.gz"
+}

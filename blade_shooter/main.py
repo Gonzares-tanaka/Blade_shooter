@@ -1,5 +1,5 @@
 # title: Blade Close Quarters
-# version: 0.18.3
+# version: 0.18.4
 """PC / GKD / Web共通入口。SELECTは状態・ヒットストップより先に処理。"""
 import sys
 import math
@@ -42,28 +42,52 @@ class Input:
             if ("inputReset" in pulses and
                     int(getattr(b,"slashSerial",0)) == int(getattr(b,"cancelSlashSerial",0))):
                 pulses.discard("slash")
-            consume=getattr(b,"consumeDrag",None)
-            if callable(consume):
-                movement=consume()
-                dx,dy=float(movement.x),float(movement.y)
-            else:
-                dx, dy = float(b.dragX), float(b.dragY)
-                b.dragX = b.dragY = 0
-            received_dx,received_dy=dx,dy
-            drag_reason="accepted"
-            # Secondary boundary defense; the JS layer validates geometry and ownership first.
-            if (not math.isfinite(dx) or not math.isfinite(dy) or
-                    math.hypot(dx,dy)>C.WEB_TOUCH["max_drag_frame_px"] or
-                    (hasattr(b,"movePointerId") and b.movePointerId is None)):
-                drag_reason="nonfinite" if not math.isfinite(dx) or not math.isfinite(dy) else "frame_limit" if math.hypot(dx,dy)>C.WEB_TOUCH["max_drag_frame_px"] else "no_owner"
-                dx=dy=0
-            if bool(b.suspended):
+            # Only strings cross the JS -> Python boundary for relative movement.
+            # A numeric JsProxy getter was observed returning the low int32 bits of a double.
+            raw, packet, dx, dy, drag_reason = "", {}, 0.0, 0.0, "accepted"
+            try:
+                consume = getattr(b, "consumeDragJSON", None)
+                if not callable(consume):
+                    raise ValueError("Missing movement JSON protocol")
+                raw = consume()
+                if not isinstance(raw, str) or len(raw) > 1024:
+                    raise ValueError("Invalid movement JSON text")
+                packet = json.loads(raw)
+                if (not isinstance(packet, dict) or packet.get("protocol") != 1 or
+                        type(packet.get("seq")) is not int or packet["seq"] < 1 or
+                        type(packet.get("x")) not in (int, float) or
+                        type(packet.get("y")) not in (int, float) or
+                        type(packet.get("suspended")) is not bool or
+                        (packet.get("owner") is not None and type(packet["owner"]) is not int)):
+                    raise ValueError("Invalid movement JSON schema")
+                dx, dy = float(packet["x"]), float(packet["y"])
+            except (ValueError, TypeError, OverflowError) as error:
+                packet = {}
+                drag_reason = "transport_error"
+                if not getattr(self, "drag_protocol_error", False):
+                    self.drag_protocol_error = True
+                    if callable(getattr(b, "reportError", None)):
+                        b.reportError("movement_transport", str(error), "")
+            received_dx, received_dy = dx, dy
+            # Keep both defenses unchanged; malformed transport never becomes movement.
+            if not math.isfinite(dx) or not math.isfinite(dy):
+                dx = dy = 0.0
+                drag_reason = "nonfinite"
+            elif math.hypot(dx, dy) > C.WEB_TOUCH["max_drag_frame_px"]:
+                dx = dy = 0.0
+                drag_reason = "frame_limit"
+            elif drag_reason != "transport_error" and packet.get("owner") is None:
+                dx = dy = 0.0
+                drag_reason = "no_owner"
+            if bool(b.suspended) or packet.get("suspended", False):
                 held.clear()
                 pulses.clear()
-                dx = dy = 0
-                drag_reason="suspended"
-            if bool(getattr(b,"touchDebugEnabled",False)) and callable(getattr(b,"reportRead",None)):
-                b.reportRead(received_dx,received_dy,dx,dy,drag_reason)
+                dx = dy = 0.0
+                drag_reason = "suspended"
+            if bool(getattr(b, "touchDebugEnabled", False)) and callable(getattr(b, "reportReadJSON", None)):
+                b.reportReadJSON(json.dumps({"received":[received_dx, received_dy], "out":[dx, dy],
+                    "reason":drag_reason, "transport":"json-v1", "packetSeq":packet.get("seq"),
+                    "wire":raw}, ensure_ascii=True))
         def down(name):
             return any(k in held and k not in self.blocked for k in self.keys[name])
         def pressed(name):
@@ -159,8 +183,10 @@ class App:
             self.input.blocked.update(k for keys in self.input.keys.values() for k in keys if self.p.btn(k))
         if self.input.bridge is not None:
             bridge=self.input.bridge
-            if "life_lost" in self.game.events and callable(getattr(bridge,"resetTouch",None)):
-                bridge.resetTouch("respawn")
+            if "life_lost" in self.game.events:
+                # Rebase only existing owners; keep scene/background resets fully destructive.
+                reset = getattr(bridge, "rebaseTouch", None) or getattr(bridge, "resetTouch", None)
+                if callable(reset):reset("respawn")
             if (self.game.debug or self.game.touch_trace_enabled) and callable(getattr(bridge,"recordPlayer",None)):
                 bridge.recordPlayer(self.game.px,self.game.py,self.game.state,self.game.time,
                                     self.game.last_position_reason,action.drag_x,action.drag_y,*previous_position,

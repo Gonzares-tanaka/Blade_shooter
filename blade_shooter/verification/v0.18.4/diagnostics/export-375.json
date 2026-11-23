@@ -1,0 +1,4074 @@
+{
+  "schema": 1,
+  "build": {
+    "expected": "0184-F1",
+    "components": {
+      "html": "0184-F1",
+      "diagnostics": "0184-F1",
+      "config": "0184-F1",
+      "gestures": "0184-F1",
+      "space": "0184-F1",
+      "transport": "0184-F1",
+      "input": "0184-F1",
+      "loader": "0184-F1",
+      "boot": "0184-F1",
+      "python": "0184-F1"
+    },
+    "mismatches": [],
+    "missing": []
+  },
+  "enabled": true,
+  "issue": "自機の移動のみ不可",
+  "at": "2026-11-23T02:20:02.137Z",
+  "url": "http://127.0.0.1:49222/play.html?touchdebug=1",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5 Safari/605.1.15",
+  "platform": "Win32",
+  "dpr": 3,
+  "counts": {
+    "invalidate": 33,
+    "layout_change": 32,
+    "reset": 2,
+    "consume": 37,
+    "received": 36,
+    "movement": 36,
+    "discard_event": 1,
+    "discard": 1,
+    "rebase": 30,
+    "python_read": 1,
+    "frame": 2,
+    "error": 1
+  },
+  "latest": {
+    "invalidate": {
+      "at": 1355,
+      "kind": "invalidate",
+      "seq": 33,
+      "consumeSeq": 34,
+      "readSeq": 0,
+      "reason": "resize"
+    },
+    "layout_change": {
+      "at": 1356,
+      "kind": "layout_change",
+      "seq": 32,
+      "consumeSeq": 34,
+      "readSeq": 0,
+      "rect": {
+        "left": 9,
+        "top": 255.125,
+        "width": 357,
+        "height": 446.75,
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "viewport": {
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 3,
+      "reason": "notification:resize",
+      "changes": []
+    },
+    "reset": {
+      "at": 1388,
+      "kind": "reset",
+      "seq": 2,
+      "consumeSeq": 37,
+      "readSeq": 1,
+      "reason": "scene:playing->paused"
+    },
+    "consume": {
+      "at": 1387,
+      "kind": "consume",
+      "seq": 37,
+      "consumeSeq": 36,
+      "readSeq": 0,
+      "received": [
+        3.5999999999999996,
+        0
+      ],
+      "out": [
+        3.5999999999999996,
+        0
+      ],
+      "reason": "accepted",
+      "owner": 1
+    },
+    "received": {
+      "at": 1387,
+      "kind": "received",
+      "seq": 36,
+      "consumeSeq": 36,
+      "readSeq": 0,
+      "type": "pointermove",
+      "id": 1,
+      "client": [
+        321.375,
+        548.3046875
+      ],
+      "target": "DIV",
+      "button": 0
+    },
+    "pointer_received": {
+      "at": 1387,
+      "kind": "received",
+      "seq": 36,
+      "consumeSeq": 36,
+      "readSeq": 0,
+      "type": "pointermove",
+      "id": 1,
+      "client": [
+        321.375,
+        548.3046875
+      ],
+      "target": "DIV",
+      "button": 0
+    },
+    "movement": {
+      "at": 1387,
+      "kind": "movement",
+      "seq": 36,
+      "consumeSeq": 36,
+      "readSeq": 0,
+      "status": "queued",
+      "reason": "relative_drag",
+      "point": [
+        224,
+        210
+      ],
+      "delta": [
+        3,
+        0
+      ],
+      "id": 1,
+      "pending": [
+        3.5999999999999996,
+        0
+      ]
+    },
+    "move_movement": {
+      "at": 1387,
+      "kind": "movement",
+      "seq": 36,
+      "consumeSeq": 36,
+      "readSeq": 0,
+      "status": "queued",
+      "reason": "relative_drag",
+      "point": [
+        224,
+        210
+      ],
+      "delta": [
+        3,
+        0
+      ],
+      "id": 1,
+      "pending": [
+        3.5999999999999996,
+        0
+      ]
+    },
+    "consume_active": {
+      "at": 1387,
+      "kind": "consume",
+      "seq": 37,
+      "consumeSeq": 36,
+      "readSeq": 0,
+      "received": [
+        3.5999999999999996,
+        0
+      ],
+      "out": [
+        3.5999999999999996,
+        0
+      ],
+      "reason": "accepted",
+      "owner": 1
+    },
+    "discard_event": {
+      "at": 457,
+      "kind": "discard_event",
+      "seq": 1,
+      "consumeSeq": 4,
+      "readSeq": 0,
+      "id": 1,
+      "point": [
+        220,
+        210
+      ],
+      "delta": [
+        155,
+        0
+      ],
+      "rect": {
+        "left": 9,
+        "top": 255.125,
+        "width": 357,
+        "height": 446.75,
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      }
+    },
+    "discard": {
+      "at": 457,
+      "kind": "discard",
+      "seq": 1,
+      "consumeSeq": 4,
+      "readSeq": 0,
+      "reason": "event_limit",
+      "delta": [
+        155,
+        0
+      ],
+      "limit": 48
+    },
+    "rebase": {
+      "at": 1356,
+      "kind": "rebase",
+      "seq": 30,
+      "consumeSeq": 34,
+      "readSeq": 0,
+      "id": 1,
+      "point": [
+        221,
+        210
+      ]
+    },
+    "python_read": {
+      "at": 1387,
+      "kind": "python_read",
+      "seq": 1,
+      "consumeSeq": 37,
+      "readSeq": 0,
+      "received": [
+        6,
+        0
+      ],
+      "out": [
+        6,
+        0
+      ],
+      "reason": "accepted",
+      "transport": "fixture"
+    },
+    "python_read_active": {
+      "at": 1387,
+      "kind": "python_read",
+      "seq": 1,
+      "consumeSeq": 37,
+      "readSeq": 0,
+      "received": [
+        6,
+        0
+      ],
+      "out": [
+        6,
+        0
+      ],
+      "reason": "accepted",
+      "transport": "fixture"
+    },
+    "frame": {
+      "at": 1388,
+      "kind": "frame",
+      "seq": 2,
+      "consumeSeq": 37,
+      "readSeq": 1,
+      "after": [
+        128,
+        266
+      ],
+      "before": [
+        128,
+        266
+      ],
+      "scene": "playing",
+      "time": 12.1,
+      "reason": "cave_wall",
+      "drag": [
+        6,
+        0
+      ],
+      "positionWrites": [
+        {
+          "before": [
+            128,
+            266
+          ],
+          "after": [
+            134,
+            266
+          ],
+          "reason": "touch_drag"
+        },
+        {
+          "before": [
+            134,
+            266
+          ],
+          "after": [
+            128,
+            266
+          ],
+          "reason": "cave_wall"
+        }
+      ],
+      "phase": "playing"
+    },
+    "frame_active": {
+      "at": 1388,
+      "kind": "frame",
+      "seq": 2,
+      "consumeSeq": 37,
+      "readSeq": 1,
+      "after": [
+        128,
+        266
+      ],
+      "before": [
+        128,
+        266
+      ],
+      "scene": "playing",
+      "time": 12.1,
+      "reason": "cave_wall",
+      "drag": [
+        6,
+        0
+      ],
+      "positionWrites": [
+        {
+          "before": [
+            128,
+            266
+          ],
+          "after": [
+            134,
+            266
+          ],
+          "reason": "touch_drag"
+        },
+        {
+          "before": [
+            134,
+            266
+          ],
+          "after": [
+            128,
+            266
+          ],
+          "reason": "cave_wall"
+        }
+      ],
+      "phase": "playing"
+    },
+    "error": {
+      "at": 1409,
+      "kind": "error",
+      "seq": 1,
+      "consumeSeq": 37,
+      "readSeq": 1,
+      "source": "JavaScript",
+      "message": "DIAGNOSTIC_TEST_ERROR",
+      "stack": ""
+    }
+  },
+  "lastError": {
+    "at": 1409,
+    "source": "JavaScript",
+    "message": "DIAGNOSTIC_TEST_ERROR",
+    "stack": ""
+  },
+  "events": [
+    {
+      "at": 50,
+      "kind": "invalidate",
+      "seq": 1,
+      "consumeSeq": 0,
+      "readSeq": 0,
+      "reason": "resize_observer"
+    },
+    {
+      "at": 97,
+      "kind": "invalidate",
+      "seq": 2,
+      "consumeSeq": 0,
+      "readSeq": 0,
+      "reason": "resize"
+    },
+    {
+      "at": 98,
+      "kind": "layout_change",
+      "seq": 1,
+      "consumeSeq": 0,
+      "readSeq": 0,
+      "rect": null,
+      "viewport": {
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 3,
+      "reason": "no_canvas",
+      "changes": []
+    },
+    {
+      "at": 98,
+      "kind": "invalidate",
+      "seq": 3,
+      "consumeSeq": 0,
+      "readSeq": 0,
+      "reason": "resize_observer"
+    },
+    {
+      "at": 128,
+      "kind": "reset",
+      "seq": 1,
+      "consumeSeq": 0,
+      "readSeq": 0,
+      "reason": "scene:loading->playing"
+    },
+    {
+      "at": 172,
+      "kind": "layout_change",
+      "seq": 2,
+      "consumeSeq": 0,
+      "readSeq": 0,
+      "rect": {
+        "left": 9,
+        "top": 255.125,
+        "width": 357,
+        "height": 446.75,
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "viewport": {
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 3,
+      "reason": "notification:resize_observer",
+      "changes": []
+    },
+    {
+      "at": 415,
+      "kind": "received",
+      "seq": 1,
+      "consumeSeq": 1,
+      "readSeq": 0,
+      "type": "pointerdown",
+      "id": 1,
+      "client": [
+        92.671875,
+        548.3046875
+      ],
+      "target": "DIV",
+      "button": 0
+    },
+    {
+      "at": 417,
+      "kind": "movement",
+      "seq": 1,
+      "consumeSeq": 1,
+      "readSeq": 0,
+      "status": "registered",
+      "reason": "move",
+      "id": 1,
+      "point": [
+        60,
+        210
+      ],
+      "delta": [
+        0,
+        0
+      ]
+    },
+    {
+      "at": 417,
+      "kind": "received",
+      "seq": 2,
+      "consumeSeq": 1,
+      "readSeq": 0,
+      "type": "pointerdown",
+      "id": 2,
+      "client": [
+        287.90625,
+        548.3046875
+      ],
+      "target": "DIV",
+      "button": 0
+    },
+    {
+      "at": 417,
+      "kind": "movement",
+      "seq": 2,
+      "consumeSeq": 1,
+      "readSeq": 0,
+      "status": "registered",
+      "reason": "attack",
+      "id": 2,
+      "point": [
+        200,
+        210
+      ],
+      "delta": [
+        0,
+        0
+      ]
+    },
+    {
+      "at": 453,
+      "kind": "received",
+      "seq": 3,
+      "consumeSeq": 2,
+      "readSeq": 0,
+      "type": "pointermove",
+      "id": 1,
+      "client": [
+        99.64453125,
+        548.3046875
+      ],
+      "target": "DIV",
+      "button": 0
+    },
+    {
+      "at": 455,
+      "kind": "movement",
+      "seq": 3,
+      "consumeSeq": 2,
+      "readSeq": 0,
+      "status": "queued",
+      "reason": "relative_drag",
+      "point": [
+        65,
+        210
+      ],
+      "delta": [
+        5,
+        0
+      ],
+      "id": 1,
+      "pending": [
+        6,
+        0
+      ]
+    },
+    {
+      "at": 455,
+      "kind": "consume",
+      "seq": 3,
+      "consumeSeq": 2,
+      "readSeq": 0,
+      "received": [
+        6,
+        0
+      ],
+      "out": [
+        6,
+        0
+      ],
+      "reason": "accepted",
+      "owner": 1
+    },
+    {
+      "at": 456,
+      "kind": "received",
+      "seq": 4,
+      "consumeSeq": 3,
+      "readSeq": 0,
+      "type": "pointermove",
+      "id": 1,
+      "client": [
+        99.64453125,
+        548.3046875
+      ],
+      "target": "DIV",
+      "button": 0
+    },
+    {
+      "at": 456,
+      "kind": "movement",
+      "seq": 4,
+      "consumeSeq": 3,
+      "readSeq": 0,
+      "status": "queued",
+      "reason": "zero_delta",
+      "point": [
+        65,
+        210
+      ],
+      "delta": [
+        0,
+        0
+      ],
+      "id": 1,
+      "pending": [
+        0,
+        0
+      ]
+    },
+    {
+      "at": 456,
+      "kind": "received",
+      "seq": 5,
+      "consumeSeq": 4,
+      "readSeq": 0,
+      "type": "pointermove",
+      "id": 1,
+      "client": [
+        315.796875,
+        548.3046875
+      ],
+      "target": "DIV",
+      "button": 0
+    },
+    {
+      "at": 457,
+      "kind": "discard_event",
+      "seq": 1,
+      "consumeSeq": 4,
+      "readSeq": 0,
+      "id": 1,
+      "point": [
+        220,
+        210
+      ],
+      "delta": [
+        155,
+        0
+      ],
+      "rect": {
+        "left": 9,
+        "top": 255.125,
+        "width": 357,
+        "height": 446.75,
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      }
+    },
+    {
+      "at": 457,
+      "kind": "discard",
+      "seq": 1,
+      "consumeSeq": 4,
+      "readSeq": 0,
+      "reason": "event_limit",
+      "delta": [
+        155,
+        0
+      ],
+      "limit": 48
+    },
+    {
+      "at": 457,
+      "kind": "movement",
+      "seq": 5,
+      "consumeSeq": 4,
+      "readSeq": 0,
+      "status": "discarded",
+      "reason": "event_limit",
+      "id": 1,
+      "point": [
+        220,
+        210
+      ],
+      "delta": [
+        155,
+        0
+      ]
+    },
+    {
+      "at": 457,
+      "kind": "consume",
+      "seq": 5,
+      "consumeSeq": 4,
+      "readSeq": 0,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "event_limit",
+      "owner": 1
+    },
+    {
+      "at": 457,
+      "kind": "invalidate",
+      "seq": 4,
+      "consumeSeq": 5,
+      "readSeq": 0,
+      "reason": "resize"
+    },
+    {
+      "at": 457,
+      "kind": "received",
+      "seq": 6,
+      "consumeSeq": 5,
+      "readSeq": 0,
+      "type": "pointermove",
+      "id": 1,
+      "client": [
+        315.796875,
+        548.3046875
+      ],
+      "target": "DIV",
+      "button": 0
+    },
+    {
+      "at": 458,
+      "kind": "layout_change",
+      "seq": 3,
+      "consumeSeq": 5,
+      "readSeq": 0,
+      "rect": {
+        "left": 9,
+        "top": 255.125,
+        "width": 357,
+        "height": 446.75,
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "viewport": {
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 3,
+      "reason": "notification:resize",
+      "changes": []
+    },
+    {
+      "at": 458,
+      "kind": "rebase",
+      "seq": 1,
+      "consumeSeq": 5,
+      "readSeq": 0,
+      "id": 1,
+      "point": [
+        220,
+        210
+      ]
+    },
+    {
+      "at": 458,
+      "kind": "movement",
+      "seq": 6,
+      "consumeSeq": 5,
+      "readSeq": 0,
+      "status": "rebased",
+      "reason": "layout_revision",
+      "point": [
+        220,
+        210
+      ],
+      "delta": [
+        0,
+        0
+      ],
+      "id": 1
+    },
+    {
+      "at": 458,
+      "kind": "consume",
+      "seq": 6,
+      "consumeSeq": 5,
+      "readSeq": 0,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "layout:notification:resize",
+      "owner": 1
+    },
+    {
+      "at": 484,
+      "kind": "invalidate",
+      "seq": 5,
+      "consumeSeq": 6,
+      "readSeq": 0,
+      "reason": "resize"
+    },
+    {
+      "at": 484,
+      "kind": "received",
+      "seq": 7,
+      "consumeSeq": 6,
+      "readSeq": 0,
+      "type": "pointermove",
+      "id": 1,
+      "client": [
+        317.19140625,
+        548.3046875
+      ],
+      "target": "DIV",
+      "button": 0
+    },
+    {
+      "at": 484,
+      "kind": "layout_change",
+      "seq": 4,
+      "consumeSeq": 6,
+      "readSeq": 0,
+      "rect": {
+        "left": 9,
+        "top": 255.125,
+        "width": 357,
+        "height": 446.75,
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "viewport": {
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 3,
+      "reason": "notification:resize",
+      "changes": []
+    },
+    {
+      "at": 485,
+      "kind": "rebase",
+      "seq": 2,
+      "consumeSeq": 6,
+      "readSeq": 0,
+      "id": 1,
+      "point": [
+        221,
+        210
+      ]
+    },
+    {
+      "at": 485,
+      "kind": "movement",
+      "seq": 7,
+      "consumeSeq": 6,
+      "readSeq": 0,
+      "status": "rebased",
+      "reason": "layout_revision",
+      "point": [
+        221,
+        210
+      ],
+      "delta": [
+        0,
+        0
+      ],
+      "id": 1
+    },
+    {
+      "at": 485,
+      "kind": "consume",
+      "seq": 7,
+      "consumeSeq": 6,
+      "readSeq": 0,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "layout:notification:resize",
+      "owner": 1
+    },
+    {
+      "at": 516,
+      "kind": "invalidate",
+      "seq": 6,
+      "consumeSeq": 7,
+      "readSeq": 0,
+      "reason": "resize"
+    },
+    {
+      "at": 516,
+      "kind": "received",
+      "seq": 8,
+      "consumeSeq": 7,
+      "readSeq": 0,
+      "type": "pointermove",
+      "id": 1,
+      "client": [
+        315.796875,
+        548.3046875
+      ],
+      "target": "DIV",
+      "button": 0
+    },
+    {
+      "at": 516,
+      "kind": "layout_change",
+      "seq": 5,
+      "consumeSeq": 7,
+      "readSeq": 0,
+      "rect": {
+        "left": 9,
+        "top": 255.125,
+        "width": 357,
+        "height": 446.75,
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "viewport": {
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 3,
+      "reason": "notification:resize",
+      "changes": []
+    },
+    {
+      "at": 516,
+      "kind": "rebase",
+      "seq": 3,
+      "consumeSeq": 7,
+      "readSeq": 0,
+      "id": 1,
+      "point": [
+        220,
+        210
+      ]
+    },
+    {
+      "at": 516,
+      "kind": "movement",
+      "seq": 8,
+      "consumeSeq": 7,
+      "readSeq": 0,
+      "status": "rebased",
+      "reason": "layout_revision",
+      "point": [
+        220,
+        210
+      ],
+      "delta": [
+        0,
+        0
+      ],
+      "id": 1
+    },
+    {
+      "at": 517,
+      "kind": "consume",
+      "seq": 8,
+      "consumeSeq": 7,
+      "readSeq": 0,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "layout:notification:resize",
+      "owner": 1
+    },
+    {
+      "at": 547,
+      "kind": "invalidate",
+      "seq": 7,
+      "consumeSeq": 8,
+      "readSeq": 0,
+      "reason": "resize"
+    },
+    {
+      "at": 547,
+      "kind": "received",
+      "seq": 9,
+      "consumeSeq": 8,
+      "readSeq": 0,
+      "type": "pointermove",
+      "id": 1,
+      "client": [
+        317.19140625,
+        548.3046875
+      ],
+      "target": "DIV",
+      "button": 0
+    },
+    {
+      "at": 547,
+      "kind": "layout_change",
+      "seq": 6,
+      "consumeSeq": 8,
+      "readSeq": 0,
+      "rect": {
+        "left": 9,
+        "top": 255.125,
+        "width": 357,
+        "height": 446.75,
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "viewport": {
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 3,
+      "reason": "notification:resize",
+      "changes": []
+    },
+    {
+      "at": 548,
+      "kind": "rebase",
+      "seq": 4,
+      "consumeSeq": 8,
+      "readSeq": 0,
+      "id": 1,
+      "point": [
+        221,
+        210
+      ]
+    },
+    {
+      "at": 548,
+      "kind": "movement",
+      "seq": 9,
+      "consumeSeq": 8,
+      "readSeq": 0,
+      "status": "rebased",
+      "reason": "layout_revision",
+      "point": [
+        221,
+        210
+      ],
+      "delta": [
+        0,
+        0
+      ],
+      "id": 1
+    },
+    {
+      "at": 548,
+      "kind": "consume",
+      "seq": 9,
+      "consumeSeq": 8,
+      "readSeq": 0,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "layout:notification:resize",
+      "owner": 1
+    },
+    {
+      "at": 579,
+      "kind": "invalidate",
+      "seq": 8,
+      "consumeSeq": 9,
+      "readSeq": 0,
+      "reason": "resize"
+    },
+    {
+      "at": 579,
+      "kind": "received",
+      "seq": 10,
+      "consumeSeq": 9,
+      "readSeq": 0,
+      "type": "pointermove",
+      "id": 1,
+      "client": [
+        315.796875,
+        548.3046875
+      ],
+      "target": "DIV",
+      "button": 0
+    },
+    {
+      "at": 579,
+      "kind": "layout_change",
+      "seq": 7,
+      "consumeSeq": 9,
+      "readSeq": 0,
+      "rect": {
+        "left": 9,
+        "top": 255.125,
+        "width": 357,
+        "height": 446.75,
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "viewport": {
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 3,
+      "reason": "notification:resize",
+      "changes": []
+    },
+    {
+      "at": 579,
+      "kind": "rebase",
+      "seq": 5,
+      "consumeSeq": 9,
+      "readSeq": 0,
+      "id": 1,
+      "point": [
+        220,
+        210
+      ]
+    },
+    {
+      "at": 579,
+      "kind": "movement",
+      "seq": 10,
+      "consumeSeq": 9,
+      "readSeq": 0,
+      "status": "rebased",
+      "reason": "layout_revision",
+      "point": [
+        220,
+        210
+      ],
+      "delta": [
+        0,
+        0
+      ],
+      "id": 1
+    },
+    {
+      "at": 579,
+      "kind": "consume",
+      "seq": 10,
+      "consumeSeq": 9,
+      "readSeq": 0,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "layout:notification:resize",
+      "owner": 1
+    },
+    {
+      "at": 609,
+      "kind": "invalidate",
+      "seq": 9,
+      "consumeSeq": 10,
+      "readSeq": 0,
+      "reason": "resize"
+    },
+    {
+      "at": 610,
+      "kind": "received",
+      "seq": 11,
+      "consumeSeq": 10,
+      "readSeq": 0,
+      "type": "pointermove",
+      "id": 1,
+      "client": [
+        317.19140625,
+        548.3046875
+      ],
+      "target": "DIV",
+      "button": 0
+    },
+    {
+      "at": 610,
+      "kind": "layout_change",
+      "seq": 8,
+      "consumeSeq": 10,
+      "readSeq": 0,
+      "rect": {
+        "left": 9,
+        "top": 255.125,
+        "width": 357,
+        "height": 446.75,
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "viewport": {
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 3,
+      "reason": "notification:resize",
+      "changes": []
+    },
+    {
+      "at": 610,
+      "kind": "rebase",
+      "seq": 6,
+      "consumeSeq": 10,
+      "readSeq": 0,
+      "id": 1,
+      "point": [
+        221,
+        210
+      ]
+    },
+    {
+      "at": 610,
+      "kind": "movement",
+      "seq": 11,
+      "consumeSeq": 10,
+      "readSeq": 0,
+      "status": "rebased",
+      "reason": "layout_revision",
+      "point": [
+        221,
+        210
+      ],
+      "delta": [
+        0,
+        0
+      ],
+      "id": 1
+    },
+    {
+      "at": 610,
+      "kind": "consume",
+      "seq": 11,
+      "consumeSeq": 10,
+      "readSeq": 0,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "layout:notification:resize",
+      "owner": 1
+    },
+    {
+      "at": 640,
+      "kind": "invalidate",
+      "seq": 10,
+      "consumeSeq": 11,
+      "readSeq": 0,
+      "reason": "resize"
+    },
+    {
+      "at": 640,
+      "kind": "received",
+      "seq": 12,
+      "consumeSeq": 11,
+      "readSeq": 0,
+      "type": "pointermove",
+      "id": 1,
+      "client": [
+        315.796875,
+        548.3046875
+      ],
+      "target": "DIV",
+      "button": 0
+    },
+    {
+      "at": 641,
+      "kind": "layout_change",
+      "seq": 9,
+      "consumeSeq": 11,
+      "readSeq": 0,
+      "rect": {
+        "left": 9,
+        "top": 255.125,
+        "width": 357,
+        "height": 446.75,
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "viewport": {
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 3,
+      "reason": "notification:resize",
+      "changes": []
+    },
+    {
+      "at": 641,
+      "kind": "rebase",
+      "seq": 7,
+      "consumeSeq": 11,
+      "readSeq": 0,
+      "id": 1,
+      "point": [
+        220,
+        210
+      ]
+    },
+    {
+      "at": 641,
+      "kind": "movement",
+      "seq": 12,
+      "consumeSeq": 11,
+      "readSeq": 0,
+      "status": "rebased",
+      "reason": "layout_revision",
+      "point": [
+        220,
+        210
+      ],
+      "delta": [
+        0,
+        0
+      ],
+      "id": 1
+    },
+    {
+      "at": 641,
+      "kind": "consume",
+      "seq": 12,
+      "consumeSeq": 11,
+      "readSeq": 0,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "layout:notification:resize",
+      "owner": 1
+    },
+    {
+      "at": 675,
+      "kind": "invalidate",
+      "seq": 11,
+      "consumeSeq": 12,
+      "readSeq": 0,
+      "reason": "resize"
+    },
+    {
+      "at": 676,
+      "kind": "received",
+      "seq": 13,
+      "consumeSeq": 12,
+      "readSeq": 0,
+      "type": "pointermove",
+      "id": 1,
+      "client": [
+        317.19140625,
+        548.3046875
+      ],
+      "target": "DIV",
+      "button": 0
+    },
+    {
+      "at": 676,
+      "kind": "layout_change",
+      "seq": 10,
+      "consumeSeq": 12,
+      "readSeq": 0,
+      "rect": {
+        "left": 9,
+        "top": 255.125,
+        "width": 357,
+        "height": 446.75,
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "viewport": {
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 3,
+      "reason": "notification:resize",
+      "changes": []
+    },
+    {
+      "at": 676,
+      "kind": "rebase",
+      "seq": 8,
+      "consumeSeq": 12,
+      "readSeq": 0,
+      "id": 1,
+      "point": [
+        221,
+        210
+      ]
+    },
+    {
+      "at": 676,
+      "kind": "movement",
+      "seq": 13,
+      "consumeSeq": 12,
+      "readSeq": 0,
+      "status": "rebased",
+      "reason": "layout_revision",
+      "point": [
+        221,
+        210
+      ],
+      "delta": [
+        0,
+        0
+      ],
+      "id": 1
+    },
+    {
+      "at": 676,
+      "kind": "consume",
+      "seq": 13,
+      "consumeSeq": 12,
+      "readSeq": 0,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "layout:notification:resize",
+      "owner": 1
+    },
+    {
+      "at": 702,
+      "kind": "invalidate",
+      "seq": 12,
+      "consumeSeq": 13,
+      "readSeq": 0,
+      "reason": "resize"
+    },
+    {
+      "at": 702,
+      "kind": "received",
+      "seq": 14,
+      "consumeSeq": 13,
+      "readSeq": 0,
+      "type": "pointermove",
+      "id": 1,
+      "client": [
+        315.796875,
+        548.3046875
+      ],
+      "target": "DIV",
+      "button": 0
+    },
+    {
+      "at": 703,
+      "kind": "layout_change",
+      "seq": 11,
+      "consumeSeq": 13,
+      "readSeq": 0,
+      "rect": {
+        "left": 9,
+        "top": 255.125,
+        "width": 357,
+        "height": 446.75,
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "viewport": {
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 3,
+      "reason": "notification:resize",
+      "changes": []
+    },
+    {
+      "at": 703,
+      "kind": "rebase",
+      "seq": 9,
+      "consumeSeq": 13,
+      "readSeq": 0,
+      "id": 1,
+      "point": [
+        220,
+        210
+      ]
+    },
+    {
+      "at": 703,
+      "kind": "movement",
+      "seq": 14,
+      "consumeSeq": 13,
+      "readSeq": 0,
+      "status": "rebased",
+      "reason": "layout_revision",
+      "point": [
+        220,
+        210
+      ],
+      "delta": [
+        0,
+        0
+      ],
+      "id": 1
+    },
+    {
+      "at": 703,
+      "kind": "consume",
+      "seq": 14,
+      "consumeSeq": 13,
+      "readSeq": 0,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "layout:notification:resize",
+      "owner": 1
+    },
+    {
+      "at": 733,
+      "kind": "invalidate",
+      "seq": 13,
+      "consumeSeq": 14,
+      "readSeq": 0,
+      "reason": "resize"
+    },
+    {
+      "at": 733,
+      "kind": "received",
+      "seq": 15,
+      "consumeSeq": 14,
+      "readSeq": 0,
+      "type": "pointermove",
+      "id": 1,
+      "client": [
+        317.19140625,
+        548.3046875
+      ],
+      "target": "DIV",
+      "button": 0
+    },
+    {
+      "at": 734,
+      "kind": "layout_change",
+      "seq": 12,
+      "consumeSeq": 14,
+      "readSeq": 0,
+      "rect": {
+        "left": 9,
+        "top": 255.125,
+        "width": 357,
+        "height": 446.75,
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "viewport": {
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 3,
+      "reason": "notification:resize",
+      "changes": []
+    },
+    {
+      "at": 734,
+      "kind": "rebase",
+      "seq": 10,
+      "consumeSeq": 14,
+      "readSeq": 0,
+      "id": 1,
+      "point": [
+        221,
+        210
+      ]
+    },
+    {
+      "at": 734,
+      "kind": "movement",
+      "seq": 15,
+      "consumeSeq": 14,
+      "readSeq": 0,
+      "status": "rebased",
+      "reason": "layout_revision",
+      "point": [
+        221,
+        210
+      ],
+      "delta": [
+        0,
+        0
+      ],
+      "id": 1
+    },
+    {
+      "at": 734,
+      "kind": "consume",
+      "seq": 15,
+      "consumeSeq": 14,
+      "readSeq": 0,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "layout:notification:resize",
+      "owner": 1
+    },
+    {
+      "at": 764,
+      "kind": "invalidate",
+      "seq": 14,
+      "consumeSeq": 15,
+      "readSeq": 0,
+      "reason": "resize"
+    },
+    {
+      "at": 764,
+      "kind": "received",
+      "seq": 16,
+      "consumeSeq": 15,
+      "readSeq": 0,
+      "type": "pointermove",
+      "id": 1,
+      "client": [
+        315.796875,
+        548.3046875
+      ],
+      "target": "DIV",
+      "button": 0
+    },
+    {
+      "at": 764,
+      "kind": "layout_change",
+      "seq": 13,
+      "consumeSeq": 15,
+      "readSeq": 0,
+      "rect": {
+        "left": 9,
+        "top": 255.125,
+        "width": 357,
+        "height": 446.75,
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "viewport": {
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 3,
+      "reason": "notification:resize",
+      "changes": []
+    },
+    {
+      "at": 764,
+      "kind": "rebase",
+      "seq": 11,
+      "consumeSeq": 15,
+      "readSeq": 0,
+      "id": 1,
+      "point": [
+        220,
+        210
+      ]
+    },
+    {
+      "at": 764,
+      "kind": "movement",
+      "seq": 16,
+      "consumeSeq": 15,
+      "readSeq": 0,
+      "status": "rebased",
+      "reason": "layout_revision",
+      "point": [
+        220,
+        210
+      ],
+      "delta": [
+        0,
+        0
+      ],
+      "id": 1
+    },
+    {
+      "at": 764,
+      "kind": "consume",
+      "seq": 16,
+      "consumeSeq": 15,
+      "readSeq": 0,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "layout:notification:resize",
+      "owner": 1
+    },
+    {
+      "at": 795,
+      "kind": "invalidate",
+      "seq": 15,
+      "consumeSeq": 16,
+      "readSeq": 0,
+      "reason": "resize"
+    },
+    {
+      "at": 795,
+      "kind": "received",
+      "seq": 17,
+      "consumeSeq": 16,
+      "readSeq": 0,
+      "type": "pointermove",
+      "id": 1,
+      "client": [
+        317.19140625,
+        548.3046875
+      ],
+      "target": "DIV",
+      "button": 0
+    },
+    {
+      "at": 795,
+      "kind": "layout_change",
+      "seq": 14,
+      "consumeSeq": 16,
+      "readSeq": 0,
+      "rect": {
+        "left": 9,
+        "top": 255.125,
+        "width": 357,
+        "height": 446.75,
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "viewport": {
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 3,
+      "reason": "notification:resize",
+      "changes": []
+    },
+    {
+      "at": 795,
+      "kind": "rebase",
+      "seq": 12,
+      "consumeSeq": 16,
+      "readSeq": 0,
+      "id": 1,
+      "point": [
+        221,
+        210
+      ]
+    },
+    {
+      "at": 795,
+      "kind": "movement",
+      "seq": 17,
+      "consumeSeq": 16,
+      "readSeq": 0,
+      "status": "rebased",
+      "reason": "layout_revision",
+      "point": [
+        221,
+        210
+      ],
+      "delta": [
+        0,
+        0
+      ],
+      "id": 1
+    },
+    {
+      "at": 795,
+      "kind": "consume",
+      "seq": 17,
+      "consumeSeq": 16,
+      "readSeq": 0,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "layout:notification:resize",
+      "owner": 1
+    },
+    {
+      "at": 827,
+      "kind": "invalidate",
+      "seq": 16,
+      "consumeSeq": 17,
+      "readSeq": 0,
+      "reason": "resize"
+    },
+    {
+      "at": 827,
+      "kind": "received",
+      "seq": 18,
+      "consumeSeq": 17,
+      "readSeq": 0,
+      "type": "pointermove",
+      "id": 1,
+      "client": [
+        315.796875,
+        548.3046875
+      ],
+      "target": "DIV",
+      "button": 0
+    },
+    {
+      "at": 828,
+      "kind": "layout_change",
+      "seq": 15,
+      "consumeSeq": 17,
+      "readSeq": 0,
+      "rect": {
+        "left": 9,
+        "top": 255.125,
+        "width": 357,
+        "height": 446.75,
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "viewport": {
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 3,
+      "reason": "notification:resize",
+      "changes": []
+    },
+    {
+      "at": 828,
+      "kind": "rebase",
+      "seq": 13,
+      "consumeSeq": 17,
+      "readSeq": 0,
+      "id": 1,
+      "point": [
+        220,
+        210
+      ]
+    },
+    {
+      "at": 828,
+      "kind": "movement",
+      "seq": 18,
+      "consumeSeq": 17,
+      "readSeq": 0,
+      "status": "rebased",
+      "reason": "layout_revision",
+      "point": [
+        220,
+        210
+      ],
+      "delta": [
+        0,
+        0
+      ],
+      "id": 1
+    },
+    {
+      "at": 828,
+      "kind": "consume",
+      "seq": 18,
+      "consumeSeq": 17,
+      "readSeq": 0,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "layout:notification:resize",
+      "owner": 1
+    },
+    {
+      "at": 858,
+      "kind": "invalidate",
+      "seq": 17,
+      "consumeSeq": 18,
+      "readSeq": 0,
+      "reason": "resize"
+    },
+    {
+      "at": 858,
+      "kind": "received",
+      "seq": 19,
+      "consumeSeq": 18,
+      "readSeq": 0,
+      "type": "pointermove",
+      "id": 1,
+      "client": [
+        317.19140625,
+        548.3046875
+      ],
+      "target": "DIV",
+      "button": 0
+    },
+    {
+      "at": 858,
+      "kind": "layout_change",
+      "seq": 16,
+      "consumeSeq": 18,
+      "readSeq": 0,
+      "rect": {
+        "left": 9,
+        "top": 255.125,
+        "width": 357,
+        "height": 446.75,
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "viewport": {
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 3,
+      "reason": "notification:resize",
+      "changes": []
+    },
+    {
+      "at": 859,
+      "kind": "rebase",
+      "seq": 14,
+      "consumeSeq": 18,
+      "readSeq": 0,
+      "id": 1,
+      "point": [
+        221,
+        210
+      ]
+    },
+    {
+      "at": 859,
+      "kind": "movement",
+      "seq": 19,
+      "consumeSeq": 18,
+      "readSeq": 0,
+      "status": "rebased",
+      "reason": "layout_revision",
+      "point": [
+        221,
+        210
+      ],
+      "delta": [
+        0,
+        0
+      ],
+      "id": 1
+    },
+    {
+      "at": 859,
+      "kind": "consume",
+      "seq": 19,
+      "consumeSeq": 18,
+      "readSeq": 0,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "layout:notification:resize",
+      "owner": 1
+    },
+    {
+      "at": 889,
+      "kind": "invalidate",
+      "seq": 18,
+      "consumeSeq": 19,
+      "readSeq": 0,
+      "reason": "resize"
+    },
+    {
+      "at": 889,
+      "kind": "received",
+      "seq": 20,
+      "consumeSeq": 19,
+      "readSeq": 0,
+      "type": "pointermove",
+      "id": 1,
+      "client": [
+        315.796875,
+        548.3046875
+      ],
+      "target": "DIV",
+      "button": 0
+    },
+    {
+      "at": 890,
+      "kind": "layout_change",
+      "seq": 17,
+      "consumeSeq": 19,
+      "readSeq": 0,
+      "rect": {
+        "left": 9,
+        "top": 255.125,
+        "width": 357,
+        "height": 446.75,
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "viewport": {
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 3,
+      "reason": "notification:resize",
+      "changes": []
+    },
+    {
+      "at": 890,
+      "kind": "rebase",
+      "seq": 15,
+      "consumeSeq": 19,
+      "readSeq": 0,
+      "id": 1,
+      "point": [
+        220,
+        210
+      ]
+    },
+    {
+      "at": 890,
+      "kind": "movement",
+      "seq": 20,
+      "consumeSeq": 19,
+      "readSeq": 0,
+      "status": "rebased",
+      "reason": "layout_revision",
+      "point": [
+        220,
+        210
+      ],
+      "delta": [
+        0,
+        0
+      ],
+      "id": 1
+    },
+    {
+      "at": 890,
+      "kind": "consume",
+      "seq": 20,
+      "consumeSeq": 19,
+      "readSeq": 0,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "layout:notification:resize",
+      "owner": 1
+    },
+    {
+      "at": 920,
+      "kind": "invalidate",
+      "seq": 19,
+      "consumeSeq": 20,
+      "readSeq": 0,
+      "reason": "resize"
+    },
+    {
+      "at": 920,
+      "kind": "received",
+      "seq": 21,
+      "consumeSeq": 20,
+      "readSeq": 0,
+      "type": "pointermove",
+      "id": 1,
+      "client": [
+        317.19140625,
+        548.3046875
+      ],
+      "target": "DIV",
+      "button": 0
+    },
+    {
+      "at": 920,
+      "kind": "layout_change",
+      "seq": 18,
+      "consumeSeq": 20,
+      "readSeq": 0,
+      "rect": {
+        "left": 9,
+        "top": 255.125,
+        "width": 357,
+        "height": 446.75,
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "viewport": {
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 3,
+      "reason": "notification:resize",
+      "changes": []
+    },
+    {
+      "at": 920,
+      "kind": "rebase",
+      "seq": 16,
+      "consumeSeq": 20,
+      "readSeq": 0,
+      "id": 1,
+      "point": [
+        221,
+        210
+      ]
+    },
+    {
+      "at": 920,
+      "kind": "movement",
+      "seq": 21,
+      "consumeSeq": 20,
+      "readSeq": 0,
+      "status": "rebased",
+      "reason": "layout_revision",
+      "point": [
+        221,
+        210
+      ],
+      "delta": [
+        0,
+        0
+      ],
+      "id": 1
+    },
+    {
+      "at": 920,
+      "kind": "consume",
+      "seq": 21,
+      "consumeSeq": 20,
+      "readSeq": 0,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "layout:notification:resize",
+      "owner": 1
+    },
+    {
+      "at": 950,
+      "kind": "invalidate",
+      "seq": 20,
+      "consumeSeq": 21,
+      "readSeq": 0,
+      "reason": "resize"
+    },
+    {
+      "at": 950,
+      "kind": "received",
+      "seq": 22,
+      "consumeSeq": 21,
+      "readSeq": 0,
+      "type": "pointermove",
+      "id": 1,
+      "client": [
+        315.796875,
+        548.3046875
+      ],
+      "target": "DIV",
+      "button": 0
+    },
+    {
+      "at": 951,
+      "kind": "layout_change",
+      "seq": 19,
+      "consumeSeq": 21,
+      "readSeq": 0,
+      "rect": {
+        "left": 9,
+        "top": 255.125,
+        "width": 357,
+        "height": 446.75,
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "viewport": {
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 3,
+      "reason": "notification:resize",
+      "changes": []
+    },
+    {
+      "at": 951,
+      "kind": "rebase",
+      "seq": 17,
+      "consumeSeq": 21,
+      "readSeq": 0,
+      "id": 1,
+      "point": [
+        220,
+        210
+      ]
+    },
+    {
+      "at": 951,
+      "kind": "movement",
+      "seq": 22,
+      "consumeSeq": 21,
+      "readSeq": 0,
+      "status": "rebased",
+      "reason": "layout_revision",
+      "point": [
+        220,
+        210
+      ],
+      "delta": [
+        0,
+        0
+      ],
+      "id": 1
+    },
+    {
+      "at": 951,
+      "kind": "consume",
+      "seq": 22,
+      "consumeSeq": 21,
+      "readSeq": 0,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "layout:notification:resize",
+      "owner": 1
+    },
+    {
+      "at": 981,
+      "kind": "invalidate",
+      "seq": 21,
+      "consumeSeq": 22,
+      "readSeq": 0,
+      "reason": "resize"
+    },
+    {
+      "at": 982,
+      "kind": "received",
+      "seq": 23,
+      "consumeSeq": 22,
+      "readSeq": 0,
+      "type": "pointermove",
+      "id": 1,
+      "client": [
+        317.19140625,
+        548.3046875
+      ],
+      "target": "DIV",
+      "button": 0
+    },
+    {
+      "at": 982,
+      "kind": "layout_change",
+      "seq": 20,
+      "consumeSeq": 22,
+      "readSeq": 0,
+      "rect": {
+        "left": 9,
+        "top": 255.125,
+        "width": 357,
+        "height": 446.75,
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "viewport": {
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 3,
+      "reason": "notification:resize",
+      "changes": []
+    },
+    {
+      "at": 982,
+      "kind": "rebase",
+      "seq": 18,
+      "consumeSeq": 22,
+      "readSeq": 0,
+      "id": 1,
+      "point": [
+        221,
+        210
+      ]
+    },
+    {
+      "at": 982,
+      "kind": "movement",
+      "seq": 23,
+      "consumeSeq": 22,
+      "readSeq": 0,
+      "status": "rebased",
+      "reason": "layout_revision",
+      "point": [
+        221,
+        210
+      ],
+      "delta": [
+        0,
+        0
+      ],
+      "id": 1
+    },
+    {
+      "at": 982,
+      "kind": "consume",
+      "seq": 23,
+      "consumeSeq": 22,
+      "readSeq": 0,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "layout:notification:resize",
+      "owner": 1
+    },
+    {
+      "at": 1013,
+      "kind": "invalidate",
+      "seq": 22,
+      "consumeSeq": 23,
+      "readSeq": 0,
+      "reason": "resize"
+    },
+    {
+      "at": 1013,
+      "kind": "received",
+      "seq": 24,
+      "consumeSeq": 23,
+      "readSeq": 0,
+      "type": "pointermove",
+      "id": 1,
+      "client": [
+        315.796875,
+        548.3046875
+      ],
+      "target": "DIV",
+      "button": 0
+    },
+    {
+      "at": 1013,
+      "kind": "layout_change",
+      "seq": 21,
+      "consumeSeq": 23,
+      "readSeq": 0,
+      "rect": {
+        "left": 9,
+        "top": 255.125,
+        "width": 357,
+        "height": 446.75,
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "viewport": {
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 3,
+      "reason": "notification:resize",
+      "changes": []
+    },
+    {
+      "at": 1013,
+      "kind": "rebase",
+      "seq": 19,
+      "consumeSeq": 23,
+      "readSeq": 0,
+      "id": 1,
+      "point": [
+        220,
+        210
+      ]
+    },
+    {
+      "at": 1013,
+      "kind": "movement",
+      "seq": 24,
+      "consumeSeq": 23,
+      "readSeq": 0,
+      "status": "rebased",
+      "reason": "layout_revision",
+      "point": [
+        220,
+        210
+      ],
+      "delta": [
+        0,
+        0
+      ],
+      "id": 1
+    },
+    {
+      "at": 1013,
+      "kind": "consume",
+      "seq": 24,
+      "consumeSeq": 23,
+      "readSeq": 0,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "layout:notification:resize",
+      "owner": 1
+    },
+    {
+      "at": 1044,
+      "kind": "invalidate",
+      "seq": 23,
+      "consumeSeq": 24,
+      "readSeq": 0,
+      "reason": "resize"
+    },
+    {
+      "at": 1044,
+      "kind": "received",
+      "seq": 25,
+      "consumeSeq": 24,
+      "readSeq": 0,
+      "type": "pointermove",
+      "id": 1,
+      "client": [
+        317.19140625,
+        548.3046875
+      ],
+      "target": "DIV",
+      "button": 0
+    },
+    {
+      "at": 1045,
+      "kind": "layout_change",
+      "seq": 22,
+      "consumeSeq": 24,
+      "readSeq": 0,
+      "rect": {
+        "left": 9,
+        "top": 255.125,
+        "width": 357,
+        "height": 446.75,
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "viewport": {
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 3,
+      "reason": "notification:resize",
+      "changes": []
+    },
+    {
+      "at": 1045,
+      "kind": "rebase",
+      "seq": 20,
+      "consumeSeq": 24,
+      "readSeq": 0,
+      "id": 1,
+      "point": [
+        221,
+        210
+      ]
+    },
+    {
+      "at": 1045,
+      "kind": "movement",
+      "seq": 25,
+      "consumeSeq": 24,
+      "readSeq": 0,
+      "status": "rebased",
+      "reason": "layout_revision",
+      "point": [
+        221,
+        210
+      ],
+      "delta": [
+        0,
+        0
+      ],
+      "id": 1
+    },
+    {
+      "at": 1045,
+      "kind": "consume",
+      "seq": 25,
+      "consumeSeq": 24,
+      "readSeq": 0,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "layout:notification:resize",
+      "owner": 1
+    },
+    {
+      "at": 1078,
+      "kind": "invalidate",
+      "seq": 24,
+      "consumeSeq": 25,
+      "readSeq": 0,
+      "reason": "resize"
+    },
+    {
+      "at": 1078,
+      "kind": "received",
+      "seq": 26,
+      "consumeSeq": 25,
+      "readSeq": 0,
+      "type": "pointermove",
+      "id": 1,
+      "client": [
+        315.796875,
+        548.3046875
+      ],
+      "target": "DIV",
+      "button": 0
+    },
+    {
+      "at": 1079,
+      "kind": "layout_change",
+      "seq": 23,
+      "consumeSeq": 25,
+      "readSeq": 0,
+      "rect": {
+        "left": 9,
+        "top": 255.125,
+        "width": 357,
+        "height": 446.75,
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "viewport": {
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 3,
+      "reason": "notification:resize",
+      "changes": []
+    },
+    {
+      "at": 1079,
+      "kind": "rebase",
+      "seq": 21,
+      "consumeSeq": 25,
+      "readSeq": 0,
+      "id": 1,
+      "point": [
+        220,
+        210
+      ]
+    },
+    {
+      "at": 1079,
+      "kind": "movement",
+      "seq": 26,
+      "consumeSeq": 25,
+      "readSeq": 0,
+      "status": "rebased",
+      "reason": "layout_revision",
+      "point": [
+        220,
+        210
+      ],
+      "delta": [
+        0,
+        0
+      ],
+      "id": 1
+    },
+    {
+      "at": 1079,
+      "kind": "consume",
+      "seq": 26,
+      "consumeSeq": 25,
+      "readSeq": 0,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "layout:notification:resize",
+      "owner": 1
+    },
+    {
+      "at": 1106,
+      "kind": "invalidate",
+      "seq": 25,
+      "consumeSeq": 26,
+      "readSeq": 0,
+      "reason": "resize"
+    },
+    {
+      "at": 1106,
+      "kind": "received",
+      "seq": 27,
+      "consumeSeq": 26,
+      "readSeq": 0,
+      "type": "pointermove",
+      "id": 1,
+      "client": [
+        317.19140625,
+        548.3046875
+      ],
+      "target": "DIV",
+      "button": 0
+    },
+    {
+      "at": 1107,
+      "kind": "layout_change",
+      "seq": 24,
+      "consumeSeq": 26,
+      "readSeq": 0,
+      "rect": {
+        "left": 9,
+        "top": 255.125,
+        "width": 357,
+        "height": 446.75,
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "viewport": {
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 3,
+      "reason": "notification:resize",
+      "changes": []
+    },
+    {
+      "at": 1107,
+      "kind": "rebase",
+      "seq": 22,
+      "consumeSeq": 26,
+      "readSeq": 0,
+      "id": 1,
+      "point": [
+        221,
+        210
+      ]
+    },
+    {
+      "at": 1107,
+      "kind": "movement",
+      "seq": 27,
+      "consumeSeq": 26,
+      "readSeq": 0,
+      "status": "rebased",
+      "reason": "layout_revision",
+      "point": [
+        221,
+        210
+      ],
+      "delta": [
+        0,
+        0
+      ],
+      "id": 1
+    },
+    {
+      "at": 1107,
+      "kind": "consume",
+      "seq": 27,
+      "consumeSeq": 26,
+      "readSeq": 0,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "layout:notification:resize",
+      "owner": 1
+    },
+    {
+      "at": 1138,
+      "kind": "invalidate",
+      "seq": 26,
+      "consumeSeq": 27,
+      "readSeq": 0,
+      "reason": "resize"
+    },
+    {
+      "at": 1138,
+      "kind": "received",
+      "seq": 28,
+      "consumeSeq": 27,
+      "readSeq": 0,
+      "type": "pointermove",
+      "id": 1,
+      "client": [
+        315.796875,
+        548.3046875
+      ],
+      "target": "DIV",
+      "button": 0
+    },
+    {
+      "at": 1138,
+      "kind": "layout_change",
+      "seq": 25,
+      "consumeSeq": 27,
+      "readSeq": 0,
+      "rect": {
+        "left": 9,
+        "top": 255.125,
+        "width": 357,
+        "height": 446.75,
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "viewport": {
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 3,
+      "reason": "notification:resize",
+      "changes": []
+    },
+    {
+      "at": 1138,
+      "kind": "rebase",
+      "seq": 23,
+      "consumeSeq": 27,
+      "readSeq": 0,
+      "id": 1,
+      "point": [
+        220,
+        210
+      ]
+    },
+    {
+      "at": 1138,
+      "kind": "movement",
+      "seq": 28,
+      "consumeSeq": 27,
+      "readSeq": 0,
+      "status": "rebased",
+      "reason": "layout_revision",
+      "point": [
+        220,
+        210
+      ],
+      "delta": [
+        0,
+        0
+      ],
+      "id": 1
+    },
+    {
+      "at": 1138,
+      "kind": "consume",
+      "seq": 28,
+      "consumeSeq": 27,
+      "readSeq": 0,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "layout:notification:resize",
+      "owner": 1
+    },
+    {
+      "at": 1169,
+      "kind": "invalidate",
+      "seq": 27,
+      "consumeSeq": 28,
+      "readSeq": 0,
+      "reason": "resize"
+    },
+    {
+      "at": 1169,
+      "kind": "received",
+      "seq": 29,
+      "consumeSeq": 28,
+      "readSeq": 0,
+      "type": "pointermove",
+      "id": 1,
+      "client": [
+        317.19140625,
+        548.3046875
+      ],
+      "target": "DIV",
+      "button": 0
+    },
+    {
+      "at": 1169,
+      "kind": "layout_change",
+      "seq": 26,
+      "consumeSeq": 28,
+      "readSeq": 0,
+      "rect": {
+        "left": 9,
+        "top": 255.125,
+        "width": 357,
+        "height": 446.75,
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "viewport": {
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 3,
+      "reason": "notification:resize",
+      "changes": []
+    },
+    {
+      "at": 1169,
+      "kind": "rebase",
+      "seq": 24,
+      "consumeSeq": 28,
+      "readSeq": 0,
+      "id": 1,
+      "point": [
+        221,
+        210
+      ]
+    },
+    {
+      "at": 1169,
+      "kind": "movement",
+      "seq": 29,
+      "consumeSeq": 28,
+      "readSeq": 0,
+      "status": "rebased",
+      "reason": "layout_revision",
+      "point": [
+        221,
+        210
+      ],
+      "delta": [
+        0,
+        0
+      ],
+      "id": 1
+    },
+    {
+      "at": 1169,
+      "kind": "consume",
+      "seq": 29,
+      "consumeSeq": 28,
+      "readSeq": 0,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "layout:notification:resize",
+      "owner": 1
+    },
+    {
+      "at": 1199,
+      "kind": "invalidate",
+      "seq": 28,
+      "consumeSeq": 29,
+      "readSeq": 0,
+      "reason": "resize"
+    },
+    {
+      "at": 1199,
+      "kind": "received",
+      "seq": 30,
+      "consumeSeq": 29,
+      "readSeq": 0,
+      "type": "pointermove",
+      "id": 1,
+      "client": [
+        315.796875,
+        548.3046875
+      ],
+      "target": "DIV",
+      "button": 0
+    },
+    {
+      "at": 1199,
+      "kind": "layout_change",
+      "seq": 27,
+      "consumeSeq": 29,
+      "readSeq": 0,
+      "rect": {
+        "left": 9,
+        "top": 255.125,
+        "width": 357,
+        "height": 446.75,
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "viewport": {
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 3,
+      "reason": "notification:resize",
+      "changes": []
+    },
+    {
+      "at": 1200,
+      "kind": "rebase",
+      "seq": 25,
+      "consumeSeq": 29,
+      "readSeq": 0,
+      "id": 1,
+      "point": [
+        220,
+        210
+      ]
+    },
+    {
+      "at": 1200,
+      "kind": "movement",
+      "seq": 30,
+      "consumeSeq": 29,
+      "readSeq": 0,
+      "status": "rebased",
+      "reason": "layout_revision",
+      "point": [
+        220,
+        210
+      ],
+      "delta": [
+        0,
+        0
+      ],
+      "id": 1
+    },
+    {
+      "at": 1200,
+      "kind": "consume",
+      "seq": 30,
+      "consumeSeq": 29,
+      "readSeq": 0,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "layout:notification:resize",
+      "owner": 1
+    },
+    {
+      "at": 1231,
+      "kind": "invalidate",
+      "seq": 29,
+      "consumeSeq": 30,
+      "readSeq": 0,
+      "reason": "resize"
+    },
+    {
+      "at": 1231,
+      "kind": "received",
+      "seq": 31,
+      "consumeSeq": 30,
+      "readSeq": 0,
+      "type": "pointermove",
+      "id": 1,
+      "client": [
+        317.19140625,
+        548.3046875
+      ],
+      "target": "DIV",
+      "button": 0
+    },
+    {
+      "at": 1231,
+      "kind": "layout_change",
+      "seq": 28,
+      "consumeSeq": 30,
+      "readSeq": 0,
+      "rect": {
+        "left": 9,
+        "top": 255.125,
+        "width": 357,
+        "height": 446.75,
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "viewport": {
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 3,
+      "reason": "notification:resize",
+      "changes": []
+    },
+    {
+      "at": 1231,
+      "kind": "rebase",
+      "seq": 26,
+      "consumeSeq": 30,
+      "readSeq": 0,
+      "id": 1,
+      "point": [
+        221,
+        210
+      ]
+    },
+    {
+      "at": 1231,
+      "kind": "movement",
+      "seq": 31,
+      "consumeSeq": 30,
+      "readSeq": 0,
+      "status": "rebased",
+      "reason": "layout_revision",
+      "point": [
+        221,
+        210
+      ],
+      "delta": [
+        0,
+        0
+      ],
+      "id": 1
+    },
+    {
+      "at": 1231,
+      "kind": "consume",
+      "seq": 31,
+      "consumeSeq": 30,
+      "readSeq": 0,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "layout:notification:resize",
+      "owner": 1
+    },
+    {
+      "at": 1263,
+      "kind": "invalidate",
+      "seq": 30,
+      "consumeSeq": 31,
+      "readSeq": 0,
+      "reason": "resize"
+    },
+    {
+      "at": 1263,
+      "kind": "received",
+      "seq": 32,
+      "consumeSeq": 31,
+      "readSeq": 0,
+      "type": "pointermove",
+      "id": 1,
+      "client": [
+        315.796875,
+        548.3046875
+      ],
+      "target": "DIV",
+      "button": 0
+    },
+    {
+      "at": 1263,
+      "kind": "layout_change",
+      "seq": 29,
+      "consumeSeq": 31,
+      "readSeq": 0,
+      "rect": {
+        "left": 9,
+        "top": 255.125,
+        "width": 357,
+        "height": 446.75,
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "viewport": {
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 3,
+      "reason": "notification:resize",
+      "changes": []
+    },
+    {
+      "at": 1263,
+      "kind": "rebase",
+      "seq": 27,
+      "consumeSeq": 31,
+      "readSeq": 0,
+      "id": 1,
+      "point": [
+        220,
+        210
+      ]
+    },
+    {
+      "at": 1263,
+      "kind": "movement",
+      "seq": 32,
+      "consumeSeq": 31,
+      "readSeq": 0,
+      "status": "rebased",
+      "reason": "layout_revision",
+      "point": [
+        220,
+        210
+      ],
+      "delta": [
+        0,
+        0
+      ],
+      "id": 1
+    },
+    {
+      "at": 1263,
+      "kind": "consume",
+      "seq": 32,
+      "consumeSeq": 31,
+      "readSeq": 0,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "layout:notification:resize",
+      "owner": 1
+    },
+    {
+      "at": 1294,
+      "kind": "invalidate",
+      "seq": 31,
+      "consumeSeq": 32,
+      "readSeq": 0,
+      "reason": "resize"
+    },
+    {
+      "at": 1294,
+      "kind": "received",
+      "seq": 33,
+      "consumeSeq": 32,
+      "readSeq": 0,
+      "type": "pointermove",
+      "id": 1,
+      "client": [
+        317.19140625,
+        548.3046875
+      ],
+      "target": "DIV",
+      "button": 0
+    },
+    {
+      "at": 1294,
+      "kind": "layout_change",
+      "seq": 30,
+      "consumeSeq": 32,
+      "readSeq": 0,
+      "rect": {
+        "left": 9,
+        "top": 255.125,
+        "width": 357,
+        "height": 446.75,
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "viewport": {
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 3,
+      "reason": "notification:resize",
+      "changes": []
+    },
+    {
+      "at": 1294,
+      "kind": "rebase",
+      "seq": 28,
+      "consumeSeq": 32,
+      "readSeq": 0,
+      "id": 1,
+      "point": [
+        221,
+        210
+      ]
+    },
+    {
+      "at": 1294,
+      "kind": "movement",
+      "seq": 33,
+      "consumeSeq": 32,
+      "readSeq": 0,
+      "status": "rebased",
+      "reason": "layout_revision",
+      "point": [
+        221,
+        210
+      ],
+      "delta": [
+        0,
+        0
+      ],
+      "id": 1
+    },
+    {
+      "at": 1294,
+      "kind": "consume",
+      "seq": 33,
+      "consumeSeq": 32,
+      "readSeq": 0,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "layout:notification:resize",
+      "owner": 1
+    },
+    {
+      "at": 1324,
+      "kind": "invalidate",
+      "seq": 32,
+      "consumeSeq": 33,
+      "readSeq": 0,
+      "reason": "resize"
+    },
+    {
+      "at": 1325,
+      "kind": "received",
+      "seq": 34,
+      "consumeSeq": 33,
+      "readSeq": 0,
+      "type": "pointermove",
+      "id": 1,
+      "client": [
+        315.796875,
+        548.3046875
+      ],
+      "target": "DIV",
+      "button": 0
+    },
+    {
+      "at": 1325,
+      "kind": "layout_change",
+      "seq": 31,
+      "consumeSeq": 33,
+      "readSeq": 0,
+      "rect": {
+        "left": 9,
+        "top": 255.125,
+        "width": 357,
+        "height": 446.75,
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "viewport": {
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 3,
+      "reason": "notification:resize",
+      "changes": []
+    },
+    {
+      "at": 1325,
+      "kind": "rebase",
+      "seq": 29,
+      "consumeSeq": 33,
+      "readSeq": 0,
+      "id": 1,
+      "point": [
+        220,
+        210
+      ]
+    },
+    {
+      "at": 1325,
+      "kind": "movement",
+      "seq": 34,
+      "consumeSeq": 33,
+      "readSeq": 0,
+      "status": "rebased",
+      "reason": "layout_revision",
+      "point": [
+        220,
+        210
+      ],
+      "delta": [
+        0,
+        0
+      ],
+      "id": 1
+    },
+    {
+      "at": 1325,
+      "kind": "consume",
+      "seq": 34,
+      "consumeSeq": 33,
+      "readSeq": 0,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "layout:notification:resize",
+      "owner": 1
+    },
+    {
+      "at": 1355,
+      "kind": "invalidate",
+      "seq": 33,
+      "consumeSeq": 34,
+      "readSeq": 0,
+      "reason": "resize"
+    },
+    {
+      "at": 1356,
+      "kind": "received",
+      "seq": 35,
+      "consumeSeq": 34,
+      "readSeq": 0,
+      "type": "pointermove",
+      "id": 1,
+      "client": [
+        317.19140625,
+        548.3046875
+      ],
+      "target": "DIV",
+      "button": 0
+    },
+    {
+      "at": 1356,
+      "kind": "layout_change",
+      "seq": 32,
+      "consumeSeq": 34,
+      "readSeq": 0,
+      "rect": {
+        "left": 9,
+        "top": 255.125,
+        "width": 357,
+        "height": 446.75,
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "viewport": {
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 3,
+      "reason": "notification:resize",
+      "changes": []
+    },
+    {
+      "at": 1356,
+      "kind": "rebase",
+      "seq": 30,
+      "consumeSeq": 34,
+      "readSeq": 0,
+      "id": 1,
+      "point": [
+        221,
+        210
+      ]
+    },
+    {
+      "at": 1356,
+      "kind": "movement",
+      "seq": 35,
+      "consumeSeq": 34,
+      "readSeq": 0,
+      "status": "rebased",
+      "reason": "layout_revision",
+      "point": [
+        221,
+        210
+      ],
+      "delta": [
+        0,
+        0
+      ],
+      "id": 1
+    },
+    {
+      "at": 1356,
+      "kind": "consume",
+      "seq": 35,
+      "consumeSeq": 34,
+      "readSeq": 0,
+      "received": [
+        0,
+        0
+      ],
+      "out": [
+        0,
+        0
+      ],
+      "reason": "layout:notification:resize",
+      "owner": 1
+    },
+    {
+      "at": 1387,
+      "kind": "received",
+      "seq": 36,
+      "consumeSeq": 36,
+      "readSeq": 0,
+      "type": "pointermove",
+      "id": 1,
+      "client": [
+        321.375,
+        548.3046875
+      ],
+      "target": "DIV",
+      "button": 0
+    },
+    {
+      "at": 1387,
+      "kind": "movement",
+      "seq": 36,
+      "consumeSeq": 36,
+      "readSeq": 0,
+      "status": "queued",
+      "reason": "relative_drag",
+      "point": [
+        224,
+        210
+      ],
+      "delta": [
+        3,
+        0
+      ],
+      "id": 1,
+      "pending": [
+        3.5999999999999996,
+        0
+      ]
+    },
+    {
+      "at": 1387,
+      "kind": "consume",
+      "seq": 37,
+      "consumeSeq": 36,
+      "readSeq": 0,
+      "received": [
+        3.5999999999999996,
+        0
+      ],
+      "out": [
+        3.5999999999999996,
+        0
+      ],
+      "reason": "accepted",
+      "owner": 1
+    },
+    {
+      "at": 1387,
+      "kind": "python_read",
+      "seq": 1,
+      "consumeSeq": 37,
+      "readSeq": 0,
+      "received": [
+        6,
+        0
+      ],
+      "out": [
+        6,
+        0
+      ],
+      "reason": "accepted",
+      "transport": "fixture"
+    },
+    {
+      "at": 1388,
+      "kind": "frame",
+      "seq": 1,
+      "consumeSeq": 37,
+      "readSeq": 1,
+      "after": [
+        134,
+        266
+      ],
+      "before": [
+        128,
+        266
+      ],
+      "scene": "playing",
+      "time": 12,
+      "reason": "touch_drag",
+      "drag": [
+        6,
+        0
+      ],
+      "positionWrites": [
+        {
+          "before": [
+            128,
+            266
+          ],
+          "after": [
+            134,
+            266
+          ],
+          "reason": "touch_drag"
+        }
+      ],
+      "phase": "playing"
+    },
+    {
+      "at": 1388,
+      "kind": "frame",
+      "seq": 2,
+      "consumeSeq": 37,
+      "readSeq": 1,
+      "after": [
+        128,
+        266
+      ],
+      "before": [
+        128,
+        266
+      ],
+      "scene": "playing",
+      "time": 12.1,
+      "reason": "cave_wall",
+      "drag": [
+        6,
+        0
+      ],
+      "positionWrites": [
+        {
+          "before": [
+            128,
+            266
+          ],
+          "after": [
+            134,
+            266
+          ],
+          "reason": "touch_drag"
+        },
+        {
+          "before": [
+            134,
+            266
+          ],
+          "after": [
+            128,
+            266
+          ],
+          "reason": "cave_wall"
+        }
+      ],
+      "phase": "playing"
+    },
+    {
+      "at": 1388,
+      "kind": "reset",
+      "seq": 2,
+      "consumeSeq": 37,
+      "readSeq": 1,
+      "reason": "scene:playing->paused"
+    },
+    {
+      "at": 1409,
+      "kind": "error",
+      "seq": 1,
+      "consumeSeq": 37,
+      "readSeq": 1,
+      "source": "JavaScript",
+      "message": "DIAGNOSTIC_TEST_ERROR",
+      "stack": ""
+    }
+  ],
+  "timeline": [
+    {
+      "at": 1014,
+      "lastEvent": {
+        "type": "pointermove",
+        "id": 1,
+        "clientX": 315.796875,
+        "clientY": 548.3046875,
+        "at": 1013
+      },
+      "movePointerId": 1,
+      "attackPointerId": 2,
+      "drag": [
+        0,
+        0
+      ],
+      "rect": {
+        "left": 9,
+        "top": 255.125,
+        "width": 357,
+        "height": 446.75,
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "revision": 21,
+      "clientPoints": {
+        "move": [
+          315.796875,
+          548.3046875
+        ],
+        "attack": [
+          287.90625,
+          548.3046875
+        ]
+      },
+      "stageNumber": 1,
+      "gamePoints": {
+        "move": {
+          "x": 220,
+          "y": 210
+        },
+        "attack": {
+          "x": 200,
+          "y": 210
+        }
+      },
+      "viewport": {
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 3,
+      "css": {
+        "width": "357px",
+        "height": "446.75px"
+      }
+    },
+    {
+      "at": 2058,
+      "lastEvent": {
+        "type": "pointermove",
+        "id": 1,
+        "clientX": 321.375,
+        "clientY": 548.3046875,
+        "at": 1387
+      },
+      "movePointerId": null,
+      "attackPointerId": null,
+      "drag": [
+        0,
+        0
+      ],
+      "rect": {
+        "left": 9,
+        "top": 255.125,
+        "width": 357,
+        "height": 446.75,
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "revision": 32,
+      "clientPoints": {
+        "move": null,
+        "attack": null
+      },
+      "stageNumber": 1,
+      "gamePoints": {
+        "move": null,
+        "attack": null
+      },
+      "viewport": {
+        "innerWidth": 375,
+        "innerHeight": 956,
+        "vw": 375,
+        "vh": 956,
+        "offsetLeft": 0,
+        "offsetTop": 0
+      },
+      "dpr": 3,
+      "css": {
+        "width": "357px",
+        "height": "446.75px"
+      },
+      "player": {
+        "x": 128,
+        "y": 266,
+        "scene": "playing",
+        "time": 12.1,
+        "reason": "cave_wall",
+        "drag": [
+          6,
+          0
+        ]
+      }
+    }
+  ],
+  "controls": {
+    "lastEvent": {
+      "type": "pointermove",
+      "id": 1,
+      "clientX": 321.375,
+      "clientY": 548.3046875,
+      "at": 1387
+    },
+    "movePointerId": null,
+    "attackPointerId": null,
+    "drag": [
+      0,
+      0
+    ],
+    "rect": {
+      "left": 9,
+      "top": 255.125,
+      "width": 357,
+      "height": 446.75,
+      "innerWidth": 375,
+      "innerHeight": 956,
+      "vw": 375,
+      "vh": 956,
+      "offsetLeft": 0,
+      "offsetTop": 0
+    },
+    "revision": 32,
+    "clientPoints": {
+      "move": null,
+      "attack": null
+    },
+    "stageNumber": 1,
+    "gamePoints": {
+      "move": null,
+      "attack": null
+    },
+    "viewport": {
+      "innerWidth": 375,
+      "innerHeight": 956,
+      "vw": 375,
+      "vh": 956,
+      "offsetLeft": 0,
+      "offsetTop": 0
+    },
+    "dpr": 3,
+    "css": {
+      "width": "357px",
+      "height": "446.75px"
+    }
+  }
+}

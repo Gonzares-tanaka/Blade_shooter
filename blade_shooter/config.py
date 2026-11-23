@@ -1,8 +1,8 @@
 """調整箇所。時間=秒、距離=ゲーム内px、速度=px/秒。変更後build.pyで配布版更新。"""
 from stage2_config import MISSILE,STEALTH
 
-TITLE, VERSION = "BLADE / CLOSE QUARTERS", "0.18.3"
-BUILD_ID = "0183-D1"  # 端末照合用。HTML / JS / BOOT / Pythonで一致を確認。
+TITLE, VERSION = "BLADE / CLOSE QUARTERS", "0.18.4"
+BUILD_ID = "0184-F1"  # 端末照合用。HTML / JS / BOOT / Pythonで一致を確認。
 WIDTH, HEIGHT, HUD_HEIGHT, FPS = 256, 320, 24, 60
 PLAYER_SIZE, PLAYER_HIT_RADIUS = 16, 2.0
 PLAYER_SPEED, PLAYER_HP, INVINCIBLE_SECONDS = 125.0, 3, 1.2

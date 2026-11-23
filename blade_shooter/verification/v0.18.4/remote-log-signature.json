@@ -1,0 +1,42 @@
+{
+  "source": "User-provided log excerpts, build 0183-D1; not a local device capture",
+  "rows": [
+    {
+      "consumeSeq": 570,
+      "axis": "x",
+      "js": -3.2154589371980817,
+      "python": -1996018586,
+      "double_low_signed_int32": -1996018586,
+      "double_high_signed_int32": -1073104574,
+      "match": true
+    },
+    {
+      "consumeSeq": 571,
+      "axis": "x",
+      "js": -2.9681159420289815,
+      "python": -1842478733,
+      "double_low_signed_int32": -1842478733,
+      "double_high_signed_int32": -1073234253,
+      "match": true
+    },
+    {
+      "consumeSeq": 572,
+      "axis": "x",
+      "js": -3.462801932367148,
+      "python": 2145408781,
+      "double_low_signed_int32": 2145408781,
+      "double_high_signed_int32": -1072974895,
+      "match": true
+    },
+    {
+      "consumeSeq": 572,
+      "axis": "y",
+      "js": 0.2471042471042324,
+      "python": -1442711552,
+      "double_low_signed_int32": -1442711552,
+      "double_high_signed_int32": 1070571804,
+      "match": true
+    }
+  ],
+  "local_engine_reproduction": false
+}

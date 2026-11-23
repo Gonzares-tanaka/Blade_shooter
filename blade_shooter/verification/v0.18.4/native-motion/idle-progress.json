@@ -1,0 +1,470 @@
+[
+  {
+    "entry": "start-story",
+    "before": {
+      "x": 128,
+      "y": 266,
+      "time": 0.016666666666666666
+    },
+    "after": {
+      "x": 128,
+      "y": 266,
+      "time": 30.09999999999957,
+      "hp": 2,
+      "lives": 1,
+      "state": "playing"
+    },
+    "owners": [
+      null,
+      null
+    ],
+    "drag": [
+      0,
+      0
+    ],
+    "last_layout_changes": [
+      {
+        "at": 8455.599999904633,
+        "kind": "layout_change",
+        "state": "title",
+        "rect": {
+          "left": 13,
+          "top": 240,
+          "width": 414,
+          "height": 518,
+          "innerWidth": 440,
+          "innerHeight": 956,
+          "vw": 440,
+          "vh": 956,
+          "offsetLeft": 0,
+          "offsetTop": 0
+        },
+        "viewport": {
+          "innerWidth": 440,
+          "innerHeight": 956,
+          "vw": 440,
+          "vh": 956,
+          "offsetLeft": 0,
+          "offsetTop": 0
+        },
+        "dpr": 3,
+        "reason": "notification:resize_observer",
+        "changes": [
+          "top"
+        ]
+      },
+      {
+        "at": 8999.599999904633,
+        "kind": "layout_change",
+        "state": "story",
+        "rect": {
+          "left": 13,
+          "top": 221.5,
+          "width": 414,
+          "height": 518,
+          "innerWidth": 440,
+          "innerHeight": 956,
+          "vw": 440,
+          "vh": 956,
+          "offsetLeft": 0,
+          "offsetTop": 0
+        },
+        "viewport": {
+          "innerWidth": 440,
+          "innerHeight": 956,
+          "vw": 440,
+          "vh": 956,
+          "offsetLeft": 0,
+          "offsetTop": 0
+        },
+        "dpr": 3,
+        "reason": "notification:resize_observer",
+        "changes": [
+          "top"
+        ]
+      },
+      {
+        "at": 9154.899999976158,
+        "kind": "layout_change",
+        "state": "playing",
+        "rect": {
+          "left": 13,
+          "top": 203.5,
+          "width": 414,
+          "height": 518,
+          "innerWidth": 440,
+          "innerHeight": 956,
+          "vw": 440,
+          "vh": 956,
+          "offsetLeft": 0,
+          "offsetTop": 0
+        },
+        "viewport": {
+          "innerWidth": 440,
+          "innerHeight": 956,
+          "vw": 440,
+          "vh": 956,
+          "offsetLeft": 0,
+          "offsetTop": 0
+        },
+        "dpr": 3,
+        "reason": "notification:resize_observer",
+        "changes": [
+          "top"
+        ]
+      }
+    ],
+    "timeline_samples": 33
+  },
+  {
+    "entry": "story-pages",
+    "before": {
+      "x": 128,
+      "y": 266,
+      "time": 0.08333333333333333
+    },
+    "after": {
+      "x": 128,
+      "y": 266,
+      "time": 30.09999999999957,
+      "hp": 2,
+      "lives": 1,
+      "state": "playing"
+    },
+    "owners": [
+      null,
+      null
+    ],
+    "drag": [
+      0,
+      0
+    ],
+    "last_layout_changes": [
+      {
+        "at": 39315.199999928474,
+        "kind": "layout_change",
+        "state": "title",
+        "rect": {
+          "left": 13,
+          "top": 240,
+          "width": 414,
+          "height": 518,
+          "innerWidth": 440,
+          "innerHeight": 956,
+          "vw": 440,
+          "vh": 956,
+          "offsetLeft": 0,
+          "offsetTop": 0
+        },
+        "viewport": {
+          "innerWidth": 440,
+          "innerHeight": 956,
+          "vw": 440,
+          "vh": 956,
+          "offsetLeft": 0,
+          "offsetTop": 0
+        },
+        "dpr": 3,
+        "reason": "notification:resize_observer",
+        "changes": [
+          "top"
+        ]
+      },
+      {
+        "at": 39638,
+        "kind": "layout_change",
+        "state": "story",
+        "rect": {
+          "left": 13,
+          "top": 221.5,
+          "width": 414,
+          "height": 518,
+          "innerWidth": 440,
+          "innerHeight": 956,
+          "vw": 440,
+          "vh": 956,
+          "offsetLeft": 0,
+          "offsetTop": 0
+        },
+        "viewport": {
+          "innerWidth": 440,
+          "innerHeight": 956,
+          "vw": 440,
+          "vh": 956,
+          "offsetLeft": 0,
+          "offsetTop": 0
+        },
+        "dpr": 3,
+        "reason": "notification:resize_observer",
+        "changes": [
+          "top"
+        ]
+      },
+      {
+        "at": 40156.09999990463,
+        "kind": "layout_change",
+        "state": "playing",
+        "rect": {
+          "left": 13,
+          "top": 203.5,
+          "width": 414,
+          "height": 518,
+          "innerWidth": 440,
+          "innerHeight": 956,
+          "vw": 440,
+          "vh": 956,
+          "offsetLeft": 0,
+          "offsetTop": 0
+        },
+        "viewport": {
+          "innerWidth": 440,
+          "innerHeight": 956,
+          "vw": 440,
+          "vh": 956,
+          "offsetLeft": 0,
+          "offsetTop": 0
+        },
+        "dpr": 3,
+        "reason": "notification:resize_observer",
+        "changes": [
+          "top"
+        ]
+      }
+    ],
+    "timeline_samples": 64
+  },
+  {
+    "entry": "stage-select",
+    "before": {
+      "x": 128,
+      "y": 266,
+      "time": 0.31666666666666665
+    },
+    "after": {
+      "x": 128,
+      "y": 266,
+      "time": 30.38333333333289,
+      "hp": 2,
+      "lives": 1,
+      "state": "playing"
+    },
+    "owners": [
+      null,
+      null
+    ],
+    "drag": [
+      0,
+      0
+    ],
+    "last_layout_changes": [
+      {
+        "at": 40156.09999990463,
+        "kind": "layout_change",
+        "state": "playing",
+        "rect": {
+          "left": 13,
+          "top": 203.5,
+          "width": 414,
+          "height": 518,
+          "innerWidth": 440,
+          "innerHeight": 956,
+          "vw": 440,
+          "vh": 956,
+          "offsetLeft": 0,
+          "offsetTop": 0
+        },
+        "viewport": {
+          "innerWidth": 440,
+          "innerHeight": 956,
+          "vw": 440,
+          "vh": 956,
+          "offsetLeft": 0,
+          "offsetTop": 0
+        },
+        "dpr": 3,
+        "reason": "notification:resize_observer",
+        "changes": [
+          "top"
+        ]
+      },
+      {
+        "at": 70529.89999997616,
+        "kind": "layout_change",
+        "state": "title",
+        "rect": {
+          "left": 13,
+          "top": 240,
+          "width": 414,
+          "height": 518,
+          "innerWidth": 440,
+          "innerHeight": 956,
+          "vw": 440,
+          "vh": 956,
+          "offsetLeft": 0,
+          "offsetTop": 0
+        },
+        "viewport": {
+          "innerWidth": 440,
+          "innerHeight": 956,
+          "vw": 440,
+          "vh": 956,
+          "offsetLeft": 0,
+          "offsetTop": 0
+        },
+        "dpr": 3,
+        "reason": "notification:resize_observer",
+        "changes": [
+          "top"
+        ]
+      },
+      {
+        "at": 71962.79999995232,
+        "kind": "layout_change",
+        "state": "playing",
+        "rect": {
+          "left": 13,
+          "top": 203.5,
+          "width": 414,
+          "height": 518,
+          "innerWidth": 440,
+          "innerHeight": 956,
+          "vw": 440,
+          "vh": 956,
+          "offsetLeft": 0,
+          "offsetTop": 0
+        },
+        "viewport": {
+          "innerWidth": 440,
+          "innerHeight": 956,
+          "vw": 440,
+          "vh": 956,
+          "offsetLeft": 0,
+          "offsetTop": 0
+        },
+        "dpr": 3,
+        "reason": "notification:resize_observer",
+        "changes": [
+          "top"
+        ]
+      }
+    ],
+    "timeline_samples": 96
+  },
+  {
+    "entry": "keyboard",
+    "before": {
+      "x": 128,
+      "y": 266,
+      "time": 0.03333333333333333
+    },
+    "after": {
+      "x": 128,
+      "y": 266,
+      "time": 30.049999999999574,
+      "hp": 2,
+      "lives": 1,
+      "state": "playing"
+    },
+    "owners": [
+      null,
+      null
+    ],
+    "drag": [
+      0,
+      0
+    ],
+    "last_layout_changes": [
+      {
+        "at": 102455.19999992847,
+        "kind": "layout_change",
+        "state": "title",
+        "rect": {
+          "left": 13,
+          "top": 240,
+          "width": 414,
+          "height": 518,
+          "innerWidth": 440,
+          "innerHeight": 956,
+          "vw": 440,
+          "vh": 956,
+          "offsetLeft": 0,
+          "offsetTop": 0
+        },
+        "viewport": {
+          "innerWidth": 440,
+          "innerHeight": 956,
+          "vw": 440,
+          "vh": 956,
+          "offsetLeft": 0,
+          "offsetTop": 0
+        },
+        "dpr": 3,
+        "reason": "notification:resize_observer",
+        "changes": [
+          "top"
+        ]
+      },
+      {
+        "at": 102697.79999995232,
+        "kind": "layout_change",
+        "state": "story",
+        "rect": {
+          "left": 13,
+          "top": 221.5,
+          "width": 414,
+          "height": 518,
+          "innerWidth": 440,
+          "innerHeight": 956,
+          "vw": 440,
+          "vh": 956,
+          "offsetLeft": 0,
+          "offsetTop": 0
+        },
+        "viewport": {
+          "innerWidth": 440,
+          "innerHeight": 956,
+          "vw": 440,
+          "vh": 956,
+          "offsetLeft": 0,
+          "offsetTop": 0
+        },
+        "dpr": 3,
+        "reason": "notification:resize_observer",
+        "changes": [
+          "top"
+        ]
+      },
+      {
+        "at": 102981.69999992847,
+        "kind": "layout_change",
+        "state": "playing",
+        "rect": {
+          "left": 13,
+          "top": 203.5,
+          "width": 414,
+          "height": 518,
+          "innerWidth": 440,
+          "innerHeight": 956,
+          "vw": 440,
+          "vh": 956,
+          "offsetLeft": 0,
+          "offsetTop": 0
+        },
+        "viewport": {
+          "innerWidth": 440,
+          "innerHeight": 956,
+          "vw": 440,
+          "vh": 956,
+          "offsetLeft": 0,
+          "offsetTop": 0
+        },
+        "dpr": 3,
+        "reason": "notification:resize_observer",
+        "changes": [
+          "top"
+        ]
+      }
+    ],
+    "timeline_samples": 126
+  }
+]
