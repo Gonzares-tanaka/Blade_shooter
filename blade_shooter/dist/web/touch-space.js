@@ -27,4 +27,4 @@ class BladeTouchSpace {
 if(typeof module!=="undefined")module.exports=BladeTouchSpace;
 if(typeof window!=="undefined")window.BladeTouchSpace=BladeTouchSpace;
 
-if(typeof window!=="undefined")window.bladeDiagnostics?.build("space","0190-B1");
+if(typeof window!=="undefined")window.bladeDiagnostics?.build("space","0191-R1");

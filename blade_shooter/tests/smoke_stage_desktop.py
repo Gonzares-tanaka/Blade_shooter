@@ -55,11 +55,14 @@ def tick():
         assert g.score_totals['battleship']==10000
         assert [h['area'] for h in g.items.history if h['event']=='spawn']==[1,2,3,4]
         from game import Actions
-        g.step(1/C.FPS,Actions(retry=True))
-        assert (g.score,g.current_cut,g.max_cut,g.time,g.hp)==(0,0,0,0,3)
+        carry=(g.score,g.max_cut,g.hp,g.weapon,g.run.lives)
+        g.step(1/C.FPS,Actions(confirm=True))
+        assert g.run.current_stage==2 and g.state=='story'
+        assert (g.score,g.max_cut,g.hp,g.weapon,g.run.lives)==carry
+        assert g.current_cut==0 and g.time==0
         assert not (g.enemies or g.bullets or g.shots or g.boss or g.items.current)
-        capture('retry-reset')
-        result['retry_clean']=True
+        capture('next-stage')
+        result['next_stage_clean']=True
         (FOLDER/'result.json').write_text(json.dumps(result,indent=2))
         print('DESKTOP_STAGE',json.dumps(result),flush=True)
         pyxel.quit()

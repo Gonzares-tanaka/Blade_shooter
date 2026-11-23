@@ -11,7 +11,7 @@ window.bladeInput = {
   document.documentElement.dataset.embedded = String(new URLSearchParams(location.search).has("embed"));
   const bridge = window.bladeInput;
   const D=window.bladeDiagnostics||{enabled:false,note(){},build(){},error(){}};
-  D.build("input","0190-B1");
+  D.build("input","0191-R1");
   bridge.touchDebugEnabled=D.enabled;
   bridge.reportBuild=(id)=>D.build("python",id);
   bridge.reportReadJSON=(text)=>D.note("python_read",JSON.parse(text));
@@ -127,7 +127,8 @@ window.bladeInput = {
     settings.hidden=settings.disabled;
     nextStageButton.textContent=`第${stageNumber+1}面へ進む`;
     nextStageButton.hidden=!(state==="result"&&bridge.canAdvanceStage);
-    titleButton.hidden=!["result","gameover"].includes(state);
+    titleButton.hidden=!["result","gameover"].includes(state)||(state==="result"&&bridge.canAdvanceStage);
+    start.hidden=state==="result";
     settings.textContent = state === "settings" ? "設定を閉じる" : `${weaponLabels[weaponName]} / ${directionLabel()} ⚙`;
     panel.hidden = state !== "settings";
     weapon.textContent = `武器：${weaponLabels[weaponName]}（変更）`;
@@ -137,7 +138,7 @@ window.bladeInput = {
     document.getElementById("attack-zone-label").textContent = `斬撃エリア ${weaponName==="lance"?"↑↓":"←→"}`;
     start.disabled = state === "loading" || ["stage_clear","ending_clear","credits"].includes(state);
     start.textContent = state === "loading" ? "読み込み中" : state === "playing" ? "一時停止" : state === "paused" ? "再開" :
-                       state==="gameover" ? "CONTINUE" : ["clear","result"].includes(state) ? "リトライ" : state === "ending_clear" ? "CLEAR" : state === "credits" ? "スタッフロール" : state === "stage_clear" ? "STAGE CLEAR" : state === "settings" ? "設定完了" : state==="title" ? "START" : state==="story" ? "次へ" : "選択";
+                       state==="gameover" ? "CONTINUE" : state === "ending_clear" ? "CLEAR" : state === "credits" ? "スタッフロール" : state === "stage_clear" ? "STAGE CLEAR" : state === "settings" ? "設定完了" : state==="title" ? "START" : state==="story" ? "次へ" : "選択";
     if(state==="gameover")start.disabled=!canContinue;
     document.getElementById("status").textContent = state === "loading" ?
       "表示が出たらゲーム画面をタップ →「開始」でプレイ" : state === "ending_clear" ? "CLEAR · 最終スコアを表示中" : state === "credits" ? "スタッフロール · 終了後はタイトルへ戻ります" : state === "paused" ?
@@ -317,7 +318,7 @@ window.bladeInput = {
       const row=Math.floor((point[1]-140)/26);
       if(point[0]>=20&&point[0]<=236&&row>=0&&row<menuOptions.children.length)pickMenu(row+1);
     }else if(["result","gameover"].includes(state)&&point[0]>=20&&point[0]<=236){
-      const count=state==="gameover"?2:bridge.canAdvanceStage?3:2,row=Math.floor((point[1]-214)/15);
+      const count=state==="gameover"?2:1,row=Math.floor((point[1]-214)/15);
       if(row>=0&&row<count)pickMenu(row+1);
     }
   },nonPassive);
@@ -336,7 +337,7 @@ window.bladeInput = {
     clearTouch("start_button:"+state);
     if (["playing", "paused"].includes(state)) bridge.pauseSerial++;
     else if(state==="gameover")bridge.continueSerial++;
-    else if(state==="result")bridge.retrySerial++;
+    else if(state==="result")return;
     else if(state==="title")pickMenu(1);
     else bridge.confirmSerial++;
   });

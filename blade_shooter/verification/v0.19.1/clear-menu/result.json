@@ -1,0 +1,71 @@
+{
+  "result": "PASS",
+  "build": "0191-R1",
+  "actualPyxel": true,
+  "bossDefeatFixture": true,
+  "realIPhone": false,
+  "realGkd": false,
+  "results": [
+    {
+      "mobile": false,
+      "stage": 1,
+      "options": [
+        "NEXT STAGE"
+      ],
+      "oldRetryTapsIgnored": true,
+      "legacyRetryIgnored": true,
+      "advancedTo": 2,
+      "carryPreserved": true
+    },
+    {
+      "mobile": false,
+      "stage": 2,
+      "options": [
+        "NEXT STAGE"
+      ],
+      "oldRetryTapsIgnored": true,
+      "legacyRetryIgnored": true,
+      "advancedTo": 3,
+      "carryPreserved": true
+    },
+    {
+      "mobile": false,
+      "mode": "stage_select",
+      "options": [
+        "TITLE"
+      ],
+      "returnedToTitle": true
+    },
+    {
+      "mobile": true,
+      "stage": 1,
+      "options": [
+        "NEXT STAGE"
+      ],
+      "oldRetryTapsIgnored": true,
+      "legacyRetryIgnored": true,
+      "advancedTo": 2,
+      "carryPreserved": true
+    },
+    {
+      "mobile": true,
+      "stage": 2,
+      "options": [
+        "NEXT STAGE"
+      ],
+      "oldRetryTapsIgnored": true,
+      "legacyRetryIgnored": true,
+      "advancedTo": 3,
+      "carryPreserved": true
+    },
+    {
+      "mobile": true,
+      "mode": "stage_select",
+      "options": [
+        "TITLE"
+      ],
+      "returnedToTitle": true
+    }
+  ],
+  "errors": []
+}

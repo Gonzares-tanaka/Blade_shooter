@@ -461,8 +461,8 @@ class Game:
 
     @property
     def result_options(self):
-        if self.state=="gameover" and self.can_continue:return ("CONTINUE","TITLE")
-        return ("NEXT STAGE", "RETRY", "TITLE") if self.can_advance_stage else ("RETRY", "TITLE")
+        if self.state=="gameover":return ("CONTINUE","TITLE") if self.can_continue else ("RETRY","TITLE")
+        return ("NEXT STAGE",) if self.can_advance_stage else ("TITLE",)
 
     def choose_course(self,course):
         self.course=course
@@ -781,7 +781,7 @@ class Game:
             if action.next_stage and self.can_advance_stage:
                 self.enter_stage(self.stage_definition.next_stage,carry_run=True,show_intro=True)
                 self.events.append("start");return
-            if action.retry:
+            if action.retry and self.state=="gameover":
                 self.continue_entry=None
                 if self.course in ("stage","stage2","stage3"):self.checkpoint=0
                 self.reset();self.events.append("start");return
@@ -790,12 +790,12 @@ class Game:
                 self.result_choice=(self.result_choice+(1 if action.y>0 else -1))%len(self.result_options)
             self.menu_vertical=vertical
             choice=self.result_options[self.result_choice]
-            if action.title or action.settings or ((action.confirm or action.slash or action.menu_pick) and choice=="TITLE"):
+            if ((action.title or action.settings) and not self.can_advance_stage) or ((action.confirm or action.slash or action.menu_pick) and choice=="TITLE"):
                 self.return_title()
             elif action.confirm or action.slash or action.menu_pick:
                 if choice=="CONTINUE":self.continue_play()
                 elif choice=="NEXT STAGE":self.enter_stage(self.stage_definition.next_stage,carry_run=True,show_intro=True)
-                else:
+                elif choice=="RETRY":
                     self.continue_entry=None
                     if self.course in ("stage","stage2","stage3"):self.checkpoint=0
                     self.reset()

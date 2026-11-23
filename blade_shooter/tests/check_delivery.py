@@ -10,7 +10,8 @@ from build import SOURCES,RESOURCES
 folder=ROOT/'verification'/('v'+C.VERSION)
 sha=lambda data:hashlib.sha256(data).hexdigest()
 folder.mkdir(exist_ok=True)
-addition=json.loads((folder/'resource-addition.json').read_text())
+reference=ROOT/'verification/v0.19.0'
+addition=json.loads((reference/'resource-addition.json').read_text())
 assert sha((ROOT/C.RESOURCE_FILE).read_bytes())==addition['after_sha256']
 assert (ROOT/C.PALETTE_FILE).read_bytes()==(ROOT/'verification/v0.3.0/before-rear/blade.pyxpal').read_bytes()
 with zipfile.ZipFile(ROOT/'dist/blade-shooter-gkd.zip') as gkd,zipfile.ZipFile(ROOT/'dist/web/blade-shooter.pyxapp') as web:
@@ -20,7 +21,7 @@ with zipfile.ZipFile(ROOT/'dist/blade-shooter-gkd.zip') as gkd,zipfile.ZipFile(R
     assert gkd.read('blade-shooter/README.txt')==(ROOT/'README.md').read_bytes()
     assert gkd.read('blade-shooter/VERIFICATION.md')==(ROOT/'VERIFICATION.md').read_bytes()
 # 前版と比較。戦闘の核・武器の全性能・素材・出現表を保持。
-old=runpy.run_path(str(folder/'before/config.py'))
+old=runpy.run_path(str(reference/'before/config.py'))
 prefixes=('SHOT_','BLADE_','HITSTOP_','BULLET_')
 preserved=[key for key in old if key.startswith(prefixes)]
 preserved+=['PLAYER_HP','PLAYER_HIT_RADIUS','INVINCIBLE_SECONDS','SMALL_HP','ARMOR_HP','REAR_HP']
@@ -32,7 +33,7 @@ assert old['BOSS_PARTS']==C.BOSS_PARTS
 assert old['WEB_TOUCH']==C.WEB_TOUCH
 assert all(getattr(C,key)==old[key] for key in ('SHOT_DAMAGE','SHOT_INTERVAL','SHOT_SPEED'))
 for name in ('stage2_config.py','stage3_config.py'):
-    assert (folder/'before'/name).read_bytes()==(ROOT/name).read_bytes()
+    assert (reference/'before'/name).read_bytes()==(ROOT/name).read_bytes()
 
 for weapon,settings in old['WEAPONS'].items():
     for key,value in settings.items():

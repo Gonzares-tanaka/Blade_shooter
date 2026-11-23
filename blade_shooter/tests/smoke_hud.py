@@ -18,8 +18,8 @@ def run(update,draw):
     app.draw();p.screenshot(str(folder/'gameover.png'),scale=2)
     g.state='result';g.boss_defeated=True
     app.draw();p.screenshot(str(folder/'result.png'),scale=2)
-    g.step(1/C.FPS,Actions(retry=True));assert g.score==0 and g.max_cut==0
-    app.draw();p.screenshot(str(folder/'retry.png'),scale=2)
+    g.step(1/C.FPS,Actions(confirm=True));assert g.state=='title' and g.score==0 and g.max_cut==0
+    app.draw();p.screenshot(str(folder/'title.png'),scale=2)
     # 文字が他のHUD描画で欠けていないか、同じFontの単独描画と比較。
     expected={}
     for key,x,y,text,color in (('weapon',54,15,'BLADE',6),('cut',191,4,'CUT',6),('timer',201,15,'00:00',3)):

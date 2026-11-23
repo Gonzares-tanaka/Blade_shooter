@@ -5,7 +5,7 @@
   const expected=document.documentElement.dataset.build||"unknown";
   const badge=document.getElementById("build-badge"),panel=document.getElementById("input-diagnostics");
   const text=document.getElementById("input-diagnostics-text"),dialog=document.getElementById("diagnostics-log");
-  const counts={},latest={},events=[],builds={html:expected,diagnostics:"0190-B1",config:window.BLADE_TOUCH_CONFIG?.build_id||"unknown"};
+  const counts={},latest={},events=[],builds={html:expected,diagnostics:"0191-R1",config:window.BLADE_TOUCH_CONFIG?.build_id||"unknown"};
   let error=null,uiTicks=0,issue="未選択",frozenReport=null;
   const now=()=>performance.now();
   function buildStatus(){

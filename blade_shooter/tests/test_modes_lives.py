@@ -32,8 +32,24 @@ class ModesLivesTests(unittest.TestCase):
             self.assertEqual((g.run.current_stage,g.time,g.play_mode,g.run.lives),(stage,0,"stage_select",3))
             self.kill_boss(g);g.step(C.FLOW['clear_banner_seconds'])
             self.assertEqual(g.state,"result");self.assertFalse(g.can_advance_stage)
-            self.assertEqual(g.result_options,("RETRY","TITLE"))
+            self.assertEqual(g.result_options,("TITLE",))
             g.step(.01,Actions(next_stage=True));self.assertEqual(g.state,"result")
+            g.step(.01,Actions(retry=True));self.assertEqual(g.state,"result")
+            g.step(.01,Actions(confirm=True));self.assertEqual(g.state,"title")
+
+    def test_clear_result_only_advances_and_ignores_old_retry_signal(self):
+        for stage in (1,2):
+            for action in (Actions(confirm=True),Actions(slash=True),Actions(menu_pick=1),Actions(next_stage=True)):
+                g=Game();g.start_play(stage=stage,mode="campaign")
+                g.step(.01);g.step(.01,Actions(settings=True));g.step(.01)
+                g.hp=2;g.weapon="axe";g.add_cut(7)
+                self.kill_boss(g);g.step(C.FLOW['clear_banner_seconds'])
+                carry=(g.hp,g.weapon,g.score,g.max_cut,g.run.lives,g.run.next_extend)
+                self.assertEqual(g.result_options,("NEXT STAGE",))
+                g.step(.01,Actions(retry=True));self.assertEqual((g.state,g.run.current_stage),("result",stage))
+                g.step(.01,action)
+                self.assertEqual((g.state,g.run.current_stage),("story",stage+1))
+                self.assertEqual((g.hp,g.weapon,g.score,g.max_cut,g.run.lives,g.run.next_extend),carry)
 
     def test_development_direct_courses_still_start_at_requested_stage(self):
         for course,stage in (("stage2",2),("stage3",3),("stealth",2),("final",3)):

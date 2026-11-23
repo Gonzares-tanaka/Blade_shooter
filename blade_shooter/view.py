@@ -476,7 +476,8 @@ class View:
             self.center(201,f"TIME {seconds//60:02d}:{seconds%60:02d}",2)
             for i,option in enumerate(g.result_options):
                 self.center(219+i*15,("> " if g.result_choice==i else "  ")+option,6 if g.result_choice==i else 2)
-            self.center(269,"UP/DOWN + A/START" if self.profile=="gkd" else "UP/DOWN + Z/ENTER",39)
+            confirm_hint="A/START" if self.profile=="gkd" else "Z/ENTER"
+            self.center(269,confirm_hint if g.state=="result" else "UP/DOWN + "+confirm_hint,39)
             if getattr(g,"save_failed",False):self.center(294,"BEST: THIS SESSION ONLY",2)
         elif g.state in ("clear", "paused"):
             self.panel(116, 100)
