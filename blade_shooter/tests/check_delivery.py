@@ -27,11 +27,19 @@ preserved+=['PLAYER_HP','PLAYER_HIT_RADIUS','INVINCIBLE_SECONDS','SMALL_HP','ARM
 assert all(old[key]==getattr(C,key) for key in preserved)
 for course in ('classic','rear','tempo','tempo_fast'):
     assert old['COURSES'][course]['waves']==C.COURSES[course]['waves']
-assert old['COURSES']['stage']['waves']==C.COURSES['stage']['waves']
-assert old['COURSES']['stage']['duration']==C.COURSES['stage']['duration']
+assert C.COURSES['stage']['duration']==165
+assert old['BOSS_PARTS']==C.BOSS_PARTS
+assert old['WEB_TOUCH']==C.WEB_TOUCH
+assert all(getattr(C,key)==old[key] for key in ('SHOT_DAMAGE','SHOT_INTERVAL','SHOT_SPEED'))
+for name in ('stage2_config.py','stage3_config.py'):
+    assert (folder/'before'/name).read_bytes()==(ROOT/name).read_bytes()
+
 for weapon,settings in old['WEAPONS'].items():
     for key,value in settings.items():
+        if weapon=='lance' and key in ('reach','inner'):continue
         assert C.WEAPONS[weapon][key]==value,(weapon,key)
+assert C.WEAPONS['lance']['reach']==old['WEAPONS']['lance']['reach']*1.5
+assert C.WEAPONS['lance']['reach']-C.WEAPONS['lance']['inner']==old['WEAPONS']['lance']['reach']-old['WEAPONS']['lance']['inner']
 assert C.WEAPONS['lance']['width']==C.PLAYER_SIZE==16
 assert tuple(C.TOUCH_MODES)==('flick',)
 # 既存画像・音の保持はtest_resourcesと素材ハッシュで検証。
@@ -43,7 +51,7 @@ assert not any(old_mode in gestures for old_mode in ('lastTap','double_tap','tap
 changes={k:dict(before=v,after=getattr(C,k)) for k,v in old.items()
          if k.isupper() and isinstance(v,(int,float)) and hasattr(C,k) and v!=getattr(C,k)}
 result=dict(version=C.VERSION,resource_sha256=addition['after_sha256'],
-            core_combat_hp_and_reference_wave_tables_preserved=True,
+            shot_blade_axe_boss_stage2_stage3_and_reference_tables_preserved=True,
             existing_resources_preserved=assets_preserved,
             tuning_changes=changes, lives_tuning=dict(before=old.get("LIVES"),after=C.LIVES),
             sources_resources_and_documents_match=True,packages={})

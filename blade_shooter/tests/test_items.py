@@ -16,17 +16,17 @@ class ItemTests(unittest.TestCase):
     def put(self,g,kind,cycle=0):
         g.items.current=AreaItem(0,g.px,g.py,kind,cycle=cycle)
 
-    def test_six_area_ends_and_bounded_final_boss_spawn(self):
+    def test_four_area_rewards_precede_next_wave_and_final_boss(self):
         g=self.sandbox()
-        self.assertEqual(g.items.ends,[40,80,120,160,210,300])
+        self.assertEqual(g.items.ends,[30,65,105,161])
         for i,end in enumerate(g.items.ends):
             g.time=end-.01;g.items.current=None
             g.step(.01)
-            if end<300:
+            if i<len(g.items.ends)-1:
                 self.assertIsNone(g.items.current)
                 for _ in range(31):g.step(1/C.FPS)
             else:
-                self.assertEqual(g.boss_spawned_at,300)
+                self.assertIsNone(g.boss_spawned_at)
             self.assertEqual(g.items.current.area,i)
             self.assertGreaterEqual(math.hypot(g.px-g.items.current.x,g.py-g.items.current.y),64)
             self.assertEqual(len([h for h in g.items.history if h['event']=='spawn']),i+1)
@@ -34,10 +34,10 @@ class ItemTests(unittest.TestCase):
             self.assertEqual(len([h for h in g.items.history if h['event']=='spawn']),i+1)
         # 取得しなくても、ボス初撃はアイテムの寿命に依存しない。
         g.bullets=[];g.enemies=[]
-        for _ in range(6*C.FPS):g.step(1/C.FPS)
+        for _ in range(10*C.FPS):g.step(1/C.FPS)
         self.assertIsNotNone(g.boss.first_fire_time)
-        self.assertLess(g.boss.first_fire_time,306)
-        self.assertIsNotNone(g.items.current)
+        self.assertLess(g.boss.first_fire_time,g.duration+6)
+        self.assertTrue(g.items.current is None or g.items.current.exiting)
 
     def test_collision_uses_last_displayed_kind_even_on_switch_frame(self):
         g=self.sandbox();g.hp=1
@@ -127,7 +127,7 @@ class ItemTests(unittest.TestCase):
         self.assertIn(enemy,g.enemies);self.assertIn(bullet,g.bullets)
 
     def test_spawn_avoids_local_threat_and_never_auto_collects(self):
-        g=self.sandbox();g.time=40.5
+        g=self.sandbox();g.time=30.5
         g.spawn('armor',64,200)
         g.bullets=[Bullet(192,200,0,0)]
         pos,safe=g.items.location(g)
@@ -135,17 +135,17 @@ class ItemTests(unittest.TestCase):
         g.items.schedule(g);self.assertIsNotNone(g.items.current)
         g.items.update(g,.001,(g.px,g.py));self.assertIsNotNone(g.items.current)
         # 全候補が危険なら最大2秒まで待つ。ボスは待たせない。
-        g=self.sandbox();g.time=40.5
+        g=self.sandbox();g.time=30.5
         g.items.location=lambda game:((48,200),False)
         g.items.schedule(g);self.assertIsNone(g.items.current)
-        g.time=42;g.items.schedule(g);self.assertIsNotNone(g.items.current)
+        g.time=32;g.items.schedule(g);self.assertIsNotNone(g.items.current)
 
     def test_retry_and_checkpoint_reset_without_backfilling(self):
-        g=self.sandbox();g.time=40.5;g.items.schedule(g)
+        g=self.sandbox();g.time=30.5;g.items.schedule(g)
         first=g.items.current.kind
         g.reset();self.assertEqual(g.items.done,set());self.assertEqual(g.items.history,[])
         self.assertIsNone(g.items.current)
-        g.time=40.5;g.items.schedule(g);self.assertEqual(first,g.items.current.kind)
+        g.time=30.5;g.items.schedule(g);self.assertEqual(first,g.items.current.kind)
         g.checkpoint=3;g.reset();self.assertEqual(g.items.done,{0,1,2})
         self.assertIsNone(g.items.current)
         for course in ('compare','boss','tempo','legacy'):

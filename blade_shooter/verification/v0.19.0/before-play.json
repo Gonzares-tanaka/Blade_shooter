@@ -1,0 +1,108 @@
+{
+  "same_new_input_planner": true,
+  "weapon": "blade",
+  "state": "result",
+  "time": 338.09999999996535,
+  "boss_spawn": 300.6499999999994,
+  "quiet_without_item_seconds": 57.01666666666471,
+  "mixed_seconds": 59.416666666664575,
+  "near_seconds": 19.333333333333517,
+  "items": [
+    {
+      "event": "spawn",
+      "area": 1,
+      "time": 40.499999999998984,
+      "x": 64.0,
+      "y": 200.0,
+      "kind": "lance"
+    },
+    {
+      "event": "pickup",
+      "area": 1,
+      "time": 42.31666666666555,
+      "kind": "blade",
+      "weapon": "blade",
+      "hp": 3
+    },
+    {
+      "event": "spawn",
+      "area": 2,
+      "time": 80.49999999999672,
+      "x": 64.0,
+      "y": 200.0,
+      "kind": "axe"
+    },
+    {
+      "event": "pickup",
+      "area": 2,
+      "time": 82.31666666666328,
+      "kind": "blade",
+      "weapon": "blade",
+      "hp": 3
+    },
+    {
+      "event": "spawn",
+      "area": 3,
+      "time": 120.49999999999444,
+      "x": 64.0,
+      "y": 200.0,
+      "kind": "axe"
+    },
+    {
+      "event": "pickup",
+      "area": 3,
+      "time": 123.06666666666096,
+      "kind": "heal",
+      "weapon": "blade",
+      "hp": 3
+    },
+    {
+      "event": "spawn",
+      "area": 4,
+      "time": 160.50000000001987,
+      "x": 208.0,
+      "y": 248.0,
+      "kind": "blade"
+    },
+    {
+      "event": "pickup",
+      "area": 4,
+      "time": 160.8833333333535,
+      "kind": "blade",
+      "weapon": "blade",
+      "hp": 3
+    },
+    {
+      "event": "spawn",
+      "area": 5,
+      "time": 210.50000000005966,
+      "x": 208.0,
+      "y": 248.0,
+      "kind": "axe"
+    },
+    {
+      "event": "pickup",
+      "area": 5,
+      "time": 212.31666666672777,
+      "kind": "heal",
+      "weapon": "blade",
+      "hp": 3
+    },
+    {
+      "event": "spawn",
+      "area": 6,
+      "time": 300.0,
+      "x": 208.0,
+      "y": 248.0,
+      "kind": "blade"
+    },
+    {
+      "event": "pickup",
+      "area": 6,
+      "time": 300.3499999999997,
+      "kind": "blade",
+      "weapon": "blade",
+      "hp": 3
+    }
+  ]
+}

@@ -38,8 +38,9 @@ def main():
         p.screenshot(str(OUT/(name+'.png')), scale=3)
         pose = weapon_pose(g.attack_weapon, max(0, g.swing))
         if name.startswith('weapon-'):
+            top=108 if name=='weapon-lance' else 144
             detail=p.Image(256,176)
-            detail.blt(0,0,p.screen,0,144,256,176)
+            detail.blt(0,0,p.screen,0,top,256,176)
             detail.save(str(OUT/('detail-'+name[7:]+'.png')),3)
         captures[name] = dict(stage=g.run.current_stage, time=round(g.time, 3),
             weapon=g.weapon, player=[round(g.px, 2), round(g.py, 2)],
@@ -48,18 +49,18 @@ def main():
             enemies=len(g.enemies), bullets=len(g.bullets),
             sha256=hashlib.sha256((OUT/(name+'.png')).read_bytes()).hexdigest())
 
-    for weapon in ('blade', 'axe', 'lance'):
+    for weapon in (('lance',) if '--lance-only' in sys.argv else ('blade','axe','lance')):
         g=Game(seed=7, weapon=weapon)
         g.reset()
         for _ in range(200):g.step(DT, Actions())
         if weapon=='blade':capture('move', g)
         g.step(DT, Actions(slash=True))
-        target=C.WEAPONS[weapon]['windup']+C.WEAPONS[weapon]['active']*.55
+        target=C.WEAPONS[weapon]['windup']+C.WEAPONS[weapon]['active']*(.70 if weapon=='lance' else .55)
         while g.swing < target:g.step(DT, Actions())
         assert g.slash_polys and g.state=='playing'
         capture('weapon-'+weapon, g)
 
-    for stage in (1, 2, 3):
+    for stage in (() if '--lance-only' in sys.argv else (1,2,3)):
         g=Game(seed=7)
         g.enter_stage(stage, carry_run=False)
         pilot=Pilot() if stage==2 else CavePilot() if stage==3 else None

@@ -38,7 +38,7 @@ window.bladeInput = {
   const directionLabel = () => weaponName === "lance" ? "縦フリック ↑↓" : "横フリック ←→";
   let state = "loading", stageNumber = 1;
   let courseName = "stage";
-  let courseLabel = "1面 / 5分＋巨大戦艦", sectionLabel = "最初から";
+  let courseLabel = "1面 / 2分45秒＋巨大戦艦", sectionLabel = "最初から";
 
   function record(kind,data={}) {
     if(!bridge.debug&&!D.enabled)return;

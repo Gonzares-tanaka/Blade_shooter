@@ -1,0 +1,49 @@
+[
+  {
+    "stage": 1,
+    "route": 300.0,
+    "boss_spawn": 301.9999999999982,
+    "wall_simulated": 302.0,
+    "item_points": [
+      40.0,
+      80.0,
+      120.0,
+      160.0,
+      210.0,
+      300.0
+    ],
+    "scheduled_waves": 125,
+    "timing_fixture_invincible": true
+  },
+  {
+    "stage": 2,
+    "route": 180.0,
+    "boss_spawn": 181.9166666666682,
+    "wall_simulated": 181.91666666666666,
+    "item_points": [
+      30.0,
+      60.0,
+      90.0,
+      120.0,
+      150.0,
+      180.0
+    ],
+    "scheduled_waves": 143,
+    "timing_fixture_invincible": true
+  },
+  {
+    "stage": 3,
+    "route": 150.0,
+    "boss_spawn": 151.45000000000115,
+    "wall_simulated": 151.45,
+    "item_points": [
+      30.0,
+      60.0,
+      90.0,
+      120.0,
+      150.0
+    ],
+    "scheduled_waves": 75,
+    "timing_fixture_invincible": true
+  }
+]

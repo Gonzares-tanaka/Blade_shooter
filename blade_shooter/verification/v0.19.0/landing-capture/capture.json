@@ -1,0 +1,36 @@
+{
+  "game_version": "0.19.0",
+  "source": "Actual native Pyxel renderer, input-only simulation",
+  "ai_generated": false,
+  "gameplay_modified": false,
+  "captures": {
+    "weapon-lance": {
+      "stage": 1,
+      "time": 3.517,
+      "weapon": "lance",
+      "player": [
+        128.0,
+        266.0
+      ],
+      "tip": [
+        128.0,
+        121.0
+      ],
+      "melee_active": true,
+      "enemy_kinds": [
+        "small"
+      ],
+      "enemies": 5,
+      "bullets": 0,
+      "sha256": "a14fcf37717df88b2e52a05ba0d334c22ec0382b83cb2fd0c2535cef8c1735f1"
+    }
+  },
+  "game_sources": {
+    "game.py": "0733f0bf248b2d842215851153d135d91852f8dd80ae2465f1e594265172d24a",
+    "config.py": "824fe41f1e27bb679f083fe101e82664b7c0b9643a9efe01fdf19476af36baf3",
+    "view.py": "8893ddd40ad0f34e26922f55a856c6ccc7ed1b3a8740525c81c9341f93623d9d",
+    "main.py": "6dc9861f401b6d595f4a626126c9e864810d2ed26ac69b5180605fab69e9a413",
+    "audio.py": "c099613def8eefbd8adaaf86245dcf3dca3badba9ebe26efb2204b02884e7882"
+  },
+  "pyxapp_sha256": "5e82efce1a1e0ab69ee0bf6282f964869e9b7c6b5fe4b071305da0bf70be7b39"
+}

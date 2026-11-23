@@ -566,7 +566,7 @@ class Game:
         return C.PLAYER_SPEED*C.PLAYER_SPEED_PRESETS.get(self.course, C.PLAYER_SPEED_PRESETS["tempo"])
 
     def finish_course(self):
-        """道中の出口。300秒で出現を止め、クリアにせず戦艦へ接続する。"""
+        """道中の出口。ステージ設定の時間で出現を止め、残敵を整理してボスへ接続する。"""
         if self.course_config["next_scene"]=="boss":
             self.route_complete=True
             self.boss_pending=True
@@ -640,9 +640,11 @@ class Game:
             return (self.duration,"06 / FINAL REFLECTOR","REFLECT BULLETS WITH MELEE" if self.boss.fight_time<9 else "DODGE / REFLECT / MOVE AGAIN")
         if self.boss and self.run.current_stage==2:
             return (self.duration,"07 / STEALTH CHAIN","CUT / THEN DISENGAGE" if self.boss.opening else "ALL REST / READ THE BULLETS" if self.boss.attack_state()[1]=="rest" else "DODGE / WATCH THE GLOW")
-        if self.boss_pending:return (self.duration,"CORE / APPROACHING" if self.run.current_stage==3 else "07 / CLEARING THE DECK","MOVE / FINAL FIGHTER INCOMING" if self.run.current_stage==3 else "MOVE / DREADNOUGHT INCOMING")
+        if self.boss_pending:
+            label="CORE / APPROACHING" if self.run.current_stage==3 else f"{len(self.course_config['plan'])+1:02d} / CLEARING THE DECK"
+            return (self.duration,label,"MOVE / FINAL FIGHTER INCOMING" if self.run.current_stage==3 else "MOVE / DREADNOUGHT INCOMING")
         if self.boss:
-            return (self.duration,"07 / DREADNOUGHT","OPEN / STEP IN / CUT" if self.boss.opening
+            return (self.duration,self.course_config["sections"][-1][1],"OPEN / STEP IN / CUT" if self.boss.opening
                     else "CLEAR DECK / MOVE BELOW" if not self.boss.active else "DODGE / CUT A CORRIDOR")
         return next(s for s in reversed(self.course_config["sections"]) if self.time >= s[0])
 
@@ -653,6 +655,12 @@ class Game:
               "asteroid": ROCK["hp"], "missile": MISSILE["hp"],"barrier":BARRIER["hp"]}[kind]
         enemy = Enemy(self.uid, kind, x, y, hp, home_x=x,home_y=y)
         self.enemies.append(enemy)
+        return enemy
+
+    def spawn_armor(self,x,pattern="hold",y=-20):
+        enemy=self.spawn("armor",x,y)
+        enemy.pattern=pattern
+        enemy.hp=C.ARMOR_PATTERNS[pattern].get("hp",C.ARMOR_HP)
         return enemy
 
     def spawn_rear(self, x, pattern="rise"):
@@ -1014,6 +1022,7 @@ class Game:
                     e=self.spawn("asteroid",rx);e.pattern=pattern;e.group=self.group_id
             elif kind=="formation":self.spawn_formation(x,pattern=pattern)
             elif kind=="rear":self.spawn_rear(x,pattern)
+            elif kind=="armor":self.spawn_armor(x,pattern)
             else:
                 e=self.spawn(kind,x)
                 e.pattern=pattern
@@ -1119,7 +1128,7 @@ class Game:
             e.phase = "exit"
             e.y -= C.ARMOR_EXIT_SPEED*dt
             return
-        e.y = min(C.ARMOR_Y, e.y+C.ARMOR_ENTRY_SPEED*dt)
+        e.y = min(C.ARMOR_PATTERNS.get(e.pattern,{}).get("stop_y",C.ARMOR_Y), e.y+C.ARMOR_ENTRY_SPEED*dt)
         if not e.on_screen:
             return
         e.visible_time += dt

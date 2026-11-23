@@ -1,5 +1,6 @@
 const {webkit,chromium}=require('playwright'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
-const root=path.resolve(__dirname,'../dist/web'),folder=path.resolve(__dirname,'../verification/v0.18.4/bridge');fs.mkdirSync(folder,{recursive:true});
+const CURRENT=JSON.parse(fs.readFileSync(path.resolve(__dirname,'../dist/web/touch-config.js'),'utf8').replace(/^window.BLADE_TOUCH_CONFIG = /,'').replace(/;\s*$/,''));
+const root=path.resolve(__dirname,'../dist/web'),folder=path.resolve(__dirname,'../verification/v'+CURRENT.version+'/bridge');fs.mkdirSync(folder,{recursive:true});
 const server=require('node:http').createServer((req,res)=>{const f=path.resolve(root,new URL(req.url,'http://localhost').pathname.slice(1));if(!f.startsWith(root+path.sep)||!fs.existsSync(f)){res.writeHead(404);res.end();return;}res.setHeader('Content-Type',path.extname(f)==='.js'?'text/javascript':'text/html');res.end(fs.readFileSync(f));});
 (async()=>{await new Promise(r=>server.listen(0,'127.0.0.1',r));const results=[];
 try{for(const [name,engine,opts] of [['webkit',webkit,{}],['edge',chromium,{channel:'msedge'}]]){

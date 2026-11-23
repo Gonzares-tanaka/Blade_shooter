@@ -90,4 +90,4 @@ class BladeGestures {
 if(typeof module!=="undefined")module.exports=BladeGestures;
 if(typeof window!=="undefined")window.BladeGestures=BladeGestures;
 
-if(typeof window!=="undefined")window.bladeDiagnostics?.build("gestures","0184-F1");
+if(typeof window!=="undefined")window.bladeDiagnostics?.build("gestures","0190-B1");

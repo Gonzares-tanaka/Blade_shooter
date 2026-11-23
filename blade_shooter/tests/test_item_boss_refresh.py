@@ -22,8 +22,11 @@ class ItemBossRefreshTests(unittest.TestCase):
 
     def test_boss_hp_attacks_and_item_rules_preserved(self):
         old=runpy.run_path(str(FOLDER/'before/config.py'))
-        for key in ('AREA_ITEM','BOSS_PARTS','BOSS_CYCLE_SECONDS','BOSS_OPEN_FROM','BOSS_HULL_RECT','WEAPONS','SCORING','PALETTE'):
+        for key in ('AREA_ITEM','BOSS_PARTS','BOSS_CYCLE_SECONDS','BOSS_OPEN_FROM','BOSS_HULL_RECT','SCORING','PALETTE'):
             self.assertEqual(getattr(C,key),old[key],key)
+        for weapon in ('blade','axe'):self.assertEqual(C.WEAPONS[weapon],old['WEAPONS'][weapon])
+        for key,value in old['WEAPONS']['lance'].items():
+            if key not in ('reach','inner'):self.assertEqual(C.WEAPONS['lance'][key],value)
         self.assertEqual(C.LIVES,{**old['LIVES'],'extend_points':30000})
 
     def test_all_six_boss_orders_keep_destroyed_parts_silent_and_remaining_parts_shooting(self):

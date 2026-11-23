@@ -1,5 +1,6 @@
 const {webkit,chromium}=require('playwright'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
-const root=path.resolve(__dirname,'../dist/web'),folder=path.resolve(process.env.BLADE_DIAG_REPORT||path.resolve(__dirname,'../verification/v0.18.4/diagnostics'));
+const CURRENT=JSON.parse(fs.readFileSync(path.resolve(__dirname,'../dist/web/touch-config.js'),'utf8').replace(/^window.BLADE_TOUCH_CONFIG = /,'').replace(/;\s*$/,''));
+const root=path.resolve(__dirname,'../dist/web'),folder=path.resolve(process.env.BLADE_DIAG_REPORT||path.resolve(__dirname,'../verification/v'+CURRENT.version+'/diagnostics'));
 fs.mkdirSync(folder,{recursive:true});
 const server=require('node:http').createServer((req,res)=>{const file=path.resolve(root,new URL(req.url,'http://localhost').pathname.slice(1)||'index.html');if(!file.startsWith(root+path.sep)||!fs.existsSync(file)){res.writeHead(404);res.end();return;}res.setHeader('Content-Type',({'.js':'text/javascript','.css':'text/css','.html':'text/html'})[path.extname(file)]||'application/octet-stream');res.end(fs.readFileSync(file));});
 (async()=>{await new Promise(r=>server.listen(0,'127.0.0.1',r));const url=process.env.BLADE_DIAG_URL||`http://127.0.0.1:${server.address().port}/play.html`;
@@ -51,7 +52,7 @@ const server=require('node:http').createServer((req,res)=>{const file=path.resol
     b.recordPlayer(128,266,'playing',12.1,'cave_wall',6,0,128,266,JSON.stringify([{before:[128,266],after:[134,266],reason:'touch_drag'},{before:[134,266],after:[128,266],reason:'cave_wall'}]),'playing');
     check(D.snapshot().latest.frame.positionWrites.length===2,'later position overwrite visible');
     b.state='paused';check(D.snapshot().latest.reset.reason.includes('scene:'),'reset reason visible');
-    D.build('python','OLD');check(D.snapshot().build.mismatches.includes('python'),'mixed builds visible');D.build('python','0184-F1');
+    D.build('python','OLD');check(D.snapshot().build.mismatches.includes('python'),'mixed builds visible');D.build('python',window.BLADE_TOUCH_CONFIG.build_id);
     window.dispatchEvent(new ErrorEvent('error',{message:'DIAGNOSTIC_TEST_ERROR'}));check(D.snapshot().lastError.message.includes('DIAGNOSTIC_TEST_ERROR'),'error visible');
     await wait(250);return {case:'diagnostic-classification',result:'PASS',normalDelta:normal,freeze:{injected:true,rectUnchanged:true,events:30,rejected,reason:stalled.latest.movement.reason,invalidations:stalled.counts.invalidate},recovery,diagnostic:D.snapshot()};
    });
@@ -59,7 +60,7 @@ const server=require('node:http').createServer((req,res)=>{const file=path.resol
    await page.locator('#diagnostics-open').click();const frozen=JSON.parse(await page.locator('#diagnostics-json').inputValue());await page.locator('#diagnostics-issue').selectOption({label:'自機の移動のみ不可'});
    await page.waitForTimeout(250);assert.equal(JSON.parse(await page.locator('#diagnostics-json').inputValue()).latest.received.at,frozen.latest.received.at);
    const downloadPromise=page.waitForEvent('download');await page.locator('#diagnostics-save').click();const download=await downloadPromise;await download.saveAs(folder+'/export-'+width+'.json');
-   const saved=JSON.parse(fs.readFileSync(folder+'/export-'+width+'.json','utf8'));assert.equal(saved.issue,'自機の移動のみ不可');assert.equal(saved.build.expected,'0184-F1');assert(saved.latest.consume.seq>0);assert(saved.latest.python_read.consumeSeq>0);
+   const saved=JSON.parse(fs.readFileSync(folder+'/export-'+width+'.json','utf8'));assert.equal(saved.issue,'自機の移動のみ不可');assert.equal(saved.build.expected,CURRENT.build_id);assert(saved.latest.consume.seq>0);assert(saved.latest.python_read.consumeSeq>0);
    await page.locator('#diagnostics-close').click();assert.equal(await page.locator('#diagnostics-log').isVisible(),false);
    results.push({...r,width,exportAndFrozenSnapshot:'PASS'});await context.close();
   }

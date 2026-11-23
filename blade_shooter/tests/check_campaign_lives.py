@@ -35,7 +35,7 @@ def main():
     score=g.score;maximum=g.max_cut
     assert len(records)==3 and all(r['result'] for r in records.values())
     assert all(r['cut_events'] and r['slashes'] for r in records.values())
-    assert 300<=records[1]['boss_spawn']<=302.1
+    assert C.STAGE_SECONDS<=records[1]['boss_spawn']<=C.STAGE_SECONDS+2.1
     assert 180<=records[2]['boss_spawn']<=182.1
     assert 150<=records[3]['boss_spawn']<=152.1
     assert g.result.score==score and g.result.max_cut==maximum

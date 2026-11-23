@@ -1,4 +1,4 @@
-"""通常入力だけで5分道中・戦艦・全破壊順・混成候補を通す。"""
+"""通常入力だけで設定尺の道中・戦艦・全破壊順・混成候補を通す。"""
 from pathlib import Path
 from itertools import permutations
 import sys,json
@@ -12,7 +12,7 @@ FOLDER=Path(__file__).resolve().parents[1]/'verification'/('v'+C.VERSION)
 
 
 def run(course='stage',blade=True,seed=7,order=('center','left','right'),stop=None):
-    g=Game(course,5 if stop else 0,seed=seed);g.reset()
+    g=Game(course,3 if stop else 0,seed=seed);g.reset()
     sections={};hits=[];peak=0;frames=0
     for _ in range(480*C.FPS):
         key='boss' if g.boss else g.section[1]
@@ -41,7 +41,7 @@ def run(course='stage',blade=True,seed=7,order=('center','left','right'),stop=No
 
 def population(seed):
     g=Game('stage',seed=seed);g.reset();counts={}
-    for f in range(300*C.FPS):
+    for f in range(int(C.STAGE_SECONDS*C.FPS)):
         g.time=f*DT;g.schedule();g.update_enemies(DT)
         g.enemies=[e for e in g.enemies if -50<e.x<C.WIDTH+50 and -50<e.y<C.HEIGHT+24]
         key=g.section[1];n=len({e.kind for e in g.enemies if e.on_screen})
@@ -54,9 +54,9 @@ def population(seed):
 def check():
     full=[run(seed=s) for s in (7,42)]
     for r in full:
-        assert r['state']=='result' and 300<=r['boss_spawn']<=302.1,r
-        assert r['first_boss_fire']>=304.8,r
-        mix=r['sections']['06 / COMBINED ASSAULT']
+        assert r['state']=='result' and C.STAGE_SECONDS<=r['boss_spawn']<=C.STAGE_SECONDS+2.1,r
+        assert r['first_boss_fire']>=C.STAGE_SECONDS+4.8,r
+        mix=r['sections']['04 / FLEET BREAKTHROUGH']
         assert mix['near']>1 and mix['erased']>0 and mix['slashes']>0,r
         assert all(s['four']==0 for s in r['sections'].values()),r
     bosses=[run('boss',True,order=o) for o in permutations(('left','right','center'))]
@@ -66,12 +66,12 @@ def check():
     candidates={}
     for key in C.MIX_CANDIDATES:
         seed=next(s for s in range(100) if C.mixed_waves(s)[1][0]==key)
-        result=run(seed=seed,stop=225)
+        result=run(seed=seed,stop=140)
         assert result['state']=='playing' and result['hp']>0,result
         candidates[key]=result
     populations={str(seed):population(seed) for seed in (7,42)}
     g=Game();g.reset()
-    while g.state=='playing' and g.time<40:g.step(DT,Actions())
+    while g.state=='playing' and g.time<60:g.step(DT,Actions())
     idle=dict(state=g.state,time=g.time,hp=g.hp)
     assert idle['state']=='gameover',idle
     result=dict(version=C.VERSION,automatic_input=True,full=full,boss_orders=bosses,

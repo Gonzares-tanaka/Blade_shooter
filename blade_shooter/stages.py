@@ -29,7 +29,7 @@ class StageDefinition:
             elapsed+=part['length'];points.append(elapsed)
         data.update(stage_number=self.number, background=self.background, bgm=self.bgm,
                     boss=self.boss_factory, boss_bgm=self.boss_bgm,
-                    mixed_candidates=self.mixed_candidates,item_points=tuple(points),item_positions=self.item_positions,
+                    mixed_candidates=self.mixed_candidates,item_points=tuple(data.get("item_points",points)),item_positions=self.item_positions,
                     clear_target=self.clear_target,next_stage=self.next_stage)
         return data
 

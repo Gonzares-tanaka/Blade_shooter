@@ -1,4 +1,4 @@
-"""実Pyxel 60fps・描画音声付きで300秒道中から戦艦撃破まで通す。"""
+"""実Pyxel 60fps・描画音声付きで設定尺の道中から戦艦撃破まで通す。"""
 from pathlib import Path
 import sys,json,time
 sys.path[:0]=[str(Path(__file__).resolve().parents[1]),str(Path(__file__).resolve().parent)]
@@ -32,7 +32,7 @@ def capture(key):
 def tick():
     global frames
     frames+=1;app.update();g=app.game
-    for moment in (4,40.6,44,80.6,84,120.6,124,160.6,164,210.6,214,264,299.9,300,302,305,308,312,320):
+    for moment in (4,30.6,35.6,65.6,70.6,105.6,110.6,152.6,154.6,161.1,164.9,165,167,171,174,180,190):
         if g.time>=moment:capture(str(moment))
     if g.boss:
         for p in g.boss.parts:
@@ -49,11 +49,11 @@ def tick():
                     cleared=g.cleared_bullets,items=g.items.history,weapon=g.weapon,
                     score=g.score,best=g.best_score,max_cut=g.max_cut,score_totals=g.score_totals,
                     result_max_cut=g.result.max_cut,boss_defeated=g.boss_defeated,save_failed=app.store.failed)
-        assert g.state=='result' and 300<=g.boss_spawned_at<=302.1
+        assert g.state=='result' and C.STAGE_SECONDS<=g.boss_spawned_at<=C.STAGE_SECONDS+2.1
         assert g.score>0 and g.max_cut>0 and g.result.max_cut==g.max_cut
         assert g.score==sum(g.score_totals.values())
         assert g.score_totals['battleship']==10000
-        assert [h['area'] for h in g.items.history if h['event']=='spawn']==[1,2,3,4,5,6]
+        assert [h['area'] for h in g.items.history if h['event']=='spawn']==[1,2,3,4]
         from game import Actions
         g.step(1/C.FPS,Actions(retry=True))
         assert (g.score,g.current_cut,g.max_cut,g.time,g.hp)==(0,0,0,0,3)

@@ -1,0 +1,256 @@
+{
+  "result": "PASS",
+  "actual_pyxel": true,
+  "automatic_input": true,
+  "updates_per_draw": 6,
+  "real_devices": false,
+  "runs": [
+    {
+      "weapon": "blade",
+      "time": 202.46666666669648,
+      "boss_spawn": 165.0,
+      "first_boss_fire": 169.88333333333722,
+      "hp": 3,
+      "lives": 5,
+      "slashes": 96,
+      "cuts": 139,
+      "items": [
+        {
+          "event": "pickup",
+          "area": 1,
+          "time": 32.33333333333278,
+          "kind": "blade",
+          "weapon": "blade",
+          "hp": 3
+        },
+        {
+          "event": "pickup",
+          "area": 2,
+          "time": 67.34999999999746,
+          "kind": "blade",
+          "weapon": "blade",
+          "hp": 3
+        },
+        {
+          "event": "pickup",
+          "area": 3,
+          "time": 108.09999999999515,
+          "kind": "heal",
+          "weapon": "blade",
+          "hp": 3
+        },
+        {
+          "event": "pickup",
+          "area": 4,
+          "time": 161.45000000002062,
+          "kind": "blade",
+          "weapon": "blade",
+          "hp": 3
+        }
+      ],
+      "shot_kills": {
+        "armor": 0,
+        "small": 28,
+        "charger": 0,
+        "rear": 0,
+        "boss": 0,
+        "missile": 0,
+        "barrier": 0
+      },
+      "melee_kills": {
+        "armor": 16,
+        "small": 33,
+        "charger": 0,
+        "rear": 2,
+        "boss": 3,
+        "missile": 0,
+        "barrier": 0
+      }
+    },
+    {
+      "weapon": "axe",
+      "time": 191.70000000002125,
+      "boss_spawn": 165.0,
+      "first_boss_fire": 169.88333333333722,
+      "hp": 3,
+      "lives": 5,
+      "slashes": 70,
+      "cuts": 58,
+      "items": [
+        {
+          "event": "pickup",
+          "area": 1,
+          "time": 31.516666666666158,
+          "kind": "axe",
+          "weapon": "axe",
+          "hp": 3
+        },
+        {
+          "event": "pickup",
+          "area": 2,
+          "time": 65.94999999999754,
+          "kind": "axe",
+          "weapon": "axe",
+          "hp": 3
+        },
+        {
+          "event": "pickup",
+          "area": 3,
+          "time": 105.91666666666194,
+          "kind": "axe",
+          "weapon": "axe",
+          "hp": 3
+        },
+        {
+          "event": "pickup",
+          "area": 4,
+          "time": 161.45000000002062,
+          "kind": "axe",
+          "weapon": "axe",
+          "hp": 3
+        }
+      ],
+      "shot_kills": {
+        "armor": 0,
+        "small": 22,
+        "charger": 0,
+        "rear": 0,
+        "boss": 0,
+        "missile": 0,
+        "barrier": 0
+      },
+      "melee_kills": {
+        "armor": 19,
+        "small": 33,
+        "charger": 1,
+        "rear": 0,
+        "boss": 3,
+        "missile": 0,
+        "barrier": 0
+      }
+    },
+    {
+      "weapon": "lance",
+      "time": 192.83333333335548,
+      "boss_spawn": 165.0,
+      "first_boss_fire": 169.88333333333722,
+      "hp": 3,
+      "lives": 5,
+      "slashes": 95,
+      "cuts": 123,
+      "items": [
+        {
+          "event": "pickup",
+          "area": 1,
+          "time": 31.033333333332852,
+          "kind": "lance",
+          "weapon": "lance",
+          "hp": 3
+        },
+        {
+          "event": "pickup",
+          "area": 2,
+          "time": 67.31666666666413,
+          "kind": "lance",
+          "weapon": "lance",
+          "hp": 3
+        },
+        {
+          "event": "pickup",
+          "area": 3,
+          "time": 107.31666666666186,
+          "kind": "lance",
+          "weapon": "lance",
+          "hp": 3
+        },
+        {
+          "event": "pickup",
+          "area": 4,
+          "time": 162.01666666668774,
+          "kind": "heal",
+          "weapon": "lance",
+          "hp": 3
+        }
+      ],
+      "shot_kills": {
+        "armor": 0,
+        "small": 20,
+        "charger": 0,
+        "rear": 0,
+        "boss": 0,
+        "missile": 0,
+        "barrier": 0
+      },
+      "melee_kills": {
+        "armor": 19,
+        "small": 44,
+        "charger": 1,
+        "rear": 2,
+        "boss": 3,
+        "missile": 0,
+        "barrier": 0
+      }
+    }
+  ],
+  "fixtures": [
+    {
+      "weapon": "blade",
+      "distance": 36,
+      "swings": 2,
+      "hp": -21,
+      "melee": [
+        {
+          "time": 0.11666666666666665,
+          "before": 64,
+          "after": 24
+        },
+        {
+          "time": 1.2000000000000006,
+          "before": 19,
+          "after": -21
+        }
+      ]
+    },
+    {
+      "weapon": "axe",
+      "distance": 36,
+      "swings": 1,
+      "hp": -16,
+      "melee": [
+        {
+          "time": 0.06666666666666667,
+          "before": 64,
+          "after": -16
+        }
+      ]
+    },
+    {
+      "weapon": "blade",
+      "distance": 125,
+      "swings": 1,
+      "hp": 56,
+      "melee": []
+    },
+    {
+      "weapon": "lance",
+      "distance": 125,
+      "swings": 1,
+      "hp": 24,
+      "melee": [
+        {
+          "time": 0.13333333333333333,
+          "before": 64,
+          "after": 32
+        }
+      ]
+    },
+    {
+      "case": "column",
+      "hp": [
+        32,
+        32
+      ],
+      "swings": 1
+    }
+  ]
+}

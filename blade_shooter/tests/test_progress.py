@@ -55,7 +55,7 @@ class ProgressTests(unittest.TestCase):
         for weapon in C.WEAPONS:
             g=self.sandbox(weapon);w=g.weapon_config;g.shot_clock=999
             g.swing=w['windup']+.7*w['active'];g.swing_weapon=weapon
-            if weapon=='lance':x,y=g.px,g.py-84
+            if weapon=='lance':x,y=g.px,g.py-4-(w['reach']+w['inner'])/2
             else:
                 from game import point_at,weapon_pose
                 angle,near,far,width=weapon_pose(weapon,g.swing)
@@ -102,13 +102,13 @@ class ProgressTests(unittest.TestCase):
         self.assertEqual(g.state,'title');self.assertEqual(g.selected_weapon,'lance')
 
     def test_cleanup_bounded_no_new_enemies_and_final_item_not_delayed(self):
-        g=self.sandbox();g.time=300-1/C.FPS
+        g=self.sandbox();g.time=g.duration-1/C.FPS
         g.spawn('armor',80,100);g.bullets=[Bullet(10,100,0,0,'armor')]
         g.add_cut(4);g.step(1/C.FPS)
         self.assertTrue(g.boss_pending);self.assertIsNone(g.boss)
-        self.assertEqual(g.items.current.area,5)
+        self.assertEqual(g.items.current.area,len(g.items.ends)-1)
         for _ in range(122):g.step(1/C.FPS)
-        self.assertIsNotNone(g.boss);self.assertLessEqual(g.boss_spawned_at,302.02)
+        self.assertIsNotNone(g.boss);self.assertLessEqual(g.boss_spawned_at,g.duration+2.02)
         self.assertFalse(g.enemies or g.bullets);self.assertEqual(g.current_cut,4)
         self.assertEqual(g.uid,1)
 

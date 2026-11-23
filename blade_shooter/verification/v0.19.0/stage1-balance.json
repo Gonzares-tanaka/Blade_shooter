@@ -1,0 +1,791 @@
+{
+  "automatic_input": true,
+  "real_devices": false,
+  "version": "0.19.0",
+  "timing": [
+    {
+      "stage": 1,
+      "route": 165.0,
+      "boss_spawn": 165.0,
+      "wall_simulated": 165.0,
+      "timing_fixture_invincible": true,
+      "item_points": [
+        30.0,
+        65.0,
+        105.0,
+        161.0
+      ]
+    },
+    {
+      "stage": 2,
+      "route": 180.0,
+      "boss_spawn": 181.9166666666682,
+      "wall_simulated": 181.91666666666666,
+      "timing_fixture_invincible": true,
+      "item_points": [
+        30.0,
+        60.0,
+        90.0,
+        120.0,
+        150.0,
+        180.0
+      ]
+    },
+    {
+      "stage": 3,
+      "route": 150.0,
+      "boss_spawn": 151.45000000000115,
+      "wall_simulated": 151.45,
+      "timing_fixture_invincible": true,
+      "item_points": [
+        30.0,
+        60.0,
+        90.0,
+        120.0,
+        150.0
+      ]
+    }
+  ],
+  "runs": [
+    {
+      "weapon": "blade",
+      "seed": 7,
+      "state": "result",
+      "seconds": 202.46666666669648,
+      "hp": 3,
+      "lives": 5,
+      "boss_spawn": 165.0,
+      "first_boss_fire": 169.88333333333722,
+      "order": [
+        "center",
+        "left",
+        "right"
+      ],
+      "shots": {
+        "armor": 0,
+        "small": 28,
+        "charger": 0,
+        "rear": 0,
+        "boss": 0,
+        "missile": 0,
+        "barrier": 0
+      },
+      "melee": {
+        "armor": 16,
+        "small": 33,
+        "charger": 0,
+        "rear": 2,
+        "boss": 3,
+        "missile": 0,
+        "barrier": 0
+      },
+      "slashes": 96,
+      "cuts": 139,
+      "hits": 0,
+      "near_seconds": 12.916666666666888,
+      "dodge_frames": 813,
+      "mixed_seconds": 42.29999999999888,
+      "triple_seconds": 6.716666666666648,
+      "quiet_without_item_seconds": 37.2333333333325,
+      "examples": [
+        {
+          "time": 49.54999999999847,
+          "kinds": [
+            "armor",
+            "rear",
+            "small"
+          ],
+          "bullets": 4
+        },
+        {
+          "time": 79.21666666666346,
+          "kinds": [
+            "armor",
+            "charger",
+            "small"
+          ],
+          "bullets": 1
+        },
+        {
+          "time": 94.71666666666258,
+          "kinds": [
+            "armor",
+            "rear",
+            "small"
+          ],
+          "bullets": 2
+        },
+        {
+          "time": 111.64999999999495,
+          "kinds": [
+            "armor",
+            "charger",
+            "small"
+          ],
+          "bullets": 6
+        },
+        {
+          "time": 127.28333333332739,
+          "kinds": [
+            "armor",
+            "rear",
+            "small"
+          ],
+          "bullets": 6
+        },
+        {
+          "time": 147.33333333334272,
+          "kinds": [
+            "armor",
+            "charger",
+            "small"
+          ],
+          "bullets": 4
+        }
+      ],
+      "item_history": [
+        {
+          "event": "spawn",
+          "area": 1,
+          "time": 30.49999999999955,
+          "x": 48.0,
+          "y": 248.0,
+          "kind": "lance"
+        },
+        {
+          "event": "pickup",
+          "area": 1,
+          "time": 32.33333333333278,
+          "kind": "blade",
+          "weapon": "blade",
+          "hp": 3
+        },
+        {
+          "event": "spawn",
+          "area": 2,
+          "time": 65.49999999999757,
+          "x": 48.0,
+          "y": 248.0,
+          "kind": "axe"
+        },
+        {
+          "event": "pickup",
+          "area": 2,
+          "time": 67.34999999999746,
+          "kind": "blade",
+          "weapon": "blade",
+          "hp": 3
+        },
+        {
+          "event": "spawn",
+          "area": 3,
+          "time": 105.4999999999953,
+          "x": 64.0,
+          "y": 200.0,
+          "kind": "axe"
+        },
+        {
+          "event": "pickup",
+          "area": 3,
+          "time": 108.09999999999515,
+          "kind": "heal",
+          "weapon": "blade",
+          "hp": 3
+        },
+        {
+          "event": "spawn",
+          "area": 4,
+          "time": 161.00000000002026,
+          "x": 64.0,
+          "y": 200.0,
+          "kind": "blade"
+        },
+        {
+          "event": "pickup",
+          "area": 4,
+          "time": 161.45000000002062,
+          "kind": "blade",
+          "weapon": "blade",
+          "hp": 3
+        }
+      ],
+      "final_weapon": "blade",
+      "score": 61600
+    },
+    {
+      "weapon": "axe",
+      "seed": 7,
+      "state": "result",
+      "seconds": 191.70000000002125,
+      "hp": 3,
+      "lives": 5,
+      "boss_spawn": 165.0,
+      "first_boss_fire": 169.88333333333722,
+      "order": [
+        "center",
+        "left",
+        "right"
+      ],
+      "shots": {
+        "armor": 0,
+        "small": 22,
+        "charger": 0,
+        "rear": 0,
+        "boss": 0,
+        "missile": 0,
+        "barrier": 0
+      },
+      "melee": {
+        "armor": 19,
+        "small": 33,
+        "charger": 1,
+        "rear": 0,
+        "boss": 3,
+        "missile": 0,
+        "barrier": 0
+      },
+      "slashes": 70,
+      "cuts": 58,
+      "hits": 0,
+      "near_seconds": 14.650000000000308,
+      "dodge_frames": 848,
+      "mixed_seconds": 43.01666666666551,
+      "triple_seconds": 3.816666666666658,
+      "quiet_without_item_seconds": 44.899999999998734,
+      "examples": [
+        {
+          "time": 42.14999999999889,
+          "kinds": [
+            "armor",
+            "charger",
+            "small"
+          ],
+          "bullets": 5
+        },
+        {
+          "time": 111.64999999999495,
+          "kinds": [
+            "armor",
+            "charger",
+            "small"
+          ],
+          "bullets": 6
+        },
+        {
+          "time": 127.28333333332739,
+          "kinds": [
+            "armor",
+            "rear",
+            "small"
+          ],
+          "bullets": 7
+        }
+      ],
+      "item_history": [
+        {
+          "event": "spawn",
+          "area": 1,
+          "time": 30.49999999999955,
+          "x": 64.0,
+          "y": 200.0,
+          "kind": "lance"
+        },
+        {
+          "event": "pickup",
+          "area": 1,
+          "time": 31.516666666666158,
+          "kind": "axe",
+          "weapon": "axe",
+          "hp": 3
+        },
+        {
+          "event": "spawn",
+          "area": 2,
+          "time": 65.49999999999757,
+          "x": 64.0,
+          "y": 200.0,
+          "kind": "axe"
+        },
+        {
+          "event": "pickup",
+          "area": 2,
+          "time": 65.94999999999754,
+          "kind": "axe",
+          "weapon": "axe",
+          "hp": 3
+        },
+        {
+          "event": "spawn",
+          "area": 3,
+          "time": 105.4999999999953,
+          "x": 64.0,
+          "y": 200.0,
+          "kind": "axe"
+        },
+        {
+          "event": "pickup",
+          "area": 3,
+          "time": 105.91666666666194,
+          "kind": "axe",
+          "weapon": "axe",
+          "hp": 3
+        },
+        {
+          "event": "spawn",
+          "area": 4,
+          "time": 161.00000000002026,
+          "x": 64.0,
+          "y": 200.0,
+          "kind": "axe"
+        },
+        {
+          "event": "pickup",
+          "area": 4,
+          "time": 161.45000000002062,
+          "kind": "axe",
+          "weapon": "axe",
+          "hp": 3
+        }
+      ],
+      "final_weapon": "axe",
+      "score": 63800
+    },
+    {
+      "weapon": "lance",
+      "seed": 7,
+      "state": "result",
+      "seconds": 192.83333333335548,
+      "hp": 3,
+      "lives": 5,
+      "boss_spawn": 165.0,
+      "first_boss_fire": 169.88333333333722,
+      "order": [
+        "center",
+        "left",
+        "right"
+      ],
+      "shots": {
+        "armor": 0,
+        "small": 20,
+        "charger": 0,
+        "rear": 0,
+        "boss": 0,
+        "missile": 0,
+        "barrier": 0
+      },
+      "melee": {
+        "armor": 19,
+        "small": 44,
+        "charger": 1,
+        "rear": 2,
+        "boss": 3,
+        "missile": 0,
+        "barrier": 0
+      },
+      "slashes": 95,
+      "cuts": 123,
+      "hits": 0,
+      "near_seconds": 20.316666666666794,
+      "dodge_frames": 733,
+      "mixed_seconds": 31.54999999999949,
+      "triple_seconds": 2.716666666666662,
+      "quiet_without_item_seconds": 39.333333333332384,
+      "examples": [
+        {
+          "time": 10.400000000000096,
+          "kinds": [
+            "armor",
+            "rear",
+            "small"
+          ],
+          "bullets": 3
+        },
+        {
+          "time": 94.71666666666258,
+          "kinds": [
+            "armor",
+            "rear",
+            "small"
+          ],
+          "bullets": 2
+        },
+        {
+          "time": 111.64999999999495,
+          "kinds": [
+            "armor",
+            "charger",
+            "small"
+          ],
+          "bullets": 6
+        },
+        {
+          "time": 147.33333333334272,
+          "kinds": [
+            "armor",
+            "charger",
+            "small"
+          ],
+          "bullets": 8
+        }
+      ],
+      "item_history": [
+        {
+          "event": "spawn",
+          "area": 1,
+          "time": 30.49999999999955,
+          "x": 64.0,
+          "y": 200.0,
+          "kind": "lance"
+        },
+        {
+          "event": "pickup",
+          "area": 1,
+          "time": 31.033333333332852,
+          "kind": "lance",
+          "weapon": "lance",
+          "hp": 3
+        },
+        {
+          "event": "spawn",
+          "area": 2,
+          "time": 65.49999999999757,
+          "x": 64.0,
+          "y": 200.0,
+          "kind": "axe"
+        },
+        {
+          "event": "pickup",
+          "area": 2,
+          "time": 67.31666666666413,
+          "kind": "lance",
+          "weapon": "lance",
+          "hp": 3
+        },
+        {
+          "event": "spawn",
+          "area": 3,
+          "time": 105.4999999999953,
+          "x": 64.0,
+          "y": 200.0,
+          "kind": "axe"
+        },
+        {
+          "event": "pickup",
+          "area": 3,
+          "time": 107.31666666666186,
+          "kind": "lance",
+          "weapon": "lance",
+          "hp": 3
+        },
+        {
+          "event": "spawn",
+          "area": 4,
+          "time": 161.00000000002026,
+          "x": 64.0,
+          "y": 200.0,
+          "kind": "blade"
+        },
+        {
+          "event": "pickup",
+          "area": 4,
+          "time": 162.01666666668774,
+          "kind": "heal",
+          "weapon": "lance",
+          "hp": 3
+        }
+      ],
+      "final_weapon": "lance",
+      "score": 66200
+    }
+  ],
+  "weapons": [
+    {
+      "weapon": "blade",
+      "distance": 36,
+      "pattern": "bulwark",
+      "hp": -21,
+      "slashes": 2,
+      "damage_log": [
+        {
+          "time": 0.11666666666666665,
+          "before": 64,
+          "after": 24,
+          "melee": true
+        },
+        {
+          "time": 0.5333333333333333,
+          "before": 24,
+          "after": 23,
+          "melee": false
+        },
+        {
+          "time": 0.6666666666666671,
+          "before": 23,
+          "after": 22,
+          "melee": false
+        },
+        {
+          "time": 0.8000000000000008,
+          "before": 22,
+          "after": 21,
+          "melee": false
+        },
+        {
+          "time": 0.9500000000000013,
+          "before": 21,
+          "after": 20,
+          "melee": false
+        },
+        {
+          "time": 1.0833333333333344,
+          "before": 20,
+          "after": 19,
+          "melee": false
+        },
+        {
+          "time": 1.2000000000000006,
+          "before": 19,
+          "after": -21,
+          "melee": true
+        }
+      ]
+    },
+    {
+      "weapon": "axe",
+      "distance": 36,
+      "pattern": "bulwark",
+      "hp": -16,
+      "slashes": 1,
+      "damage_log": [
+        {
+          "time": 0.06666666666666667,
+          "before": 64,
+          "after": -16,
+          "melee": true
+        }
+      ]
+    },
+    {
+      "weapon": "blade",
+      "distance": 125,
+      "pattern": "bulwark",
+      "hp": 47,
+      "slashes": 1,
+      "damage_log": [
+        {
+          "time": 0.7666666666666674,
+          "before": 64,
+          "after": 63,
+          "melee": false
+        },
+        {
+          "time": 0.9000000000000011,
+          "before": 63,
+          "after": 62,
+          "melee": false
+        },
+        {
+          "time": 1.0333333333333345,
+          "before": 62,
+          "after": 61,
+          "melee": false
+        },
+        {
+          "time": 1.183333333333334,
+          "before": 61,
+          "after": 60,
+          "melee": false
+        },
+        {
+          "time": 1.3166666666666669,
+          "before": 60,
+          "after": 59,
+          "melee": false
+        },
+        {
+          "time": 1.4666666666666663,
+          "before": 59,
+          "after": 58,
+          "melee": false
+        },
+        {
+          "time": 1.5999999999999992,
+          "before": 58,
+          "after": 57,
+          "melee": false
+        },
+        {
+          "time": 1.733333333333332,
+          "before": 57,
+          "after": 56,
+          "melee": false
+        },
+        {
+          "time": 1.8833333333333315,
+          "before": 56,
+          "after": 55,
+          "melee": false
+        },
+        {
+          "time": 2.0166666666666644,
+          "before": 55,
+          "after": 54,
+          "melee": false
+        },
+        {
+          "time": 2.166666666666664,
+          "before": 54,
+          "after": 53,
+          "melee": false
+        },
+        {
+          "time": 2.2999999999999967,
+          "before": 53,
+          "after": 52,
+          "melee": false
+        },
+        {
+          "time": 2.4333333333333296,
+          "before": 52,
+          "after": 51,
+          "melee": false
+        },
+        {
+          "time": 2.583333333333329,
+          "before": 51,
+          "after": 50,
+          "melee": false
+        },
+        {
+          "time": 2.716666666666662,
+          "before": 50,
+          "after": 49,
+          "melee": false
+        },
+        {
+          "time": 2.8666666666666614,
+          "before": 49,
+          "after": 48,
+          "melee": false
+        },
+        {
+          "time": 2.9999999999999942,
+          "before": 48,
+          "after": 47,
+          "melee": false
+        }
+      ]
+    },
+    {
+      "weapon": "lance",
+      "distance": 125,
+      "pattern": "bulwark",
+      "hp": 16,
+      "slashes": 1,
+      "damage_log": [
+        {
+          "time": 0.13333333333333333,
+          "before": 64,
+          "after": 32,
+          "melee": true
+        },
+        {
+          "time": 0.8333333333333343,
+          "before": 32,
+          "after": 31,
+          "melee": false
+        },
+        {
+          "time": 0.966666666666668,
+          "before": 31,
+          "after": 30,
+          "melee": false
+        },
+        {
+          "time": 1.100000000000001,
+          "before": 30,
+          "after": 29,
+          "melee": false
+        },
+        {
+          "time": 1.2500000000000004,
+          "before": 29,
+          "after": 28,
+          "melee": false
+        },
+        {
+          "time": 1.3833333333333333,
+          "before": 28,
+          "after": 27,
+          "melee": false
+        },
+        {
+          "time": 1.5333333333333328,
+          "before": 27,
+          "after": 26,
+          "melee": false
+        },
+        {
+          "time": 1.6666666666666656,
+          "before": 26,
+          "after": 25,
+          "melee": false
+        },
+        {
+          "time": 1.7999999999999985,
+          "before": 25,
+          "after": 24,
+          "melee": false
+        },
+        {
+          "time": 1.949999999999998,
+          "before": 24,
+          "after": 23,
+          "melee": false
+        },
+        {
+          "time": 2.083333333333331,
+          "before": 23,
+          "after": 22,
+          "melee": false
+        },
+        {
+          "time": 2.2333333333333303,
+          "before": 22,
+          "after": 21,
+          "melee": false
+        },
+        {
+          "time": 2.366666666666663,
+          "before": 21,
+          "after": 20,
+          "melee": false
+        },
+        {
+          "time": 2.499999999999996,
+          "before": 20,
+          "after": 19,
+          "melee": false
+        },
+        {
+          "time": 2.6499999999999955,
+          "before": 19,
+          "after": 18,
+          "melee": false
+        },
+        {
+          "time": 2.7833333333333283,
+          "before": 18,
+          "after": 17,
+          "melee": false
+        },
+        {
+          "time": 2.933333333333328,
+          "before": 17,
+          "after": 16,
+          "melee": false
+        }
+      ]
+    }
+  ]
+}

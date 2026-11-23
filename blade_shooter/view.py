@@ -312,7 +312,11 @@ class View:
                 color = 6 if e.resting else 11
                 sprite(p,"armor_open" if e.resting else "armor",e.x,e.y)
                 p.rect(e.x-12, e.y+e.radius+4, 24, 2, 1)
-                p.rect(e.x-12, e.y+e.radius+4, 24*max(0,e.hp)/C.ARMOR_HP, 2, color)
+                p.rect(e.x-12, e.y+e.radius+4, 24*max(0,e.hp)/C.ARMOR_PATTERNS.get(e.pattern,{}).get("hp",C.ARMOR_HP), 2, color)
+                if C.ARMOR_PATTERNS.get(e.pattern,{}).get("hp",C.ARMOR_HP)>C.ARMOR_HP:
+                    # Reinforced plates distinguish the 64-HP variant; original sprites stay editable.
+                    p.line(e.x-10,e.y-7,e.x+10,e.y-7,10)
+                    p.line(e.x-10,e.y-5,e.x+10,e.y-5,10)
                 if e.on_screen and e.age <= C.ARMOR_LIFETIME:
                     p.text(e.x-8 if e.resting else e.x-14, e.y-e.radius-10,
                            "OPEN" if e.resting else "AIM" if e.phase=="warning" else "FIRING", 6 if e.resting else 37)
@@ -420,7 +424,7 @@ class View:
             self.panel(78, 202)
             self.center(91, "B L A D E", 6)
             self.center(108, g.course_config["label"], 40)
-            self.center(120,f"{int(g.duration)//60} MIN + BOSS" if g.course in ("stage","stage2","stage3") else "3 TARGETS / ANY ORDER" if g.course=="boss"
+            self.center(120,f"{int(g.duration)//60}:{int(g.duration)%60:02d} + BOSS" if g.course in ("stage","stage2","stage3") else "3 TARGETS / ANY ORDER" if g.course=="boss"
                         else f"{int(g.duration)} SEC / FIXED WAVES",39)
             self.center(140,"WEAPON: "+g.weapon_config["label"],6)
             self.center(152,"LEFT: DRAG / RIGHT: "+("V-FLICK" if g.weapon=="lance" else "H-FLICK"),39)

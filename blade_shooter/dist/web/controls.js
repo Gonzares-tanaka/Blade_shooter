@@ -11,7 +11,7 @@ window.bladeInput = {
   document.documentElement.dataset.embedded = String(new URLSearchParams(location.search).has("embed"));
   const bridge = window.bladeInput;
   const D=window.bladeDiagnostics||{enabled:false,note(){},build(){},error(){}};
-  D.build("input","0184-F1");
+  D.build("input","0190-B1");
   bridge.touchDebugEnabled=D.enabled;
   bridge.reportBuild=(id)=>D.build("python",id);
   bridge.reportReadJSON=(text)=>D.note("python_read",JSON.parse(text));
@@ -38,7 +38,7 @@ window.bladeInput = {
   const directionLabel = () => weaponName === "lance" ? "縦フリック ↑↓" : "横フリック ←→";
   let state = "loading", stageNumber = 1;
   let courseName = "stage";
-  let courseLabel = "1面 / 5分＋巨大戦艦", sectionLabel = "最初から";
+  let courseLabel = "1面 / 2分45秒＋巨大戦艦", sectionLabel = "最初から";
 
   function record(kind,data={}) {
     if(!bridge.debug&&!D.enabled)return;

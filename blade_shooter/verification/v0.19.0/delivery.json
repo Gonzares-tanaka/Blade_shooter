@@ -1,0 +1,37 @@
+{
+  "version": "0.19.0",
+  "resource_sha256": "2bf6fdaf695ddfe2e7d03d6b79a058473d8f68840b841bf1f2966fe1d6dde3d8",
+  "shot_blade_axe_boss_stage2_stage3_and_reference_tables_preserved": true,
+  "existing_resources_preserved": true,
+  "tuning_changes": {
+    "STAGE_SECONDS": {
+      "before": 300.0,
+      "after": 165.0
+    }
+  },
+  "lives_tuning": {
+    "before": {
+      "initial": 3,
+      "extend_points": 30000,
+      "respawn_invincible": 2.0,
+      "notice_seconds": 1.5
+    },
+    "after": {
+      "initial": 3,
+      "extend_points": 30000,
+      "respawn_invincible": 2.0,
+      "notice_seconds": 1.5
+    }
+  },
+  "sources_resources_and_documents_match": true,
+  "packages": {
+    "blade-shooter-web.zip": {
+      "bytes": 767834,
+      "sha256": "f808af7da3011fd688921dfedfaea0b38967aff2bb0c0166917c7a82ffc687ca"
+    },
+    "blade-shooter-gkd.zip": {
+      "bytes": 366404,
+      "sha256": "5658c8f846b8bc7f8352f8b1844553de9c4e28448db3e7ee2099665ba15f0284"
+    }
+  }
+}

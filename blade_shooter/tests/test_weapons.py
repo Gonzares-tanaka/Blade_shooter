@@ -70,8 +70,8 @@ class WeaponTests(unittest.TestCase):
         g=self.sandbox('lance');w=g.weapon_config
         self.assertEqual(w['width'],C.PLAYER_SIZE)
         g.swing=w['windup']+.7*w['active'];g.cooldown=.5;g.shot_clock=999
-        e=g.spawn('small',g.px+15,g.py-4-80);e.hp=500
-        g.bullets=[Bullet(g.px+10,g.py-4-80,0,0),Bullet(g.px+12,g.py-4-80,0,0)]
+        e=g.spawn('small',g.px+15,g.py-4-130);e.hp=500
+        g.bullets=[Bullet(g.px+10,g.py-4-130,0,0),Bullet(g.px+12,g.py-4-130,0,0)]
         g.step(.001)
         self.assertEqual(e.hp,500-w['damage'])
         self.assertEqual(g.cleared_bullets,1);self.assertEqual(len(g.bullets),1)
@@ -84,9 +84,19 @@ class WeaponTests(unittest.TestCase):
         root=Path(__file__).resolve().parents[1]
         old=runpy.run_path(str(root/'verification/v0.11.0/before/config.py'))
         for key,value in old.items():
-            if key in ('VERSION','WEB_TOUCH') or not key.isupper():continue
+            if key in ('VERSION','WEB_TOUCH','STAGE_PLAN','STAGE_SECONDS') or not key.isupper():continue
             if key=='COURSES':
-                for name,course in value.items():self.assertEqual(C.COURSES[name],course,name)
+                for name,course in value.items():
+                    if name!='stage':self.assertEqual(C.COURSES[name],course,name)
+                continue
+            if key=='WEAPONS':
+                for weapon,settings in value.items():
+                    for setting,v in settings.items():
+                        if weapon=='lance' and setting in ('reach','inner'):continue
+                        self.assertEqual(C.WEAPONS[weapon][setting],v,(weapon,setting))
+                continue
+            if key=='ARMOR_PATTERNS':
+                for pattern,settings in value.items():self.assertEqual(C.ARMOR_PATTERNS[pattern],settings)
                 continue
             if key=='AREA_ITEM':
                 for name,setting in value.items():

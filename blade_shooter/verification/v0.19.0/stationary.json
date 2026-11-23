@@ -1,0 +1,16 @@
+{
+  "state": "gameover",
+  "time": 40.266666666665664,
+  "hp": 0,
+  "lives": 0,
+  "near_frames": 432,
+  "shots": {
+    "armor": 0,
+    "small": 9,
+    "charger": 0,
+    "rear": 0,
+    "boss": 0,
+    "missile": 0,
+    "barrier": 0
+  }
+}

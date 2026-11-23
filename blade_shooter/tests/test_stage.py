@@ -13,15 +13,15 @@ DT=1/C.FPS
 class StageTests(unittest.TestCase):
     def test_exact_route_length_sections_and_cutoff(self):
         c=C.COURSES['stage']
-        self.assertEqual(c['duration'],300)
-        self.assertEqual([s[0] for s in c['sections']],[0,40,80,120,160,210,300])
-        self.assertTrue(all(0<=w['at']<300 for w in c['waves']))
+        self.assertEqual(c['duration'],165)
+        self.assertEqual([s[0] for s in c['sections']],[0,30,65,105,165])
+        self.assertTrue(all(0<=w['at']<165 for w in c['waves']))
         g=Game();g.reset();self.assertEqual(g.course,'stage')
-        for i in range(7):
+        for i in range(5):
             g=Game('stage',i);g.reset();g.schedule()
             self.assertEqual(g.time,c['sections'][i][0])
             self.assertEqual(g.hp,C.PLAYER_HP)
-            self.assertEqual(bool(g.boss),i==6)
+            self.assertEqual(bool(g.boss),i==4)
 
     def test_seed_reproducible_and_no_consecutive_family_or_late_third(self):
         for seed in (0,1,7,42,2026):
@@ -30,18 +30,18 @@ class StageTests(unittest.TestCase):
             families=[C.MIX_CANDIDATES[k]['family'] for k in a['mix_choices']]
             self.assertTrue(all(x!=y for x,y in zip(families,families[1:])))
             for w in a['waves']:
-                if w['section']=='mix' and w['kind'] in ('rear','charger'):
-                    self.assertLess((w['at']-210)%C.MIX_SLOT_SECONDS,3)
+                if w['section']=='mix' and w['kind'] in ('rear','charger') and w['at']<140:
+                    self.assertLess((w['at']-105-C.STAGE_REWARD['next_wave_delay'])%C.MIX_SLOT_SECONDS,3)
         self.assertNotEqual(C.stage_course(1)['mix_choices'],C.stage_course(42)['mix_choices'])
         self.assertEqual(App.seed_option(['--seed','42']),42)
         with self.assertRaises(ValueError):App.seed_option(['--seed'])
 
     def test_transition_keeps_hp_enemies_bullets_and_disables_new_waves(self):
-        g=Game();g.reset();g.time=300-DT;g.hp=2
+        g=Game();g.reset();g.time=g.duration-DT;g.hp=2
         e=g.spawn('armor',64,132);e.phase='fire'
         b=Bullet(10,250,0,12,'armor');g.bullets=[b]
         g.step(DT)
-        self.assertEqual((g.state,g.time,g.hp),('playing',300,2))
+        self.assertEqual((g.state,g.time,g.hp),('playing',g.duration,2))
         self.assertIsNone(g.boss_spawned_at)
         self.assertTrue(g.boss_pending)
         self.assertIn(e,g.enemies);self.assertIn(b,g.bullets)
@@ -49,7 +49,7 @@ class StageTests(unittest.TestCase):
         for _ in range(5*C.FPS):
             g.step(DT,Actions(x=1 if g.px<230 else 0))
         self.assertEqual(g.uid,n)
-        self.assertLessEqual(g.boss_spawned_at,302+DT)
+        self.assertLessEqual(g.boss_spawned_at,g.duration+2+DT)
         self.assertFalse(g.enemies)
         self.assertNotIn(b,g.bullets)
         self.assertFalse(g.boss.active)  # 整理してから4秒の登場演出を開始。
@@ -57,12 +57,12 @@ class StageTests(unittest.TestCase):
         self.assertTrue(all(p.shots_fired==0 for p in g.boss.parts))
 
     def test_real_residuals_leave_before_first_boss_attack(self):
-        g=Game('stage',6);g.reset()
+        g=Game('stage',4);g.reset()
         b=Bullet(10,288,0,-92,'rear');g.bullets=[b]
         for _ in range(5*C.FPS):g.step(DT)
         self.assertNotIn(b,g.bullets)
         self.assertTrue(g.boss.active)
-        self.assertGreaterEqual(g.boss.first_fire_time,304+C.BOSS_PARTS['left']['warning_at']+C.BOSS_PARTS['left']['warning']-DT)
+        self.assertGreaterEqual(g.boss.first_fire_time,g.duration+4+C.BOSS_PARTS['left']['warning_at']+C.BOSS_PARTS['left']['warning']-DT)
         self.assertFalse(g.stage_complete)
 
     def test_all_three_arbitrary_order_and_bullets_survive_destruction(self):

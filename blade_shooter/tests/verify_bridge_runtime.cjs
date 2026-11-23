@@ -1,5 +1,6 @@
 const {chromium}=require('playwright'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
-const root=path.resolve(__dirname,'../dist/web'),folder=path.resolve(__dirname,'../verification/v0.18.4/runtime-bridge');fs.mkdirSync(folder,{recursive:true});
+const CURRENT=JSON.parse(fs.readFileSync(path.resolve(__dirname,'../dist/web/touch-config.js'),'utf8').replace(/^window.BLADE_TOUCH_CONFIG = /,'').replace(/;\s*$/,''));
+const root=path.resolve(__dirname,'../dist/web'),folder=path.resolve(__dirname,'../verification/v'+CURRENT.version+'/runtime-bridge');fs.mkdirSync(folder,{recursive:true});
 const server=require('node:http').createServer((req,res)=>{const f=path.resolve(root,new URL(req.url,'http://localhost').pathname.slice(1));if(!f.startsWith(root+path.sep)||!fs.existsSync(f)){res.writeHead(404);res.end();return;}res.setHeader('Content-Type',({'.js':'text/javascript','.css':'text/css','.html':'text/html'})[path.extname(f)]||'application/octet-stream');res.end(fs.readFileSync(f));});
 (async()=>{await new Promise(r=>server.listen(0,'127.0.0.1',r));const browser=await chromium.launch({channel:'msedge',headless:true});
 try{const page=await browser.newPage({viewport:{width:440,height:956},hasTouch:true,isMobile:true,deviceScaleFactor:3});const errors=[];page.on('pageerror',e=>errors.push(String(e)));

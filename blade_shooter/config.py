@@ -1,8 +1,8 @@
 """調整箇所。時間=秒、距離=ゲーム内px、速度=px/秒。変更後build.pyで配布版更新。"""
 from stage2_config import MISSILE,STEALTH
 
-TITLE, VERSION = "BLADE / CLOSE QUARTERS", "0.18.4"
-BUILD_ID = "0184-F1"  # 端末照合用。HTML / JS / BOOT / Pythonで一致を確認。
+TITLE, VERSION = "BLADE / CLOSE QUARTERS", "0.19.0"
+BUILD_ID = "0190-B1"  # 端末照合用。HTML / JS / BOOT / Pythonで一致を確認。
 WIDTH, HEIGHT, HUD_HEIGHT, FPS = 256, 320, 24, 60
 PLAYER_SIZE, PLAYER_HIT_RADIUS = 16, 2.0
 PLAYER_SPEED, PLAYER_HP, INVINCIBLE_SECONDS = 125.0, 3, 1.2
@@ -30,7 +30,7 @@ WEAPONS = {
     "axe": dict(label="AXE", damage=80, reach=44.0, inner=30.0, width=14.0,
                 windup=0.035, active=0.12, recovery=0.50, cooldown=1.20,
                 start_angle=-145.0, end_angle=-35.0),
-    "lance": dict(label="LANCE", damage=32, reach=94.0, inner=66.0, width=16.0,
+    "lance": dict(label="LANCE", damage=32, reach=141.0, inner=113.0, width=16.0,
                   windup=0.055, active=0.16, recovery=0.20, cooldown=0.82,
                   start_angle=-90.0, end_angle=-90.0),
 }
@@ -120,6 +120,12 @@ ARMOR_PATTERNS = {
     "hold": dict(angles=(-ARMOR_SPREAD_DEGREES,0,ARMOR_SPREAD_DEGREES), speed=ARMOR_BULLET_SPEED, interval=ARMOR_FIRE_INTERVAL),
     "barrage": dict(angles=(-40,-20,0,20,40), speed=84.0, interval=0.45),
 }
+# Stage-1-only durable lanes. Keep standard armor and every weapon's damage unchanged.
+ARMOR_PATTERNS.update(
+    bulwark=dict(ARMOR_PATTERNS["hold"], hp=64),
+    column_front=dict(ARMOR_PATTERNS["hold"], hp=64, stop_y=132.0),
+    column_back=dict(ARMOR_PATTERNS["hold"], hp=64, stop_y=88.0),
+)
 REAR_PATTERNS = {"rise": dict(stop_y=REAR_STOP_Y, escape_vx=0.0)}
 
 # 出現表はここへ集約。各行=(区間内秒, 敵種, x座標, 移動パターン)。
@@ -206,6 +212,11 @@ def compile_course(label, menu_label, plan, next_scene="retry"):
 # 小型の座標は編隊の中心。side_* は画面外の左右から斜めに入る。
 STAGE_SEED = 7
 MIX_SLOT_SECONDS = 15
+STAGE_MIX_SLOTS = 2
+# 180s (stage 2) and 150s (stage 3) -> 165s route, plus the existing <=2s cleanup.
+STAGE_AREA_SECONDS = (30.0, 35.0, 40.0, 60.0)
+STAGE_REWARD = dict(next_wave_delay=5.0, final_lead_seconds=4.0)
+
 MIX_CANDIDATES = {
     "rear_port": dict(family="rear", mirror=False, waves=(
         (0.2,"armor",104,"hold"),(0.2,"formation",192,"line"),
@@ -228,7 +239,7 @@ def mixed_waves(seed, candidates=None):
     candidates=MIX_CANDIDATES if candidates is None else candidates
     waves,chosen=[],[]
     previous=None
-    for slot in range(6):
+    for slot in range(STAGE_MIX_SLOTS):
         pool=[key for key,p in candidates.items() if p["family"]!=previous]
         key=rng.choice(pool)
         item=candidates[key]
@@ -245,55 +256,48 @@ def mixed_waves(seed, candidates=None):
 
 def stage_plan(seed=STAGE_SEED, candidates=None):
     mixed,_=mixed_waves(seed,candidates)
+    reward=STAGE_REWARD["next_wave_delay"]
     return (
-        section("formation",40,"01 / FORMATIONS","LINE UP / SWEEP / REPOSITION",(
-            (0.8,"formation",128,"line"),(4.0,"formation",60,"diagonal_l"),
-            (8.0,"formation",286,"side_r"),(9.2,"armor",80,"hold"),
-            (12.4,"formation",196,"diagonal_r"),(16.0,"formation",-30,"side_l"),
-            (19.8,"formation",128,"line"),(21.0,"armor",184,"hold"),
-            (24.2,"formation",56,"diagonal_l"),(28.4,"formation",286,"side_r"),
-            (32.2,"formation",160,"line"),(33.4,"armor",72,"hold"),
-            (36.0,"formation",184,"diagonal_r"))),
-        section("rear",40,"02 / BACK ATTACK","BELOW / SIDE STEP / COUNTER",(
-            (1,"rear",128,"rise"),(4,"formation",64,"diagonal_l"),
-            (7.8,"rear",192,"rise"),(9.4,"formation",128,"line"),
-            (14.0,"rear",64,"rise"),(14.6,"armor",176,"hold"),
-            (18.2,"formation",184,"diagonal_r"),(21.0,"rear",160,"rise"),
-            (24.0,"formation",-30,"side_l"),(27.4,"rear",88,"rise"),
-            (29,"armor",176,"hold"),(32.4,"formation",128,"line"),
-            (34.2,"rear",200,"rise"),(36.2,"formation",56,"diagonal_l"))),
-        section("charger",40,"03 / INTERCEPT","LOCKED LINE / CUT OR DODGE",(
-            (1,"charger",64,"lock"),(4.4,"formation",192,"line"),
-            (6.2,"charger",192,"lock"),(10,"charger",128,"lock"),
-            (11.8,"formation",56,"diagonal_l"),(14,"armor",176,"hold"),
-            (15.4,"charger",40,"lock"),(19.8,"formation",184,"diagonal_r"),
-            (21.4,"charger",216,"lock"),(25,"charger",80,"lock"),
-            (26.8,"formation",128,"line"),(29.2,"armor",72,"hold"),
-            (31.4,"charger",208,"lock"),(34.8,"formation",286,"side_r"),
-            (36.4,"charger",56,"lock"))),
-        section("armor",40,"04 / ARMORED LINE","READ AIM / STEP INTO OPEN",(
-            (0.6,"armor",128,"hold"),(4.4,"formation",56,"diagonal_l"),
-            (6.4,"armor",72,"hold"),(9,"formation",192,"line"),
-            (12.2,"armor",184,"hold"),(13.6,"rear",72,"rise"),
-            (16.4,"formation",128,"line"),(18.6,"armor",96,"hold"),
-            (22.4,"formation",184,"diagonal_r"),(24.4,"armor",176,"hold"),
-            (25.6,"rear",128,"rise"),(28.6,"formation",56,"line"),
-            (30.4,"armor",72,"hold"),(34.2,"formation",192,"line"),
-            (36,"armor",160,"hold"))),
-        section("barrage",50,"05 / BREAK A CORRIDOR","DODGE GAPS / CUT FORWARD FIRE",tuple(
-            wave for block in range(5) for wave in (
-                (block*10+0.4,"armor",64 if block%2==0 else 192,"barrage"),
-                (block*10+1.8,"formation",184 if block%2==0 else 72,"line"),
-                (block*10+5.4,"armor",176 if block%2==0 else 80,"hold"),
-                (block*10+6.6,"formation",104 if block%2==0 else 152,"diagonal_l" if block%2==0 else "diagonal_r")))),
-        section("mix",90,"06 / COMBINED ASSAULT","CHOOSE / CUT / ADVANCE",mixed),
+        section("opening",STAGE_AREA_SECONDS[0],"01 / RAID AND REAR","SWEEP / SIDE STEP / READ THE CHARGE",(
+            (0.8,"formation",128,"line"),(3.4,"formation",64,"diagonal_l"),
+            (6.0,"rear",184,"rise"),(8.4,"formation",192,"diagonal_r"),
+            (10.0,"armor",88,"hold"),(12.2,"charger",208,"lock"),
+            (15.6,"formation",128,"line"),(20.0,"rear",64,"rise"),
+            (23.0,"formation",196,"diagonal_r"),(26.0,"armor",184,"bulwark"))),
+        section("reach",STAGE_AREA_SECONDS[1],"02 / DEPTH AND IMPACT","PIERCE THE COLUMN / CUT THE ARMOR",(
+            (reward,"armor",104,"column_front"),(reward+1.2,"armor",104,"column_back"),
+            (8.4,"formation",184,"diagonal_r"),(11.8,"charger",208,"lock"),
+            (16.0,"armor",184,"bulwark"),(17.4,"formation",56,"diagonal_l"),
+            (18.6,"rear",64,"rise"),(22.0,"charger",48,"lock"),
+            (24.0,"formation",168,"line"),(25.4,"armor",72,"hold"),
+            (30.0,"armor",184,"bulwark"))),
+        section("barrage",STAGE_AREA_SECONDS[2],"03 / BREAK THE CROSS FIRE","DODGE / CUT A GAP / CHANGE SIDES",(
+            (reward,"armor",64,"barrage"),(6.4,"formation",192,"diagonal_r"),
+            (10.2,"armor",184,"bulwark"),(11.8,"charger",208,"lock"),
+            (14.0,"formation",-30,"side_l"),(18.0,"armor",192,"barrage"),
+            (19.2,"rear",64,"rise"),(22.2,"formation",104,"line"),
+            (25.6,"armor",72,"bulwark"),(27.0,"rear",184,"rise"),
+            (29.0,"formation",168,"diagonal_r"),(31.5,"charger",48,"lock"),
+            (33.0,"formation",208,"diagonal_r"),(36.0,"charger",104,"lock"))),
+        section("mix",STAGE_AREA_SECONDS[3],"04 / FLEET BREAKTHROUGH","FRONT ARMOR / REAR SIGNAL / LEAVE A SIDE EXIT",
+            tuple((reward+at,kind,x,pattern) for at,kind,x,pattern in mixed)+(
+                (35.0,"armor",192,"column_front"),(36.2,"armor",192,"column_back"),
+                (38.0,"formation",56,"diagonal_l"),(39.5,"formation",286,"side_r"),
+                (42.0,"charger",48,"lock"),
+                (46.0,"armor",128,"bulwark"),(47.8,"rear",80,"rise"),
+                (49.6,"formation",192,"diagonal_r"))),
     )
 
 
 def stage_course(seed=STAGE_SEED, candidates=None):
-    data=compile_course("STAGE 1 / DREADNOUGHT","1面 / 5分＋巨大戦艦",stage_plan(seed,candidates),"boss")
-    data["sections"]+=((data["duration"],"07 / DREADNOUGHT","CUT A PATH / DESTROY ALL THREE"),)
+    data=compile_course("STAGE 1 / DREADNOUGHT","1面 / 2分45秒＋巨大戦艦",stage_plan(seed,candidates),"boss")
+    data["sections"]+=((data["duration"],"05 / DREADNOUGHT","CUT A PATH / DESTROY ALL THREE"),)
     data["seed"],data["mix_choices"]=seed,mixed_waves(seed,candidates)[1]
+    ends=[];elapsed=0.0
+    for part in data["plan"]:
+        elapsed+=part["length"];ends.append(elapsed)
+    # Final reward is before the boss boundary, so it never waits for pickup to spawn.
+    data["item_points"]=tuple(ends[:-1]+[data["duration"]-STAGE_REWARD["final_lead_seconds"]])
     return data
 
 

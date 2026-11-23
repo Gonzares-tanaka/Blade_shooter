@@ -11,4 +11,4 @@ function attachBladeMovementBridge(bridge) {
 if(typeof module!=="undefined")module.exports=attachBladeMovementBridge;
 if(typeof window!=="undefined")window.attachBladeMovementBridge=attachBladeMovementBridge;
 
-if(typeof window!=="undefined")window.bladeDiagnostics?.build("transport","0184-F1");
+if(typeof window!=="undefined")window.bladeDiagnostics?.build("transport","0190-B1");
